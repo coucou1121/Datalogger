@@ -2,6 +2,7 @@
 #include "ui_mainwindow.h"
 
 //test for commit seconde time
+//test for 3st commit
 MainWindow::MainWindow(QWidget *parent) :
     QMainWindow(parent),
     ui(new Ui::MainWindow)
