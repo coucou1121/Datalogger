@@ -2,6 +2,7 @@
 #include "ui_mainwindow.h"
 
 //ready for work
+//jsut to be sure
 MainWindow::MainWindow(QWidget *parent) :
     QMainWindow(parent),
     ui(new Ui::MainWindow)
