@@ -15,8 +15,14 @@ public:
     explicit MainWindow(QWidget *parent = 0);
     ~MainWindow();
 
+    //cetup the basic style for the main wondows
+    void setupStyle();
+
 private:
     Ui::MainWindow *ui;
+
+private slots:
+
 };
 
 #endif // MAINWINDOW_H

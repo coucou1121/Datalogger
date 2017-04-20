@@ -14,3 +14,10 @@ MainWindow::~MainWindow()
 {
     delete ui;
 }
+
+void MainWindow::setupStyle()
+{
+    QPalette palette;
+    palette.setColor(backgroundRole(), QColor::fromRgb( 82, 82, 82 ));
+    this->setPalette(palette);
+}
