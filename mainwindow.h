@@ -18,6 +18,9 @@ public:
     explicit MainWindow(QWidget *parent = 0);
     ~MainWindow();
 
+    //timer for x axis
+    QTimer dataTimer;
+
     //cetup the basic style for the main wondows
     void setupStyle();
 
