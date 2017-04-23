@@ -6,7 +6,7 @@ int main(int argc, char *argv[])
     MainWindow mainWindows;
     AnalogPlot analogPlotWindows;
     mainWindows.setupStyle();
-    mainWindows.show();
+    //mainWindows.show();
     analogPlotWindows.show();
 
 

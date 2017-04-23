@@ -22,47 +22,93 @@ void AnalogPlot::setupPlot()
     //setup the style
     setupStyle(ui->tracePlot);
 
+    //add graph
+
     //setup the trace
-    setupRealtimeDataDemo(ui->tracePlot);
+    //setupTrace(ui->tracePlot);
+
+    //setup the trace in real time
+    //setupRealtimeDataDemo(ui->tracePlot);
+
 }
 
 void AnalogPlot::setupStyle(QCustomPlot *customPlot)
 {
-    // set some pens, brushes and backgrounds:
-    customPlot->xAxis->setBasePen(QPen(Qt::white, 1));
-    customPlot->yAxis->setBasePen(QPen(Qt::white, 1));
-    customPlot->xAxis->setTickPen(QPen(Qt::white, 1));
-    customPlot->yAxis->setTickPen(QPen(Qt::white, 1));
-    customPlot->xAxis->setSubTickPen(QPen(Qt::white, 1));
-    customPlot->yAxis->setSubTickPen(QPen(Qt::white, 1));
-    customPlot->xAxis->setTickLabelColor(Qt::white);
-    customPlot->yAxis->setTickLabelColor(Qt::white);
-    customPlot->xAxis->grid()->setPen(QPen(QColor(140, 140, 140), 1, Qt::DotLine));
-    customPlot->yAxis->grid()->setPen(QPen(QColor(140, 140, 140), 1, Qt::DotLine));
-    customPlot->xAxis->grid()->setSubGridPen(QPen(QColor(80, 80, 80), 1, Qt::DotLine));
-    customPlot->yAxis->grid()->setSubGridPen(QPen(QColor(80, 80, 80), 1, Qt::DotLine));
+
+    //back ground Color behing the plot
+    customPlot->setBackground(myStyle.getBackGroundColor());
+
+    //back ground color of the plot
+    customPlot->axisRect()->setBackground(myStyle.getBackGroundColorAnalogPlot());
+
+    //Set the axis color and line type
+    customPlot->xAxis->setBasePen(QPen(myStyle.getAxisColorAnalogPlot(), 1));
+    customPlot->yAxis->setBasePen(QPen(myStyle.getAxisColorAnalogPlot(), 1));
+    customPlot->xAxis->setTickPen(QPen(myStyle.getAxisTickColorAnalogPlot(), 1));
+    customPlot->yAxis->setTickPen(QPen(myStyle.getAxisTickColorAnalogPlot(), 1));
+    customPlot->xAxis->setSubTickPen(QPen(myStyle.getAxisSubTickColorAnalogPlot(), 1));
+    customPlot->yAxis->setSubTickPen(QPen(myStyle.getAxisSubTickColorAnalogPlot(), 1));
+    customPlot->xAxis->setTickLabelColor(myStyle.getAxisTickLabelColorAnalogPlot());
+    customPlot->yAxis->setTickLabelColor(myStyle.getAxisTickLabelColorAnalogPlot());
+
+    //Set the grid plot color and line type
+    customPlot->xAxis->grid()->setVisible(false);
+    customPlot->yAxis->grid()->setVisible(false);
     customPlot->xAxis->grid()->setSubGridVisible(true);
     customPlot->yAxis->grid()->setSubGridVisible(true);
+    customPlot->xAxis->grid()->setSubGridPen(QPen(myStyle.getGridColorAnalogPlot(), 1, Qt::DotLine));
+    customPlot->yAxis->grid()->setSubGridPen(QPen(myStyle.getGridColorAnalogPlot(), 1, Qt::DotLine));
+
+    //Set the axis grid color and line type
+    customPlot->xAxis->grid()->setPen(QPen(myStyle.getAxisGridColorAnalogPlot(), 1, Qt::DotLine));
+    customPlot->yAxis->grid()->setPen(QPen(myStyle.getAxisGridColorAnalogPlot(), 1, Qt::DotLine));
+
+
+    //y Axis color and line type
     customPlot->xAxis->grid()->setZeroLinePen(Qt::NoPen);
     customPlot->yAxis->grid()->setZeroLinePen(Qt::NoPen);
     customPlot->xAxis->setUpperEnding(QCPLineEnding::esSpikeArrow);
     customPlot->yAxis->setUpperEnding(QCPLineEnding::esSpikeArrow);
-    QLinearGradient plotGradient;
-    plotGradient.setStart(0, 0);
-    plotGradient.setFinalStop(0, 350);
-    plotGradient.setColorAt(0, QColor(80, 80, 80));
-    plotGradient.setColorAt(1, QColor(50, 50, 50));
-    customPlot->setBackground(plotGradient);
-    QLinearGradient axisRectGradient;
-    axisRectGradient.setStart(0, 0);
-    axisRectGradient.setFinalStop(0, 350);
-    axisRectGradient.setColorAt(0, QColor(80, 80, 80));
-    axisRectGradient.setColorAt(1, QColor(30, 30, 30));
-    customPlot->axisRect()->setBackground(axisRectGradient);
 
+
+    //rescale the axis
     customPlot->rescaleAxes();
+
+    //set the axis range
+    customPlot->xAxis->setRange(0, 110);
     customPlot->yAxis->setRange(0, 110);
 
+}
+
+void AnalogPlot::setupTrace(QCustomPlot *customPlot)
+{
+
+//    customPlot->xAxis->setTickLabelType( QCPAxis::ltDateTime );
+//    // Set the x axis time string format
+//    customPlot->xAxis->setDateTimeFormat( "hh:mm:ss:zzz" );
+//    customPlot->xAxis->setAutoTickStep( true );
+//    customPlot->yAxis->setAutoTickStep( true );
+
+//    // Allocating memory for the text item that will
+//    // display the current value as a text.
+//    m_ValueIndex = new QCPItemText( customPlot );
+//    // Set the font of the text item
+//    m_ValueIndex->setFont(QFont(font().family(), 8)); // make font a bit larger
+//    // Add the text item to the plt widget
+//    customPlot->addItem(m_ValueIndex);
+
+//    // Change the color of the graphs
+//    QColor brushClr = Qt::green;
+//    brushClr.setAlphaF( .5 );
+//    customPlot->graph( 0 )->setBrush( brushClr );
+//    customPlot->graph( 0 )->setPen( QColor() );
+//    customPlot->graph( 1 )->setPen( QColor() );
+
+
+//    // setup a timer and start it.
+//    QTimer *timer = new QTimer(this);
+//    connect(timer, SIGNAL(timeout() ), this, SLOT( updatePlot()));
+//    timer->start(timeInterval);
 }
 
 void AnalogPlot::setupRealtimeDataDemo(QCustomPlot *customPlot)
@@ -76,10 +122,10 @@ void AnalogPlot::setupRealtimeDataDemo(QCustomPlot *customPlot)
     customPlot->yAxis->setTickLabelFont(font);
     customPlot->legend->setFont(font);
     */
-    customPlot->addGraph(); // blue line
-    customPlot->graph(0)->setPen(QPen(QColor(40, 110, 255)));
-    customPlot->addGraph(); // red line
-    customPlot->graph(1)->setPen(QPen(QColor(255, 110, 40)));
+//    customPlot->addGraph(); // blue line
+//    customPlot->graph(0)->setPen(QPen(QColor(40, 110, 255)));
+//    customPlot->addGraph(); // red line
+//    customPlot->graph(1)->setPen(QPen(QColor(255, 110, 40)));
 
 //    QSharedPointer<QCPAxisTickerTime> timeTicker(new QCPAxisTickerTime);
 //    timeTicker->setTimeFormat("%h:%m:%s");
@@ -87,7 +133,7 @@ void AnalogPlot::setupRealtimeDataDemo(QCustomPlot *customPlot)
 //    customPlot->axisRect()->setupFullAxesBox();
 //    customPlot->yAxis->setRange(-1.2, 1.2);
 
-//    // make left and bottom axes transfer their ranges to right and top axes:
+    // make left and bottom axes transfer their ranges to right and top axes:
 //    connect(customPlot->xAxis, SIGNAL(rangeChanged(QCPRange)), customPlot->xAxis2, SLOT(setRange(QCPRange)));
 //    connect(customPlot->yAxis, SIGNAL(rangeChanged(QCPRange)), customPlot->yAxis2, SLOT(setRange(QCPRange)));
 

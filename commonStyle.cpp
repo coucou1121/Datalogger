@@ -2,7 +2,17 @@
 
 CommonStyle::CommonStyle()
 {
+    //main windows
     backGroundColor.setRgb(BACKGROUD_COLOR);
+
+    //Analog plot
+    backGroundColorAnalogPlot.setRgb(ANALOG_PLOT_BACKGROUD_COLOR);
+    gridColorAnalogPlot.setRgb(ANALOG_PLOT_GRID_COLOR);
+    axisGridColorAnalogPlot.setRgb(ANALOG_PLOT_AXE_GRID_COLOR);
+    axisColorAnalogPlot.setRgb(ANALOG_PLOT_AXIS_COLOR);
+    axisTickColorAnalogPlot.setRgb(ANALOG_PLOT_AXIS_TICK_COLOR);
+    axisSubTickColorAnalogPlot.setRgb(ANALOG_PLOT_AXIS_SUB_TICK_COLOR);
+    axisTickLabelColorAnalogPlot.setRgb(ANALOG_PLOT_AXIS_TICK_LABEL_COLOR);
 }
 
 QColor CommonStyle::getBackGroundColor() const
@@ -10,7 +20,37 @@ QColor CommonStyle::getBackGroundColor() const
     return backGroundColor;
 }
 
-void CommonStyle::setBackGroundColor(const QColor &value)
+QColor CommonStyle::getBackGroundColorAnalogPlot() const
 {
-    backGroundColor = value;
+    return backGroundColorAnalogPlot;
+}
+
+QColor CommonStyle::getGridColorAnalogPlot() const
+{
+    return gridColorAnalogPlot;
+}
+
+QColor CommonStyle::getAxisGridColorAnalogPlot() const
+{
+    return axisGridColorAnalogPlot;
+}
+
+QColor CommonStyle::getAxisColorAnalogPlot() const
+{
+    return axisColorAnalogPlot;
+}
+
+QColor CommonStyle::getAxisTickColorAnalogPlot() const
+{
+    return axisTickColorAnalogPlot;
+}
+
+QColor CommonStyle::getAxisSubTickColorAnalogPlot() const
+{
+    return axisSubTickColorAnalogPlot;
+}
+
+QColor CommonStyle::getAxisTickLabelColorAnalogPlot() const
+{
+    return axisTickLabelColorAnalogPlot;
 }
