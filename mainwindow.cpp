@@ -18,6 +18,7 @@ MainWindow::~MainWindow()
 void MainWindow::setupStyle()
 {
     QPalette palette;
-    palette.setColor(backgroundRole(), QColor::fromRgb( 82, 82, 82 ));
+    palette.setColor(backgroundRole(), myStyle.getBackGroundColor());
+
     this->setPalette(palette);
 }

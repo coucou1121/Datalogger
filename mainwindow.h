@@ -3,7 +3,8 @@
 
 #include <QMainWindow>
 #include <QTimer>
-#include "qcustomplot.h"
+#include "main.h"
+#include "commonStyle.h"
 
 namespace Ui {
 class MainWindow;
@@ -22,6 +23,7 @@ public:
 
 private:
     Ui::MainWindow *ui;
+    CommonStyle myStyle;
 
 private slots:
 

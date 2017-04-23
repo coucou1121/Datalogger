@@ -15,12 +15,14 @@ TEMPLATE = app
 SOURCES += main.cpp\
         mainwindow.cpp \
     qcustomplot.cpp \
-    analogPlot.cpp
+    analogPlot.cpp \
+    commonStyle.cpp
 
 HEADERS  += mainwindow.h \
     main.h \
     qcustomplot.h \
-    analogPlot.h
+    analogPlot.h \
+    commonStyle.h
 
 FORMS    += mainwindow.ui \
     analogPlot.ui
