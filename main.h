@@ -7,6 +7,7 @@
 
 //interfaces
 #include "mainwindow.h"
+#include "analogPlot.h"
 
 
 
