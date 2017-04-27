@@ -6,9 +6,6 @@
 #include "qcustomplot.h"
 #include "commonStyle.h"
 
-#define MINIMUM_WIDTH_SIZE 960
-#define MINIMUM_HEIGHT_SIZE 22
-
 #define TIMER_REFRESH 1
 #define NB_X_VALUES_DISPLAY_LIVE 200
 #define NB_X_VALUES_DISPLAY_HOLD 100

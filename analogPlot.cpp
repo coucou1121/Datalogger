@@ -7,7 +7,7 @@ AnalogPlot::AnalogPlot(QWidget *parent) :
   _timeInterval(TIMER_REFRESH)
 {
     ui->setupUi(this);
-    setMinimumSize(MINIMUM_WIDTH_SIZE, MINIMUM_HEIGHT_SIZE);
+    setMinimumSize(MINIMUM_WIDTH_SIZE_ANALOG_PLOT, MINIMUM_HEIGHT_SIZE_ANALOG_PLOT);
     //setup the style, curve and real time plot
     setupPlot();
 

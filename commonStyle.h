@@ -4,9 +4,19 @@
 #include <QColor>
 
 //main windows
+//size
+#define MINIMUM_WIDTH_SIZE 1280
+#define MINIMUM_HEIGHT_SIZE 720
+
+//color
 #define BACKGROUD_COLOR 82,82,82    //RGB, R=82, G=82, B=82,    aplha = 255
 
 //analog plot
+//size
+#define MINIMUM_WIDTH_SIZE_ANALOG_PLOT 960
+#define MINIMUM_HEIGHT_SIZE_ANALOG_PLOT 22
+
+//color
 #define ANALOG_PLOT_BACKGROUD_COLOR         25,25,25                //RGB, R=25,    G=25,   B=25,   aplha = 255
 #define ANALOG_PLOT_BACKGROUD_COLOR_PLOT    25,25,25                //RGB, R=25,    G=25,   B=25,   aplha = 255
 
