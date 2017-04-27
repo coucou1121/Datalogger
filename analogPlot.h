@@ -6,8 +6,14 @@
 #include "qcustomplot.h"
 #include "commonStyle.h"
 
-#define TIMER_REFRESH 500
-#define NB_X_VALUES_DISPLAY 100
+#define MINIMUM_WIDTH_SIZE 960
+#define MINIMUM_HEIGHT_SIZE 22
+
+#define TIMER_REFRESH 1
+#define NB_X_VALUES_DISPLAY_LIVE 200
+#define NB_X_VALUES_DISPLAY_HOLD 100
+
+#define ANALOG_PLOT 0
 
 namespace Ui {
 class AnalogPlot;
@@ -24,6 +30,11 @@ public:
     //function
    // void setupRealtimeDataDemo();
 
+    //getter
+    int getMinValue() const;
+    int getMaxValue() const;
+
+
 private:
 
     //Interface
@@ -38,14 +49,22 @@ private:
 
     // The time between each update, this
     // will be  used by the timer to call "updatePlot" slot
-    qreal _timeInterval;
+    int _timeInterval;
 
-    //timer;
-    QTimer dataTimer;
+    //reccroding value
+    int _maxValue = 0;
+    int _minValue = 0;
 
     // Data buffers
-    QVector<qreal> _YData;
-    QVector<qreal> _XData;
+    QVector<double> _YData;
+    QVector<double> _minusYData;
+    QVector<double> _XData;
+
+
+    //setter
+    void setMinValue(int value);
+    void setMaxValue(int value);
+
 
     //function
     void setupPlot();
@@ -55,7 +74,7 @@ private:
 private slots:
     // This function is responsible for ploting
     // and updating the graphs , with each timer tick
-    void updatePlot(QCustomPlot *customPlot);
+    void updatePlot();
     void realtimeDataSlot();
 
 };
