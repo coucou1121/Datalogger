@@ -6,8 +6,8 @@
 #include "qcustomplot.h"
 #include "commonStyle.h"
 
-#define DI_TIMER_REFRESH 1
-#define DI_NB_X_VALUES_DISPLAY_LIVE 200
+#define DI_TIMER_REFRESH 100
+#define DI_NB_X_VALUES_DISPLAY_LIVE 100
 #define DI_NB_X_VALUES_DISPLAY_HOLD 100
 
 

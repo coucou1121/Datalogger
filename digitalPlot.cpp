@@ -89,8 +89,8 @@ void DigitalPlot::setupStyle(QCustomPlot *customPlot)
     //y Axis color and line type
     customPlot->xAxis->grid()->setZeroLinePen(Qt::NoPen);
     customPlot->yAxis->grid()->setZeroLinePen(Qt::NoPen);
-    customPlot->xAxis->setUpperEnding(QCPLineEnding::esSpikeArrow);
-    customPlot->yAxis->setUpperEnding(QCPLineEnding::esSpikeArrow);
+//    customPlot->xAxis->setUpperEnding(QCPLineEnding::esSpikeArrow);
+//    customPlot->yAxis->setUpperEnding(QCPLineEnding::esSpikeArrow);
 
 
     //rescale the axis
@@ -152,7 +152,7 @@ void DigitalPlot::realtimeDataSlot()
         ui->tracePlot->graph(1)->addData(key, dataX);
         ui->tracePlot->graph(0)->addData(key, dataY);
 
-        ui->tracePlot->graph(1)->rescaleValueAxis(true);
+//        ui->tracePlot->graph(1)->rescaleValueAxis(true);
         lastPointKey = key;
 
 
@@ -186,7 +186,7 @@ void DigitalPlot::updatePlot()
 
     // Keep the data buffers size under NB_X_VALUES_DISPLAY value each,
     // so our memory won't explode with random numbers
-    if( _XData.size() > DI_NB_X_VALUES_DISPLAY_LIVE){
+    if( _XData.size() > DI_NB_X_VALUES_DISPLAY_LIVE-10){
         _XData.remove(0);
         _YData.remove(0);
         _minusYData.remove(0);
@@ -202,25 +202,32 @@ void DigitalPlot::updatePlot()
 
     // Set the range of the vertical and horizontal axis of the plot ( not the graph )
     // so all the data will be centered. first we get the min and max of the x and y data
-    QVector<double>::iterator xMaxIt = std::max_element( _XData.begin() , _XData.end() );
-    QVector<double>::iterator xMinIt = std::min_element( _XData.begin() , _XData.end() );
-    QVector<double>::iterator yMaxIt = std::max_element( _YData.begin() , _YData.end() );
+//    QVector<double>::iterator xMaxIt = std::max_element( _XData.begin() , _XData.end() );
+//    QVector<double>::iterator xMinIt = std::min_element( _XData.begin() , _XData.end() );
+//    QVector<double>::iterator yMaxIt = std::max_element( _YData.begin() , _YData.end() );
 
 
-    qreal yPlotMin = 0;
-    qreal yPlotMax = *yMaxIt;
+//    qreal yPlotMin = 0;
+//    qreal yPlotMax = *yMaxIt;
 
-    qreal xPlotMin = *xMinIt;
-    qreal xPlotMax = *xMaxIt;
+//    qreal xPlotMin = *xMinIt;
+//    qreal xPlotMax = *xMaxIt;
+
+//    qreal xPlotMin = -1;
+//    qreal xPlotMax = 1;
+    qreal yPlotMin = -1.1;
+    qreal yPlotMax = 1.1;
+
+
 
     //    // The yOffset just to make sure that the graph won't take the whole
     //    // space in the plot widget, and to keep a margin at the top, the same goes for xOffset
-    qreal yOffset = 0.1 * (yPlotMax - yPlotMin) ;
-    qreal xOffset = 0.5 * (xPlotMax - xPlotMin);
-    ui->tracePlot->xAxis->setRange(xPlotMin , xPlotMax + xOffset);
-    ui->tracePlot->yAxis->setRange(-yOffset-yPlotMax , yPlotMax + yOffset);
     //    ui->tracePlot->xAxis->setRange(xPlotMin , xPlotMax);
-    //    ui->tracePlot->yAxis->setRange(yPlotMin , yPlotMax);
+    //    qreal yOffset = 0.1 * (yPlotMax - yPlotMin) ;
+    //    qreal xOffset = 0.5 * (xPlotMax - xPlotMin);
+    //    ui->tracePlot->xAxis->setRange(xPlotMin , xPlotMax + xOffset);
+ //       ui->tracePlot->xAxis->setRange(-yOffset-yPlotMax , yPlotMax + yOffset);
+        ui->tracePlot->yAxis->setRange(yPlotMin , yPlotMax);
     //    //************************************************************//
     // Generate the data for the horizontal line, that changes with
     // the last value of the main graph

@@ -6,8 +6,8 @@
 #include "qcustomplot.h"
 #include "commonStyle.h"
 
-#define AI_TIMER_REFRESH 1
-#define AI_NB_X_VALUES_DISPLAY_LIVE 200
+#define AI_TIMER_REFRESH 500
+#define AI_NB_X_VALUES_DISPLAY_LIVE 10
 #define AI_NB_X_VALUES_DISPLAY_HOLD 100
 
 namespace Ui {

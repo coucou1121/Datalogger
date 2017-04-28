@@ -8,8 +8,8 @@ int main(int argc, char *argv[])
     DigitalPlot digitalPlotWindows;
     mainWindows.setupStyle();
     mainWindows.show();
-    analogPlotWindows.setMinimumWidth(960);
-    digitalPlotWindows.show();
+    //analogPlotWindows.setMinimumWidth(960);
+    //digitalPlotWindows.show();
     //analogPlotWindows.show();
 
 
