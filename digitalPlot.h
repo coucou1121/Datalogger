@@ -1,26 +1,28 @@
-#ifndef ANALOGPLOT_H
-#define ANALOGPLOT_H
+#ifndef DIGITALPLOT_H
+#define DIGITALPLOT_H
 
 #include <QWidget>
 #include <QTimer>
 #include "qcustomplot.h"
 #include "commonStyle.h"
 
-#define AI_TIMER_REFRESH 1
-#define AI_NB_X_VALUES_DISPLAY_LIVE 200
-#define AI_NB_X_VALUES_DISPLAY_HOLD 100
+#define DI_TIMER_REFRESH 1
+#define DI_NB_X_VALUES_DISPLAY_LIVE 200
+#define DI_NB_X_VALUES_DISPLAY_HOLD 100
+
 
 namespace Ui {
-class AnalogPlot;
+class DigitalPlot;
 }
 
-class AnalogPlot : public QWidget
+class DigitalPlot : public QWidget
 {
     Q_OBJECT
 
 public:
-    explicit AnalogPlot(QWidget *parent = 0);
-    ~AnalogPlot();
+    explicit DigitalPlot(QWidget *parent = 0);
+    ~DigitalPlot();
+
 
     //function
    // void setupRealtimeDataDemo();
@@ -29,11 +31,8 @@ public:
     int getMinValue() const;
     int getMaxValue() const;
 
-
 private:
-
-    //Interface
-    Ui::AnalogPlot *ui;
+    Ui::DigitalPlot *ui;
 
     //style
     CommonStyle _myStyle;
@@ -67,11 +66,11 @@ private:
     void setupTrace(QCustomPlot *customPlot);
 
 private slots:
+
     // This function is responsible for ploting
     // and updating the graphs , with each timer tick
     void updatePlot();
     void realtimeDataSlot();
-
 };
 
-#endif // ANALOGPLOT_H
+#endif // DIGITALPLOT_H

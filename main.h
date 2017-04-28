@@ -7,5 +7,6 @@
 //interfaces
 #include "mainwindow.h"
 #include "analogPlot.h"
+#include "digitalPlot.h"
 
 #endif // MAIN_H
