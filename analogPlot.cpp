@@ -66,9 +66,9 @@ void AnalogPlot::setupStyle(QCustomPlot *customPlot)
     customPlot->yAxis->setSubTickPen(QPen(_myStyle.getAxisSubTickColorAnalogPlot(), 1));
     customPlot->xAxis->setTickLabelColor(_myStyle.getAxisTickLabelColorAnalogPlot());
     customPlot->yAxis->setTickLabelColor(_myStyle.getAxisTickLabelColorAnalogPlot());
-    customPlot->xAxis->setTicks(false);
-    customPlot->yAxis->setTicks(false);
-    customPlot->xAxis->setSubTicks(false);
+    customPlot->xAxis->setTicks(true);
+    customPlot->yAxis->setTicks(true);
+    customPlot->xAxis->setSubTicks(true);
     customPlot->xAxis->setTickLabels(false);
     customPlot->yAxis->setTickLabels(false);
 
@@ -97,8 +97,8 @@ void AnalogPlot::setupStyle(QCustomPlot *customPlot)
     customPlot->rescaleAxes();
 
     //set the axis range
-    //customPlot->xAxis->setRange(0, 110);
-    //customPlot->yAxis->setRange(0, 110);
+    customPlot->xAxis->setRange(0, AI_NB_X_VALUES_DISPLAY_LIVE*5);
+    customPlot->yAxis->setRange(-1.2, 1.2);
 
 }
 
@@ -123,7 +123,8 @@ void AnalogPlot::setupTrace(QCustomPlot *customPlot)
 
     // setup a timer that repeatedly calls MainWindow::realtimeDataSlot:
     QTimer *timer = new QTimer(this);
-    connect(timer, SIGNAL(timeout()), this, SLOT(updatePlot()));
+//    connect(timer, SIGNAL(timeout()), this, SLOT(updatePlot()));
+    connect(timer, SIGNAL(timeout()), this, SLOT(realtimeDataSlot()));
     timer->start(_timeInterval); // Interval 0 means to refresh as fast as possible
 
 }
@@ -131,38 +132,62 @@ void AnalogPlot::setupTrace(QCustomPlot *customPlot)
 void AnalogPlot::realtimeDataSlot()
 {
     // calculate two new data points:
-#if QT_VERSION < QT_VERSION_CHECK(4, 7, 0)
+  #if QT_VERSION < QT_VERSION_CHECK(4, 7, 0)
     double key = 0;
-#else
-    //double key = QDateTime::currentDateTime().toMSecsSinceEpoch()/10000.0;
-#endif
+  #else
+    static qint64 key = 0;
+  #endif
+    _XData.append(key);
+    static double value = 0;
+    double value0 = qSin(value); //qSin(key*1.6+qCos(key*1.7)*2)*10 + qSin(key*1.2+0.56)*20 + 26;
+    double value1 = qCos(value); //qSin(key*1.3+qCos(key*1.2)*1.2)*7 + qSin(key*0.9+0.26)*24 + 26;
 
-    double key = QDateTime::currentMSecsSinceEpoch() - QDateTime(QDate::currentDate()).toMSecsSinceEpoch();
-    static int dataX = 0;
-    static int dataY = 100;
+    _YData.append(value0);
+    _minusYData.append(value1);
 
-    dataX = dataX >100 ? 0 : dataX + 1;
-    dataY = dataY < 0  ? 100 : dataY - 1;
-    double addPointDelai = 1.;
-    static double lastPointKey = 0;
-    if (key-lastPointKey > addPointDelai) // at most add point every 10 ms
+    if( _XData.size() > AI_NB_X_VALUES_DISPLAY_LIVE-1){
+        _XData.remove(0);
+        _YData.remove(0);
+        _minusYData.remove(0);
+    }
+
+    static int lastPointKey = 10;
+    lastPointKey = lastPointKey >= 0 ? lastPointKey - 1 : 1;
+    if (lastPointKey <= 0) // at most add point every 10 ms
     {
+      // add data to lines:
+      ui->tracePlot->graph(0)->setData(_XData, _YData);
+      ui->tracePlot->graph(1)->setData(_XData, _minusYData);
 
-        // add data to lines:
-        ui->tracePlot->graph(1)->addData(key, dataX);
-        ui->tracePlot->graph(0)->addData(key, dataY);
-
-        ui->tracePlot->graph(1)->rescaleValueAxis(true);
-        lastPointKey = key;
-
-
+      // rescale value (vertical) axis to fit the current data:
+//     ui->tracePlot->graph(0)->rescaleValueAxis();
+//      ui->tracePlot->graph(1)->rescaleValueAxis(true);
     }
     // make key axis range scroll with the data (at a constant range size of 8):
-    ui->tracePlot->xAxis->setRange(key, AI_NB_X_VALUES_DISPLAY_HOLD, Qt::AlignRight);
+    ui->tracePlot->xAxis->setRange(key, AI_NB_X_VALUES_DISPLAY_LIVE*5, Qt::AlignRight);
     ui->tracePlot->replot();
 
-
+    // calculate frames per second:
+    static double lastFpsKey;
+    static int frameCount;
+    ++frameCount;
+    ui->FPS->setText("coucou");
+    ui->lcdNumberFPS->display(ui->tracePlot->graph(0)->data()->size()+ui->tracePlot->graph(1)->data()->size());
+    ui->lcdNumberMs->display((int)key);
+//    if (key-lastFpsKey > 2) // average fps over 2 seconds
+ //   {
+//      ui->FPS->setText("coucou");
+//            QString("%1 FPS, Total Data points: %2")
+//            .arg(frameCount/(key-lastFpsKey), 0, 'f', 0)
+//            .arg(ui->tracePlot->graph(0)->data()->count()+ui->tracePlot->graph(1)->data()->count())
+//            , 0);
+ //     lastFpsKey = key;
+ //     frameCount = 0;
+  //  }
+    key = key + 1;
+    value = value+1./AI_RESOLUTION;
 }
+
 
 void AnalogPlot::updatePlot()
 {

@@ -6,8 +6,11 @@
 #include "qcustomplot.h"
 #include "commonStyle.h"
 
-#define AI_TIMER_REFRESH 500
-#define AI_NB_X_VALUES_DISPLAY_LIVE 10
+#define AI_TIMER_REFRESH 100
+#define AI_NB_TRACE 2
+#define AI_RESOLUTION 100
+#define AI_NB_X_PIXELS 200
+#define AI_NB_X_VALUES_DISPLAY_LIVE     AI_NB_X_PIXELS/AI_NB_TRACE
 #define AI_NB_X_VALUES_DISPLAY_HOLD 100
 
 namespace Ui {
@@ -55,6 +58,9 @@ private:
     QVector<double> _minusYData;
     QVector<double> _XData;
 
+    QVector<int> _XDataInt;
+    QVector<int> _Y1DataInt;
+    QVector<int> _Y2DataInt;
 
     //setter
     void setMinValue(int value);
