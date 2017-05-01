@@ -7,11 +7,14 @@
 #include "commonStyle.h"
 
 #define AI_TIMER_REFRESH 100
+#define AI_DISPLAY_REFRESH 0
 #define AI_NB_TRACE 2
 #define AI_RESOLUTION 100
 #define AI_NB_X_PIXELS 200
 #define AI_NB_X_VALUES_DISPLAY_LIVE     AI_NB_X_PIXELS/AI_NB_TRACE
 #define AI_NB_X_VALUES_DISPLAY_HOLD 100
+#define AI_X_AXIS_MIN_VALUE -1.2
+#define AI_Y_AXIS_MIN_VALUE 1.2
 
 namespace Ui {
 class AnalogPlot;

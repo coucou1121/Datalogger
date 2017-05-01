@@ -17,18 +17,15 @@ SOURCES += main.cpp\
     qcustomplot.cpp \
     analogPlot.cpp \
     commonStyle.cpp \
-    digitalPlot.cpp \
-    analogPlot_V2.cpp
+    digitalPlot.cpp
 
 HEADERS  += mainwindow.h \
     main.h \
     qcustomplot.h \
     analogPlot.h \
     commonStyle.h \
-    digitalPlot.h \
-    analogPlot_V2.h
+    digitalPlot.h
 
 FORMS    += mainwindow.ui \
     analogPlot.ui \
-    digitalPlot.ui \
-    analogPlot_V2.ui
+    digitalPlot.ui

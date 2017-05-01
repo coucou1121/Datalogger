@@ -10,6 +10,9 @@
 #define DI_NB_X_VALUES_DISPLAY_LIVE 100
 #define DI_NB_X_VALUES_DISPLAY_HOLD 100
 
+#define DI_X_AXIS_MIN_VALUE 0
+#define DI_Y_AXIS_MIN_VALUE 1
+
 
 namespace Ui {
 class DigitalPlot;

@@ -104,7 +104,7 @@ void AnalogPlot::setupStyle(QCustomPlot *customPlot)
 
     //set the axis range
     customPlot->xAxis->setRange(0, AI_NB_X_VALUES_DISPLAY_LIVE*5);
-    customPlot->yAxis->setRange(-1.2, 1.2);
+    customPlot->yAxis->setRange(AI_X_AXIS_MIN_VALUE, AI_Y_AXIS_MIN_VALUE);
 
 }
 
@@ -142,6 +142,7 @@ void AnalogPlot::realtimeDataSlot()
     double key = 0;
   #else
     static qint64 key = 0;
+    static int refreshPlot = AI_DISPLAY_REFRESH;
   #endif
     _XData.append(key);
     static double value = 0;
@@ -157,38 +158,25 @@ void AnalogPlot::realtimeDataSlot()
         _minusYData.remove(0);
     }
 
-    static int lastPointKey = 10;
-    lastPointKey = lastPointKey >= 0 ? lastPointKey - 1 : 1;
-//    if (lastPointKey <= 0) // at most add point every 10 ms
-//    {
-      // add data to lines:
-      ui->tracePlot->graph(0)->setData(_XData, _YData);
-      ui->tracePlot->graph(1)->setData(_XData, _minusYData);
+    //add value to the plot
+    ui->tracePlot->graph(0)->setData(_XData, _YData);
+    ui->tracePlot->graph(1)->setData(_XData, _minusYData);
 
-      // rescale value (vertical) axis to fit the current data:
-//     ui->tracePlot->graph(0)->rescaleValueAxis();
-//      ui->tracePlot->graph(1)->rescaleValueAxis(true);
-//    }
-    // make key axis range scroll with the data (at a constant range size of 8):
-    ui->tracePlot->xAxis->setRange(key, AI_NB_X_VALUES_DISPLAY_LIVE*5, Qt::AlignRight);
-    ui->tracePlot->replot();
+    refreshPlot = refreshPlot > 0 ? refreshPlot - 1 : AI_DISPLAY_REFRESH;
+    if (!refreshPlot) // at most add point every 10 ms
+    {
+        // make key axis range scroll with the data
+        ui->tracePlot->xAxis->setRange(key, AI_NB_X_VALUES_DISPLAY_LIVE*5, Qt::AlignRight);
 
+        // replot the graph
+        ui->tracePlot->replot();
+    }
     // calculate frames per second:
     static double lastFpsKey;
     static int frameCount;
     ++frameCount;
     ui->lcdNumberFPS->display(ui->tracePlot->graph(0)->data()->size()+ui->tracePlot->graph(1)->data()->size());
     ui->lcdNumberMs->display((int)key);
-//    if (key-lastFpsKey > 2) // average fps over 2 seconds
- //   {
-//      ui->FPS->setText("coucou");
-//            QString("%1 FPS, Total Data points: %2")
-//            .arg(frameCount/(key-lastFpsKey), 0, 'f', 0)
-//            .arg(ui->tracePlot->graph(0)->data()->count()+ui->tracePlot->graph(1)->data()->count())
-//            , 0);
- //     lastFpsKey = key;
- //     frameCount = 0;
-  //  }
     key = key + 1;
     value = value+1./AI_RESOLUTION;
 }
