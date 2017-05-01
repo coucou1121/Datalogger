@@ -8,6 +8,9 @@ AnalogPlot::AnalogPlot(QWidget *parent) :
 {
     ui->setupUi(this);
     setMinimumSize(ANALOG_PLOT_MINIMUM_WIDTH_SIZE, ANALOG_PLOT_MINIMUM_HEIGHT_SIZE);
+    //set margin
+    ui->tracePlot->axisRect()->setAutoMargins(QCP::msNone);
+    //ui->tracePlot->axisRect()->setMargins(QMargins(0,0,0,0));
     //setup the style, curve and real time plot
     setupPlot();
 

@@ -8,6 +8,8 @@ DigitalPlot::DigitalPlot(QWidget *parent) :
 {
     ui->setupUi(this);
     setMinimumSize(ANALOG_PLOT_MINIMUM_WIDTH_SIZE, ANALOG_PLOT_MINIMUM_HEIGHT_SIZE);
+    //set margin
+    ui->tracePlot->axisRect()->setAutoMargins(QCP::msNone);
     //setup the style, curve and real time plot
     setupPlot();
 
@@ -66,9 +68,9 @@ void DigitalPlot::setupStyle(QCustomPlot *customPlot)
     customPlot->yAxis->setSubTickPen(QPen(_myStyle.getAxisSubTickColorAnalogPlot(), 1));
     customPlot->xAxis->setTickLabelColor(_myStyle.getAxisTickLabelColorAnalogPlot());
     customPlot->yAxis->setTickLabelColor(_myStyle.getAxisTickLabelColorAnalogPlot());
-    customPlot->xAxis->setTicks(false);
-    customPlot->yAxis->setTicks(false);
-    customPlot->xAxis->setSubTicks(false);
+    customPlot->xAxis->setTicks(true);
+    customPlot->yAxis->setTicks(true);
+    customPlot->xAxis->setSubTicks(true);
     customPlot->xAxis->setTickLabels(false);
     customPlot->yAxis->setTickLabels(false);
 
