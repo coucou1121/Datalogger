@@ -153,8 +153,8 @@ void AnalogPlot::realtimeDataSlot()
 
     static int lastPointKey = 10;
     lastPointKey = lastPointKey >= 0 ? lastPointKey - 1 : 1;
-    if (lastPointKey <= 0) // at most add point every 10 ms
-    {
+//    if (lastPointKey <= 0) // at most add point every 10 ms
+//    {
       // add data to lines:
       ui->tracePlot->graph(0)->setData(_XData, _YData);
       ui->tracePlot->graph(1)->setData(_XData, _minusYData);
@@ -162,7 +162,7 @@ void AnalogPlot::realtimeDataSlot()
       // rescale value (vertical) axis to fit the current data:
 //     ui->tracePlot->graph(0)->rescaleValueAxis();
 //      ui->tracePlot->graph(1)->rescaleValueAxis(true);
-    }
+//    }
     // make key axis range scroll with the data (at a constant range size of 8):
     ui->tracePlot->xAxis->setRange(key, AI_NB_X_VALUES_DISPLAY_LIVE*5, Qt::AlignRight);
     ui->tracePlot->replot();
@@ -171,7 +171,6 @@ void AnalogPlot::realtimeDataSlot()
     static double lastFpsKey;
     static int frameCount;
     ++frameCount;
-    ui->FPS->setText("coucou");
     ui->lcdNumberFPS->display(ui->tracePlot->graph(0)->data()->size()+ui->tracePlot->graph(1)->data()->size());
     ui->lcdNumberMs->display((int)key);
 //    if (key-lastFpsKey > 2) // average fps over 2 seconds
