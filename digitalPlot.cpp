@@ -9,7 +9,7 @@ DigitalPlot::DigitalPlot(QWidget *parent) :
     ui->setupUi(this);
     setMinimumSize(ANALOG_PLOT_MINIMUM_WIDTH_SIZE, ANALOG_PLOT_MINIMUM_HEIGHT_SIZE);
     //set margin
-    ui->tracePlot->axisRect()->setAutoMargins(QCP::msNone);
+    //ui->tracePlot->axisRect()->setAutoMargins(QCP::msNone);
     //setup the style, curve and real time plot
     setupPlot();
 
@@ -58,6 +58,9 @@ void DigitalPlot::setupStyle(QCustomPlot *customPlot)
 
     //back ground color of the plot
     customPlot->axisRect()->setBackground(_myStyle.getBackGroundColorAnalogPlot());
+
+    //set margin
+    customPlot->axisRect()->setAutoMargins(QCP::msNone);
 
     //Set the axis color and line type
     customPlot->xAxis->setBasePen(QPen(_myStyle.getAxisColorAnalogPlot(), 1));
