@@ -6,11 +6,13 @@ int main(int argc, char *argv[])
     MainWindow mainWindows;
     AnalogPlot analogPlotWindows;
     DigitalPlot digitalPlotWindows;
+    GraphicTracePlot graphicTracePlotWindows;
     //mainWindows.setupStyle();
     //mainWindows.show();
     //analogPlotWindows.setMinimumWidth(960);
     //digitalPlotWindows.show();
-    analogPlotWindows.show();
+    //analogPlotWindows.show();
+    graphicTracePlotWindows.show();
 
 
     return a.exec();

@@ -8,5 +8,6 @@
 #include "mainwindow.h"
 #include "analogPlot.h"
 #include "digitalPlot.h"
+#include "graphicTracePlot.h"
 
 #endif // MAIN_H
