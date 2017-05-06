@@ -6,15 +6,15 @@
 #include "qcustomplot.h"
 #include "commonStyle.h"
 
-#define AI_TIMER_REFRESH 100
-#define AI_DISPLAY_REFRESH 0
-#define AI_NB_TRACE 2
-#define AI_RESOLUTION 100
-#define AI_NB_X_PIXELS 200
-#define AI_NB_X_VALUES_DISPLAY_LIVE     AI_NB_X_PIXELS/AI_NB_TRACE
-#define AI_NB_X_VALUES_DISPLAY_HOLD 100
-#define AI_X_AXIS_MIN_VALUE -1.2
-#define AI_Y_AXIS_MIN_VALUE 1.2
+#define TIMER_REFRESH 1
+#define DISPLAY_REFRESH 10
+#define NB_TRACE 2
+#define RESOLUTION 10
+#define NB_X_PIXELS 800
+#define NB_X_VALUES_DISPLAY_LIVE     NB_X_PIXELS/NB_TRACE
+#define NB_X_VALUES_DISPLAY_HOLD 100
+#define X_AXIS_MIN_VALUE -1.2
+#define Y_AXIS_MIN_VALUE 1.2
 
 
 namespace Ui {
@@ -29,11 +29,14 @@ public:
     explicit GraphicTracePlot(QWidget *parent = 0);
     ~GraphicTracePlot();
 
-    int maxValue() const;
+    //getter
+    int getMinValue() const;
+    int getMaxValue() const;
 
-    int minValue() const;
 
 private:
+
+    //Interface
     Ui::GraphicTracePlot *ui;
 
     //style
