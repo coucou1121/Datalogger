@@ -159,7 +159,7 @@ void GraphicTracePlot::updatePlot()
     //    trigger = value < 400 ? 200 : 500;
     // Keep the data buffers size under NB_X_VALUES_DISPLAY value each,
     // so our memory won't explode with random numbers
-    if( _XData.size() > NB_X_VALUES_DISPLAY_LIVE-1){
+    if( _XData.size() > NB_X_VALUES_DISPLAY_LIVE){
         _XData.remove(0);
         _YData.remove(0);
         //        _minusYData.remove(0);
@@ -258,7 +258,7 @@ void GraphicTracePlot::realtimeDataSlot()
     _YData.append(value0);
     _minusYData.append(value1);
 
-    if( _XData.size() > NB_X_VALUES_DISPLAY_LIVE-1){
+    if( _XData.size() > NB_X_VALUES_DISPLAY_LIVE){
         _XData.remove(0);
         _YData.remove(0);
         _minusYData.remove(0);
@@ -272,7 +272,7 @@ void GraphicTracePlot::realtimeDataSlot()
     if (!refreshPlot) // at most add point every 10 ms
     {
         // make key axis range scroll with the data
-        ui->tracePlot->xAxis->setRange(key, NB_X_VALUES_DISPLAY_LIVE, Qt::AlignRight);
+        ui->tracePlot->xAxis->setRange(key, NB_X_VALUES_DISPLAY_LIVE-1, Qt::AlignRight);
 
         // replot the graph
         ui->tracePlot->replot();

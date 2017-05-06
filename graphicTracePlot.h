@@ -6,11 +6,11 @@
 #include "qcustomplot.h"
 #include "commonStyle.h"
 
-#define TIMER_REFRESH 1
-#define DISPLAY_REFRESH 10
+#define TIMER_REFRESH 10
+#define DISPLAY_REFRESH 1
 #define NB_TRACE 2
 #define RESOLUTION 10
-#define NB_X_PIXELS 800
+#define NB_X_PIXELS 10
 #define NB_X_VALUES_DISPLAY_LIVE     NB_X_PIXELS/NB_TRACE
 #define NB_X_VALUES_DISPLAY_HOLD 100
 #define X_AXIS_MIN_VALUE -1.2
