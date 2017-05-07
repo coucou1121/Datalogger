@@ -8,17 +8,17 @@
 #include "startstopemuldata.h"
 
 #define TIMER_REFRESH 1
-#define DISPLAY_REFRESH 100
+#define DISPLAY_REFRESH 10
 #define NB_TRACE 2
-#define RESOLUTION 10
-#define NB_X_PIXELS 200
+#define RESOLUTION 1
+#define NB_X_PIXELS 600
 #define NB_X_VALUES_DISPLAY_LIVE     NB_X_PIXELS/NB_TRACE
 #define NB_X_VALUES_DISPLAY_HOLD 100
 #define X_AXIS_MIN_VALUE 0
-#define Y_AXIS_MIN_VALUE 1.2
-#define Y_AXIS_MAX_VALUE -1.2
+#define Y_AXIS_MIN_VALUE 0
+#define Y_AXIS_MAX_VALUE 255
 
-#define IN_DOOR_DATA 1
+#define IN_DOOR_DATA 0 // 0 use the frame simulator
 
 namespace Ui {
 class GraphicTracePlot;
@@ -55,6 +55,7 @@ private:
     // The time between each update, this
     // will be  used by the timer to call "updatePlot" slot
     int _timeInterval;
+    QTimer *timer;
 
     //reccroding value
     int _maxValue = 0;

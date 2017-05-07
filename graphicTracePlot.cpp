@@ -9,6 +9,7 @@ GraphicTracePlot::GraphicTracePlot(QWidget *parent) :
 {
     ui->setupUi(this);
     setMinimumSize(ANALOG_PLOT_MINIMUM_WIDTH_SIZE, ANALOG_PLOT_MINIMUM_HEIGHT_SIZE);
+    timer = new QTimer(this);
 #if !IN_DOOR_DATA
     _emulData = new StartStopEmulData();
     _emulData->show();
@@ -122,7 +123,7 @@ void GraphicTracePlot::setupTrace(QCustomPlot *customPlot)
 
     //Trigger
     customPlot->addGraph();
-       customPlot->graph(1)->setPen(QPen(_myStyle.getTraceColorAnalogPlot()));
+       customPlot->graph(1)->setPen(QPen(_myStyle.getTraceColorDigitalPlot()));
     //   customPlot->graph(1)->setBrush(QBrush(_myStyle.getTraceColorAnalogPlot()));
 
     //  customPlot->addGraph(); // red line
@@ -134,7 +135,7 @@ void GraphicTracePlot::setupTrace(QCustomPlot *customPlot)
 
 #if IN_DOOR_DATA
     // setup a timer that repeatedly calls MainWindow::realtimeDataSlot:
-    QTimer *timer = new QTimer(this);
+    // QTimer *timer = new QTimer(this);
     //    connect(timer, SIGNAL(timeout()), this, SLOT(updatePlot()));
     connect(timer, SIGNAL(timeout()), this, SLOT(realtimeDataSlot()));
     timer->start(_timeInterval); // Interval 0 means to refresh as fast as possible
@@ -383,18 +384,18 @@ void GraphicTracePlot::realtimeDataSlot()
 
     int y = _emulData->frameData()->getAI1();
     _YData.append(y);
-   // _minusYData.append(value1);
+    _minusYData.append(y>125?250:5);
 
     if( _XData.size() > NB_X_VALUES_DISPLAY_LIVE){
         _XData.remove(0);
         _YData.remove(0);
- //       _minusYData.remove(0);
+        _minusYData.remove(0);
     }
 
     qDebug() << "plot value" << key << y;
     //add value to the plot
     ui->tracePlot->graph(0)->setData(_XData, _YData);
-//    ui->tracePlot->graph(1)->setData(_XData, _minusYData);
+    ui->tracePlot->graph(1)->setData(_XData, _minusYData);
 
     refreshPlot = refreshPlot > 0 ? refreshPlot - 1 : DISPLAY_REFRESH;
     if (!refreshPlot) // at most add point every 10 ms
