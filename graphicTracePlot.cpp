@@ -1,5 +1,6 @@
 #include "graphicTracePlot.h"
 #include "ui_graphicTracePlot.h"
+#include "ui_startstopemuldata.h"
 
 GraphicTracePlot::GraphicTracePlot(QWidget *parent) :
     QWidget(parent),
@@ -8,6 +9,12 @@ GraphicTracePlot::GraphicTracePlot(QWidget *parent) :
 {
     ui->setupUi(this);
     setMinimumSize(ANALOG_PLOT_MINIMUM_WIDTH_SIZE, ANALOG_PLOT_MINIMUM_HEIGHT_SIZE);
+#if !IN_DOOR_DATA
+    _emulData = new StartStopEmulData();
+    _emulData->show();
+    _emulData->setTimeInterval(TIMER_REFRESH);
+    connect(_emulData,SIGNAL(refreshPlot()),this, SLOT(realtimeDataSlot()));
+#endif
     //set margin
     //ui->tracePlot->axisRect()->setAutoMargins(QCP::msNone);
     //ui->tracePlot->axisRect()->setMargins(QMargins(0,0,0,0));
@@ -45,7 +52,6 @@ void GraphicTracePlot::setupPlot()
 {
     //setup the style
     setupStyle(ui->tracePlot);
-
     //setup the trace
     setupTrace(ui->tracePlot);
 }
@@ -103,7 +109,7 @@ void GraphicTracePlot::setupStyle(QCustomPlot *customPlot)
 
     //set the axis range
     customPlot->xAxis->setRange(0, NB_X_VALUES_DISPLAY_LIVE);
-    customPlot->yAxis->setRange(X_AXIS_MIN_VALUE, Y_AXIS_MIN_VALUE);
+    customPlot->yAxis->setRange(Y_AXIS_MIN_VALUE, Y_AXIS_MAX_VALUE);
 
 }
 
@@ -116,7 +122,7 @@ void GraphicTracePlot::setupTrace(QCustomPlot *customPlot)
 
     //Trigger
     customPlot->addGraph();
-    //   customPlot->graph(1)->setPen(QPen(_myStyle.getTraceColorAnalogPlot()));
+       customPlot->graph(1)->setPen(QPen(_myStyle.getTraceColorAnalogPlot()));
     //   customPlot->graph(1)->setBrush(QBrush(_myStyle.getTraceColorAnalogPlot()));
 
     //  customPlot->addGraph(); // red line
@@ -126,13 +132,16 @@ void GraphicTracePlot::setupTrace(QCustomPlot *customPlot)
     connect(customPlot->xAxis, SIGNAL(rangeChanged(QCPRange)),customPlot->xAxis2, SLOT(setRange(QCPRange)));
     connect(customPlot->yAxis, SIGNAL(rangeChanged(QCPRange)),customPlot->yAxis2, SLOT(setRange(QCPRange)));
 
+#if IN_DOOR_DATA
     // setup a timer that repeatedly calls MainWindow::realtimeDataSlot:
     QTimer *timer = new QTimer(this);
     //    connect(timer, SIGNAL(timeout()), this, SLOT(updatePlot()));
     connect(timer, SIGNAL(timeout()), this, SLOT(realtimeDataSlot()));
     timer->start(_timeInterval); // Interval 0 means to refresh as fast as possible
+#endif
 }
 
+#if IN_DOOR_DATA
 void GraphicTracePlot::updatePlot()
 {
 
@@ -152,6 +161,7 @@ void GraphicTracePlot::updatePlot()
     //    double value = 80 + 5 * r;
     //Add the value in y data buffer
     _YData.append(r);
+    qDebug() << "plot value" << r;
     //   _minusYData.append(-value);
     // int _maxValue = value > _maxValue ? value : _maxValue;
     // int _minValue = value < _minValue ? value : _minValue;
@@ -188,8 +198,8 @@ void GraphicTracePlot::updatePlot()
     //        qreal xPlotMin = -1.1;
     //        qreal xPlotMax = 1.1;
 
-    qreal yPlotMin = 0;
-    qreal yPlotMax = 31;
+   // qreal yPlotMin = 0;
+    //qreal yPlotMax = 31;
 
 
     //    // The yOffset just to make sure that the graph won't take the whole
@@ -199,7 +209,7 @@ void GraphicTracePlot::updatePlot()
     //      ui->tracePlot->xAxis->setRange(xPlotMin , xPlotMax + xOffset);
     //      ui->tracePlot->yAxis->setRange(-yOffset-yPlotMax , yPlotMax + yOffset);
     //    ui->tracePlot->xAxis->setRange(xPlotMin , xPlotMax);
-    ui->tracePlot->yAxis->setRange(yPlotMin , yPlotMax);
+    //ui->tracePlot->yAxis->setRange(yPlotMin , yPlotMax);
     //    //************************************************************//
     // Generate the data for the horizontal line, that changes with
     // the last value of the main graph
@@ -235,14 +245,87 @@ void GraphicTracePlot::updatePlot()
     // make key axis range scroll with the data:
     ui->tracePlot->xAxis->setRange(CPT, NB_X_VALUES_DISPLAY_LIVE, Qt::AlignRight);
 
-    ui->tracePlot->yAxis->rescale();
+    //ui->tracePlot->yAxis->rescale();
 
     // Update the plot widget
     ui->tracePlot->replot();
 }
+#else
+void GraphicTracePlot::updatePlot()
+{
+
+    //    static double CPT = 0;
+    //    CPT = CPT > 150 ? 0 : CPT+1;
+    // int CPT = _emulData->frameData()->getLsbCPT();
+    //    double CPT = (QDateTime::currentMSecsSinceEpoch() -
+    //                QDateTime(QDate::currentDate()).toMSecsSinceEpoch())/TIMER_REFRESH;
+    //Add the CPT in x data buffer
+    _XData.append(_emulData->frameData()->getCPT());
+
+    // Generate random data with variations
+    // This will generate a random intiger between [ 0 , 1 ]
+    //qreal r = static_cast<qreal>( rand() ) / RAND_MAX  ;
+    //int r = static_cast<int>( rand()%30 ) ;
+    // the next value will be 80 plus or minus 5
+    //    double value = 80 + 5 * r;
+    //Add the value in y data buffer
+    int y = _emulData->frameData()->getAI1();
+    _YData.append(y);
+    //   _minusYData.append(-value);
+    // int _maxValue = value > _maxValue ? value : _maxValue;
+    // int _minValue = value < _minValue ? value : _minValue;
+    //    int trigger = 80;
+    //    trigger = value < 400 ? 200 : 500;
+    // Keep the data buffers size under NB_X_VALUES_DISPLAY value each,
+    // so our memory won't explode with random numbers
+    if( _XData.size() > NB_X_VALUES_DISPLAY_LIVE){
+        _XData.remove(0);
+        _YData.remove(0);
+        //        _minusYData.remove(0);
+    }
+
+    // qDebug() << "plot value" << _emulData->frameData()->getCPT() << y;
+    // Add the data to the graph
+    //ui->tracePlot->graph(0)->addData(_XData , _YData);
+    ui->tracePlot->graph(0)->setData(_XData , _YData);
+    //    ui->tracePlot->graph(1)->setData(_XData , _minusYData);
+    // Now this is the tricky part, the previous part
+    // was easy and nothing new in it.
+
+
+    // Set the range of the vertical and horizontal axis of the plot ( not the graph )
+    // so all the data will be centered. first we get the min and max of the x and y data
+    //    QVector<double>::iterator xMaxIt = std::max_element( _XData.begin() , _XData.end() );
+    //    QVector<double>::iterator xMinIt = std::min_element( _XData.begin() , _XData.end() );
+    //    QVector<double>::iterator yMaxIt = std::max_element( _YData.begin() , _YData.end() );
+
+
+    //    qreal yPlotMin = 0;
+    //    qreal yPlotMax = *yMaxIt;
+
+    //    qreal xPlotMin = *xMinIt;
+    //    qreal xPlotMax = *xMaxIt;
+    //        qreal xPlotMin = -1.1;
+    //        qreal xPlotMax = 1.1;
+
+    //qreal yPlotMin = 0;
+    //qreal yPlotMax = 31;
+
+
+    //ui->tracePlot->yAxis->setRange(yPlotMin , yPlotMax);
+    // make key axis range scroll with the data:
+    ui->tracePlot->xAxis->setRange(_emulData->frameData()->getCPT(), NB_X_VALUES_DISPLAY_LIVE, Qt::AlignRight);
+
+    //ui->tracePlot->yAxis->rescale();
+
+    // Update the plot widget
+    ui->tracePlot->replot();
+}
+#endif
 
 void GraphicTracePlot::realtimeDataSlot()
 {
+#if IN_DOOR_DATA
     // calculate two new data points:
 #if QT_VERSION < QT_VERSION_CHECK(4, 7, 0)
     double key = 0;
@@ -285,4 +368,50 @@ void GraphicTracePlot::realtimeDataSlot()
     ui->lcdNumberMs->display((int)key);
     key = key + 1;
     value = value+1./RESOLUTION;
+#else
+    // calculate two new data points:
+#if QT_VERSION < QT_VERSION_CHECK(4, 7, 0)
+    double key = 0;
+#else
+   quint64 key = _emulData->frameData()->getCPT();
+   static int refreshPlot = DISPLAY_REFRESH;
+#endif
+    _XData.append(key);
+ //   static double value = 0;
+//    double value0 = qSin(value); //qSin(key*1.6+qCos(key*1.7)*2)*10 + qSin(key*1.2+0.56)*20 + 26;
+//    double value1 = qCos(value); //qSin(key*1.3+qCos(key*1.2)*1.2)*7 + qSin(key*0.9+0.26)*24 + 26;
+
+    int y = _emulData->frameData()->getAI1();
+    _YData.append(y);
+   // _minusYData.append(value1);
+
+    if( _XData.size() > NB_X_VALUES_DISPLAY_LIVE){
+        _XData.remove(0);
+        _YData.remove(0);
+ //       _minusYData.remove(0);
+    }
+
+    qDebug() << "plot value" << key << y;
+    //add value to the plot
+    ui->tracePlot->graph(0)->setData(_XData, _YData);
+//    ui->tracePlot->graph(1)->setData(_XData, _minusYData);
+
+    refreshPlot = refreshPlot > 0 ? refreshPlot - 1 : DISPLAY_REFRESH;
+    if (!refreshPlot) // at most add point every 10 ms
+    {
+        // make key axis range scroll with the data
+        ui->tracePlot->xAxis->setRange(key, NB_X_VALUES_DISPLAY_LIVE-1, Qt::AlignRight);
+
+        // replot the graph
+        ui->tracePlot->replot();
+    }
+    // calculate frames per second:
+    static double lastFpsKey;
+    static int frameCount;
+    ++frameCount;
+    ui->lcdNumberFPS->display(ui->tracePlot->graph(0)->data()->size()+ui->tracePlot->graph(1)->data()->size());
+    ui->lcdNumberMs->display((int)key);
+    //key = key + 1;
+    //value = value+1./RESOLUTION;
+#endif
 }

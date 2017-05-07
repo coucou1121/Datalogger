@@ -5,17 +5,20 @@
 #include <QTimer>
 #include "qcustomplot.h"
 #include "commonStyle.h"
+#include "startstopemuldata.h"
 
-#define TIMER_REFRESH 10
-#define DISPLAY_REFRESH 1
+#define TIMER_REFRESH 1
+#define DISPLAY_REFRESH 100
 #define NB_TRACE 2
 #define RESOLUTION 10
-#define NB_X_PIXELS 10
+#define NB_X_PIXELS 200
 #define NB_X_VALUES_DISPLAY_LIVE     NB_X_PIXELS/NB_TRACE
 #define NB_X_VALUES_DISPLAY_HOLD 100
-#define X_AXIS_MIN_VALUE -1.2
+#define X_AXIS_MIN_VALUE 0
 #define Y_AXIS_MIN_VALUE 1.2
+#define Y_AXIS_MAX_VALUE -1.2
 
+#define IN_DOOR_DATA 1
 
 namespace Ui {
 class GraphicTracePlot;
@@ -33,6 +36,8 @@ public:
     int getMinValue() const;
     int getMaxValue() const;
 
+public slots:
+    void updatePlot();
 
 private:
 
@@ -41,6 +46,7 @@ private:
 
     //style
     CommonStyle _myStyle;
+    StartStopEmulData *_emulData;
 
     // This object will hold the current value as a text
     // that will appear at the extreme right of the plot,
@@ -76,7 +82,7 @@ private:
 private slots:
     // This function is responsible for ploting
     // and updating the graphs , with each timer tick
-    void updatePlot();
+
     void realtimeDataSlot();
 
 };
