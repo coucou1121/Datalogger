@@ -59,9 +59,7 @@
     </layout>
    </item>
   </layout>
-  <zorder>layoutWidget</zorder>
   <zorder></zorder>
-  <zorder>tracePlot_2</zorder>
  </widget>
  <customwidgets>
   <customwidget>

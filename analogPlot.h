@@ -36,6 +36,12 @@ public:
     int getMaxValue() const;
 
 
+    int getYValue() const;
+    void setYValue(int yValue);
+
+public slots:
+    void updatePlot();
+
 private:
 
     //Interface
@@ -55,6 +61,7 @@ private:
     //reccroding value
     int _maxValue = 0;
     int _minValue = 0;
+    int _yValue = 0;
 
     // Data buffers
     QVector<double> _YData;
@@ -71,14 +78,13 @@ private:
 
 
     //function
-    void setupPlot();
-    void setupStyle(QCustomPlot *customPlot);
-    void setupTrace(QCustomPlot *customPlot);
+   // void setupPlot();
+    //void setupStyle(QCustomPlot *customPlot);
+   // void setupTrace(QCustomPlot *customPlot);
 
 private slots:
     // This function is responsible for ploting
     // and updating the graphs , with each timer tick
-    void updatePlot();
     void realtimeDataSlot();
 
 };

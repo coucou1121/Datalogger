@@ -12,7 +12,7 @@ AnalogPlot::AnalogPlot(QWidget *parent) :
     //ui->tracePlot->axisRect()->setAutoMargins(QCP::msNone);
     //ui->tracePlot->axisRect()->setMargins(QMargins(0,0,0,0));
     //setup the style, curve and real time plot
-    setupPlot();
+    //setupPlot();
 
 }
 
@@ -36,21 +36,33 @@ int AnalogPlot::getMaxValue() const
     return _maxValue;
 }
 
+int AnalogPlot::getYValue() const
+{
+    return _yValue;
+}
+
+void AnalogPlot::setYValue(int yValue)
+{
+    _yValue = yValue;
+}
+
 void AnalogPlot::setMinValue(int value)
 {
     _minValue = value;
 }
 
+/**
 void AnalogPlot::setupPlot()
 {
     //setup the style
-    setupStyle(ui->tracePlot);
+    //setupStyle(ui->tracePlot);
 
     //setup the trace
-    setupTrace(ui->tracePlot);
+    //setupTrace(ui->tracePlot);
 
 }
-
+*/
+/*
 void AnalogPlot::setupStyle(QCustomPlot *customPlot)
 {
 
@@ -107,7 +119,9 @@ void AnalogPlot::setupStyle(QCustomPlot *customPlot)
     customPlot->yAxis->setRange(AI_X_AXIS_MIN_VALUE, AI_Y_AXIS_MIN_VALUE);
 
 }
+*/
 
+/*
 void AnalogPlot::setupTrace(QCustomPlot *customPlot)
 {
    //trace
@@ -134,6 +148,7 @@ void AnalogPlot::setupTrace(QCustomPlot *customPlot)
     timer->start(_timeInterval); // Interval 0 means to refresh as fast as possible
 
 }
+*/
 
 void AnalogPlot::realtimeDataSlot()
 {
@@ -159,24 +174,24 @@ void AnalogPlot::realtimeDataSlot()
     }
 
     //add value to the plot
-    ui->tracePlot->graph(0)->setData(_XData, _YData);
-    ui->tracePlot->graph(1)->setData(_XData, _minusYData);
+    //ui->tracePlot->graph(0)->setData(_XData, _YData);
+    //ui->tracePlot->graph(1)->setData(_XData, _minusYData);
 
     refreshPlot = refreshPlot > 0 ? refreshPlot - 1 : AI_DISPLAY_REFRESH;
     if (!refreshPlot) // at most add point every 10 ms
     {
         // make key axis range scroll with the data
-        ui->tracePlot->xAxis->setRange(key, AI_NB_X_VALUES_DISPLAY_LIVE*5, Qt::AlignRight);
+        //ui->tracePlot->xAxis->setRange(key, AI_NB_X_VALUES_DISPLAY_LIVE*5, Qt::AlignRight);
 
         // replot the graph
-        ui->tracePlot->replot();
+        //ui->tracePlot->replot();
     }
     // calculate frames per second:
     static double lastFpsKey;
     static int frameCount;
     ++frameCount;
-    ui->lcdNumberFPS->display(ui->tracePlot->graph(0)->data()->size()+ui->tracePlot->graph(1)->data()->size());
-    ui->lcdNumberMs->display((int)key);
+    //ui->lcdNumberFPS->display(ui->tracePlot->graph(0)->data()->size()+ui->tracePlot->graph(1)->data()->size());
+    //ui->lcdNumberMs->display((int)key);
     key = key + 1;
     value = value+1./AI_RESOLUTION;
 }
@@ -216,8 +231,9 @@ void AnalogPlot::updatePlot()
 
     // Add the data to the graph
     //ui->tracePlot->graph(0)->addData(_XData , _YData);
-    ui->tracePlot->graph(0)->setData(_XData , _YData);
+   // ui->tracePlot->graph(0)->setData(_XData , _YData);
 //    ui->tracePlot->graph(1)->setData(_XData , _minusYData);
+
     // Now this is the tricky part, the previous part
     // was easy and nothing new in it.
 
@@ -248,7 +264,7 @@ void AnalogPlot::updatePlot()
 //      ui->tracePlot->xAxis->setRange(xPlotMin , xPlotMax + xOffset);
 //      ui->tracePlot->yAxis->setRange(-yOffset-yPlotMax , yPlotMax + yOffset);
 //    ui->tracePlot->xAxis->setRange(xPlotMin , xPlotMax);
-    ui->tracePlot->yAxis->setRange(yPlotMin , yPlotMax);
+    //ui->tracePlot->yAxis->setRange(yPlotMin , yPlotMax);
 //    //************************************************************//
     // Generate the data for the horizontal line, that changes with
     // the last value of the main graph
@@ -282,10 +298,11 @@ void AnalogPlot::updatePlot()
  //   ui->tracePlot->graph(0)->removeData(key-NB_X_VALUES_DISPLAY,);
 
     // make key axis range scroll with the data:
-    ui->tracePlot->xAxis->setRange(CPT, AI_NB_X_VALUES_DISPLAY_LIVE, Qt::AlignRight);
+   // ui->tracePlot->xAxis->setRange(CPT, AI_NB_X_VALUES_DISPLAY_LIVE, Qt::AlignRight);
 
-    ui->tracePlot->yAxis->rescale();
+    //ui->tracePlot->yAxis->rescale();
 
     // Update the plot widget
-    ui->tracePlot->replot();
+    //ui->tracePlot->replot();
+        //replot();
 }

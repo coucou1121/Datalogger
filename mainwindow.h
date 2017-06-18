@@ -4,6 +4,7 @@
 
 #include <QMainWindow>
 #include <QTimer>
+#include <QThread>
 #include "main.h"
 #include "commonStyle.h"
 

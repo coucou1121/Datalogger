@@ -112,8 +112,6 @@
      </layout>
     </item>
    </layout>
-   <zorder>verticalLayoutWidget</zorder>
-   <zorder>AI2</zorder>
   </widget>
   <widget class="QMenuBar" name="menuBar">
    <property name="geometry">
@@ -146,7 +144,7 @@
   <customwidget>
    <class>DigitalPlot</class>
    <extends>QWidget</extends>
-   <header location="global">digitalPlot.h</header>
+   <header>digitalPlot.h</header>
    <container>1</container>
   </customwidget>
  </customwidgets>

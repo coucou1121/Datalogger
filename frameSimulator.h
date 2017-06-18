@@ -33,7 +33,6 @@ public:
     quint8 getAI4() const;
     void setAI4(const quint8 &value);
 
-
     quint64 getCPT() const;
     void setCPT(const quint64 &CPT);
 

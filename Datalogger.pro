@@ -4,7 +4,7 @@
 #
 #-------------------------------------------------
 
-QT       += core gui
+QT += core gui
 
 greaterThan(QT_MAJOR_VERSION, 4): QT += widgets printsupport
 
@@ -21,7 +21,13 @@ SOURCES += main.cpp\
     frameSimulator.cpp \
     frameThread.cpp \
     startThread.cpp \
-    startstopemuldata.cpp
+    startstopemuldata.cpp \
+    refreshTimer.cpp \
+    displayWindows.cpp \
+    graphicPlot.cpp \
+    frame.cpp \
+    dataFrame.cpp \
+    dataFrameSimulator.cpp
 
 HEADERS  += mainwindow.h \
     main.h \
@@ -33,10 +39,18 @@ HEADERS  += mainwindow.h \
     frameSimulator.h \
     frameThread.h \
     startThread.h \
-    startstopemuldata.h
+    startstopemuldata.h \
+    refreshTimer.h \
+    displayWindows.h \
+    graphicPlot.h \
+    frame.h \
+    dataFrame.h \
+    dataFrameSimulator.h
 
 FORMS    += mainwindow.ui \
     analogPlot.ui \
     digitalPlot.ui \
     graphicTracePlot.ui \
-    startstopemuldata.ui
+    startstopemuldata.ui \
+    displayWindows.ui \
+    graphicPlot.ui
