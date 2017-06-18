@@ -42,9 +42,9 @@ void DataFrameSimulator::incValue()
     DI_1_8 = lsbCPT;
     DI_9_16 = msbCPT;
     AI1 = lsbCPT;
-    AI2 = AI1 >> 1;
-    AI3 = AI1 >> 2;
-    AI4 = AI1 >> 3;
+    AI2 = (_CPT++ >> 1) & 0xFF;
+    AI3 = (_CPT++ >> 2) & 0xFF;
+    AI4 = (_CPT++ >> 3) & 0xFF;
 
     _dataFrame.setLsbCPT(lsbCPT);
     _dataFrame.setMsbCPT(msbCPT);
@@ -57,7 +57,10 @@ void DataFrameSimulator::incValue()
 
     qDebug() << objectName() << " Data increased " << _CPT;
     qDebug() << objectName() << " emit lsbCPT " << lsbCPT;
-    emit valueUpdated(lsbCPT);
+    emit valueAI1Updated(AI1);
+    emit valueAI2Updated(AI2);
+    emit valueAI3Updated(AI3);
+    emit valueAI4Updated(AI4);
 }
 
 DataFrame DataFrameSimulator::dataFrame() const

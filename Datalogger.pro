@@ -16,7 +16,6 @@ SOURCES += main.cpp\
     qcustomplot.cpp \
     analogPlot.cpp \
     commonStyle.cpp \
-    digitalPlot.cpp \
     graphicTracePlot.cpp \
     frameSimulator.cpp \
     frameThread.cpp \
@@ -34,7 +33,6 @@ HEADERS  += mainwindow.h \
     qcustomplot.h \
     analogPlot.h \
     commonStyle.h \
-    digitalPlot.h \
     graphicTracePlot.h \
     frameSimulator.h \
     frameThread.h \
@@ -49,7 +47,6 @@ HEADERS  += mainwindow.h \
 
 FORMS    += mainwindow.ui \
     analogPlot.ui \
-    digitalPlot.ui \
     graphicTracePlot.ui \
     startstopemuldata.ui \
     displayWindows.ui \

@@ -19,7 +19,11 @@ public:
     void setDataFrame(const DataFrame &dataFrame);
 
 signals:
-    void valueUpdated(quint8 value);
+    void valueAI1Updated(quint8 value);
+    void valueAI2Updated(quint8 value);
+    void valueAI3Updated(quint8 value);
+    void valueAI4Updated(quint8 value);
+
 
 public slots:
     void resetFrame();

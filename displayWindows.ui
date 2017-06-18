@@ -20,7 +20,17 @@
       <widget class="AnalogPlot" name="AI1" native="true"/>
      </item>
      <item>
-      <widget class="AnalogPlot" name="Ai2" native="true"/>
+      <widget class="AnalogPlot" name="AI2" native="true">
+       <zorder>AI4</zorder>
+      </widget>
+     </item>
+     <item>
+      <widget class="AnalogPlot" name="AI3" native="true"/>
+     </item>
+     <item>
+      <widget class="AnalogPlot" name="AI4" native="true">
+       <zorder>AI3</zorder>
+      </widget>
      </item>
     </layout>
    </item>

@@ -11,7 +11,7 @@ int main(int argc, char *argv[])
     //FrameThread frameThreadTest;
     //StartStopEmulData emuldata;
     DisplayWindows displayWindows;
-    AnalogPlot analogPlot;
+    //AnalogPlot analogPlot;
     GraphicPlot graphicPlot;
     DataFrame dataFrame;
 
@@ -25,16 +25,16 @@ int main(int argc, char *argv[])
     //qDebug() << "hello from GUI thread " << frameThreadTest.thread()->currentThreadId();
     //frameThreadTest.start();
     //frameThreadTest.wait();  // do not exit before the thread is completed!
-    //displayWindows.show();
+    displayWindows.show();
     //analogPlot.show();
-    graphicPlot.show();
+    //graphicPlot.show();
     //thread
     QThread *threadTick = new QThread; // First thread
     QThread *threadDisplayRefresh = new QThread; // Second thread
 
     //timer for thread
-    refreshTimer *tickTimer = new refreshTimer(false, "Tick", 10);
-    refreshTimer *refreshDisplayTimer = new refreshTimer(true, "Refres Display", 1000);
+    refreshTimer *tickTimer = new refreshTimer(false, "Tick", 1);
+    refreshTimer *refreshDisplayTimer = new refreshTimer(true, "Refres Display", 100);
 
     //frame simulator
     DataFrameSimulator *dataFrameSimulator = new DataFrameSimulator("Frame Simulator");
@@ -50,9 +50,17 @@ int main(int argc, char *argv[])
     //increment the data frame simulator
     QObject::connect(tickTimer, SIGNAL(tickFinished()), dataFrameSimulator, SLOT(incValue()));
     QObject::connect(dataFrameSimulator, SIGNAL(valueUpdated(quint8)), &graphicPlot, SLOT(addYValue(quint8)));
+    //QObject::connect(dataFrameSimulator, SIGNAL(valueUpdated(quint8)), &analogPlot, SLOT(addYValue(quint8)));
+    QObject::connect(dataFrameSimulator, SIGNAL(valueAI1Updated(quint8)), &displayWindows, SLOT(addValueAI1(quint8)));
+    QObject::connect(dataFrameSimulator, SIGNAL(valueAI2Updated(quint8)), &displayWindows, SLOT(addValueAI2(quint8)));
+    QObject::connect(dataFrameSimulator, SIGNAL(valueAI3Updated(quint8)), &displayWindows, SLOT(addValueAI3(quint8)));
+    QObject::connect(dataFrameSimulator, SIGNAL(valueAI4Updated(quint8)), &displayWindows, SLOT(addValueAI4(quint8)));
+
 
     //refresh the plot
-    QObject::connect(refreshDisplayTimer, SIGNAL(tickFinished()), &graphicPlot, SLOT(updatePlot()));
+    //QObject::connect(refreshDisplayTimer, SIGNAL(tickFinished()), &graphicPlot, SLOT(updatePlot()));
+    //QObject::connect(refreshDisplayTimer, SIGNAL(tickFinished()), &analogPlot, SLOT(updatePlot()));
+    QObject::connect(refreshDisplayTimer, SIGNAL(tickFinished()), &displayWindows, SLOT(replot()));
 
     //thread start
     threadTick->start();

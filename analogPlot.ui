@@ -44,7 +44,7 @@
    <item row="0" column="0">
     <layout class="QGridLayout" name="gridLayout">
      <item row="0" column="0">
-      <widget class="GraphicPlot" name="widget" native="true"/>
+      <widget class="QCustomPlot" name="widget" native="true"/>
      </item>
     </layout>
    </item>
@@ -52,9 +52,9 @@
  </widget>
  <customwidgets>
   <customwidget>
-   <class>GraphicPlot</class>
+   <class>QCustomPlot</class>
    <extends>QWidget</extends>
-   <header>graphicPlot.h</header>
+   <header>qcustomplot.h</header>
    <container>1</container>
   </customwidget>
  </customwidgets>

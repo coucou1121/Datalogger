@@ -8,7 +8,6 @@
 //interfaces
 #include "mainwindow.h"
 #include "analogPlot.h"
-#include "digitalPlot.h"
 #include "graphicTracePlot.h"
 #include "frameSimulator.h"
 #include "frameThread.h"
