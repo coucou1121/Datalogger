@@ -9,7 +9,8 @@
 #define MINIMUM_HEIGHT_SIZE 720
 
 //color
-#define BACKGROUD_COLOR 82,82,82    //RGB, R=82, G=82, B=82,    aplha = 255
+#define BACKGROUD_COLOR 160,160,160             //RGB, R=160, G=160, B=160  aplha = 255
+#define BACKGROUD_COLOR_BOTTOM_BAR 125,125,125  //RGB, R=125, G=125, B=125  alpha = 255
 
 //ANALOG plot
 //size
@@ -57,6 +58,7 @@ public:
 
     //background
     QColor getBackGroundColor() const;
+    QColor getBackGroundColorBottomBar() const;
     QColor getBackGroundColorAnalogPlot() const;
 
     //plot
@@ -78,6 +80,7 @@ private:
     //analog plot
     //backrgound
     QColor backGroundColor;
+    QColor backGroundColorBottomBar;
     QColor backGroundColorAnalogPlot;
 
     //Grid

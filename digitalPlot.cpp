@@ -1,28 +1,28 @@
-#include "analogPlot.h"
-#include "ui_analogPlot.h"
+#include "digitalPlot.h"
+#include "ui_digitalPlot.h"
 
-AnalogPlot::AnalogPlot(QWidget *parent) :
+DigitalPlot::DigitalPlot(QWidget *parent) :
     QWidget(parent),
-    ui(new Ui::AnalogPlot)
+    ui(new Ui::DigitalPlot)
 {
     ui->setupUi(this);
-    setupStyle(ui->widget_AI);
-    setupTrace(ui->widget_AI);
-    ui->TLname_AI->setStyleSheet("background-color:" + _myStyle.getBackGroundColorBottomBar().name() + ";");
+    setupStyle(ui->widget_DI);
+    setupTrace(ui->widget_DI);
+    ui->TLname_DI->setStyleSheet("background-color:" + _myStyle.getBackGroundColorBottomBar().name() + ";");
     _CPT = 0;
 }
 
-AnalogPlot::~AnalogPlot()
+DigitalPlot::~DigitalPlot()
 {
     delete ui;
 }
 
-void AnalogPlot::setTitleName(QString name)
+void DigitalPlot::setTitleName(QString name)
 {
-    ui->TLname_AI->setText(name);
+    ui->TLname_DI->setText(name);
 }
 
-void AnalogPlot::setupStyle(QCustomPlot *customPlot)
+void DigitalPlot::setupStyle(QCustomPlot *customPlot)
 {
 
     //back ground Color behing the plot
@@ -74,22 +74,22 @@ void AnalogPlot::setupStyle(QCustomPlot *customPlot)
     customPlot->rescaleAxes();
 
     //set the axis range
-    customPlot->xAxis->setRange(0, AI_NB_X_VALUES_DISPLAY_LIVE);
-    customPlot->yAxis->setRange(AI_Y_AXIS_MIN_VALUE, AI_Y_AXIS_MAX_VALUE);
+    customPlot->xAxis->setRange(0, DI_NB_X_VALUES_DISPLAY_LIVE);
+    customPlot->yAxis->setRange(DI_Y_AXIS_MIN_VALUE, DI_Y_AXIS_MAX_VALUE);
 
 }
 
-void AnalogPlot::setupTrace(QCustomPlot *customPlot)
+void DigitalPlot::setupTrace(QCustomPlot *customPlot)
 {
     //trace
     customPlot->addGraph();
-    customPlot->graph(0)->setPen(QPen(_myStyle.getTraceColorAnalogPlot()));
-    //   customPlot->graph(0)->setBrush(QBrush(_myStyle.getTraceColorAnalogPlot()));
+    customPlot->graph(0)->setPen(QPen(_myStyle.getTraceColorDigitalPlot()));
+    customPlot->graph(0)->setBrush(QBrush(_myStyle.getTraceColorDigitalPlot()));
 
     //Trigger
     customPlot->addGraph();
-       customPlot->graph(1)->setPen(QPen(_myStyle.getTraceColorDigitalPlot()));
-    //   customPlot->graph(1)->setBrush(QBrush(_myStyle.getTraceColorAnalogPlot()));
+    customPlot->graph(1)->setPen(QPen(_myStyle.getTraceColorDigitalPlot()));
+    customPlot->graph(1)->setBrush(QBrush(_myStyle.getTraceColorDigitalPlot()));
 
     //  customPlot->addGraph(); // red line
     //  customPlot->graph(1)->setPen(QPen(QColor(255, 110, 40)));
@@ -107,7 +107,7 @@ void AnalogPlot::setupTrace(QCustomPlot *customPlot)
 #endif
 }
 
-void AnalogPlot::updatePlot()
+void DigitalPlot::updatePlot()
 {
 
     //qDebug() << objectName() << " update plot recieved, CPT :" << _CPT;
@@ -147,8 +147,8 @@ void AnalogPlot::updatePlot()
     // Add the data to the graph
     //ui->tracePlot->graph(0)->addData(_XData , _YData);
     //ui->widget->graph(0)->setData(_XData , _YData);
-    ui->widget_AI->graph(0)->setData(_XData , _YData);
-    //    ui->tracePlot->graph(1)->setData(_XData , _minusYData);
+    ui->widget_DI->graph(0)->setData(_XData , _YData);
+    ui->widget_DI->graph(1)->setData(_XData , _minusYData);
     // Now this is the tricky part, the previous part
     // was easy and nothing new in it.
 
@@ -174,21 +174,30 @@ void AnalogPlot::updatePlot()
 
     //ui->tracePlot->yAxis->setRange(yPlotMin , yPlotMax);
     // make key axis range scroll with the data:
-    ui->widget_AI->xAxis->setRange(_CPT, AI_NB_X_VALUES_DISPLAY_LIVE, Qt::AlignRight);
+    ui->widget_DI->xAxis->setRange(_CPT, DI_NB_X_VALUES_DISPLAY_LIVE, Qt::AlignRight);
 
     //ui->tracePlot->yAxis->rescale();
 
     // Update the plot widget
-    ui->widget_AI->replot();
+    ui->widget_DI->replot();
 }
 
-void AnalogPlot::addYValue(quint8 value)
+void DigitalPlot::addYValue(quint8 value)
 {
-    qDebug() << objectName() << " Data recieved " << value;
+    qDebug() << objectName() << " Datas recieved " << value;
+    if(value)
+    {
+        ui->TLname_DI->setStyleSheet("background-color:" + _myStyle.getTraceColorDigitalPlot().name() + ";");
+    }
+    else
+    {
+        ui->TLname_DI->setStyleSheet("background-color:" + _myStyle.getBackGroundColorBottomBar().name() + ";");
+    }
     _CPT++;
     _XData.append(_CPT);
 
     _YData.append(value);
+    _minusYData.append(-value);
     //   _minusYData.append(-value);
     // int _maxValue = value > _maxValue ? value : _maxValue;
     // int _minValue = value < _minValue ? value : _minValue;
@@ -196,9 +205,9 @@ void AnalogPlot::addYValue(quint8 value)
     //    trigger = value < 400 ? 200 : 500;
     // Keep the data buffers size under NB_X_VALUES_DISPLAY value each,
     // so our memory won't explode with random numbers
-    if( _XData.size() > AI_NB_X_VALUES_DISPLAY_LIVE){
+    if( _XData.size() > DI_NB_X_VALUES_DISPLAY_LIVE){
         _XData.remove(0);
         _YData.remove(0);
-    //    _minusYData.remove(0);
+        _minusYData.remove(0);
     }
 }

@@ -1,31 +1,31 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <ui version="4.0">
- <class>AnalogPlot</class>
- <widget class="QWidget" name="AnalogPlot">
+ <class>DigitalPlot</class>
+ <widget class="QWidget" name="DigitalPlot">
   <property name="geometry">
    <rect>
     <x>0</x>
     <y>0</y>
     <width>854</width>
-    <height>257</height>
+    <height>20</height>
    </rect>
   </property>
   <property name="sizePolicy">
-   <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
-    <horstretch>1</horstretch>
-    <verstretch>1</verstretch>
+   <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
+    <horstretch>0</horstretch>
+    <verstretch>0</verstretch>
    </sizepolicy>
   </property>
-  <property name="minimumSize">
+  <property name="maximumSize">
    <size>
-    <width>200</width>
-    <height>22</height>
+    <width>16777215</width>
+    <height>20</height>
    </size>
   </property>
   <property name="windowTitle">
    <string>Form</string>
   </property>
-  <layout class="QGridLayout" name="gridLayoutAI">
+  <layout class="QGridLayout" name="gridLayout_DI">
    <property name="leftMargin">
     <number>0</number>
    </property>
@@ -42,12 +42,15 @@
     <number>0</number>
    </property>
    <item row="0" column="0">
-    <layout class="QGridLayout" name="gridLayout_AI_IN">
+    <layout class="QGridLayout" name="gridLayout_DI_IN">
+     <property name="spacing">
+      <number>0</number>
+     </property>
      <item row="0" column="1">
-      <widget class="QCustomPlot" name="widget_AI" native="true"/>
+      <widget class="QCustomPlot" name="widget_DI" native="true"/>
      </item>
      <item row="0" column="0">
-      <widget class="QLabel" name="TLname_AI">
+      <widget class="QLabel" name="TLname_DI">
        <property name="minimumSize">
         <size>
          <width>20</width>

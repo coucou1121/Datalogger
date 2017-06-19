@@ -26,7 +26,8 @@ SOURCES += main.cpp\
     graphicPlot.cpp \
     frame.cpp \
     dataFrame.cpp \
-    dataFrameSimulator.cpp
+    dataFrameSimulator.cpp \
+    digitalPlot.cpp
 
 HEADERS  += mainwindow.h \
     main.h \
@@ -43,11 +44,14 @@ HEADERS  += mainwindow.h \
     graphicPlot.h \
     frame.h \
     dataFrame.h \
-    dataFrameSimulator.h
+    dataFrameSimulator.h \
+    digitalPlot.h
 
 FORMS    += mainwindow.ui \
     analogPlot.ui \
     graphicTracePlot.ui \
     startstopemuldata.ui \
     displayWindows.ui \
-    graphicPlot.ui
+    graphicPlot.ui \
+    analogPlot_copy.ui \
+    digitalPlot.ui

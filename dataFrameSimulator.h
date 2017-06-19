@@ -19,6 +19,8 @@ public:
     void setDataFrame(const DataFrame &dataFrame);
 
 signals:
+    void valueDI1_8Updated(quint8 value);
+    void valueDI9_16Updated(quint8 value);
     void valueAI1Updated(quint8 value);
     void valueAI2Updated(quint8 value);
     void valueAI3Updated(quint8 value);

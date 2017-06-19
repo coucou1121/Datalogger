@@ -4,6 +4,7 @@ CommonStyle::CommonStyle()
 {
     //main windows
     backGroundColor.setRgb(BACKGROUD_COLOR);
+    backGroundColorBottomBar.setRgb(BACKGROUD_COLOR_BOTTOM_BAR);
 
     //Analog plot
     backGroundColorAnalogPlot.setRgb(ANALOG_PLOT_BACKGROUD_COLOR);
@@ -24,6 +25,11 @@ CommonStyle::CommonStyle()
 QColor CommonStyle::getBackGroundColor() const
 {
     return backGroundColor;
+}
+
+QColor CommonStyle::getBackGroundColorBottomBar() const
+{
+    return backGroundColorBottomBar;
 }
 
 QColor CommonStyle::getBackGroundColorAnalogPlot() const

@@ -17,20 +17,64 @@
    <item row="0" column="0">
     <layout class="QVBoxLayout" name="verticalLayout">
      <item>
+      <widget class="DigitalPlot" name="DI1" native="true"/>
+     </item>
+     <item>
+      <widget class="DigitalPlot" name="DI2" native="true"/>
+     </item>
+     <item>
+      <widget class="DigitalPlot" name="DI3" native="true"/>
+     </item>
+     <item>
+      <widget class="DigitalPlot" name="DI4" native="true"/>
+     </item>
+     <item>
+      <widget class="DigitalPlot" name="DI5" native="true"/>
+     </item>
+     <item>
+      <widget class="DigitalPlot" name="DI6" native="true"/>
+     </item>
+     <item>
+      <widget class="DigitalPlot" name="DI7" native="true"/>
+     </item>
+     <item>
+      <widget class="DigitalPlot" name="DI8" native="true"/>
+     </item>
+     <item>
+      <widget class="DigitalPlot" name="DI9" native="true"/>
+     </item>
+     <item>
+      <widget class="DigitalPlot" name="DI10" native="true"/>
+     </item>
+     <item>
+      <widget class="DigitalPlot" name="DI11" native="true"/>
+     </item>
+     <item>
+      <widget class="DigitalPlot" name="DI12" native="true"/>
+     </item>
+     <item>
+      <widget class="DigitalPlot" name="DI13" native="true"/>
+     </item>
+     <item>
+      <widget class="DigitalPlot" name="DI14" native="true"/>
+     </item>
+     <item>
+      <widget class="DigitalPlot" name="DI15" native="true"/>
+     </item>
+     <item>
+      <widget class="DigitalPlot" name="DI16" native="true"/>
+     </item>
+     <item>
       <widget class="AnalogPlot" name="AI1" native="true"/>
      </item>
      <item>
-      <widget class="AnalogPlot" name="AI2" native="true">
-       <zorder>AI4</zorder>
-      </widget>
+      <widget class="AnalogPlot" name="AI2" native="true"/>
      </item>
      <item>
       <widget class="AnalogPlot" name="AI3" native="true"/>
      </item>
      <item>
-      <widget class="AnalogPlot" name="AI4" native="true">
-       <zorder>AI3</zorder>
-      </widget>
+      <widget class="AnalogPlot" name="AI4" native="true"/>
      </item>
     </layout>
    </item>
@@ -41,6 +85,12 @@
    <class>AnalogPlot</class>
    <extends>QWidget</extends>
    <header>analogPlot.h</header>
+   <container>1</container>
+  </customwidget>
+  <customwidget>
+   <class>DigitalPlot</class>
+   <extends>QWidget</extends>
+   <header>digitalPlot.h</header>
    <container>1</container>
   </customwidget>
  </customwidgets>

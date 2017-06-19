@@ -1,40 +1,39 @@
-#ifndef ANALOGPLOT_H
-#define ANALOGPLOT_H
+#ifndef DIGITALPLOT_H
+#define DIGITALPLOT_H
 
 #include <QWidget>
 #include <QTimer>
 #include "qcustomplot.h"
 #include "commonStyle.h"
 
-#define AI_TIMER_REFRESH 100
-#define AI_DISPLAY_REFRESH 0
-#define AI_NB_TRACE 2
-#define AI_RESOLUTION 900
-#define AI_NB_X_PIXELS 900
-#define AI_NB_X_VALUES_DISPLAY_LIVE     AI_NB_X_PIXELS/AI_NB_TRACE
-#define AI_NB_X_VALUES_DISPLAY_HOLD 100
-#define AI_X_AXIS_MIN_VALUE -1.2
-#define AI_Y_AXIS_MIN_VALUE 1.2
-#define AI_Y_AXIS_MAX_VALUE 255
+#define DI_TIMER_REFRESH 100
+#define DI_DISPLAY_REFRESH 0
+#define DI_NB_TRACE 2
+#define DI_RESOLUTION 900
+#define DI_NB_X_PIXELS 900
+#define DI_NB_X_VALUES_DISPLAY_LIVE     DI_NB_X_PIXELS/DI_NB_TRACE
+#define DI_NB_X_VALUES_DISPLAY_HOLD 100
+#define DI_X_AXIS_MIN_VALUE 0
+#define DI_Y_AXIS_MIN_VALUE -1
+#define DI_Y_AXIS_MAX_VALUE 1
 
 namespace Ui {
-class AnalogPlot;
+class DigitalPlot;
 }
 
-class AnalogPlot : public QWidget
+class DigitalPlot : public QWidget
 {
     Q_OBJECT
 
 public:
-    explicit AnalogPlot(QWidget *parent = 0);
-    ~AnalogPlot();
+    explicit DigitalPlot(QWidget *parent = 0);
+    ~DigitalPlot();
 
-    //geter setter
-    //quint64 CPT() const;
-    //void setCPT(const quint64 &CPT);
+    quint64 CPT() const;
+    void setCPT(const quint64 &CPT);
 
-    //quint8 yValue() const;
-    //void setYValue(quint8 yValue);
+    quint8 yValue() const;
+    void setYValue(const quint8 &yValue);
 
     //change title name
     void setTitleName(QString name);
@@ -44,7 +43,7 @@ public slots:
     void addYValue(quint8 value);
 
 private:
-    Ui::AnalogPlot *ui;
+    Ui::DigitalPlot *ui;
 
     quint64 _CPT;
     quint8 _yValue;
@@ -69,4 +68,4 @@ private:
     void setupTrace(QCustomPlot *customPlot);
 };
 
-#endif // ANALOGPLOT_H
+#endif // DIGITALPLOT_H

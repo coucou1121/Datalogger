@@ -3,6 +3,8 @@
 
 #include <QWidget>
 
+#include "commonStyle.h"
+
 namespace Ui {
 class DisplayWindows;
 }
@@ -17,6 +19,10 @@ public:
 
 public slots:
     void replot();
+
+    void addValueDI1_8(quint8 value);
+    void addValueDI9_16(quint8 value);
+
     void addValueAI1(quint8 value);
     void addValueAI2(quint8 value);
     void addValueAI3(quint8 value);
@@ -24,6 +30,11 @@ public slots:
 
 private:
     Ui::DisplayWindows *ui;
+
+    //style
+    QPalette _palette;
+    CommonStyle _myStyle;
+    void setupStyle();
 };
 
 #endif // DISPLAYWINDOWS_H
