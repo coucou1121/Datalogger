@@ -55,14 +55,29 @@ void DataFrameSimulator::incValue()
     _dataFrame.setAI3(AI3);
     _dataFrame.setAI4(AI4);
 
-    qDebug() << objectName() << " Data increased " << _CPT;
-    qDebug() << objectName() << " emit lsbCPT " << lsbCPT;
-    emit valueDI1_8Updated(DI_1_8);
-    emit valueDI9_16Updated(DI_9_16);
-    emit valueAI1Updated(AI1);
-    emit valueAI2Updated(AI2);
-    emit valueAI3Updated(AI3);
-    emit valueAI4Updated(AI4);
+
+    //qDebug() << objectName() << " Data increased " << _CPT;
+    //qDebug() << objectName() << " emit lsbCPT " << lsbCPT;
+    //emit valueDI1_8Updated(DI_1_8);
+    //emit valueDI9_16Updated(DI_9_16);
+    //emit valueAI1Updated(AI1);
+    //emit valueAI2Updated(AI2);
+    //emit valueAI3Updated(AI3);
+    //emit valueAI4Updated(AI4);
+}
+
+void DataFrameSimulator::createDataFrame()
+{
+    for(quint16 i=0; i<NB_FRAME_CREATE_AT_EVERY_TICK; i++)
+    {
+    //create new frame
+    incValue();
+    // put in vector
+    _dataFrameVector.append(_dataFrame);
+    }
+    emit dataFramUpdate(_dataFrameVector);
+    //qDebug() << "newDataFrameSent";
+    _dataFrameVector.clear();
 }
 
 DataFrame DataFrameSimulator::dataFrame() const

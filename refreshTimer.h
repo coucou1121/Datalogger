@@ -5,6 +5,7 @@
 #include <QTimer>
 #include <QDebug>
 #include <Windows.h>
+#include <QElapsedTimer>
 
 class refreshTimer : public QObject
 {
@@ -22,9 +23,10 @@ signals:
 
 private:
     QTimer *timer;
-    int count;
+    quint64 count = 0;
     bool m_wantToSleep;
 
+    QElapsedTimer timerElapse;     
 };
 
 #endif // REFRESHTIMER_H

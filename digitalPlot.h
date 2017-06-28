@@ -8,14 +8,14 @@
 
 #define DI_TIMER_REFRESH 100
 #define DI_DISPLAY_REFRESH 0
-#define DI_NB_TRACE 2
+#define DI_NB_TRACE 1
 #define DI_RESOLUTION 900
-#define DI_NB_X_PIXELS 900
+#define DI_NB_X_PIXELS 795
 #define DI_NB_X_VALUES_DISPLAY_LIVE     DI_NB_X_PIXELS/DI_NB_TRACE
 #define DI_NB_X_VALUES_DISPLAY_HOLD 100
 #define DI_X_AXIS_MIN_VALUE 0
-#define DI_Y_AXIS_MIN_VALUE -1
-#define DI_Y_AXIS_MAX_VALUE 1
+#define DI_Y_AXIS_MIN_VALUE -0.2
+#define DI_Y_AXIS_MAX_VALUE 1.2
 
 namespace Ui {
 class DigitalPlot;
@@ -41,6 +41,7 @@ public:
 public slots:
     void updatePlot();
     void addYValue(quint8 value);
+    void replot();
 
 private:
     Ui::DigitalPlot *ui;

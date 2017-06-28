@@ -184,7 +184,7 @@ void AnalogPlot::updatePlot()
 
 void AnalogPlot::addYValue(quint8 value)
 {
-    qDebug() << objectName() << " Data recieved " << value;
+    //qDebug() << objectName() << " Data recieved " << value;
     _CPT++;
     _XData.append(_CPT);
 

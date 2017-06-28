@@ -43,9 +43,9 @@ void DisplayWindows::setupStyle()
     this->setPalette(_palette);
 }
 
-void DisplayWindows::replot()
+void DisplayWindows::updatePlot()
 {
-    qDebug() << objectName() << " replot recieved ";
+    //qDebug() << objectName() << " replot recieved ";
     ui->DI1->updatePlot();
     ui->DI2->updatePlot();
     ui->DI3->updatePlot();
@@ -67,24 +67,67 @@ void DisplayWindows::replot()
     ui->AI2->updatePlot();
     ui->AI3->updatePlot();
     ui->AI4->updatePlot();
+    //qDebug() << objectName() << "plot udated";
+}
+
+void DisplayWindows::addNewDataFrame(QVector<DataFrame> newDataFrameVector)
+{
+    //qDebug() << objectName() << " nb frame recieved size" << newDataFrameVector.size();
+    quint8 valueDI1_9 = 0;
+    quint8 valueDI10_18 = 0;
+
+    for(int i = 0; i < newDataFrameVector.size(); i++)
+    {
+        valueDI1_9 = newDataFrameVector[i].DI1_8();
+        valueDI10_18 = newDataFrameVector[i].DI9_16();
+
+        //qDebug() << objectName() << "value DI1" << (value);
+        ui->DI1->addYValue((valueDI1_9 & 0x01) >> 0);
+        ui->DI2->addYValue((valueDI1_9 & 0x02) >> 1);
+        ui->DI3->addYValue((valueDI1_9 & 0x04) >> 2);
+        ui->DI4->addYValue((valueDI1_9 & 0x08) >> 3);
+        ui->DI5->addYValue((valueDI1_9 & 0x10) >> 4);
+        ui->DI6->addYValue((valueDI1_9 & 0x20) >> 5);
+        ui->DI7->addYValue((valueDI1_9 & 0x40) >> 6);
+        ui->DI8->addYValue((valueDI1_9 & 0x80) >> 7);
+
+        ui->DI9->addYValue(valueDI10_18 & 0x01);
+        ui->DI10->addYValue((valueDI10_18 & 0x02) >> 1);
+        ui->DI11->addYValue((valueDI10_18 & 0x01) >> 0);
+        ui->DI12->addYValue((valueDI10_18 & 0x02) >> 1);
+        ui->DI13->addYValue((valueDI10_18 & 0x04) >> 2);
+        ui->DI14->addYValue((valueDI10_18 & 0x08) >> 3);
+        ui->DI15->addYValue((valueDI10_18 & 0x10) >> 4);
+        ui->DI16->addYValue((valueDI10_18 & 0x20) >> 5);
+
+        ui->AI1->addYValue(newDataFrameVector[i].AI1());
+        ui->AI2->addYValue(newDataFrameVector[i].AI2());
+        ui->AI3->addYValue(newDataFrameVector[i].AI3());
+        ui->AI4->addYValue(newDataFrameVector[i].AI4());
+    }
+
+
+
+   // qDebug() << objectName() << "replot";
+    //updatePlot();
 }
 
 void DisplayWindows::addValueDI1_8(quint8 value)
 {
-    qDebug() << objectName() << " Data recieved " << value;
+    //qDebug() << objectName() << " Data recieved " << value;
     ui->DI1->addYValue((value & 0x01) >> 0);
     ui->DI2->addYValue((value & 0x02) >> 1);
     ui->DI3->addYValue((value & 0x04) >> 2);
-    ui->DI4->addYValue((value & 0x08) >> 3);
-    ui->DI5->addYValue((value & 0x10) >> 4);
-    ui->DI6->addYValue((value & 0x20) >> 5);
-    ui->DI7->addYValue((value & 0x40) >> 6);
-    ui->DI8->addYValue((value & 0x80) >> 7);
+    //    ui->DI4->addYValue((value & 0x08) >> 3);
+    //    ui->DI5->addYValue((value & 0x10) >> 4);
+    //    ui->DI6->addYValue((value & 0x20) >> 5);
+    //    ui->DI7->addYValue((value & 0x40) >> 6);
+    //    ui->DI8->addYValue((value & 0x80) >> 7);
 }
 
 void DisplayWindows::addValueDI9_16(quint8 value)
 {
-    qDebug() << objectName() << " Data recieved " << value;
+    //qDebug() << objectName() << " Data recieved " << value;
     ui->DI9->addYValue((value & 0x01) >> 0);
     ui->DI10->addYValue((value & 0x02) >> 1);
     ui->DI11->addYValue((value & 0x04) >> 2);
@@ -97,24 +140,24 @@ void DisplayWindows::addValueDI9_16(quint8 value)
 
 void DisplayWindows::addValueAI1(quint8 value)
 {
-    qDebug() << objectName() << " Data recieved " << value;
+    //qDebug() << objectName() << " Data recieved " << value;
     ui->AI1->addYValue(value);
 }
 
 void DisplayWindows::addValueAI2(quint8 value)
 {
-    qDebug() << objectName() << " Data recieved " << value;
+    //qDebug() << objectName() << " Data recieved " << value;
     ui->AI2->addYValue(value);
 }
 
 void DisplayWindows::addValueAI3(quint8 value)
 {
-    qDebug() << objectName() << " Data recieved " << value;
+    //qDebug() << objectName() << " Data recieved " << value;
     ui->AI3->addYValue(value);
 }
 
 void DisplayWindows::addValueAI4(quint8 value)
 {
-    qDebug() << objectName() << " Data recieved " << value;
+    //qDebug() << objectName() << " Data recieved " << value;
     ui->AI4->addYValue(value);
 }

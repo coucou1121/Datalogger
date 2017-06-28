@@ -84,12 +84,12 @@ void DigitalPlot::setupTrace(QCustomPlot *customPlot)
     //trace
     customPlot->addGraph();
     customPlot->graph(0)->setPen(QPen(_myStyle.getTraceColorDigitalPlot()));
-    customPlot->graph(0)->setBrush(QBrush(_myStyle.getTraceColorDigitalPlot()));
+   // customPlot->graph(0)->setBrush(QBrush(_myStyle.getTraceColorDigitalPlot()));
 
     //Trigger
-    customPlot->addGraph();
-    customPlot->graph(1)->setPen(QPen(_myStyle.getTraceColorDigitalPlot()));
-    customPlot->graph(1)->setBrush(QBrush(_myStyle.getTraceColorDigitalPlot()));
+    //customPlot->addGraph();
+    //customPlot->graph(1)->setPen(QPen(_myStyle.getTraceColorDigitalPlot()));
+   // customPlot->graph(1)->setBrush(QBrush(_myStyle.getTraceColorDigitalPlot()));
 
     //  customPlot->addGraph(); // red line
     //  customPlot->graph(1)->setPen(QPen(QColor(255, 110, 40)));
@@ -110,81 +110,19 @@ void DigitalPlot::setupTrace(QCustomPlot *customPlot)
 void DigitalPlot::updatePlot()
 {
 
-    //qDebug() << objectName() << " update plot recieved, CPT :" << _CPT;
-
-    //    static double CPT = 0;
-    //    CPT = CPT > 150 ? 0 : CPT+1;
-    // int CPT = _emulData->frameData()->getLsbCPT();
-    //    double CPT = (QDateTime::currentMSecsSinceEpoch() -
-    //                QDateTime(QDate::currentDate()).toMSecsSinceEpoch())/TIMER_REFRESH;
-    //Add the CPT in x data buffer
-    //_CPT++;
-    //_XData.append(_CPT);
-
-    // Generate random data with variations
-    // This will generate a random intiger between [ 0 , 1 ]
-    //qreal r = static_cast<qreal>( rand() ) / RAND_MAX  ;
-    //int r = static_cast<int>( rand()%30 ) ;
-    // the next value will be 80 plus or minus 5
-    //    double value = 80 + 5 * r;
-    //Add the value in y data buffer
-    //int y = _yValue;
-    //_YData.append(y);
-    //   _minusYData.append(-value);
-    // int _maxValue = value > _maxValue ? value : _maxValue;
-    // int _minValue = value < _minValue ? value : _minValue;
-    //    int trigger = 80;
-    //    trigger = value < 400 ? 200 : 500;
-    // Keep the data buffers size under NB_X_VALUES_DISPLAY value each,
-    // so our memory won't explode with random numbers
-    //if( _XData.size() > NB_X_VALUES_DISPLAY_LIVE){
-    //    _XData.remove(0);
-   //     _YData.remove(0);
-    //    _minusYData.remove(0);
-   // }
-
-    // qDebug() << "plot value" << _emulData->frameData()->getCPT() << y;
-    // Add the data to the graph
-    //ui->tracePlot->graph(0)->addData(_XData , _YData);
-    //ui->widget->graph(0)->setData(_XData , _YData);
+    // add data on th plot
     ui->widget_DI->graph(0)->setData(_XData , _YData);
-    ui->widget_DI->graph(1)->setData(_XData , _minusYData);
-    // Now this is the tricky part, the previous part
-    // was easy and nothing new in it.
 
-
-    // Set the range of the vertical and horizontal axis of the plot ( not the graph )
-    // so all the data will be centered. first we get the min and max of the x and y data
-    //    QVector<double>::iterator xMaxIt = std::max_element( _XData.begin() , _XData.end() );
-    //    QVector<double>::iterator xMinIt = std::min_element( _XData.begin() , _XData.end() );
-    //    QVector<double>::iterator yMaxIt = std::max_element( _YData.begin() , _YData.end() );
-
-
-    //    qreal yPlotMin = 0;
-    //    qreal yPlotMax = *yMaxIt;
-
-    //    qreal xPlotMin = *xMinIt;
-    //    qreal xPlotMax = *xMaxIt;
-    //        qreal xPlotMin = -1.1;
-    //        qreal xPlotMax = 1.1;
-
-    //qreal yPlotMin = 0;
-    //qreal yPlotMax = 31;
-
-
-    //ui->tracePlot->yAxis->setRange(yPlotMin , yPlotMax);
     // make key axis range scroll with the data:
     ui->widget_DI->xAxis->setRange(_CPT, DI_NB_X_VALUES_DISPLAY_LIVE, Qt::AlignRight);
 
-    //ui->tracePlot->yAxis->rescale();
-
     // Update the plot widget
-    ui->widget_DI->replot();
+     ui->widget_DI->replot();
 }
 
 void DigitalPlot::addYValue(quint8 value)
 {
-    qDebug() << objectName() << " Datas recieved " << value;
+    //qDebug() << objectName() << " Datas recieved " << value;
     if(value)
     {
         ui->TLname_DI->setStyleSheet("background-color:" + _myStyle.getTraceColorDigitalPlot().name() + ";");
@@ -197,17 +135,14 @@ void DigitalPlot::addYValue(quint8 value)
     _XData.append(_CPT);
 
     _YData.append(value);
-    _minusYData.append(-value);
-    //   _minusYData.append(-value);
-    // int _maxValue = value > _maxValue ? value : _maxValue;
-    // int _minValue = value < _minValue ? value : _minValue;
-    //    int trigger = 80;
-    //    trigger = value < 400 ? 200 : 500;
-    // Keep the data buffers size under NB_X_VALUES_DISPLAY value each,
-    // so our memory won't explode with random numbers
     if( _XData.size() > DI_NB_X_VALUES_DISPLAY_LIVE){
         _XData.remove(0);
         _YData.remove(0);
-        _minusYData.remove(0);
+       // _minusYData.remove(0);
     }
+}
+
+void DigitalPlot::replot()
+{
+    ui->widget_DI->replot();
 }

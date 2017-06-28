@@ -4,6 +4,7 @@
 #include <QWidget>
 
 #include "commonStyle.h"
+#include "dataFrame.h"
 
 namespace Ui {
 class DisplayWindows;
@@ -18,8 +19,9 @@ public:
     ~DisplayWindows();
 
 public slots:
-    void replot();
+    void updatePlot();
 
+    void addNewDataFrame(QVector<DataFrame> newDataFrameVector);
     void addValueDI1_8(quint8 value);
     void addValueDI9_16(quint8 value);
 
