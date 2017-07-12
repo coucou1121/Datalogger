@@ -4,6 +4,7 @@
 #define NB_FRAME_CREATE_AT_EVERY_TICK 100
 #include <QObject>
 #include <QDebug>
+#include <QElapsedTimer>
 #include "dataFrame.h"
 
 class DataFrameSimulator : public QObject
@@ -37,6 +38,7 @@ public slots:
 private:
     DataFrame _dataFrame;
     quint64 _CPT;
+    QElapsedTimer timerElapse;
     QVector<DataFrame> _dataFrameVector;
 };
 

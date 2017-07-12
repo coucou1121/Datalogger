@@ -5,6 +5,7 @@ CommonStyle::CommonStyle()
     //main windows
     backGroundColor.setRgb(BACKGROUD_COLOR);
     backGroundColorBottomBar.setRgb(BACKGROUD_COLOR_BOTTOM_BAR);
+    backGroundColorErrorFrame.setRgb(BACKGROUD_COLOR_ERROR_FRAME);
 
     //Analog plot
     backGroundColorAnalogPlot.setRgb(ANALOG_PLOT_BACKGROUD_COLOR);
@@ -75,4 +76,9 @@ QColor CommonStyle::getTraceColorAnalogPlot() const
 QColor CommonStyle::getTraceColorDigitalPlot() const
 {
     return traceColorDigitalPlot;
+}
+
+QColor CommonStyle::getBackGroundColorErrorFrame() const
+{
+    return backGroundColorErrorFrame;
 }

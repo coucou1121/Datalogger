@@ -27,7 +27,10 @@ SOURCES += main.cpp\
     frame.cpp \
     dataFrame.cpp \
     dataFrameSimulator.cpp \
-    digitalPlot.cpp
+    digitalPlot.cpp \
+    logoDateTime.cpp \
+    errorFrame.cpp \
+    errorFrame.cpp
 
 HEADERS  += mainwindow.h \
     main.h \
@@ -45,7 +48,9 @@ HEADERS  += mainwindow.h \
     frame.h \
     dataFrame.h \
     dataFrameSimulator.h \
-    digitalPlot.h
+    digitalPlot.h \
+    logoDateTime.h \
+    errorFrame.h
 
 FORMS    += mainwindow.ui \
     analogPlot.ui \
@@ -54,4 +59,10 @@ FORMS    += mainwindow.ui \
     displayWindows.ui \
     graphicPlot.ui \
     analogPlot_copy.ui \
-    digitalPlot.ui
+    digitalPlot.ui \
+    logoDateTime.ui \
+    errorFrame.ui \
+    errorFrame.ui
+
+RESOURCES += \
+    images.qrc

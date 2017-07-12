@@ -14,12 +14,13 @@ refreshTimer::refreshTimer(bool wantToSleep, QString name, int timeInterval, QOb
 void refreshTimer::updateCount()
 {
     count++;
-    if(count%1000==0)
-    {
-       qDebug() << objectName() << " count: " << count;
-       qDebug() << "This operation took" << timerElapse.nsecsElapsed() << "nanoseconds";
+   // qDebug() << objectName() << " count: " << count;
+
+    //if(count%1000==0)
+   // {
+       qDebug() << objectName() <<  "took" << timerElapse.elapsed() << "millisecondes";
        timerElapse.restart();
-    }
+   // }
     emit tickFinished();
 }
 

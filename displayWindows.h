@@ -2,9 +2,10 @@
 #define DISPLAYWINDOWS_H
 
 #include <QWidget>
+#include <QElapsedTimer>
 
 #include "commonStyle.h"
-#include "dataFrame.h"
+#include "dataFrameSimulator.h"
 
 namespace Ui {
 class DisplayWindows;
@@ -36,6 +37,7 @@ private:
     //style
     QPalette _palette;
     CommonStyle _myStyle;
+    QElapsedTimer timerElapse;
     void setupStyle();
 };
 

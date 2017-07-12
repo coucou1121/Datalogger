@@ -3,7 +3,11 @@
 int main(int argc, char *argv[])
 {
     QApplication a(argc, argv);
-    //MainWindow mainWindows;
+
+    QString title = TITLE;
+    QString version = VERSION;
+
+    MainWindow mainWindows;
     //AnalogPlot analogPlotWindows;
    // DigitalPlot digitalPlotWindows;
     //GraphicTracePlot graphicTracePlotWindows;
@@ -14,12 +18,17 @@ int main(int argc, char *argv[])
     //AnalogPlot analogPlot;
     //GraphicPlot graphicPlot;
     //DataFrame dataFrame;
-
+    //LogoDateTime logoDateTime;
+    ErrorFrame errorFrame;
     qRegisterMetaType< QVector<DataFrame> >("QVector<DataFrame>");
 
 
+    //set title
+    mainWindows.setTitle(title);
+    mainWindows.setVersion(version);
+
     //mainWindows.setupStyle();
-    //mainWindows.show();
+    mainWindows.show();
     //analogPlotWindows.setMinimumWidth(960);
     //digitalPlotWindows.show();
     //analogPlotWindows.show();
@@ -28,26 +37,30 @@ int main(int argc, char *argv[])
     //qDebug() << "hello from GUI thread " << frameThreadTest.thread()->currentThreadId();
     //frameThreadTest.start();
     //frameThreadTest.wait();  // do not exit before the thread is completed!
-    displayWindows.show();
+    //displayWindows.show();
     //analogPlot.show();
     //graphicPlot.show();
+    //logoDateTime.show();
+    errorFrame.show();
+
     //thread
-    //QThread *threadTick = new QThread;              // First thread
+    QThread *threadTick = new QThread;              // First thread
     QThread *threadNewDataFrame = new QThread;    // Second thread
     QThread *threadDisplayRefresh = new QThread;    // Second thread
 
     //QThread *threadDataFramSimulator = new QThread; // data frame simulation
 
     //timer for thread
-    //refreshTimer *tickTimer = new refreshTimer(false, "Tick", 1);
-    refreshTimer *newDataFrame = new refreshTimer(true, "Data updated", 100);
-    refreshTimer *refreshDisplayTimer = new refreshTimer(false, "Refres Display", 100);
+    refreshTimer *tickTimer = new refreshTimer(false, "Tick", 1000);
+    refreshTimer *newDataFrame = new refreshTimer(true, "Data updated", 10);
+    refreshTimer *refreshDisplayTimer = new refreshTimer(true, "Refres Display", 100);
 
     //frame simulator
+    QVector<DataFrame> _dataFrameVector;
     DataFrameSimulator *dataFrameSimulator = new DataFrameSimulator("Frame Simulator");
 
     //move time into the thread
-    //tickTimer->moveToThread(threadTick);
+    tickTimer->moveToThread(threadTick);
     newDataFrame->moveToThread(threadNewDataFrame);
     refreshDisplayTimer->moveToThread(threadDisplayRefresh);
 
@@ -60,10 +73,10 @@ int main(int argc, char *argv[])
 
     //increment the data frame simulator
     //QObject::connect(refreshDisplayTimer, SIGNAL(tickFinished()), dataFrameSimulator, SLOT(incValue()));
-    QObject::connect(newDataFrame, SIGNAL(tickFinished()), dataFrameSimulator, SLOT(createDataFrame()));
+    //QObject::connect(newDataFrame, SIGNAL(tickFinished()), dataFrameSimulator, SLOT(createDataFrame()));
     //QObject::connect(dataFrameSimulator, SIGNAL(valueUpdated(quint8)), &graphicPlot, SLOT(addYValue(quint8)));
     //QObject::connect(dataFrameSimulator, SIGNAL(valueUpdated(quint8)), &analogPlot, SLOT(addYValue(quint8)));
-    QObject::connect(dataFrameSimulator, SIGNAL(dataFramUpdate(QVector<DataFrame>)), &displayWindows, SLOT(addNewDataFrame(QVector<DataFrame>)));
+    //QObject::connect(dataFrameSimulator, SIGNAL(dataFramUpdate(QVector<DataFrame>)), &displayWindows, SLOT(addNewDataFrame(QVector<DataFrame>)));
 
     //QObject::connect(dataFrameSimulator, SIGNAL(valueDI1_8Updated(quint8)), &displayWindows, SLOT(addValueDI1_8(quint8)));
     //QObject::connect(dataFrameSimulator, SIGNAL(valueDI9_16Updated(quint8)), &displayWindows, SLOT(addValueDI9_16(quint8)));
@@ -80,7 +93,7 @@ int main(int argc, char *argv[])
     QObject::connect(refreshDisplayTimer, SIGNAL(tickFinished()), &displayWindows, SLOT(updatePlot()));
 
     //thread start
-    //threadTick->start();
+    threadTick->start();
     threadNewDataFrame->start();
     threadDisplayRefresh->start();
     //threadDataFramSimulator->start();

@@ -11,6 +11,7 @@
 //color
 #define BACKGROUD_COLOR 160,160,160             //RGB, R=160, G=160, B=160  aplha = 255
 #define BACKGROUD_COLOR_BOTTOM_BAR 125,125,125  //RGB, R=125, G=125, B=125  alpha = 255
+#define BACKGROUD_COLOR_ERROR_FRAME 255,160,160 //RGB, R=255, G=160, B=160  alpha = 255
 
 //ANALOG plot
 //size
@@ -60,6 +61,7 @@ public:
     QColor getBackGroundColor() const;
     QColor getBackGroundColorBottomBar() const;
     QColor getBackGroundColorAnalogPlot() const;
+    QColor getBackGroundColorErrorFrame() const;
 
     //plot
     QColor getGridColorAnalogPlot() const;
@@ -76,12 +78,14 @@ public:
     //digital trace
     QColor getTraceColorDigitalPlot() const;
 
+
 private:
     //analog plot
     //backrgound
     QColor backGroundColor;
     QColor backGroundColorBottomBar;
     QColor backGroundColorAnalogPlot;
+    QColor backGroundColorErrorFrame;
 
     //Grid
     QColor gridColorAnalogPlot;

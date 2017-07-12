@@ -68,6 +68,9 @@ void DisplayWindows::updatePlot()
     ui->AI3->updatePlot();
     ui->AI4->updatePlot();
     //qDebug() << objectName() << "plot udated";
+    qDebug() << objectName() << "took" << timerElapse.elapsed() << "miliseconds" << " for refresh";
+    timerElapse.restart();
+
 }
 
 void DisplayWindows::addNewDataFrame(QVector<DataFrame> newDataFrameVector)
@@ -105,9 +108,6 @@ void DisplayWindows::addNewDataFrame(QVector<DataFrame> newDataFrameVector)
         ui->AI3->addYValue(newDataFrameVector[i].AI3());
         ui->AI4->addYValue(newDataFrameVector[i].AI4());
     }
-
-
-
    // qDebug() << objectName() << "replot";
     //updatePlot();
 }

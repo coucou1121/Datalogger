@@ -26,10 +26,18 @@ public:
     //cetup the basic style for the main wondows
     void setupStyle();
 
+    //set title
+    void setTitle(const QString &title);
+
+    //set version
+    void setVersion(const QString &version);
+
 private:
     Ui::MainWindow *ui;
-    CommonStyle myStyle;
 
+    CommonStyle _myStyle;
+    QString _title;
+    QString _version;
 private slots:
 
 };

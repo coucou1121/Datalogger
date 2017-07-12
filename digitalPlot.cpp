@@ -111,7 +111,8 @@ void DigitalPlot::updatePlot()
 {
 
     // add data on th plot
-    ui->widget_DI->graph(0)->setData(_XData , _YData);
+    ui->widget_DI->graph(0)->setData(_XData , _YData, true);
+    //ui->widget_DI->graph(0)->addData(_XData , _YData);
 
     // make key axis range scroll with the data:
     ui->widget_DI->xAxis->setRange(_CPT, DI_NB_X_VALUES_DISPLAY_LIVE, Qt::AlignRight);

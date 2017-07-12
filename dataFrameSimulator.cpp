@@ -68,13 +68,16 @@ void DataFrameSimulator::incValue()
 
 void DataFrameSimulator::createDataFrame()
 {
-    for(quint16 i=0; i<NB_FRAME_CREATE_AT_EVERY_TICK; i++)
+    timerElapse.restart();
+    quint16 i = 0;
+    for(i=0; i<NB_FRAME_CREATE_AT_EVERY_TICK; i++)
     {
-    //create new frame
-    incValue();
-    // put in vector
-    _dataFrameVector.append(_dataFrame);
+        //create new frame
+        incValue();
+        // put in vector
+        _dataFrameVector.append(_dataFrame);
     }
+    //qDebug() << "createDataFrame took" << timerElapse.nsecsElapsed()/1000 << "micro oseconds" << " for " << i << " values.";
     emit dataFramUpdate(_dataFrameVector);
     //qDebug() << "newDataFrameSent";
     _dataFrameVector.clear();
