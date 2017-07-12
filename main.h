@@ -26,5 +26,6 @@
 #include "dataFrameSimulator.h"
 #include "logoDateTime.h"
 #include "errorFrame.h"
+#include "stateFrame.h"
 
 #endif // MAIN_H

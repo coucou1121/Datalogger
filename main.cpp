@@ -19,7 +19,8 @@ int main(int argc, char *argv[])
     //GraphicPlot graphicPlot;
     //DataFrame dataFrame;
     //LogoDateTime logoDateTime;
-    ErrorFrame errorFrame;
+    //ErrorFrame errorFrame;
+    //StateFrame stateFrame;
     qRegisterMetaType< QVector<DataFrame> >("QVector<DataFrame>");
 
 
@@ -41,7 +42,8 @@ int main(int argc, char *argv[])
     //analogPlot.show();
     //graphicPlot.show();
     //logoDateTime.show();
-    errorFrame.show();
+    //errorFrame.show();
+    //stateFrame.show();
 
     //thread
     QThread *threadTick = new QThread;              // First thread

@@ -30,7 +30,7 @@ SOURCES += main.cpp\
     digitalPlot.cpp \
     logoDateTime.cpp \
     errorFrame.cpp \
-    errorFrame.cpp
+    stateFrame.cpp
 
 HEADERS  += mainwindow.h \
     main.h \
@@ -50,7 +50,8 @@ HEADERS  += mainwindow.h \
     dataFrameSimulator.h \
     digitalPlot.h \
     logoDateTime.h \
-    errorFrame.h
+    errorFrame.h \
+    stateFrame.h
 
 FORMS    += mainwindow.ui \
     analogPlot.ui \
@@ -62,7 +63,7 @@ FORMS    += mainwindow.ui \
     digitalPlot.ui \
     logoDateTime.ui \
     errorFrame.ui \
-    errorFrame.ui
+    stateFrame.ui
 
 RESOURCES += \
     images.qrc

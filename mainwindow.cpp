@@ -10,7 +10,6 @@ MainWindow::MainWindow(QWidget *parent) :
     ui->setupUi(this);
     setMinimumSize(MINIMUM_WIDTH_SIZE, MINIMUM_HEIGHT_SIZE);
     this->setupStyle();
-    ui->widgetError->setBackgroundColor(_myStyle.getBackGroundColorErrorFrame(), Qt::red);
 }
 
 MainWindow::~MainWindow()
