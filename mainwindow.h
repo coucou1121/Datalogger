@@ -3,6 +3,8 @@
 
 
 #include <QMainWindow>
+#include <QPushButton>
+#include <QHBoxLayout>
 #include <QTimer>
 #include <QThread>
 #include "main.h"
@@ -35,11 +37,37 @@ public:
 private:
     Ui::MainWindow *ui;
 
+    void setStatusBar();
+
+    //Style
     CommonStyle _myStyle;
+
+    //title
     QString _title;
+
+    //Version
     QString _version;
+
+    //widget for status bar
+    QWidget *_widgetStatusBar;
+
+    QHBoxLayout *_hlayoutStatus = new QHBoxLayout;
+
+    QPushButton *_btBase;
+    QPushButton *_btSetting;
+    QPushButton *_btTrigger;
+    QPushButton *_btDisplay;
+    QPushButton *_btDebug;
+
+    void resetPushButtonColor();
+
 private slots:
 
+    void _btBase_released();
+    void _btSetting_released();
+    void _btTrigger_released();
+    void _btDisplay_released();
+    void _btDebug_released();
 };
 
 #endif // MAINWINDOW_H

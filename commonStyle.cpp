@@ -6,6 +6,8 @@ CommonStyle::CommonStyle()
     backGroundColor.setRgb(BACKGROUD_COLOR);
     backGroundColorBottomBar.setRgb(BACKGROUD_COLOR_BOTTOM_BAR);
     backGroundColorErrorFrame.setRgb(BACKGROUD_COLOR_ERROR_FRAME);
+    backGroundColorButtonStatusbarSelected.setRgb(BACKGROUD_COLOR_BUTTON_STATUS_BAR_SELECTED);
+    backGroundColorButtonStatusbarUnselected.setRgb(BACKGROUD_COLOR_BUTTON_STATUS_BAR_UNSELECTED);
 
     //Analog plot
     backGroundColorAnalogPlot.setRgb(ANALOG_PLOT_BACKGROUD_COLOR);
@@ -76,6 +78,16 @@ QColor CommonStyle::getTraceColorAnalogPlot() const
 QColor CommonStyle::getTraceColorDigitalPlot() const
 {
     return traceColorDigitalPlot;
+}
+
+QColor CommonStyle::getBackGroundColorButtonStatusbarSelected() const
+{
+    return backGroundColorButtonStatusbarSelected;
+}
+
+QColor CommonStyle::getBackGroundColorButtonStatusbarUnselected() const
+{
+    return backGroundColorButtonStatusbarUnselected;
 }
 
 QColor CommonStyle::getBackGroundColorErrorFrame() const

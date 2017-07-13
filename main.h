@@ -7,6 +7,7 @@
 
 //libraries
 #include <QApplication>
+#include <QtWidgets>
 #include <QDebug>
 #include <QMetaType>
 
@@ -25,7 +26,6 @@
 #include "dataFrame.h"
 #include "dataFrameSimulator.h"
 #include "logoDateTime.h"
-#include "errorFrame.h"
 #include "stateFrame.h"
 
 #endif // MAIN_H
