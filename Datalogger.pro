@@ -30,7 +30,14 @@ SOURCES += main.cpp\
     digitalPlot.cpp \
     logoDateTime.cpp \
     stateFrame.cpp \
-    errorMessage.cpp
+    errorMessage.cpp \
+    settingChannelSelection.cpp \
+    settingTimeScaleFactor.cpp \
+    settingTriggerSetting.cpp \
+    settingTriggerFunction.cpp \
+    settingPreTriggerPercentage.cpp \
+    settingWindow.cpp \
+    baseWindow.cpp
 
 HEADERS  += mainwindow.h \
     main.h \
@@ -51,7 +58,14 @@ HEADERS  += mainwindow.h \
     digitalPlot.h \
     logoDateTime.h \
     stateFrame.h \
-    errorMessage.h
+    errorMessage.h \
+    settingChannelSelection.h \
+    settingTimeScaleFactor.h \
+    settingTriggerSetting.h \
+    settingTriggerFunction.h \
+    settingPreTriggerPercentage.h \
+    settingWindow.h \
+    baseWindow.h
 
 FORMS    += mainwindow.ui \
     analogPlot.ui \
@@ -63,7 +77,14 @@ FORMS    += mainwindow.ui \
     digitalPlot.ui \
     logoDateTime.ui \
     stateFrame.ui \
-    errorMessage.ui
+    errorMessage.ui \
+    settingChannelSelection.ui \
+    settingTimeScaleFactor.ui \
+    settingTriggerSetting.ui \
+    settingTriggerFunction.ui \
+    settingPreTriggerPercentage.ui \
+    settingWindow.ui \
+    baseWindow.ui
 
 RESOURCES += \
     images.qrc

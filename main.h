@@ -27,5 +27,9 @@
 #include "dataFrameSimulator.h"
 #include "logoDateTime.h"
 #include "stateFrame.h"
+#include "settingChannelSelection.h"
+#include "settingTimeScaleFactor.h"
+#include "settingTriggerSetting.h"
+#include "settingWindow.h"
 
 #endif // MAIN_H

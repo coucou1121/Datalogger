@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>SettingWindow</class>
+ <widget class="QWidget" name="SettingWindow">
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>400</width>
+    <height>300</height>
+   </rect>
+  </property>
+  <property name="windowTitle">
+   <string>Form</string>
+  </property>
+  <layout class="QGridLayout" name="gridLayout">
+   <item row="2" column="1">
+    <widget class="SettingTriggerFunction" name="widgetTriggerFunction" native="true"/>
+   </item>
+   <item row="2" column="0">
+    <widget class="SettingPreTriggerPercentage" name="widgetPreTriggerPercentage" native="true"/>
+   </item>
+   <item row="0" column="0">
+    <widget class="SettingChannelSelection" name="widgetChannelSelection" native="true"/>
+   </item>
+   <item row="1" column="0">
+    <widget class="SettingTimeScaleFactor" name="widgetTimeScallFactor" native="true"/>
+   </item>
+   <item row="0" column="1" rowspan="2">
+    <widget class="SettingTriggerSetting" name="widgetTriggerSetting" native="true"/>
+   </item>
+  </layout>
+ </widget>
+ <customwidgets>
+  <customwidget>
+   <class>SettingChannelSelection</class>
+   <extends>QWidget</extends>
+   <header>settingChannelSelection.h</header>
+   <container>1</container>
+  </customwidget>
+  <customwidget>
+   <class>SettingPreTriggerPercentage</class>
+   <extends>QWidget</extends>
+   <header>settingPreTriggerPercentage.h</header>
+   <container>1</container>
+  </customwidget>
+  <customwidget>
+   <class>SettingTimeScaleFactor</class>
+   <extends>QWidget</extends>
+   <header>settingTimeScaleFactor.h</header>
+   <container>1</container>
+  </customwidget>
+  <customwidget>
+   <class>SettingTriggerFunction</class>
+   <extends>QWidget</extends>
+   <header>settingTriggerFunction.h</header>
+   <container>1</container>
+  </customwidget>
+  <customwidget>
+   <class>SettingTriggerSetting</class>
+   <extends>QWidget</extends>
+   <header>settingTriggerSetting.h</header>
+   <container>1</container>
+  </customwidget>
+ </customwidgets>
+ <resources/>
+ <connections/>
+</ui>

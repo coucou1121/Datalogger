@@ -9,6 +9,8 @@
 #include <QThread>
 #include "main.h"
 #include "commonStyle.h"
+#include "baseWindow.h"
+#include "settingWindow.h"
 
 namespace Ui {
 class MainWindow;
@@ -28,25 +30,16 @@ public:
     //cetup the basic style for the main wondows
     void setupStyle();
 
-    //set title
-    void setTitle(const QString &title);
-
-    //set version
-    void setVersion(const QString &version);
-
 private:
     Ui::MainWindow *ui;
 
+    // diffrent windows
+    BaseWindow *baseWindow;
+    SettingWindow *settingWindows;
     void setStatusBar();
 
     //Style
     CommonStyle _myStyle;
-
-    //title
-    QString _title;
-
-    //Version
-    QString _version;
 
     //widget for status bar
     QWidget *_widgetStatusBar;
@@ -60,6 +53,7 @@ private:
     QPushButton *_btDebug;
 
     void resetPushButtonColor();
+    void mainSetup();
 
 private slots:
 

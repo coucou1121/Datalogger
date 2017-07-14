@@ -10,16 +10,31 @@ MainWindow::MainWindow(QWidget *parent) :
     ui->setupUi(this);
     setMinimumSize(MINIMUM_WIDTH_SIZE, MINIMUM_HEIGHT_SIZE);
 
-    ui->LabelTitle->setStyleSheet("qproperty-alignment: 'AlignBottom | AlignRight';");
-    ui->labelVersion->setStyleSheet("qproperty-alignment: 'AlignTop | AlignRight';");
+    //create windows object
+    baseWindow = new BaseWindow();
 
+    this->mainSetup();
     this->setupStyle();
     this->setStatusBar();
+
 }
 
 MainWindow::~MainWindow()
 {
     delete ui;
+}
+
+void MainWindow::mainSetup()
+{
+    //add base windows in windows layout
+    ui->gridLayout->addWidget(baseWindow, 0, 1, 6, 1);
+
+    //set title on baseWindows
+    baseWindow->setTitle("Datalogger");
+
+    //set version on baseWindows
+    baseWindow->setVersion("1.0");
+
 }
 
 void MainWindow::setupStyle()
@@ -28,18 +43,6 @@ void MainWindow::setupStyle()
     palette.setColor(backgroundRole(), _myStyle.getBackGroundColor());
     //palette.setColor(QPalette::Foreground,Qt::red);
     this->setPalette(palette);
-}
-
-void MainWindow::setTitle(const QString &title)
-{
-    _title = title;
-    ui->LabelTitle->setText(_title);
-}
-
-void MainWindow::setVersion(const QString &version)
-{
-    _version = version;
-    ui->labelVersion->setText(_version);
 }
 
 void MainWindow::setStatusBar()
@@ -106,8 +109,6 @@ void MainWindow::resetPushButtonColor()
                            "; color:" + _myStyle.getBackGroundColorButtonStatusbarSelected().name() + ";");
     _btDebug->setStyleSheet("background-color:" + _myStyle.getBackGroundColorButtonStatusbarUnselected().name() +
                            "; color:" + _myStyle.getBackGroundColorButtonStatusbarSelected().name() + ";");
-    ui->LabelTitle->setVisible(false);
-    ui->labelVersion->setVisible(false);
 }
 
 void MainWindow::_btBase_released()
@@ -115,8 +116,6 @@ void MainWindow::_btBase_released()
     this->resetPushButtonColor();
     _btBase->setStyleSheet("background-color:" + _myStyle.getBackGroundColorButtonStatusbarSelected().name() +
                            "; color:" + _myStyle.getBackGroundColorButtonStatusbarUnselected().name() + ";");
-    ui->LabelTitle->setVisible(true);
-    ui->labelVersion->setVisible(true);
 }
 
 void MainWindow::_btSetting_released()

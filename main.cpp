@@ -21,12 +21,12 @@ int main(int argc, char *argv[])
     //LogoDateTime logoDateTime;
     //ErrorFrame errorFrame;
     //StateFrame stateFrame;
+    //SettingChannelSelection settingChannelSelection;
+    //SettingTimeScaleFactor settingTimeScaleFactor;
+    //SettingTriggerSetting settingTriggerSetting;
+    SettingWindow settingWindow;
+
     qRegisterMetaType< QVector<DataFrame> >("QVector<DataFrame>");
-
-
-    //set title
-    mainWindows.setTitle(title);
-    mainWindows.setVersion(version);
 
     //mainWindows.setupStyle();
     mainWindows.show();
@@ -44,6 +44,10 @@ int main(int argc, char *argv[])
     //logoDateTime.show();
     //errorFrame.show();
     //stateFrame.show();
+    //settingChannelSelection.show();
+    //settingTimeScaleFactor.show();
+    //settingTriggerSetting.show();
+    settingWindow.show();
 
     //thread
     QThread *threadTick = new QThread;              // First thread

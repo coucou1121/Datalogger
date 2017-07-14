@@ -32,7 +32,7 @@
 #define ANALOG_PLOT_AXIS_SUB_TICK_COLOR     250, 250, 250           //RGB, R=140,   G=140,  B=140   aplha = 255
 #define ANALOG_PLOT_AXIS_TICK_LABEL_COLOR   250, 250, 250           //RGB, R=140,   G=140,  B=140   aplha = 255
 //pen
-#define ANALOG_PLOT_TRACE                   0, 0, 255               //RGB, R=0,   G=0,  B=255   aplha = 255
+#define ANALOG_PLOT_TRACE                   0, 153, 255               //RGB, R=0,   G=153,  B=255   aplha = 255
 
 //DIGITAL plot
 //size
@@ -51,7 +51,7 @@
 #define DIGITAL_PLOT_AXIS_SUB_TICK_COLOR     250, 250, 250           //RGB, R=140,   G=140,  B=140   aplha = 255
 #define DIGITAL_PLOT_AXIS_TICK_LABEL_COLOR   250, 250, 250           //RGB, R=140,   G=140,  B=140   aplha = 255
 //pen
-#define DIGITAL_PLOT_TRACE                   0, 255, 0               //RGB, R=0,   G=255,  B=0   aplha = 255
+#define DIGITAL_PLOT_TRACE                   51, 204, 51               //RGB, R=51,   G=204,  B=51   aplha = 255
 
 
 class CommonStyle
