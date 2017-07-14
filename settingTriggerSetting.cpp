@@ -2,7 +2,7 @@
 #include "ui_settingTriggerSetting.h"
 
 SettingTriggerSetting::SettingTriggerSetting(QWidget *parent) :
-    QWidget(parent),
+    QFrame(parent),
     ui(new Ui::SettingTriggerSetting)
 {
     ui->setupUi(this);

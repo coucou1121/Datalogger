@@ -14,9 +14,6 @@
    <string>Form</string>
   </property>
   <layout class="QGridLayout" name="gridLayout">
-   <item row="2" column="1">
-    <widget class="SettingTriggerFunction" name="widgetTriggerFunction" native="true"/>
-   </item>
    <item row="2" column="0">
     <widget class="SettingPreTriggerPercentage" name="widgetPreTriggerPercentage" native="true"/>
    </item>
@@ -28,6 +25,9 @@
    </item>
    <item row="0" column="1" rowspan="2">
     <widget class="SettingTriggerSetting" name="widgetTriggerSetting" native="true"/>
+   </item>
+   <item row="2" column="1">
+    <widget class="SettingTriggerFunction" name="widgetTriggerFunction" native="true"/>
    </item>
   </layout>
  </widget>

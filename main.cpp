@@ -24,7 +24,7 @@ int main(int argc, char *argv[])
     //SettingChannelSelection settingChannelSelection;
     //SettingTimeScaleFactor settingTimeScaleFactor;
     //SettingTriggerSetting settingTriggerSetting;
-    SettingWindow settingWindow;
+    //SettingWindow settingWindow;
 
     qRegisterMetaType< QVector<DataFrame> >("QVector<DataFrame>");
 
@@ -47,7 +47,7 @@ int main(int argc, char *argv[])
     //settingChannelSelection.show();
     //settingTimeScaleFactor.show();
     //settingTriggerSetting.show();
-    settingWindow.show();
+    //settingWindow.show();
 
     //thread
     QThread *threadTick = new QThread;              // First thread

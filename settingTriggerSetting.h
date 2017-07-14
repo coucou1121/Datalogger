@@ -1,13 +1,13 @@
 #ifndef SETTINGTRIGGERSETTING_H
 #define SETTINGTRIGGERSETTING_H
 
-#include <QWidget>
+#include <QFrame>
 
 namespace Ui {
 class SettingTriggerSetting;
 }
 
-class SettingTriggerSetting : public QWidget
+class SettingTriggerSetting : public QFrame
 {
     Q_OBJECT
 

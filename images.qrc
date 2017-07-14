@@ -8,5 +8,6 @@
         <file>images/StateRunTrig.png</file>
         <file>images/FollingEdge.png</file>
         <file>images/RisingEdge.png</file>
+        <file>images/DoubleFlow.png</file>
     </qresource>
 </RCC>

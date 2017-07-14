@@ -1,7 +1,7 @@
 #ifndef SETTINGCHANNELSELECTION_H
 #define SETTINGCHANNELSELECTION_H
 
-#include <QWidget>
+#include <QFrame>
 #include <QPushButton>
 #include "commonStyle.h"
 
@@ -9,7 +9,7 @@ namespace Ui {
 class SettingChannelSelection;
 }
 
-class SettingChannelSelection : public QWidget
+class SettingChannelSelection : public QFrame
 {
     Q_OBJECT
 
@@ -21,55 +21,33 @@ private:
     Ui::SettingChannelSelection *ui;
 
     CommonStyle _myStyle;
-    bool _btSelected;
+    void setupStyle();
 
     void setupUILayout();
     void setupButton(QPushButton *pushbutton, QColor btColor);
 
-    QPushButton *_btDI1;
-    QPushButton *_btDI2;
-    QPushButton *_btDI3;
-    QPushButton *_btDI4;
-    QPushButton *_btDI5;
-    QPushButton *_btDI6;
-    QPushButton *_btDI7;
-    QPushButton *_btDI8;
-    QPushButton *_btDI9;
-    QPushButton *_btDI10;
-    QPushButton *_btDI11;
-    QPushButton *_btDI12;
-    QPushButton *_btDI13;
-    QPushButton *_btDI14;
-    QPushButton *_btDI15;
-    QPushButton *_btDI16;
-
-    QPushButton *_btAI1;
-    QPushButton *_btAI2;
-    QPushButton *_btAI3;
-    QPushButton *_btAI4;
-
 private slots:
 
-    void _btDI1_released();
-    void _btDI2_released();
-    void _btDI3_released();
-    void _btDI4_released();
-    void _btDI5_released();
-    void _btDI6_released();
-    void _btDI7_released();
-    void _btDI8_released();
-    void _btDI9_released();
-    void _btDI10_released();
-    void _btDI11_released();
-    void _btDI12_released();
-    void _btDI13_released();
-    void _btDI14_released();
-    void _btDI15_released();
-    void _btDI16_released();
-    void _btAI1_released();
-    void _btAI2_released();
-    void _btAI3_released();
-    void _btAI4_released();
+    void on_btDI1_released();
+    void on_btDI2_released();
+    void on_btDI3_released();
+    void on_btDI4_released();
+    void on_btDI5_released();
+    void on_btDI6_released();
+    void on_btDI7_released();
+    void on_btDI8_released();
+    void on_btDI9_released();
+    void on_btDI10_released();
+    void on_btDI11_released();
+    void on_btDI12_released();
+    void on_btDI13_released();
+    void on_btDI14_released();
+    void on_btDI15_released();
+    void on_btDI16_released();
+    void on_btAI1_released();
+    void on_btAI2_released();
+    void on_btAI3_released();
+    void on_btAI4_released();
 
 signals:
     void _btDI1Selected(bool btSelected);

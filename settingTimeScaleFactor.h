@@ -1,13 +1,13 @@
 #ifndef SETTINGTIMESCALEFACTOR_H
 #define SETTINGTIMESCALEFACTOR_H
 
-#include <QWidget>
+#include <QFrame>
 
 namespace Ui {
 class SettingTimeScaleFactor;
 }
 
-class SettingTimeScaleFactor : public QWidget
+class SettingTimeScaleFactor : public QFrame
 {
     Q_OBJECT
 

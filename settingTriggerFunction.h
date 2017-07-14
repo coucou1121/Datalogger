@@ -1,13 +1,14 @@
 #ifndef SETTINGTRIGGERFUNCTION_H
 #define SETTINGTRIGGERFUNCTION_H
 
-#include <QWidget>
+#include <QFrame>
+#include "commonStyle.h"
 
 namespace Ui {
 class SettingTriggerFunction;
 }
 
-class SettingTriggerFunction : public QWidget
+class SettingTriggerFunction : public QFrame
 {
     Q_OBJECT
 
@@ -17,6 +18,9 @@ public:
 
 private:
     Ui::SettingTriggerFunction *ui;
+    CommonStyle _myStyle;
+
+    void setupStyle();
 };
 
 #endif // SETTINGTRIGGERFUNCTION_H

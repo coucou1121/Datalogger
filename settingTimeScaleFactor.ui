@@ -1,17 +1,20 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <ui version="4.0">
  <class>SettingTimeScaleFactor</class>
- <widget class="QWidget" name="SettingTimeScaleFactor">
+ <widget class="QFrame" name="SettingTimeScaleFactor">
   <property name="geometry">
    <rect>
     <x>0</x>
     <y>0</y>
     <width>366</width>
-    <height>152</height>
+    <height>162</height>
    </rect>
   </property>
   <property name="windowTitle">
    <string>Form</string>
+  </property>
+  <property name="frameShape">
+   <enum>QFrame::Box</enum>
   </property>
   <layout class="QGridLayout" name="gridLayout_2">
    <property name="verticalSpacing">
@@ -327,7 +330,6 @@
        </widget>
       </item>
      </layout>
-     <zorder>framePeriod</zorder>
      <zorder>labelTitleSampleSecond</zorder>
      <zorder>labelFrequency</zorder>
      <zorder>labelFrequencyUnit</zorder>
@@ -369,8 +371,6 @@
   <zorder>frameSampleSecond</zorder>
   <zorder>frameDuration</zorder>
   <zorder>framePeriod</zorder>
-  <zorder>doubleSpinBoxPeriod</zorder>
-  <zorder>labelPeriod</zorder>
   <zorder>frameMiddleTop</zorder>
   <zorder>frameLeftBottom</zorder>
   <zorder>frame</zorder>

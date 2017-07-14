@@ -2,7 +2,7 @@
 #include "ui_settingTimeScaleFactor.h"
 
 SettingTimeScaleFactor::SettingTimeScaleFactor(QWidget *parent) :
-    QWidget(parent),
+    QFrame(parent),
     ui(new Ui::SettingTimeScaleFactor)
 {
     ui->setupUi(this);

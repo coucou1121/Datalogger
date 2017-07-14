@@ -2,6 +2,7 @@
 #define SETTINGWINDOW_H
 
 #include <QWidget>
+#include "commonStyle.h"
 
 namespace Ui {
 class SettingWindow;
@@ -17,6 +18,7 @@ public:
 
 private:
     Ui::SettingWindow *ui;
+    CommonStyle _myStyle;
 };
 
 #endif // SETTINGWINDOW_H

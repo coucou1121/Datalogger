@@ -12,11 +12,13 @@ MainWindow::MainWindow(QWidget *parent) :
 
     //create windows object
     baseWindow = new BaseWindow();
+    settingWindow = new SettingWindow();
 
     this->mainSetup();
     this->setupStyle();
     this->setStatusBar();
 
+    this->_btSetting_released();
 }
 
 MainWindow::~MainWindow()
@@ -28,6 +30,11 @@ void MainWindow::mainSetup()
 {
     //add base windows in windows layout
     ui->gridLayout->addWidget(baseWindow, 0, 1, 6, 1);
+
+    //add setting windows in windows layout
+    ui->gridLayout->addWidget(settingWindow, 0, 1, 6, 1);
+    //hide the setting windows
+    settingWindow->hide();
 
     //set title on baseWindows
     baseWindow->setTitle("Datalogger");
@@ -109,6 +116,9 @@ void MainWindow::resetPushButtonColor()
                            "; color:" + _myStyle.getBackGroundColorButtonStatusbarSelected().name() + ";");
     _btDebug->setStyleSheet("background-color:" + _myStyle.getBackGroundColorButtonStatusbarUnselected().name() +
                            "; color:" + _myStyle.getBackGroundColorButtonStatusbarSelected().name() + ";");
+
+    baseWindow->hide();
+    settingWindow->hide();
 }
 
 void MainWindow::_btBase_released()
@@ -116,6 +126,7 @@ void MainWindow::_btBase_released()
     this->resetPushButtonColor();
     _btBase->setStyleSheet("background-color:" + _myStyle.getBackGroundColorButtonStatusbarSelected().name() +
                            "; color:" + _myStyle.getBackGroundColorButtonStatusbarUnselected().name() + ";");
+    baseWindow->show();
 }
 
 void MainWindow::_btSetting_released()
@@ -123,6 +134,7 @@ void MainWindow::_btSetting_released()
     this->resetPushButtonColor();
     _btSetting->setStyleSheet("background-color:" + _myStyle.getBackGroundColorButtonStatusbarSelected().name() +
                            "; color:" + _myStyle.getBackGroundColorButtonStatusbarUnselected().name() + ";");
+    settingWindow->show();
 }
 
 void MainWindow::_btTrigger_released()

@@ -35,8 +35,7 @@ private:
 
     // diffrent windows
     BaseWindow *baseWindow;
-    SettingWindow *settingWindows;
-    void setStatusBar();
+    SettingWindow *settingWindow;
 
     //Style
     CommonStyle _myStyle;
@@ -52,6 +51,7 @@ private:
     QPushButton *_btDisplay;
     QPushButton *_btDebug;
 
+    void setStatusBar();
     void resetPushButtonColor();
     void mainSetup();
 
