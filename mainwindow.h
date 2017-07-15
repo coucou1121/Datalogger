@@ -56,6 +56,9 @@ private:
     void resetPushButtonColor();
     void mainSetup();
 
+    //setup signal and slot
+    void setupSignalAndSlot();
+
 private slots:
 
     void _btBase_released();

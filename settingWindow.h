@@ -19,6 +19,9 @@ public:
 private:
     Ui::SettingWindow *ui;
     CommonStyle _myStyle;
+
+    //setup signal and slot
+    void setupSignalAndSlot();
 };
 
 #endif // SETTINGWINDOW_H

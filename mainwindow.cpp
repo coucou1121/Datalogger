@@ -44,6 +44,11 @@ void MainWindow::mainSetup()
 
 }
 
+void MainWindow::setupSignalAndSlot()
+{
+
+}
+
 void MainWindow::setupStyle()
 {
     QPalette palette;

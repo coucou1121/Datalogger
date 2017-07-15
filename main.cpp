@@ -99,9 +99,9 @@ int main(int argc, char *argv[])
     QObject::connect(refreshDisplayTimer, SIGNAL(tickFinished()), &displayWindows, SLOT(updatePlot()));
 
     //thread start
-    threadTick->start();
-    threadNewDataFrame->start();
-    threadDisplayRefresh->start();
+    //threadTick->start();
+    //threadNewDataFrame->start();
+    //threadDisplayRefresh->start();
     //threadDataFramSimulator->start();
 
     //analogPlot.setYValue(dataFrameSimulator->CPT());

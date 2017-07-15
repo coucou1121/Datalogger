@@ -101,18 +101,30 @@ QColor CommonStyle::getBackGroundColorErrorFrame() const
     return backGroundColorErrorFrame;
 }
 
+void CommonStyle::setPushButtonUnselected(QPushButton *pushButton)
+{
+    pushButton->setStyleSheet("background-color: qlineargradient(x1: 0, y1: 0, x2: 0, y2: 1, "
+                              "stop: 1" + this->getBackGroundColorButtonStatusbarUnselected().name() +
+                              ", stop: 0 #ffffff);");
+}
+
+void CommonStyle::setPushButtonBlocked(QPushButton *pushButton)
+{
+    pushButton->setStyleSheet("background-color:" + this->getBackGroundColor().name()+ ";");
+}
+
 void CommonStyle::setSpinBoxShape(QSpinBox *spinBox)
 {
     spinBox->setStyleSheet("QSpinBox::up-button { subcontrol-position: left; width: 40px; height: 35px;}"
-                                        "QSpinBox::down-button { subcontrol-position: right; width: 40px; height: 35px;}"
-                                        "QSpinBox {background-color: " + this->getBackGroundColorButtonStatusbarUnselected().name()+ ";}"
-                                        "QSpinBox { border: 3px inset grey; }");
+                           "QSpinBox::down-button { subcontrol-position: right; width: 40px; height: 35px;}"
+                           "QSpinBox {background-color: " + this->getBackGroundColorButtonStatusbarUnselected().name()+ ";}"
+                           "QSpinBox { border: 3px inset grey; }");
 }
 
 void CommonStyle::setDoublespinBoxShape(QDoubleSpinBox *doubleSpinBox)
 {
     doubleSpinBox->setStyleSheet("QDoubleSpinBox::up-button { subcontrol-position: left; width: 40px; height: 35px;}"
-                                        "QDoubleSpinBox::down-button { subcontrol-position: right; width: 40px; height: 35px;}"
-                                        "QDoubleSpinBox {background-color: " + this->getBackGroundColorButtonStatusbarUnselected().name()+ ";}"
-                                        "QDoubleSpinBox { border: 3px inset grey; }");
+                                 "QDoubleSpinBox::down-button { subcontrol-position: right; width: 40px; height: 35px;}"
+                                 "QDoubleSpinBox {background-color: " + this->getBackGroundColorButtonStatusbarUnselected().name()+ ";}"
+                                 "QDoubleSpinBox { border: 3px inset grey; }");
 }

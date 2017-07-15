@@ -32,48 +32,20 @@ void SettingTriggerSetting::setupStyle()
     ui->pushButtonRangeAI4->setText(range0_30Txt);
 
     //set backgroud of all buttom
-    ui->pushButtonRangeDI1->setStyleSheet("background-color: qlineargradient(x1: 0, y1: 0, x2: 0, y2: 1, "
-                                          "stop: 1" + _myStyle.getBackGroundColorButtonStatusbarUnselected().name() +
-                                          ", stop: 0 #ffffff);");
-    ui->pushButtonRangeDI2->setStyleSheet("background-color: qlineargradient(x1: 0, y1: 0, x2: 0, y2: 1, "
-                                          "stop: 1" + _myStyle.getBackGroundColorButtonStatusbarUnselected().name() +
-                                          ", stop: 0 #ffffff);");
-    ui->pushButtonRangeDI3->setStyleSheet("background-color: qlineargradient(x1: 0, y1: 0, x2: 0, y2: 1, "
-                                          "stop: 1" + _myStyle.getBackGroundColorButtonStatusbarUnselected().name() +
-                                          ", stop: 0 #ffffff);");
-    ui->pushButtonRangeDI4->setStyleSheet("background-color: qlineargradient(x1: 0, y1: 0, x2: 0, y2: 1, "
-                                          "stop: 1" + _myStyle.getBackGroundColorButtonStatusbarUnselected().name() +
-                                          ", stop: 0 #ffffff);");
-    ui->pushButtonRangeAI1->setStyleSheet("background-color: qlineargradient(x1: 0, y1: 0, x2: 0, y2: 1, "
-                                          "stop: 1" + _myStyle.getBackGroundColorButtonStatusbarUnselected().name() +
-                                          ", stop: 0 #ffffff);");
-    ui->pushButtonRangeAI2->setStyleSheet("background-color: qlineargradient(x1: 0, y1: 0, x2: 0, y2: 1, "
-                                          "stop: 1" + _myStyle.getBackGroundColorButtonStatusbarUnselected().name() +
-                                          ", stop: 0 #ffffff);");
-    ui->pushButtonRangeAI3->setStyleSheet("background-color: qlineargradient(x1: 0, y1: 0, x2: 0, y2: 1, "
-                                          "stop: 1" + _myStyle.getBackGroundColorButtonStatusbarUnselected().name() +
-                                          ", stop: 0 #ffffff);");
-    ui->pushButtonRangeAI4->setStyleSheet("background-color: qlineargradient(x1: 0, y1: 0, x2: 0, y2: 1, "
-                                          "stop: 1" + _myStyle.getBackGroundColorButtonStatusbarUnselected().name() +
-                                          ", stop: 0 #ffffff);");
-    ui->pushButtonEdgeDI1->setStyleSheet("background-color: qlineargradient(x1: 0, y1: 0, x2: 0, y2: 1, "
-                                         "stop: 1" + _myStyle.getBackGroundColorButtonStatusbarUnselected().name() +
-                                         ", stop: 0 #ffffff);");
-    ui->pushButtonEdgeDI2->setStyleSheet("background-color: qlineargradient(x1: 0, y1: 0, x2: 0, y2: 1, "
-                                         "stop: 1" + _myStyle.getBackGroundColorButtonStatusbarUnselected().name() +
-                                         ", stop: 0 #ffffff);");
-    ui->pushButtonEdgeDI3->setStyleSheet("background-color: qlineargradient(x1: 0, y1: 0, x2: 0, y2: 1, "
-                                         "stop: 1" + _myStyle.getBackGroundColorButtonStatusbarUnselected().name() +
-                                         ", stop: 0 #ffffff);");
-    ui->pushButtonEdgeDI4->setStyleSheet("background-color: qlineargradient(x1: 0, y1: 0, x2: 0, y2: 1, "
-                                         "stop: 1" + _myStyle.getBackGroundColorButtonStatusbarUnselected().name() +
-                                         ", stop: 0 #ffffff);");
-    ui->pushButtonEdgeAI1->setStyleSheet("background-color: qlineargradient(x1: 0, y1: 0, x2: 0, y2: 1, "
-                                         "stop: 1" + _myStyle.getBackGroundColorButtonStatusbarUnselected().name() +
-                                         ", stop: 0 #ffffff);");
-    ui->pushButtonEdgeAI2->setStyleSheet("background-color: qlineargradient(x1: 0, y1: 0, x2: 0, y2: 1, "
-                                         "stop: 1" + _myStyle.getBackGroundColorButtonStatusbarUnselected().name() +
-                                         ", stop: 0 #ffffff);");
+    _myStyle.setPushButtonUnselected(ui->pushButtonRangeDI1);
+    _myStyle.setPushButtonUnselected(ui->pushButtonRangeDI2);
+    _myStyle.setPushButtonUnselected(ui->pushButtonRangeDI3);
+    _myStyle.setPushButtonUnselected(ui->pushButtonRangeDI4);
+    _myStyle.setPushButtonUnselected(ui->pushButtonRangeAI1);
+    _myStyle.setPushButtonUnselected(ui->pushButtonRangeAI2);
+    _myStyle.setPushButtonUnselected(ui->pushButtonRangeAI3);
+    _myStyle.setPushButtonUnselected(ui->pushButtonRangeAI4);
+    _myStyle.setPushButtonUnselected(ui->pushButtonEdgeDI1);
+    _myStyle.setPushButtonUnselected(ui->pushButtonEdgeDI2);
+    _myStyle.setPushButtonUnselected(ui->pushButtonEdgeDI3);
+    _myStyle.setPushButtonUnselected(ui->pushButtonEdgeDI4);
+    _myStyle.setPushButtonUnselected(ui->pushButtonEdgeAI1);
+    _myStyle.setPushButtonUnselected(ui->pushButtonEdgeAI2);
 
     //set default edge value
     _btDI1Edge = GlobalEnumated::risingEdge;
@@ -108,7 +80,6 @@ SettingTriggerSetting::~SettingTriggerSetting()
 
 void SettingTriggerSetting::on_pushButtonRangeDI1_released()
 {
-
     static GlobalEnumated::eRangeValue selection;
 
     selection = selection == GlobalEnumated::range0_24 ? GlobalEnumated::range0_24 : GlobalEnumated::range0_24;
@@ -295,6 +266,142 @@ void SettingTriggerSetting::on_pushButtonEdgeAI2_released()
 {
     _btAI2Edge = _btAI2Edge == GlobalEnumated::risingEdge ? GlobalEnumated::fallingEdge : GlobalEnumated::risingEdge;
     this->setEdgeIcon(ui->pushButtonEdgeAI2, _btAI2Edge);
+}
+
+void SettingTriggerSetting::_DI1select(bool btselected)
+{
+    ui->pushButtonRangeDI1->setEnabled(btselected);
+    ui->doubleSpinBoxDI1->setEnabled(btselected);
+    ui->pushButtonEdgeDI1->setEnabled(btselected);
+
+    if(btselected)
+    {
+        _myStyle.setPushButtonUnselected(ui->pushButtonRangeDI1);
+        _myStyle.setPushButtonUnselected(ui->pushButtonEdgeDI1);
+    }
+    else
+    {
+        _myStyle.setPushButtonBlocked(ui->pushButtonRangeDI1);
+        _myStyle.setPushButtonBlocked(ui->pushButtonEdgeDI1);
+    }
+}
+
+void SettingTriggerSetting::_DI2select(bool btselected)
+{
+    ui->pushButtonRangeDI2->setEnabled(btselected);
+    ui->doubleSpinBoxDI2->setEnabled(btselected);
+    ui->pushButtonEdgeDI2->setEnabled(btselected);
+
+    if(btselected)
+    {
+        _myStyle.setPushButtonUnselected(ui->pushButtonRangeDI2);
+        _myStyle.setPushButtonUnselected(ui->pushButtonEdgeDI2);
+    }
+    else
+    {
+        _myStyle.setPushButtonBlocked(ui->pushButtonRangeDI2);
+        _myStyle.setPushButtonBlocked(ui->pushButtonEdgeDI2);
+    }
+}
+
+void SettingTriggerSetting::_DI3select(bool btselected)
+{
+    ui->pushButtonRangeDI3->setEnabled(btselected);
+    ui->doubleSpinBoxDI3->setEnabled(btselected);
+    ui->pushButtonEdgeDI3->setEnabled(btselected);
+
+    if(btselected)
+    {
+        _myStyle.setPushButtonUnselected(ui->pushButtonRangeDI3);
+        _myStyle.setPushButtonUnselected(ui->pushButtonEdgeDI3);
+    }
+    else
+    {
+        _myStyle.setPushButtonBlocked(ui->pushButtonRangeDI3);
+        _myStyle.setPushButtonBlocked(ui->pushButtonEdgeDI3);
+    }
+}
+
+void SettingTriggerSetting::_DI4select(bool btselected)
+{
+    ui->pushButtonRangeDI4->setEnabled(btselected);
+    ui->doubleSpinBoxDI4->setEnabled(btselected);
+    ui->pushButtonEdgeDI4->setEnabled(btselected);
+
+    if(btselected)
+    {
+        _myStyle.setPushButtonUnselected(ui->pushButtonRangeDI4);
+        _myStyle.setPushButtonUnselected(ui->pushButtonEdgeDI4);
+    }
+    else
+    {
+        _myStyle.setPushButtonBlocked(ui->pushButtonRangeDI4);
+        _myStyle.setPushButtonBlocked(ui->pushButtonEdgeDI4);
+    }
+}
+
+void SettingTriggerSetting::_AI1select(bool btselected)
+{
+    ui->pushButtonRangeAI1->setEnabled(btselected);
+    ui->doubleSpinBoxAI1->setEnabled(btselected);
+    ui->pushButtonEdgeAI1->setEnabled(btselected);
+
+    if(btselected)
+    {
+        _myStyle.setPushButtonUnselected(ui->pushButtonRangeAI1);
+        _myStyle.setPushButtonUnselected(ui->pushButtonEdgeAI1);
+    }
+    else
+    {
+        _myStyle.setPushButtonBlocked(ui->pushButtonRangeAI1);
+        _myStyle.setPushButtonBlocked(ui->pushButtonEdgeAI1);
+    }
+}
+
+void SettingTriggerSetting::_AI2select(bool btselected)
+{
+    ui->pushButtonRangeAI2->setEnabled(btselected);
+    ui->doubleSpinBoxAI2->setEnabled(btselected);
+    ui->pushButtonEdgeAI2->setEnabled(btselected);
+
+    if(btselected)
+    {
+        _myStyle.setPushButtonUnselected(ui->pushButtonRangeAI2);
+        _myStyle.setPushButtonUnselected(ui->pushButtonEdgeAI2);
+    }
+    else
+    {
+        _myStyle.setPushButtonBlocked(ui->pushButtonRangeAI2);
+        _myStyle.setPushButtonBlocked(ui->pushButtonEdgeAI2);
+    }
+}
+
+void SettingTriggerSetting::_AI3select(bool btselected)
+{
+    ui->pushButtonRangeAI3->setEnabled(btselected);
+
+    if(btselected)
+    {
+        _myStyle.setPushButtonUnselected(ui->pushButtonRangeAI3);
+    }
+    else
+    {
+        _myStyle.setPushButtonBlocked(ui->pushButtonRangeAI3);
+    }
+}
+
+void SettingTriggerSetting::_AI4select(bool btselected)
+{
+    ui->pushButtonRangeAI4->setEnabled(btselected);
+
+    if(btselected)
+    {
+        _myStyle.setPushButtonUnselected(ui->pushButtonRangeAI4);
+    }
+    else
+    {
+        _myStyle.setPushButtonBlocked(ui->pushButtonRangeAI4);
+    }
 }
 
 void SettingTriggerSetting::setEdgeIcon(QPushButton *pushbutton, GlobalEnumated::eEdge edgeType)

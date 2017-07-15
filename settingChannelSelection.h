@@ -1,6 +1,7 @@
 #ifndef SETTINGCHANNELSELECTION_H
 #define SETTINGCHANNELSELECTION_H
 
+#include <QDebug>
 #include <QFrame>
 #include <QPushButton>
 #include "commonStyle.h"
@@ -27,7 +28,6 @@ private:
     void setupButton(QPushButton *pushbutton, QColor btColor);
 
 private slots:
-
     void on_btDI1_released();
     void on_btDI2_released();
     void on_btDI3_released();

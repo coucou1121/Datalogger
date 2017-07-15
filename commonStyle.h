@@ -2,6 +2,7 @@
 #define COMMONSTYLE_H
 
 #include <QColor>
+#include <QPushButton>
 #include <QDoubleSpinBox>
 #include <QSpinBox>
 
@@ -86,6 +87,9 @@ public:
     //digital trace
     QColor getTraceColorDigitalPlot() const;
 
+    //pushbutton unselect Shape
+    void setPushButtonUnselected(QPushButton *pushButton);
+    void setPushButtonBlocked(QPushButton *pushButton);
 
     //doublspinbox Shape
     void setSpinBoxShape(QSpinBox *spinBox);
