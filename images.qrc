@@ -9,5 +9,8 @@
         <file>images/FollingEdge.png</file>
         <file>images/RisingEdge.png</file>
         <file>images/DoubleFlow.png</file>
+        <file>images/RightFlow.png</file>
+        <file>images/RightAngleFlow.png</file>
+        <file>images/VLine.png</file>
     </qresource>
 </RCC>

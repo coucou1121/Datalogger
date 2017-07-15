@@ -18,8 +18,8 @@ public:
 
 private:
     Ui::SettingTriggerFunction *ui;
-    CommonStyle _myStyle;
 
+    CommonStyle _myStyle;
     void setupStyle();
 };
 

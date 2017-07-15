@@ -39,23 +39,12 @@ void SettingPreTriggerPercentage::setupStyle()
                                                       "; color:" + _myStyle.getBackGroundColorButtonStatusbarUnselected().name() + ";");
 
     //setup style Time befor and after trig title
-    ui->labelTimeBeforTrig->setStyleSheet("background-color:" + _myStyle.getBackGroundColorButtonStatusbarUnselected().name()+ ";");
-    ui->labelTimeAfterTrig->setStyleSheet("background-color:" + _myStyle.getBackGroundColorButtonStatusbarUnselected().name()+ ";");
+    ui->labelTimeBeforTrigTitle->setStyleSheet("background-color:" + _myStyle.getBackGroundColorButtonStatusbarUnselected().name()+ ";");
+    ui->labelTimeAfterTrigTitle->setStyleSheet("background-color:" + _myStyle.getBackGroundColorButtonStatusbarUnselected().name()+ ";");
 
     //setup style all spinbox
-    ui->spinBoxTimeBeforeTrig->setStyleSheet("QSpinBox::up-button { subcontrol-position: left; width: 40px; height: 35px;}"
-                                             "QSpinBox::down-button { subcontrol-position: right; width: 40px; height: 35px;}"
-                                             "QSpinBox {background-color: " + _myStyle.getBackGroundColorButtonStatusbarUnselected().name()+ ";}"
-                                             "QSpinBox { border: 3px inset grey; }");
-
-    ui->spinBoxTimeAfterTrig->setStyleSheet("QSpinBox::up-button { subcontrol-position: left; width: 40px; height: 35px;}"
-                                             "QSpinBox::down-button { subcontrol-position: right; width: 40px; height: 35px;}"
-                                             "QSpinBox {background-color: " + _myStyle.getBackGroundColorButtonStatusbarUnselected().name()+ ";}"
-                                             "QSpinBox { border: 3px inset grey; }");
-
-
- //   ui->spinBoxTimeAfterTrig->setStyleSheet("background-color:" + _myStyle.getBackGroundColorButtonStatusbarUnselected().name() + ";");
-
+    _myStyle.setSpinBoxShape(ui->spinBoxTimeBeforeTrig);
+    _myStyle.setSpinBoxShape(ui->spinBoxTimeAfterTrig);
 }
 
 void SettingPreTriggerPercentage::setStepOnClick(int stepOnClick)
@@ -81,11 +70,6 @@ void SettingPreTriggerPercentage::on_spinBoxTimeBeforeTrig_valueChanged(int arg1
 
 void SettingPreTriggerPercentage::on_spinBoxTimeAfterTrig_valueChanged(int arg1)
 {
-    int percentValue = (arg1 * ui->progressBar->maximum())/_maximumRange;
-
     //modify the vlue at the time befor trig
     ui->spinBoxTimeBeforeTrig->setValue(_maximumRange-arg1);
-
-    //set the percent in progress bar
-    ui->progressBar->setValue(percentValue);
 }

@@ -2,6 +2,8 @@
 #define COMMONSTYLE_H
 
 #include <QColor>
+#include <QDoubleSpinBox>
+#include <QSpinBox>
 
 //main windows
 //size
@@ -11,6 +13,7 @@
 //color
 #define BACKGROUD_COLOR 160,160,160                                 //RGB, R=160, G=160, B=160  aplha = 255
 #define BACKGROUD_COLOR_BOTTOM_BAR 125,125,125                      //RGB, R=125, G=125, B=125  alpha = 255
+#define BACKGROUD_COLOR_FRAME 119,119,119                           //RGB, R=119, G=119, B=119  alpha = 255
 #define BACKGROUD_COLOR_ERROR_FRAME 255,160,160                     //RGB, R=255, G=160, B=160  alpha = 255
 #define BACKGROUD_COLOR_BUTTON_STATUS_BAR_SELECTED 77,77,77         //RGB, R=77, G=77, B=77  alpha = 255
 #define BACKGROUD_COLOR_BUTTON_STATUS_BAR_UNSELECTED 221,221,221    //RGB, R=221, G=221, B=221  alpha = 255
@@ -63,6 +66,7 @@ public:
     QColor getBackGroundColor() const;
     QColor getBackGroundColorBottomBar() const;
     QColor getBackGroundColorAnalogPlot() const;
+    QColor getBackGroundColorFrame() const;
     QColor getBackGroundColorErrorFrame() const;
     QColor getBackGroundColorButtonStatusbarSelected() const;
     QColor getBackGroundColorButtonStatusbarUnselected() const;
@@ -83,7 +87,9 @@ public:
     QColor getTraceColorDigitalPlot() const;
 
 
-
+    //doublspinbox Shape
+    void setSpinBoxShape(QSpinBox *spinBox);
+    void setDoublespinBoxShape(QDoubleSpinBox *doubleSpinBox);
 
 private:
     //analog plot
@@ -91,6 +97,7 @@ private:
     QColor backGroundColor;
     QColor backGroundColorBottomBar;
     QColor backGroundColorAnalogPlot;
+    QColor backGroundColorFrame;
     QColor backGroundColorErrorFrame;
     QColor backGroundColorButtonStatusbarSelected;
     QColor backGroundColorButtonStatusbarUnselected;
@@ -113,7 +120,5 @@ private:
     //digital trace
     QColor traceColorDigitalPlot;
 };
-
-
 
 #endif // COMMONSTYLE_H

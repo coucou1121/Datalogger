@@ -2,6 +2,7 @@
 #define SETTINGTIMESCALEFACTOR_H
 
 #include <QFrame>
+#include "commonStyle.h"
 
 namespace Ui {
 class SettingTimeScaleFactor;
@@ -17,6 +18,9 @@ public:
 
 private:
     Ui::SettingTimeScaleFactor *ui;
+
+    CommonStyle _myStyle;
+    void setupStyle();
 };
 
 #endif // SETTINGTIMESCALEFACTOR_H

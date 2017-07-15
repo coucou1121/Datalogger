@@ -5,6 +5,7 @@ CommonStyle::CommonStyle()
     //main windows
     backGroundColor.setRgb(BACKGROUD_COLOR);
     backGroundColorBottomBar.setRgb(BACKGROUD_COLOR_BOTTOM_BAR);
+    backGroundColorFrame.setRgb(BACKGROUD_COLOR_FRAME);
     backGroundColorErrorFrame.setRgb(BACKGROUD_COLOR_ERROR_FRAME);
     backGroundColorButtonStatusbarSelected.setRgb(BACKGROUD_COLOR_BUTTON_STATUS_BAR_SELECTED);
     backGroundColorButtonStatusbarUnselected.setRgb(BACKGROUD_COLOR_BUTTON_STATUS_BAR_UNSELECTED);
@@ -80,6 +81,11 @@ QColor CommonStyle::getTraceColorDigitalPlot() const
     return traceColorDigitalPlot;
 }
 
+QColor CommonStyle::getBackGroundColorFrame() const
+{
+    return backGroundColorFrame;
+}
+
 QColor CommonStyle::getBackGroundColorButtonStatusbarSelected() const
 {
     return backGroundColorButtonStatusbarSelected;
@@ -93,4 +99,20 @@ QColor CommonStyle::getBackGroundColorButtonStatusbarUnselected() const
 QColor CommonStyle::getBackGroundColorErrorFrame() const
 {
     return backGroundColorErrorFrame;
+}
+
+void CommonStyle::setSpinBoxShape(QSpinBox *spinBox)
+{
+    spinBox->setStyleSheet("QSpinBox::up-button { subcontrol-position: left; width: 40px; height: 35px;}"
+                                        "QSpinBox::down-button { subcontrol-position: right; width: 40px; height: 35px;}"
+                                        "QSpinBox {background-color: " + this->getBackGroundColorButtonStatusbarUnselected().name()+ ";}"
+                                        "QSpinBox { border: 3px inset grey; }");
+}
+
+void CommonStyle::setDoublespinBoxShape(QDoubleSpinBox *doubleSpinBox)
+{
+    doubleSpinBox->setStyleSheet("QDoubleSpinBox::up-button { subcontrol-position: left; width: 40px; height: 35px;}"
+                                        "QDoubleSpinBox::down-button { subcontrol-position: right; width: 40px; height: 35px;}"
+                                        "QDoubleSpinBox {background-color: " + this->getBackGroundColorButtonStatusbarUnselected().name()+ ";}"
+                                        "QDoubleSpinBox { border: 3px inset grey; }");
 }

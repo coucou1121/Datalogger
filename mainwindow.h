@@ -13,6 +13,7 @@
 #include "settingWindow.h"
 
 namespace Ui {
+
 class MainWindow;
 }
 
