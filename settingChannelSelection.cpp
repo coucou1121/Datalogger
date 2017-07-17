@@ -77,12 +77,14 @@ void SettingChannelSelection::on_btDI1_released()
         ui->btDI1->setStyleSheet("background-color: qlineargradient(x1: 0, y1: 0, x2: 0, y2: 1, "
                                   "stop: 1" + _myStyle.getTraceColorDigitalPlot().name() +
                                   ", stop: 0 #ffffff);");
+        emit _btAddList(GlobalEnumated::btDI1);
     }
     else
     {
        ui->btDI1->setStyleSheet("background-color: qlineargradient(x1: 0, y1: 0, x2: 0, y2: 1, "
                                 "stop: 1" + _myStyle.getBackGroundColor().name() +
                                 ", stop: 0 #ffffff);");
+       emit _btRemoveList(GlobalEnumated::btDI1);
     }
 
     emit _btDI1Selected(btSelected);
@@ -98,12 +100,14 @@ void SettingChannelSelection::on_btDI2_released()
         ui->btDI2->setStyleSheet("background-color: qlineargradient(x1: 0, y1: 0, x2: 0, y2: 1, "
                                   "stop: 1" + _myStyle.getTraceColorDigitalPlot().name() +
                                   ", stop: 0 #ffffff);");
+        emit _btAddList(GlobalEnumated::btDI2);
     }
     else
     {
        ui->btDI2->setStyleSheet("background-color: qlineargradient(x1: 0, y1: 0, x2: 0, y2: 1, "
                                 "stop: 1" + _myStyle.getBackGroundColor().name() +
                                 ", stop: 0 #ffffff);");
+       emit _btRemoveList(GlobalEnumated::btDI2);
     }
 
     emit _btDI2Selected(btSelected);
@@ -118,12 +122,14 @@ void SettingChannelSelection::on_btDI3_released()
         ui->btDI3->setStyleSheet("background-color: qlineargradient(x1: 0, y1: 0, x2: 0, y2: 1, "
                                   "stop: 1" + _myStyle.getTraceColorDigitalPlot().name() +
                                   ", stop: 0 #ffffff);");
+        emit _btAddList(GlobalEnumated::btDI3);
     }
     else
     {
       ui->btDI3->setStyleSheet("background-color: qlineargradient(x1: 0, y1: 0, x2: 0, y2: 1, "
                                "stop: 1" + _myStyle.getBackGroundColor().name() +
                                ", stop: 0 #ffffff);");
+      emit _btRemoveList(GlobalEnumated::btDI3);
     }
 
     emit _btDI3Selected(btSelected);

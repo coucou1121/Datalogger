@@ -5,6 +5,7 @@
 #include <QFrame>
 #include <QPushButton>
 #include "commonStyle.h"
+#include "globalEnumated.h"
 
 namespace Ui {
 class SettingChannelSelection;
@@ -50,6 +51,8 @@ private slots:
     void on_btAI4_released();
 
 signals:
+
+    //send if button is seleced or not
     void _btDI1Selected(bool btSelected);
     void _btDI2Selected(bool btSelected);
     void _btDI3Selected(bool btSelected);
@@ -71,6 +74,22 @@ signals:
     void _btAI2Selected(bool btSelected);
     void _btAI3Selected(bool btSelected);
     void _btAI4Selected(bool btSelected);
+
+    //add button in all trigger function combobox
+    void _btAddList(int buttonNummer);
+    void _btDI2AddList(int buttonNummer);
+    void _btDI3AddList(int buttonNummer);
+    void _btDI4AddList(int buttonNummer);
+    void _btAI1AddList(int buttonNummer);
+    void _btAI2AddList(int buttonNummer);
+
+    //remove button in all trigger function combobox
+    void _btRemoveList(int buttonNummer);
+    void _btDI2RemoveList(int buttonNummer);
+    void _btDI3RemoveList(int buttonNummer);
+    void _btDI4RemoveList(int buttonNummer);
+    void _btAI1RemoveList(int buttonNummer);
+    void _btAI2RemoveList(int buttonNummer);
 
 };
 
