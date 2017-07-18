@@ -28,17 +28,7 @@ void SettingWindow::setupSignalAndSlot()
 
      //add button in all trigger function combobox
     QObject::connect(ui->widgetChannelSelection, SIGNAL(_btAddList(int)),ui->widgetTriggerFunction, SLOT(_comboboxAddItem(int)));
-//    QObject::connect(ui->widgetChannelSelection, SIGNAL(_btDI2AddList(int)),ui->widgetTriggerFunction, SLOT(_comboboxAddItem(int)));
-//    QObject::connect(ui->widgetChannelSelection, SIGNAL(_btDI3AddList(int)),ui->widgetTriggerFunction, SLOT(_comboboxAddItem(int)));
-//    QObject::connect(ui->widgetChannelSelection, SIGNAL(_btDI4AddList(int)),ui->widgetTriggerFunction, SLOT(_comboboxAddItem(int)));
-//    QObject::connect(ui->widgetChannelSelection, SIGNAL(_btAI1AddList(int)),ui->widgetTriggerFunction, SLOT(_comboboxAddItem(int)));
-//    QObject::connect(ui->widgetChannelSelection, SIGNAL(_btAI2AddList(int)),ui->widgetTriggerFunction, SLOT(_comboboxAddItem(int)));
 
      //remove button in all trigger function combobox
     QObject::connect(ui->widgetChannelSelection, SIGNAL(_btRemoveList(int)),ui->widgetTriggerFunction, SLOT(_comboboxRevmoveItem(int)));
-//    QObject::connect(ui->widgetChannelSelection, SIGNAL(_btDI2RemoveList(int)),ui->widgetTriggerFunction, SLOT(_comboboxRevmoveItem(int)));
-//    QObject::connect(ui->widgetChannelSelection, SIGNAL(_btDI3RemoveList(int)),ui->widgetTriggerFunction, SLOT(_comboboxRevmoveItem(int)));
-//    QObject::connect(ui->widgetChannelSelection, SIGNAL(_btDI4RemoveList(int)),ui->widgetTriggerFunction, SLOT(_comboboxRevmoveItem(int)));
-//    QObject::connect(ui->widgetChannelSelection, SIGNAL(_btAI1RemoveList(int)),ui->widgetTriggerFunction, SLOT(_comboboxRevmoveItem(int)));
-//    QObject::connect(ui->widgetChannelSelection, SIGNAL(_btAI2RemoveList(int)),ui->widgetTriggerFunction, SLOT(_comboboxRevmoveItem(int)));
 }

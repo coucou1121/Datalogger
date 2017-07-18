@@ -13,6 +13,16 @@ SettingTriggerSetting::SettingTriggerSetting(QWidget *parent) :
 {
     ui->setupUi(this);
     setupStyle();
+
+    //unselect all trace
+    this->_DI1select(false);
+    this->_DI2select(false);
+    this->_DI3select(false);
+    this->_DI4select(false);
+    this->_AI1select(false);
+    this->_AI2select(false);
+    this->_AI3select(false);
+    this->_AI4select(false);
 }
 
 void SettingTriggerSetting::setupStyle()

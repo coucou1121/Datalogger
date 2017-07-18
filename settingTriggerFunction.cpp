@@ -65,9 +65,10 @@ void SettingTriggerFunction::updateCombobox()
     ui->comboBoxBottomLeft->clear();
     ui->comboBoxBottomRight->clear();
 
-    //add none again
+    //add "none"
     this->setupTraceCombobox();
 
+    //update all traces
     for(auto e : TriggerTraceSelected.keys())
     {
         ui->comboBoxTopLeft->addItem(TriggerTraceSelected[e], e);
@@ -79,30 +80,12 @@ void SettingTriggerFunction::updateCombobox()
 
 void SettingTriggerFunction::_comboboxAddItem(int buttonNummer)
 {
-    qDebug() << "receipt: " << buttonNummer;
-    int index = ui->comboBoxTopLeft->findData(buttonNummer);
-    qDebug() << "index: " << index;
-//    if ( index != -1 ) { // -1 for not found
-//        ui->comboBoxTopLeft->setCurrentIndex(buttonNummer);
-//    }
-
     TriggerTraceSelected[buttonNummer] = TriggerTracePossible[buttonNummer];
-
     this->updateCombobox();
-
-    //    ui->comboBoxTopLeft->addItem(mapTriggerFunction[buttonNummer], buttonNummer);
-    //    ui->comboBoxTopRight->addItem(mapTriggerFunction[buttonNummer], buttonNummer);
-    //    ui->comboBoxBottomLeft->addItem(mapTriggerFunction[buttonNummer, buttonNummer]);
-    //    ui->comboBoxBottomRight->addItem(mapTriggerFunction[buttonNummer], buttonNummer);
 }
 
 void SettingTriggerFunction::_comboboxRevmoveItem(int buttonNummer)
 {
     TriggerTraceSelected.remove(buttonNummer);
-//    int index = ui->comboBoxTopLeft->findData(buttonNummer);
-//    ui->comboBoxTopLeft->removeItem(index);
-//    ui->comboBoxTopRight->removeItem(index);
-//    ui->comboBoxBottomLeft->removeItem(index);
-//    ui->comboBoxBottomRight->removeItem(index);
     this->updateCombobox();
 }

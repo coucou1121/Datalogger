@@ -55,8 +55,22 @@ public:
         btDI2,
         btDI3,
         btDI4,
+        btDI5,
+        btDI6,
+        btDI7,
+        btDI8,
+        btDI9,
+        btDI10,
+        btDI11,
+        btDI12,
+        btDI13,
+        btDI14,
+        btDI15,
+        btDI16,
         btAI1,
-        btAI2
+        btAI2,
+        btAI3,
+        btAI4
     }eTriggerTracePossible;
 
     static QMap<int, QString> initTriggerTracePossible();
