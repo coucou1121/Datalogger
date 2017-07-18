@@ -14,7 +14,7 @@ SettingTriggerFunction::SettingTriggerFunction(QWidget *parent) :
     ui->setupUi(this);
 
     //initialise the Key - Value for combobx
-    TriggerTracePossible = GlobalEnumated::initTriggerTracePossible();
+    TriggerTracePossible = GlobalEnumatedAndExtern::initTriggerTracePossible();
 
     // setup the style
     this->setupStyle();

@@ -47,7 +47,7 @@
       </sizepolicy>
      </property>
      <property name="text">
-      <string>DI 9</string>
+      <string/>
      </property>
     </widget>
    </item>
@@ -60,7 +60,7 @@
       </sizepolicy>
      </property>
      <property name="text">
-      <string>DI 4</string>
+      <string/>
      </property>
     </widget>
    </item>
@@ -73,7 +73,7 @@
       </sizepolicy>
      </property>
      <property name="text">
-      <string>DI 3</string>
+      <string/>
      </property>
     </widget>
    </item>
@@ -86,7 +86,7 @@
       </sizepolicy>
      </property>
      <property name="text">
-      <string>DI 2</string>
+      <string/>
      </property>
     </widget>
    </item>
@@ -99,7 +99,7 @@
       </sizepolicy>
      </property>
      <property name="text">
-      <string>DI 6</string>
+      <string/>
      </property>
     </widget>
    </item>
@@ -112,7 +112,7 @@
       </sizepolicy>
      </property>
      <property name="text">
-      <string>DI 7</string>
+      <string/>
      </property>
     </widget>
    </item>
@@ -125,7 +125,7 @@
       </sizepolicy>
      </property>
      <property name="text">
-      <string>DI 5</string>
+      <string/>
      </property>
     </widget>
    </item>
@@ -138,7 +138,7 @@
       </sizepolicy>
      </property>
      <property name="text">
-      <string>DI 1</string>
+      <string/>
      </property>
     </widget>
    </item>
@@ -151,7 +151,7 @@
       </sizepolicy>
      </property>
      <property name="text">
-      <string>AI 1</string>
+      <string/>
      </property>
     </widget>
    </item>
@@ -164,7 +164,7 @@
       </sizepolicy>
      </property>
      <property name="text">
-      <string>DI 8</string>
+      <string/>
      </property>
     </widget>
    </item>
@@ -177,7 +177,7 @@
       </sizepolicy>
      </property>
      <property name="text">
-      <string>DI 10</string>
+      <string/>
      </property>
     </widget>
    </item>
@@ -190,7 +190,7 @@
       </sizepolicy>
      </property>
      <property name="text">
-      <string>DI 11</string>
+      <string/>
      </property>
     </widget>
    </item>
@@ -203,7 +203,7 @@
       </sizepolicy>
      </property>
      <property name="text">
-      <string>DI 12</string>
+      <string/>
      </property>
     </widget>
    </item>
@@ -216,7 +216,7 @@
       </sizepolicy>
      </property>
      <property name="text">
-      <string>DI 13</string>
+      <string/>
      </property>
     </widget>
    </item>
@@ -229,7 +229,7 @@
       </sizepolicy>
      </property>
      <property name="text">
-      <string>DI 14</string>
+      <string/>
      </property>
     </widget>
    </item>
@@ -242,7 +242,7 @@
       </sizepolicy>
      </property>
      <property name="text">
-      <string>DI 15</string>
+      <string/>
      </property>
     </widget>
    </item>
@@ -255,7 +255,7 @@
       </sizepolicy>
      </property>
      <property name="text">
-      <string>DI 16</string>
+      <string/>
      </property>
      <property name="default">
       <bool>false</bool>
@@ -271,7 +271,7 @@
       </sizepolicy>
      </property>
      <property name="text">
-      <string>AI 2</string>
+      <string/>
      </property>
     </widget>
    </item>
@@ -284,7 +284,7 @@
       </sizepolicy>
      </property>
      <property name="text">
-      <string>AI 3</string>
+      <string/>
      </property>
     </widget>
    </item>
@@ -297,7 +297,7 @@
       </sizepolicy>
      </property>
      <property name="text">
-      <string>AI 4</string>
+      <string/>
      </property>
     </widget>
    </item>

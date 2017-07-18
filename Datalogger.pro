@@ -38,7 +38,7 @@ SOURCES += main.cpp\
     settingPreTriggerPercentage.cpp \
     settingWindow.cpp \
     baseWindow.cpp \
-    globalEnumated.cpp
+    globalEnumatedAndExtern.cpp
 
 HEADERS  += mainwindow.h \
     main.h \
@@ -67,7 +67,7 @@ HEADERS  += mainwindow.h \
     settingPreTriggerPercentage.h \
     settingWindow.h \
     baseWindow.h \
-    globalEnumated.h
+    globalEnumatedAndExtern.h
 
 FORMS    += mainwindow.ui \
     analogPlot.ui \

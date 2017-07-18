@@ -1,11 +1,11 @@
-#include "globalEnumated.h"
+#include "globalEnumatedAndExtern.h"
 
-GlobalEnumated::GlobalEnumated()
+GlobalEnumatedAndExtern::GlobalEnumatedAndExtern()
 {
 
 }
 
-QMap<int, QString> GlobalEnumated::initTriggerTracePossible()
+QMap<int, QString> GlobalEnumatedAndExtern::initTriggerTracePossible()
 {
 
     QMap<int, QString> ret;
@@ -32,6 +32,10 @@ QMap<int, QString> GlobalEnumated::initTriggerTracePossible()
     ret.insert(btAI4, "AI 4");
     return ret;
 }
+
+
+//initialise the Key - Value for combobx
+extern QMap<int, QString> TriggerTracePossible = GlobalEnumatedAndExtern::initTriggerTracePossible();
 
 extern QString range0_24Txt = "0 / 24";
 extern QString range0_30Txt = "0 / 30";

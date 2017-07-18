@@ -5,7 +5,7 @@
 #include <QFrame>
 #include <QPushButton>
 #include "commonStyle.h"
-#include "globalEnumated.h"
+#include "globalEnumatedAndExtern.h"
 
 namespace Ui {
 class SettingChannelSelection;
@@ -22,11 +22,22 @@ public:
 private:
     Ui::SettingChannelSelection *ui;
 
+    //variable for commum style for getting acces of all color and shape
     CommonStyle _myStyle;
+
+    //set the color and shape of this windows
     void setupStyle();
 
+    //set the background color of all push button on UI
     void setupUILayout();
+
+    //set the label of all push button on UI
+    void setupLabel();
+
     void setupButton(QPushButton *pushbutton, QColor btColor);
+
+    //key value for pushbutton name
+    QMap<int, QString> TriggerTracePossible;
 
 private slots:
     void on_btDI1_released();

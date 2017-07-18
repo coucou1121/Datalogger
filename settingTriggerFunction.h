@@ -5,7 +5,7 @@
 #include <QDebug>
 #include <QComboBox>
 #include "commonStyle.h"
-#include "globalEnumated.h"
+#include "globalEnumatedAndExtern.h"
 
 namespace Ui {
 class SettingTriggerFunction;

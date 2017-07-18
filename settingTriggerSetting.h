@@ -5,7 +5,7 @@
 #include <QFrame>
 #include <QPushButton>
 #include "commonStyle.h"
-#include "globalEnumated.h"
+#include "globalEnumatedAndExtern.h"
 
 namespace Ui {
 class SettingTriggerSetting;
@@ -25,15 +25,18 @@ private:
     CommonStyle _myStyle;
     void setupStyle();
 
-    //state of edge
-    GlobalEnumated::eEdge _btDI1Edge;
-    GlobalEnumated::eEdge _btDI2Edge;
-    GlobalEnumated::eEdge _btDI3Edge;
-    GlobalEnumated::eEdge _btDI4Edge;
-    GlobalEnumated::eEdge _btAI1Edge;
-    GlobalEnumated::eEdge _btAI2Edge;
+    //key value for Trace label name
+    QMap<int, QString> TriggerTracePossible;
 
-    void setEdgeIcon(QPushButton *pushbutton, GlobalEnumated::eEdge edgeType);
+    //state of edge
+    GlobalEnumatedAndExtern::eEdge _btDI1Edge;
+    GlobalEnumatedAndExtern::eEdge _btDI2Edge;
+    GlobalEnumatedAndExtern::eEdge _btDI3Edge;
+    GlobalEnumatedAndExtern::eEdge _btDI4Edge;
+    GlobalEnumatedAndExtern::eEdge _btAI1Edge;
+    GlobalEnumatedAndExtern::eEdge _btAI2Edge;
+
+    void setEdgeIcon(QPushButton *pushbutton, GlobalEnumatedAndExtern::eEdge edgeType);
 
     //picture on button
     QPixmap _pixmapFallingEdge;

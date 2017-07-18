@@ -1,16 +1,16 @@
-#ifndef GLOBALENUMATED_H
-#define GLOBALENUMATED_H
+#ifndef GLOBALENUMATEDANDEXTERN_H
+#define GLOBALENUMATEDANDEXTERN_H
 
 #include <QString>
 #include <QMap>
 
-class GlobalEnumated
+class GlobalEnumatedAndExtern
 {
 
 private:
 
 public:
-    GlobalEnumated();
+    GlobalEnumatedAndExtern();
 
     //trace range
     typedef enum
@@ -71,10 +71,12 @@ public:
         btAI2,
         btAI3,
         btAI4
-    }eTriggerTracePossible;
+    }eTracePossible;
 
     static QMap<int, QString> initTriggerTracePossible();
 
+    static QMap<int, QString> TriggerTracePossible;
+
 };
 
-#endif // GLOBALENUMATED_H
+#endif // GLOBALENUMATEDANDEXTERN_H
