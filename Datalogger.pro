@@ -38,7 +38,8 @@ SOURCES += main.cpp\
     settingPreTriggerPercentage.cpp \
     settingWindow.cpp \
     baseWindow.cpp \
-    globalEnumatedAndExtern.cpp
+    globalEnumatedAndExtern.cpp \
+    triggerWindow.cpp
 
 HEADERS  += mainwindow.h \
     main.h \
@@ -67,7 +68,8 @@ HEADERS  += mainwindow.h \
     settingPreTriggerPercentage.h \
     settingWindow.h \
     baseWindow.h \
-    globalEnumatedAndExtern.h
+    globalEnumatedAndExtern.h \
+    triggerWindow.h
 
 FORMS    += mainwindow.ui \
     analogPlot.ui \
@@ -86,7 +88,8 @@ FORMS    += mainwindow.ui \
     settingTriggerFunction.ui \
     settingPreTriggerPercentage.ui \
     settingWindow.ui \
-    baseWindow.ui
+    baseWindow.ui \
+    triggerWindow.ui
 
 RESOURCES += \
     images.qrc

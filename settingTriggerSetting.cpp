@@ -437,5 +437,5 @@ void SettingTriggerSetting::setEdgeIcon(QPushButton *pushbutton, GlobalEnumatedA
     {
         pushbutton->setIcon(_pixmapRisingEdge);
     }
-    pushbutton->setIconSize(QSize(40,40));
+    pushbutton->setIconSize(QSize(30,30));
 }

@@ -11,6 +11,7 @@
 #include "commonStyle.h"
 #include "baseWindow.h"
 #include "settingWindow.h"
+#include "triggerWindow.h"
 
 namespace Ui {
 
@@ -37,6 +38,7 @@ private:
     // diffrent windows
     BaseWindow *baseWindow;
     SettingWindow *settingWindow;
+    TriggerWindow *triggerWindow;
 
     //Style
     CommonStyle _myStyle;

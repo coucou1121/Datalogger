@@ -37,9 +37,9 @@ QMap<int, QString> GlobalEnumatedAndExtern::initTriggerTracePossible()
 //initialise the Key - Value for combobx
 extern QMap<int, QString> TriggerTracePossible = GlobalEnumatedAndExtern::initTriggerTracePossible();
 
-extern QString range0_24Txt = "0 / 24";
-extern QString range0_30Txt = "0 / 30";
-extern QString range15_15Txt = "-15 / +15";
+extern QString range0_24Txt = "0/24";
+extern QString range0_30Txt = "0/30";
+extern QString range15_15Txt = "-15/+15";
 
 
 extern QString opNoneTxt = "NONE";

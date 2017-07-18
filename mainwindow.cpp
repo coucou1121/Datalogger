@@ -13,12 +13,13 @@ MainWindow::MainWindow(QWidget *parent) :
     //create windows object
     baseWindow = new BaseWindow();
     settingWindow = new SettingWindow();
+    triggerWindow = new TriggerWindow();
 
     this->mainSetup();
     this->setupStyle();
     this->setStatusBar();
 
-    this->_btSetting_released();
+    this->_btTrigger_released();
 }
 
 MainWindow::~MainWindow()
@@ -33,8 +34,9 @@ void MainWindow::mainSetup()
 
     //add setting windows in windows layout
     ui->gridLayout->addWidget(settingWindow, 0, 1, 6, 1);
-    //hide the setting windows
-    settingWindow->hide();
+
+    //add setting windows in windows layout
+    ui->gridLayout->addWidget(triggerWindow, 0, 1, 6, 1);
 
     //set title on baseWindows
     baseWindow->setTitle("Datalogger");
@@ -124,6 +126,7 @@ void MainWindow::resetPushButtonColor()
 
     baseWindow->hide();
     settingWindow->hide();
+    triggerWindow->hide();
 }
 
 void MainWindow::_btBase_released()
@@ -147,6 +150,7 @@ void MainWindow::_btTrigger_released()
     this->resetPushButtonColor();
     _btTrigger->setStyleSheet("background-color:" + _myStyle.getBackGroundColorButtonStatusbarSelected().name() +
                            "; color:" + _myStyle.getBackGroundColorButtonStatusbarUnselected().name() + ";");
+    triggerWindow->show();
 }
 
 void MainWindow::_btDisplay_released()

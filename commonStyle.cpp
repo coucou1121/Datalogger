@@ -115,16 +115,16 @@ void CommonStyle::setPushButtonBlocked(QPushButton *pushButton)
 
 void CommonStyle::setSpinBoxShape(QSpinBox *spinBox)
 {
-    spinBox->setStyleSheet("QSpinBox::up-button { subcontrol-position: left; width: 40px; height: 35px;}"
-                           "QSpinBox::down-button { subcontrol-position: right; width: 40px; height: 35px;}"
+    spinBox->setStyleSheet("QSpinBox::up-button { subcontrol-position: left; width: 30px; height: 40px;}"
+                           "QSpinBox::down-button { subcontrol-position: right; width: 30px; height: 40px;}"
                            "QSpinBox {background-color: " + this->getBackGroundColorButtonStatusbarUnselected().name()+ ";}"
                            "QSpinBox { border: 3px inset grey; }");
 }
 
 void CommonStyle::setDoublespinBoxShape(QDoubleSpinBox *doubleSpinBox)
 {
-    doubleSpinBox->setStyleSheet("QDoubleSpinBox::up-button { subcontrol-position: left; width: 40px; height: 35px;}"
-                                 "QDoubleSpinBox::down-button { subcontrol-position: right; width: 40px; height: 35px;}"
+    doubleSpinBox->setStyleSheet("QDoubleSpinBox::up-button { subcontrol-position: left; width: 30px; height: 40px;}"
+                                 "QDoubleSpinBox::down-button { subcontrol-position: right; width: 30px; height: 40px;}"
                                  "QDoubleSpinBox {background-color: " + this->getBackGroundColorButtonStatusbarUnselected().name()+ ";}"
                                  "QDoubleSpinBox { border: 3px inset grey; }");
 }

@@ -6,11 +6,17 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>884</width>
-    <height>435</height>
+    <width>1280</width>
+    <height>720</height>
    </rect>
   </property>
-  <property name="maximumSize">
+  <property name="sizePolicy">
+   <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+    <horstretch>0</horstretch>
+    <verstretch>0</verstretch>
+   </sizepolicy>
+  </property>
+  <property name="minimumSize">
    <size>
     <width>1280</width>
     <height>720</height>
