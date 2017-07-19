@@ -22,6 +22,14 @@ private:
 
     //setup signal and slot
     void setupSignalAndSlot();
+
+private slots:
+    void _recievedAddTraceFromChannelSelection(int traceNumber);
+    void _recievedRemoveTraceFromChannelSelection(int traceNumber);
+
+signals:
+    void _addTraceInTriggerMenu(int traceNumber);
+    void _removeTraceInTriggerMenu(int traceNumber);
 };
 
 #endif // SETTINGWINDOW_H

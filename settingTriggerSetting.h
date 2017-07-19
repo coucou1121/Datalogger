@@ -43,6 +43,8 @@ private:
     QPixmap _pixmapRisingEdge;
 
 public slots:
+    void _btSelected(int buttonNumber, bool btSelected);
+
     void _DI1select(bool btselected);
     void _DI2select(bool btselected);
     void _DI3select(bool btselected);
@@ -51,6 +53,7 @@ public slots:
     void _AI2select(bool btselected);
     void _AI3select(bool btselected);
     void _AI4select(bool btselected);
+
 
 private slots:
     void on_pushButtonRangeDI1_released();

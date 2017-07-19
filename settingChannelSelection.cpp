@@ -90,12 +90,57 @@ void SettingChannelSelection::setupLabel()
 
 void SettingChannelSelection::setupButton(QPushButton *pushbutton, QColor btColor)
 {
-    pushbutton->setMinimumSize(40,25);
-    pushbutton->setMaximumSize(140,125);
-    //pushbutton->setStyleSheet("background-color:" + btColor.name() + ";");
-    pushbutton->setStyleSheet("background-color: qlineargradient(x1: 0, y1: 0, x2: 0, y2: 1, "
-                              "stop: 1" + btColor.name() +
-                              ", stop: 0 #ffffff);");
+    //    pushbutton->setMinimumSize(40,25);
+    //    pushbutton->setMaximumSize(140,125);
+    this->setupButtonBackGround(pushbutton, btColor, false);
+}
+
+void SettingChannelSelection::setupButtonBackGround(QPushButton *pushbutton, QColor btSelectedColor, bool btSelected)
+{
+    if(btSelected)
+    {
+        pushbutton->setStyleSheet("background-color: qlineargradient(x1: 0, y1: 0, x2: 0, y2: 1, "
+                                  "stop: 1" + btSelectedColor.name() +
+                                  ", stop: 0 #ffffff);");
+    }
+    else
+    {
+        pushbutton->setStyleSheet("background-color: qlineargradient(x1: 0, y1: 0, x2: 0, y2: 1, "
+                                  "stop: 1" + _myStyle.getBackGroundColor().name() +
+                                  ", stop: 0 #ffffff);");
+    }
+}
+
+void SettingChannelSelection::emitBtdSignal(int buttonNumber, bool btSelected)
+{
+
+    if(btSelected)
+    {
+        //unlock trigger setting in trigger setting menu
+        emit _btSeleccted(buttonNumber, btSelected);
+
+
+        //add selection in trigger function combobox
+        // only if its DI1 -> DI4, AI1 and AI2
+        if(     buttonNumber < GlobalEnumatedAndExtern::btDI5 ||
+                buttonNumber == GlobalEnumatedAndExtern::btAI1 ||
+                buttonNumber == GlobalEnumatedAndExtern::btAI2)
+        {
+            emit _btAddList(buttonNumber);
+        }
+        //show trace in trigger menu
+        emit _addTrace(buttonNumber);
+    }
+    else
+    {
+        //remove selection in trigger function combobox
+        emit _btRemoveList(buttonNumber);
+
+        //hide trace in trigger menu
+        emit _removeTrace(buttonNumber);
+    }
+
+    emit _btSeleccted(buttonNumber, btSelected);
 }
 
 void SettingChannelSelection::on_btDI1_released()
@@ -103,21 +148,8 @@ void SettingChannelSelection::on_btDI1_released()
     static bool btSelected = false;
     btSelected = btSelected == true? false : true;
 
-    if(btSelected)    {
-        ui->btDI1->setStyleSheet("background-color: qlineargradient(x1: 0, y1: 0, x2: 0, y2: 1, "
-                                 "stop: 1" + _myStyle.getTraceColorDigitalPlot().name() +
-                                 ", stop: 0 #ffffff);");
-        emit _btAddList(GlobalEnumatedAndExtern::btDI1);
-    }
-    else
-    {
-        ui->btDI1->setStyleSheet("background-color: qlineargradient(x1: 0, y1: 0, x2: 0, y2: 1, "
-                                 "stop: 1" + _myStyle.getBackGroundColor().name() +
-                                 ", stop: 0 #ffffff);");
-        emit _btRemoveList(GlobalEnumatedAndExtern::btDI1);
-    }
-
-    emit _btDI1Selected(btSelected);
+    this->setupButtonBackGround(ui->btDI1, _myStyle.getTraceColorDigitalPlot(), btSelected);
+    this->emitBtdSignal(GlobalEnumatedAndExtern::btDI1, btSelected);
 }
 
 void SettingChannelSelection::on_btDI2_released()
@@ -125,22 +157,8 @@ void SettingChannelSelection::on_btDI2_released()
     static bool btSelected = false;
     btSelected = btSelected == true? false : true;
 
-    if(btSelected)
-    {
-        ui->btDI2->setStyleSheet("background-color: qlineargradient(x1: 0, y1: 0, x2: 0, y2: 1, "
-                                 "stop: 1" + _myStyle.getTraceColorDigitalPlot().name() +
-                                 ", stop: 0 #ffffff);");
-        emit _btAddList(GlobalEnumatedAndExtern::btDI2);
-    }
-    else
-    {
-        ui->btDI2->setStyleSheet("background-color: qlineargradient(x1: 0, y1: 0, x2: 0, y2: 1, "
-                                 "stop: 1" + _myStyle.getBackGroundColor().name() +
-                                 ", stop: 0 #ffffff);");
-        emit _btRemoveList(GlobalEnumatedAndExtern::btDI2);
-    }
-
-    emit _btDI2Selected(btSelected);
+    this->setupButtonBackGround(ui->btDI2, _myStyle.getTraceColorDigitalPlot(), btSelected);
+    this->emitBtdSignal(GlobalEnumatedAndExtern::btDI2, btSelected);
 }
 
 void SettingChannelSelection::on_btDI3_released()
@@ -148,21 +166,8 @@ void SettingChannelSelection::on_btDI3_released()
     static bool btSelected = false;
     btSelected = btSelected == true? false : true;
 
-    if(btSelected)    {
-        ui->btDI3->setStyleSheet("background-color: qlineargradient(x1: 0, y1: 0, x2: 0, y2: 1, "
-                                 "stop: 1" + _myStyle.getTraceColorDigitalPlot().name() +
-                                 ", stop: 0 #ffffff);");
-        emit _btAddList(GlobalEnumatedAndExtern::btDI3);
-    }
-    else
-    {
-        ui->btDI3->setStyleSheet("background-color: qlineargradient(x1: 0, y1: 0, x2: 0, y2: 1, "
-                                 "stop: 1" + _myStyle.getBackGroundColor().name() +
-                                 ", stop: 0 #ffffff);");
-        emit _btRemoveList(GlobalEnumatedAndExtern::btDI3);
-    }
-
-    emit _btDI3Selected(btSelected);
+    this->setupButtonBackGround(ui->btDI3, _myStyle.getTraceColorDigitalPlot(), btSelected);
+    this->emitBtdSignal(GlobalEnumatedAndExtern::btDI3, btSelected);
 }
 
 void SettingChannelSelection::on_btDI4_released()
@@ -170,21 +175,8 @@ void SettingChannelSelection::on_btDI4_released()
     static bool btSelected = false;
     btSelected = btSelected == true? false : true;
 
-    if(btSelected)    {
-        ui->btDI4->setStyleSheet("background-color: qlineargradient(x1: 0, y1: 0, x2: 0, y2: 1, "
-                                 "stop: 1" + _myStyle.getTraceColorDigitalPlot().name() +
-                                 ", stop: 0 #ffffff);");
-        emit _btAddList(GlobalEnumatedAndExtern::btDI4);
-    }
-    else
-    {
-        ui->btDI4->setStyleSheet("background-color: qlineargradient(x1: 0, y1: 0, x2: 0, y2: 1, "
-                                 "stop: 1" + _myStyle.getBackGroundColor().name() +
-                                 ", stop: 0 #ffffff);");
-        emit _btRemoveList(GlobalEnumatedAndExtern::btDI4);
-    }
-
-    emit _btDI4Selected(btSelected);
+    this->setupButtonBackGround(ui->btDI4, _myStyle.getTraceColorDigitalPlot(), btSelected);
+    this->emitBtdSignal(GlobalEnumatedAndExtern::btDI4, btSelected);
 }
 
 void SettingChannelSelection::on_btDI5_released()
@@ -192,21 +184,8 @@ void SettingChannelSelection::on_btDI5_released()
     static bool btSelected = false;
     btSelected = btSelected == true? false : true;
 
-    if(btSelected)    {
-        ui->btDI5->setStyleSheet("background-color: qlineargradient(x1: 0, y1: 0, x2: 0, y2: 1, "
-                                 "stop: 1" + _myStyle.getTraceColorDigitalPlot().name() +
-                                 ", stop: 0 #ffffff);");
-        emit _btAddList(GlobalEnumatedAndExtern::btDI5);
-    }
-    else
-    {
-        ui->btDI5->setStyleSheet("background-color: qlineargradient(x1: 0, y1: 0, x2: 0, y2: 1, "
-                                 "stop: 1" + _myStyle.getBackGroundColor().name() +
-                                 ", stop: 0 #ffffff);");
-        emit _btRemoveList(GlobalEnumatedAndExtern::btDI5);
-    }
-
-    emit _btDI5Selected(btSelected);
+    this->setupButtonBackGround(ui->btDI5, _myStyle.getTraceColorDigitalPlot(), btSelected);
+    this->emitBtdSignal(GlobalEnumatedAndExtern::btDI5, btSelected);
 }
 
 void SettingChannelSelection::on_btDI6_released()
@@ -214,21 +193,8 @@ void SettingChannelSelection::on_btDI6_released()
     static bool btSelected = false;
     btSelected = btSelected == true? false : true;
 
-    if(btSelected)    {
-        ui->btDI6->setStyleSheet("background-color: qlineargradient(x1: 0, y1: 0, x2: 0, y2: 1, "
-                                 "stop: 1" + _myStyle.getTraceColorDigitalPlot().name() +
-                                 ", stop: 0 #ffffff);");
-        emit _btAddList(GlobalEnumatedAndExtern::btDI6);
-    }
-    else
-    {
-        ui->btDI6->setStyleSheet("background-color: qlineargradient(x1: 0, y1: 0, x2: 0, y2: 1, "
-                                 "stop: 1" + _myStyle.getBackGroundColor().name() +
-                                 ", stop: 0 #ffffff);");
-        emit _btRemoveList(GlobalEnumatedAndExtern::btDI6);
-    }
-
-    emit _btDI6Selected(btSelected);
+    this->setupButtonBackGround(ui->btDI6, _myStyle.getTraceColorDigitalPlot(), btSelected);
+    this->emitBtdSignal(GlobalEnumatedAndExtern::btDI6, btSelected);
 }
 
 void SettingChannelSelection::on_btDI7_released()
@@ -236,21 +202,8 @@ void SettingChannelSelection::on_btDI7_released()
     static bool btSelected = false;
     btSelected = btSelected == true? false : true;
 
-    if(btSelected)    {
-        ui->btDI7->setStyleSheet("background-color: qlineargradient(x1: 0, y1: 0, x2: 0, y2: 1, "
-                                 "stop: 1" + _myStyle.getTraceColorDigitalPlot().name() +
-                                 ", stop: 0 #ffffff);");
-        emit _btAddList(GlobalEnumatedAndExtern::btDI7);
-    }
-    else
-    {
-        ui->btDI7->setStyleSheet("background-color: qlineargradient(x1: 0, y1: 0, x2: 0, y2: 1, "
-                                 "stop: 1" + _myStyle.getBackGroundColor().name() +
-                                 ", stop: 0 #ffffff);");
-        emit _btRemoveList(GlobalEnumatedAndExtern::btDI7);
-    }
-
-    emit _btDI7Selected(btSelected);
+    this->setupButtonBackGround(ui->btDI7, _myStyle.getTraceColorDigitalPlot(), btSelected);
+    this->emitBtdSignal(GlobalEnumatedAndExtern::btDI7, btSelected);
 }
 
 void SettingChannelSelection::on_btDI8_released()
@@ -258,21 +211,8 @@ void SettingChannelSelection::on_btDI8_released()
     static bool btSelected = false;
     btSelected = btSelected == true? false : true;
 
-    if(btSelected)    {
-        ui->btDI8->setStyleSheet("background-color: qlineargradient(x1: 0, y1: 0, x2: 0, y2: 1, "
-                                 "stop: 1" + _myStyle.getTraceColorDigitalPlot().name() +
-                                 ", stop: 0 #ffffff);");
-        emit _btAddList(GlobalEnumatedAndExtern::btDI8);
-    }
-    else
-    {
-        ui->btDI8->setStyleSheet("background-color: qlineargradient(x1: 0, y1: 0, x2: 0, y2: 1, "
-                                 "stop: 1" + _myStyle.getBackGroundColor().name() +
-                                 ", stop: 0 #ffffff);");
-        emit _btRemoveList(GlobalEnumatedAndExtern::btDI8);
-    }
-
-    emit _btDI8Selected(btSelected);
+    this->setupButtonBackGround(ui->btDI8, _myStyle.getTraceColorDigitalPlot(), btSelected);
+    this->emitBtdSignal(GlobalEnumatedAndExtern::btDI8, btSelected);
 }
 
 void SettingChannelSelection::on_btDI9_released()
@@ -280,21 +220,8 @@ void SettingChannelSelection::on_btDI9_released()
     static bool btSelected = false;
     btSelected = btSelected == true? false : true;
 
-    if(btSelected)    {
-        ui->btDI9->setStyleSheet("background-color: qlineargradient(x1: 0, y1: 0, x2: 0, y2: 1, "
-                                 "stop: 1" + _myStyle.getTraceColorDigitalPlot().name() +
-                                 ", stop: 0 #ffffff);");
-        emit _btAddList(GlobalEnumatedAndExtern::btDI9);
-    }
-    else
-    {
-        ui->btDI9->setStyleSheet("background-color: qlineargradient(x1: 0, y1: 0, x2: 0, y2: 1, "
-                                 "stop: 1" + _myStyle.getBackGroundColor().name() +
-                                 ", stop: 0 #ffffff);");
-        emit _btRemoveList(GlobalEnumatedAndExtern::btDI9);
-    }
-
-    emit _btDI9Selected(btSelected);
+    this->setupButtonBackGround(ui->btDI9, _myStyle.getTraceColorDigitalPlot(), btSelected);
+    this->emitBtdSignal(GlobalEnumatedAndExtern::btDI9, btSelected);
 }
 
 void SettingChannelSelection::on_btDI10_released()
@@ -302,22 +229,8 @@ void SettingChannelSelection::on_btDI10_released()
     static bool btSelected = false;
     btSelected = btSelected == true? false : true;
 
-    if(btSelected)
-    {
-        ui->btDI10->setStyleSheet("background-color: qlineargradient(x1: 0, y1: 0, x2: 0, y2: 1, "
-                                  "stop: 1" + _myStyle.getTraceColorDigitalPlot().name() +
-                                  ", stop: 0 #ffffff);");
-        emit _btAddList(GlobalEnumatedAndExtern::btDI10);
-    }
-    else
-    {
-        ui->btDI10->setStyleSheet("background-color: qlineargradient(x1: 0, y1: 0, x2: 0, y2: 1, "
-                                  "stop: 1" + _myStyle.getBackGroundColor().name() +
-                                  ", stop: 0 #ffffff);");
-        emit _btRemoveList(GlobalEnumatedAndExtern::btDI10);
-    }
-    emit _btDI10Selected(btSelected);
-
+    this->setupButtonBackGround(ui->btDI10, _myStyle.getTraceColorDigitalPlot(), btSelected);
+    this->emitBtdSignal(GlobalEnumatedAndExtern::btDI10, btSelected);
 }
 
 void SettingChannelSelection::on_btDI11_released()
@@ -325,21 +238,8 @@ void SettingChannelSelection::on_btDI11_released()
     static bool btSelected = false;
     btSelected = btSelected == true? false : true;
 
-    if(btSelected)    {
-        ui->btDI11->setStyleSheet("background-color: qlineargradient(x1: 0, y1: 0, x2: 0, y2: 1, "
-                                  "stop: 1" + _myStyle.getTraceColorDigitalPlot().name() +
-                                  ", stop: 0 #ffffff);");
-        emit _btAddList(GlobalEnumatedAndExtern::btDI11);
-    }
-    else
-    {
-        ui->btDI11->setStyleSheet("background-color: qlineargradient(x1: 0, y1: 0, x2: 0, y2: 1, "
-                                  "stop: 1" + _myStyle.getBackGroundColor().name() +
-                                  ", stop: 0 #ffffff);");
-        emit _btRemoveList(GlobalEnumatedAndExtern::btDI11);
-    }
-
-    emit _btDI11Selected(btSelected);
+    this->setupButtonBackGround(ui->btDI11, _myStyle.getTraceColorDigitalPlot(), btSelected);
+    this->emitBtdSignal(GlobalEnumatedAndExtern::btDI11, btSelected);
 }
 
 void SettingChannelSelection::on_btDI12_released()
@@ -347,21 +247,8 @@ void SettingChannelSelection::on_btDI12_released()
     static bool btSelected = false;
     btSelected = btSelected == true? false : true;
 
-    if(btSelected)    {
-        ui->btDI12->setStyleSheet("background-color: qlineargradient(x1: 0, y1: 0, x2: 0, y2: 1, "
-                                  "stop: 1" + _myStyle.getTraceColorDigitalPlot().name() +
-                                  ", stop: 0 #ffffff);");
-        emit _btAddList(GlobalEnumatedAndExtern::btDI12);
-    }
-    else
-    {
-        ui->btDI12->setStyleSheet("background-color: qlineargradient(x1: 0, y1: 0, x2: 0, y2: 1, "
-                                  "stop: 1" + _myStyle.getBackGroundColor().name() +
-                                  ", stop: 0 #ffffff);");
-        emit _btRemoveList(GlobalEnumatedAndExtern::btDI12);
-    }
-
-    emit _btDI2Selected(btSelected);
+    this->setupButtonBackGround(ui->btDI12, _myStyle.getTraceColorDigitalPlot(), btSelected);
+    this->emitBtdSignal(GlobalEnumatedAndExtern::btDI12, btSelected);
 }
 
 void SettingChannelSelection::on_btDI13_released()
@@ -369,21 +256,8 @@ void SettingChannelSelection::on_btDI13_released()
     static bool btSelected = false;
     btSelected = btSelected == true? false : true;
 
-    if(btSelected)    {
-        ui->btDI13->setStyleSheet("background-color: qlineargradient(x1: 0, y1: 0, x2: 0, y2: 1, "
-                                  "stop: 1" + _myStyle.getTraceColorDigitalPlot().name() +
-                                  ", stop: 0 #ffffff);");
-        emit _btAddList(GlobalEnumatedAndExtern::btDI13);
-    }
-    else
-    {
-        ui->btDI13->setStyleSheet("background-color: qlineargradient(x1: 0, y1: 0, x2: 0, y2: 1, "
-                                  "stop: 1" + _myStyle.getBackGroundColor().name() +
-                                  ", stop: 0 #ffffff);");
-        emit _btRemoveList(GlobalEnumatedAndExtern::btDI13);
-    }
-
-    emit _btDI13Selected(btSelected);
+    this->setupButtonBackGround(ui->btDI13, _myStyle.getTraceColorDigitalPlot(), btSelected);
+    this->emitBtdSignal(GlobalEnumatedAndExtern::btDI13, btSelected);
 }
 
 void SettingChannelSelection::on_btDI14_released()
@@ -391,21 +265,8 @@ void SettingChannelSelection::on_btDI14_released()
     static bool btSelected = false;
     btSelected = btSelected == true? false : true;
 
-    if(btSelected)    {
-        ui->btDI14->setStyleSheet("background-color: qlineargradient(x1: 0, y1: 0, x2: 0, y2: 1, "
-                                  "stop: 1" + _myStyle.getTraceColorDigitalPlot().name() +
-                                  ", stop: 0 #ffffff);");
-        emit _btAddList(GlobalEnumatedAndExtern::btDI14);
-    }
-    else
-    {
-        ui->btDI14->setStyleSheet("background-color: qlineargradient(x1: 0, y1: 0, x2: 0, y2: 1, "
-                                  "stop: 1" + _myStyle.getBackGroundColor().name() +
-                                  ", stop: 0 #ffffff);");
-        emit _btRemoveList(GlobalEnumatedAndExtern::btDI14);
-    }
-
-    emit _btDI14Selected(btSelected);
+    this->setupButtonBackGround(ui->btDI14, _myStyle.getTraceColorDigitalPlot(), btSelected);
+    this->emitBtdSignal(GlobalEnumatedAndExtern::btDI14, btSelected);
 }
 
 void SettingChannelSelection::on_btDI15_released()
@@ -413,21 +274,8 @@ void SettingChannelSelection::on_btDI15_released()
     static bool btSelected = false;
     btSelected = btSelected == true? false : true;
 
-    if(btSelected)    {
-        ui->btDI15->setStyleSheet("background-color: qlineargradient(x1: 0, y1: 0, x2: 0, y2: 1, "
-                                  "stop: 1" + _myStyle.getTraceColorDigitalPlot().name() +
-                                  ", stop: 0 #ffffff);");
-        emit _btAddList(GlobalEnumatedAndExtern::btDI15);
-    }
-    else
-    {
-        ui->btDI15->setStyleSheet("background-color: qlineargradient(x1: 0, y1: 0, x2: 0, y2: 1, "
-                                  "stop: 1" + _myStyle.getBackGroundColor().name() +
-                                  ", stop: 0 #ffffff);");
-        emit _btRemoveList(GlobalEnumatedAndExtern::btDI15);
-    }
-
-    emit _btDI15Selected(btSelected);
+    this->setupButtonBackGround(ui->btDI15, _myStyle.getTraceColorDigitalPlot(), btSelected);
+    this->emitBtdSignal(GlobalEnumatedAndExtern::btDI15, btSelected);
 }
 
 void SettingChannelSelection::on_btDI16_released()
@@ -435,21 +283,8 @@ void SettingChannelSelection::on_btDI16_released()
     static bool btSelected = false;
     btSelected = btSelected == true? false : true;
 
-    if(btSelected)    {
-        ui->btDI16->setStyleSheet("background-color: qlineargradient(x1: 0, y1: 0, x2: 0, y2: 1, "
-                                  "stop: 1" + _myStyle.getTraceColorDigitalPlot().name() +
-                                  ", stop: 0 #ffffff);");
-        emit _btAddList(GlobalEnumatedAndExtern::btDI16);
-    }
-    else
-    {
-        ui->btDI16->setStyleSheet("background-color: qlineargradient(x1: 0, y1: 0, x2: 0, y2: 1, "
-                                  "stop: 1" + _myStyle.getBackGroundColor().name() +
-                                  ", stop: 0 #ffffff);");
-        emit _btRemoveList(GlobalEnumatedAndExtern::btDI16);
-    }
-
-    emit _btDI16Selected(btSelected);
+    this->setupButtonBackGround(ui->btDI16, _myStyle.getTraceColorDigitalPlot(), btSelected);
+    this->emitBtdSignal(GlobalEnumatedAndExtern::btDI16, btSelected);
 }
 
 void SettingChannelSelection::on_btAI1_released()
@@ -457,21 +292,8 @@ void SettingChannelSelection::on_btAI1_released()
     static bool btSelected = false;
     btSelected = btSelected == true? false : true;
 
-    if(btSelected)    {
-        ui->btAI1->setStyleSheet("background-color: qlineargradient(x1: 0, y1: 0, x2: 0, y2: 1, "
-                                 "stop: 1" + _myStyle.getTraceColorAnalogPlot().name() +
-                                 ", stop: 0 #ffffff);");
-        emit _btAddList(GlobalEnumatedAndExtern::btAI1);
-    }
-    else
-    {
-        ui->btAI1->setStyleSheet("background-color: qlineargradient(x1: 0, y1: 0, x2: 0, y2: 1, "
-                                 "stop: 1" + _myStyle.getBackGroundColor().name() +
-                                 ", stop: 0 #ffffff);");
-        emit _btRemoveList(GlobalEnumatedAndExtern::btAI1);
-    }
-
-    emit _btAI1Selected(btSelected);
+    this->setupButtonBackGround(ui->btAI1, _myStyle.getTraceColorAnalogPlot(), btSelected);
+    this->emitBtdSignal(GlobalEnumatedAndExtern::btAI1, btSelected);
 }
 
 void SettingChannelSelection::on_btAI2_released()
@@ -479,21 +301,8 @@ void SettingChannelSelection::on_btAI2_released()
     static bool btSelected = false;
     btSelected = btSelected == true? false : true;
 
-    if(btSelected)    {
-        ui->btAI2->setStyleSheet("background-color: qlineargradient(x1: 0, y1: 0, x2: 0, y2: 1, "
-                                 "stop: 1" + _myStyle.getTraceColorAnalogPlot().name() +
-                                 ", stop: 0 #ffffff);");
-        emit _btAddList(GlobalEnumatedAndExtern::btAI2);
-    }
-    else
-    {
-        ui->btAI2->setStyleSheet("background-color: qlineargradient(x1: 0, y1: 0, x2: 0, y2: 1, "
-                                 "stop: 1" + _myStyle.getBackGroundColor().name() +
-                                 ", stop: 0 #ffffff);");
-        emit _btRemoveList(GlobalEnumatedAndExtern::btAI2);
-    }
-
-    emit _btAI2Selected(btSelected);
+    this->setupButtonBackGround(ui->btAI2, _myStyle.getTraceColorAnalogPlot(), btSelected);
+    this->emitBtdSignal(GlobalEnumatedAndExtern::btAI2, btSelected);
 }
 
 void SettingChannelSelection::on_btAI3_released()
@@ -501,21 +310,8 @@ void SettingChannelSelection::on_btAI3_released()
     static bool btSelected = false;
     btSelected = btSelected == true? false : true;
 
-    if(btSelected)    {
-        ui->btAI3->setStyleSheet("background-color: qlineargradient(x1: 0, y1: 0, x2: 0, y2: 1, "
-                                 "stop: 1" + _myStyle.getTraceColorAnalogPlot().name() +
-                                 ", stop: 0 #ffffff);");
-        emit _btAddList(GlobalEnumatedAndExtern::btAI3);
-    }
-    else
-    {
-        ui->btAI3->setStyleSheet("background-color: qlineargradient(x1: 0, y1: 0, x2: 0, y2: 1, "
-                                 "stop: 1" + _myStyle.getBackGroundColor().name() +
-                                 ", stop: 0 #ffffff);");
-        emit _btRemoveList(GlobalEnumatedAndExtern::btAI3);
-    }
-
-    emit _btAI3Selected(btSelected);
+    this->setupButtonBackGround(ui->btAI3, _myStyle.getTraceColorAnalogPlot(), btSelected);
+    this->emitBtdSignal(GlobalEnumatedAndExtern::btAI3, btSelected);
 }
 
 void SettingChannelSelection::on_btAI4_released()
@@ -523,19 +319,6 @@ void SettingChannelSelection::on_btAI4_released()
     static bool btSelected = false;
     btSelected = btSelected == true? false : true;
 
-    if(btSelected)    {
-        ui->btAI4->setStyleSheet("background-color: qlineargradient(x1: 0, y1: 0, x2: 0, y2: 1, "
-                                 "stop: 1" + _myStyle.getTraceColorAnalogPlot().name() +
-                                 ", stop: 0 #ffffff);");
-        emit _btAddList(GlobalEnumatedAndExtern::btAI4);
-    }
-    else
-    {
-        ui->btAI4->setStyleSheet("background-color: qlineargradient(x1: 0, y1: 0, x2: 0, y2: 1, "
-                                 "stop: 1" + _myStyle.getBackGroundColor().name() +
-                                 ", stop: 0 #ffffff);");
-        emit _btRemoveList(GlobalEnumatedAndExtern::btAI4);
-    }
-
-    emit _btAI4Selected(btSelected);
+    this->setupButtonBackGround(ui->btAI4, _myStyle.getTraceColorAnalogPlot(), btSelected);
+    this->emitBtdSignal(GlobalEnumatedAndExtern::btAI4, btSelected);
 }

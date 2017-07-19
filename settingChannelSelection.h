@@ -34,10 +34,17 @@ private:
     //set the label of all push button on UI
     void setupLabel();
 
+    //setup shap and background of the push button
     void setupButton(QPushButton *pushbutton, QColor btColor);
+
+    //setup background color of the push button
+    void setupButtonBackGround(QPushButton *pushbutton, QColor btSelectedColor, bool btSelected);
 
     //key value for pushbutton name
     QMap<int, QString> TriggerTracePossible;
+
+    //generic emit signal for all button
+    void emitBtdSignal(int buttonNumber, bool btSelected);
 
 private slots:
     void on_btDI1_released();
@@ -64,6 +71,8 @@ private slots:
 signals:
 
     //send if button is seleced or not
+    void _btSeleccted(int buttonNumber, bool btSelected);
+
     void _btDI1Selected(bool btSelected);
     void _btDI2Selected(bool btSelected);
     void _btDI3Selected(bool btSelected);
@@ -102,6 +111,11 @@ signals:
     void _btAI1RemoveList(int buttonNummer);
     void _btAI2RemoveList(int buttonNummer);
 
+    //add trace in trigger setting
+    void _addTrace(int enumTrace);
+
+    //remove trace in trigger setting
+    void _removeTrace(int enumTrace);
 };
 
 #endif // SETTINGCHANNELSELECTION_H

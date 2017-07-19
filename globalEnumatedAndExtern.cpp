@@ -30,6 +30,7 @@ QMap<int, QString> GlobalEnumatedAndExtern::initTriggerTracePossible()
     ret.insert(btAI2, "AI 2");
     ret.insert(btAI3, "AI 3");
     ret.insert(btAI4, "AI 4");
+    ret.insert(functionResult, "TR 1");
     return ret;
 }
 

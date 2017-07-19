@@ -20,6 +20,9 @@ MainWindow::MainWindow(QWidget *parent) :
     this->setStatusBar();
 
     this->_btTrigger_released();
+
+    //setup signal and slot
+    this->setupSignalAndSlot();
 }
 
 MainWindow::~MainWindow()
@@ -48,7 +51,8 @@ void MainWindow::mainSetup()
 
 void MainWindow::setupSignalAndSlot()
 {
-
+    QObject::connect(this->settingWindow, SIGNAL(_addTraceInTriggerMenu(int)), this->triggerWindow, SLOT(_addTrace(int)));
+    QObject::connect(this->settingWindow, SIGNAL(_removeTraceInTriggerMenu(int)), this->triggerWindow, SLOT(_hideTrace(int)));
 }
 
 void MainWindow::setupStyle()

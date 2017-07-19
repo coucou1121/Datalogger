@@ -126,7 +126,7 @@
        </widget>
       </item>
       <item>
-       <widget class="DigitalPlot" name="widgetDi4" native="true"/>
+       <widget class="DigitalPlot" name="widgetDI4" native="true"/>
       </item>
       <item>
        <widget class="AnalogPlot" name="widgetAI1" native="true"/>

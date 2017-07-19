@@ -427,6 +427,39 @@ void SettingTriggerSetting::_AI4select(bool btselected)
     }
 }
 
+void SettingTriggerSetting::_btSelected(int buttonNumber, bool btSelected)
+{
+    switch(buttonNumber)
+    {
+    case GlobalEnumatedAndExtern::btDI1 :
+        this->_DI1select(btSelected);
+        break;
+    case GlobalEnumatedAndExtern::btDI2 :
+        this->_DI2select(btSelected);
+        break;
+    case GlobalEnumatedAndExtern::btDI3 :
+        this->_DI3select(btSelected);
+        break;
+    case GlobalEnumatedAndExtern::btDI4 :
+        this->_DI4select(btSelected);
+        break;
+    case GlobalEnumatedAndExtern::btAI1 :
+        this->_AI1select(btSelected);
+        break;
+    case GlobalEnumatedAndExtern::btAI2 :
+        this->_AI2select(btSelected);
+        break;
+    case GlobalEnumatedAndExtern::btAI3 :
+        this->_AI3select(btSelected);
+        break;
+    case GlobalEnumatedAndExtern::btAI4 :
+        this->_AI4select(btSelected);
+        break;
+    default:
+        break;
+    }
+}
+
 void SettingTriggerSetting::setEdgeIcon(QPushButton *pushbutton, GlobalEnumatedAndExtern::eEdge edgeType)
 {
     if(edgeType == GlobalEnumatedAndExtern::fallingEdge)

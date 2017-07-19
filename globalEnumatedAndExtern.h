@@ -70,7 +70,8 @@ public:
         btAI1,
         btAI2,
         btAI3,
-        btAI4
+        btAI4,
+        functionResult
     }eTracePossible;
 
     static QMap<int, QString> initTriggerTracePossible();
