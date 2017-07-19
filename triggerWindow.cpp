@@ -15,6 +15,9 @@ TriggerWindow::TriggerWindow(QWidget *parent) :
 
     //hide all trace
     this->_hideAllTrace();
+
+    // force the trigger trace to be on bottom
+    ui->verticalLayout->setAlignment(ui->widgetFunction,Qt::AlignBottom);
 }
 
 TriggerWindow::~TriggerWindow()

@@ -12,6 +12,7 @@
 #include "baseWindow.h"
 #include "settingWindow.h"
 #include "triggerWindow.h"
+#include "displayWindows.h"
 
 namespace Ui {
 
@@ -39,6 +40,8 @@ private:
     BaseWindow *baseWindow;
     SettingWindow *settingWindow;
     TriggerWindow *triggerWindow;
+    DisplayWindows *displayWindow;
+
 
     //Style
     CommonStyle _myStyle;
