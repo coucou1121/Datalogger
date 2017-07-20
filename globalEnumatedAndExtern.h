@@ -74,7 +74,21 @@ public:
         functionResult
     }eTracePossible;
 
+    //button in trigger function
+    typedef enum
+    {
+        periode0_1_ms = 0,
+        periode1_ms,
+        periode10_ms,
+        periode100_ms,
+        periode1_s,
+        periode10_s
+    }ePeriodePossible;
+
     static QMap<int, QString> initTriggerTracePossible();
+
+    static QMap<int, double> initPeridePossible();
+    static QMap<int, QString> initPeridePossibleTxt();
 
     static QMap<int, QString> TriggerTracePossible;
 

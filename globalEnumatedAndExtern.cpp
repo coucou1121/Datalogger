@@ -34,6 +34,30 @@ QMap<int, QString> GlobalEnumatedAndExtern::initTriggerTracePossible()
     return ret;
 }
 
+QMap<int, double> GlobalEnumatedAndExtern::initPeridePossible()
+{
+    QMap<int, double> ret;
+    ret.insert(periode0_1_ms, 0.1);
+    ret.insert(periode1_ms, 1);
+    ret.insert(periode10_ms, 10);
+    ret.insert(periode100_ms, 100);
+    ret.insert(periode1_s, 1000);
+    ret.insert(periode10_s, 10000);
+    return ret;
+}
+
+QMap<int, QString> GlobalEnumatedAndExtern::initPeridePossibleTxt()
+{
+    QMap<int, QString> ret;
+    ret.insert(periode0_1_ms, "0.1 ms");
+    ret.insert(periode1_ms, "1 ms");
+    ret.insert(periode10_ms, "10 ms");
+    ret.insert(periode100_ms, "100 ms");
+    ret.insert(periode1_s, "1 s");
+    ret.insert(periode10_s, "10 s");
+    return ret;
+}
+
 
 //initialise the Key - Value for combobx
 extern QMap<int, QString> TriggerTracePossible = GlobalEnumatedAndExtern::initTriggerTracePossible();

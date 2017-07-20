@@ -6,6 +6,7 @@
 
 #include "commonStyle.h"
 #include "dataFrameSimulator.h"
+#include "globalEnumatedAndExtern.h"
 
 namespace Ui {
 class DisplayWindows;
@@ -20,6 +21,11 @@ public:
     ~DisplayWindows();
 
 public slots:
+
+public slots:
+    void _addTrace(int enumTrace);
+    void _hideTrace(int enumTrace);
+
     void updatePlot();
 
     void addNewDataFrame(QVector<DataFrame> newDataFrameVector);
@@ -33,6 +39,12 @@ public slots:
 
 private:
     Ui::DisplayWindows *ui;
+
+    //key value for Trace label name
+    QMap<int, QString> TriggerTracePossible;
+
+    void _setAllTraceName();
+    void _hideAllTrace();
 
     //style
     QPalette _palette;

@@ -25,19 +25,27 @@ void SettingWindow::setupSignalAndSlot()
     //remove button in all trigger function combobox
     QObject::connect(ui->widgetChannelSelection, SIGNAL(_btRemoveList(int)),ui->widgetTriggerFunction, SLOT(_comboboxRevmoveItem(int)));
 
-    //add Trace in trigger menu
+    //add Trace in all needed menu
     QObject::connect(ui->widgetChannelSelection, SIGNAL(_addTrace(int)),this, SLOT(_recievedAddTraceFromChannelSelection(int)));
 
-    //remove Trace in trigger menu
+    //remove Trace in  all needed menu
     QObject::connect(ui->widgetChannelSelection, SIGNAL(_removeTrace(int)),this, SLOT(_recievedRemoveTraceFromChannelSelection(int)));
 }
 
 void SettingWindow::_recievedAddTraceFromChannelSelection(int traceNumber)
 {
+    // add in trigger menu
     emit _addTraceInTriggerMenu(traceNumber);
+
+    // add in display menu
+    emit _addTraceInDisplayMenu(traceNumber);
 }
 
 void SettingWindow::_recievedRemoveTraceFromChannelSelection(int traceNumber)
 {
+    //remove in trigger menu
     emit _removeTraceInTriggerMenu(traceNumber);
+
+    //remove in display menu
+    emit _removeTraceInDisplayMenu(traceNumber);
 }

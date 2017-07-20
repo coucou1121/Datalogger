@@ -5,36 +5,161 @@ DisplayWindows::DisplayWindows(QWidget *parent) :
     QWidget(parent),
     ui(new Ui::DisplayWindows)
 {
+    //initialise the Key - Value for combobx
+    TriggerTracePossible = GlobalEnumatedAndExtern::initTriggerTracePossible();
+
     ui->setupUi(this);
     this->setupStyle();
 
-    ui->DI1->setTitleName("DI1");
-    ui->DI2->setTitleName("DI2");
-    ui->DI3->setTitleName("DI3");
-    ui->DI4->setTitleName("DI4");
-    ui->DI5->setTitleName("DI5");
-    ui->DI6->setTitleName("DI6");
-    ui->DI7->setTitleName("DI7");
-    ui->DI8->setTitleName("DI8");
-    ui->DI9->setTitleName("DI9");
-    ui->DI10->setTitleName("DI10");
-    ui->DI11->setTitleName("DI11");
-    ui->DI12->setTitleName("DI12");
-    ui->DI13->setTitleName("DI13");
-    ui->DI14->setTitleName("DI14");
-    ui->DI15->setTitleName("DI15");
-    ui->DI16->setTitleName("DI16");
+    //setup title name of all trace
+    this->_setAllTraceName();
 
-    ui->AI1->setTitleName("AI1");
-    ui->AI2->setTitleName("AI2");
-    ui->AI3->setTitleName("AI3");
-    ui->AI4->setTitleName("AI4");
+    //hide all trace
+    this->_hideAllTrace();
 }
 
 
 DisplayWindows::~DisplayWindows()
 {
     delete ui;
+}
+
+void DisplayWindows::_addTrace(int enumTrace)
+{
+    switch(enumTrace)
+    {
+    case GlobalEnumatedAndExtern::btDI1:
+        ui->DI1->show();
+        break;
+    case GlobalEnumatedAndExtern::btDI2:
+        ui->DI2->show();
+        break;
+    case GlobalEnumatedAndExtern::btDI3:
+        ui->DI3->show();
+        break;
+    case GlobalEnumatedAndExtern::btDI4:
+        ui->DI4->show();
+        break;
+    case GlobalEnumatedAndExtern::btDI5:
+        ui->DI5->show();
+        break;
+    case GlobalEnumatedAndExtern::btDI6:
+        ui->DI6->show();
+        break;
+    case GlobalEnumatedAndExtern::btDI7:
+        ui->DI7->show();
+        break;
+    case GlobalEnumatedAndExtern::btDI8:
+        ui->DI8->show();
+        break;
+    case GlobalEnumatedAndExtern::btDI9:
+        ui->DI9->show();
+        break;
+    case GlobalEnumatedAndExtern::btDI10:
+        ui->DI10->show();
+        break;
+    case GlobalEnumatedAndExtern::btDI11:
+        ui->DI11->show();
+        break;
+    case GlobalEnumatedAndExtern::btDI12:
+        ui->DI12->show();
+        break;
+    case GlobalEnumatedAndExtern::btDI13:
+        ui->DI13->show();
+        break;
+    case GlobalEnumatedAndExtern::btDI14:
+        ui->DI14->show();
+        break;
+    case GlobalEnumatedAndExtern::btDI15:
+        ui->DI15->show();
+        break;
+    case GlobalEnumatedAndExtern::btDI16:
+        ui->DI16->show();
+        break;
+    case GlobalEnumatedAndExtern::btAI1:
+        ui->AI1->show();
+        break;
+    case GlobalEnumatedAndExtern::btAI2:
+        ui->AI2->show();
+        break;
+    case GlobalEnumatedAndExtern::btAI3:
+        ui->AI3->show();
+        break;
+    case GlobalEnumatedAndExtern::btAI4:
+        ui->AI4->show();
+        break;
+    default :
+        break;
+    }
+}
+
+void DisplayWindows::_hideTrace(int enumTrace)
+{
+    switch(enumTrace)
+    {
+    case GlobalEnumatedAndExtern::btDI1:
+        ui->DI1->hide();
+        break;
+    case GlobalEnumatedAndExtern::btDI2:
+        ui->DI2->hide();
+        break;
+    case GlobalEnumatedAndExtern::btDI3:
+        ui->DI3->hide();
+        break;
+    case GlobalEnumatedAndExtern::btDI4:
+        ui->DI4->hide();
+        break;
+    case GlobalEnumatedAndExtern::btDI5:
+        ui->DI5->hide();
+        break;
+    case GlobalEnumatedAndExtern::btDI6:
+        ui->DI6->hide();
+        break;
+    case GlobalEnumatedAndExtern::btDI7:
+        ui->DI7->hide();
+        break;
+    case GlobalEnumatedAndExtern::btDI8:
+        ui->DI8->hide();
+        break;
+    case GlobalEnumatedAndExtern::btDI9:
+        ui->DI9->hide();
+        break;
+    case GlobalEnumatedAndExtern::btDI10:
+        ui->DI10->hide();
+        break;
+    case GlobalEnumatedAndExtern::btDI11:
+        ui->DI11->hide();
+        break;
+    case GlobalEnumatedAndExtern::btDI12:
+        ui->DI12->hide();
+        break;
+    case GlobalEnumatedAndExtern::btDI13:
+        ui->DI13->hide();
+        break;
+    case GlobalEnumatedAndExtern::btDI14:
+        ui->DI14->hide();
+        break;
+    case GlobalEnumatedAndExtern::btDI15:
+        ui->DI15->hide();
+        break;
+    case GlobalEnumatedAndExtern::btDI16:
+        ui->DI16->hide();
+        break;
+    case GlobalEnumatedAndExtern::btAI1:
+        ui->AI1->hide();
+        break;
+    case GlobalEnumatedAndExtern::btAI2:
+        ui->AI2->hide();
+        break;
+    case GlobalEnumatedAndExtern::btAI3:
+        ui->AI3->hide();
+        break;
+    case GlobalEnumatedAndExtern::btAI4:
+        ui->AI4->hide();
+        break;
+    default :
+        break;
+    }
 }
 
 void DisplayWindows::setupStyle()
@@ -160,4 +285,56 @@ void DisplayWindows::addValueAI4(quint8 value)
 {
     //qDebug() << objectName() << " Data recieved " << value;
     ui->AI4->addYValue(value);
+}
+
+void DisplayWindows::_setAllTraceName()
+{
+   ui->DI1->setTitleName(TriggerTracePossible[GlobalEnumatedAndExtern::btDI1]);
+   ui->DI2->setTitleName(TriggerTracePossible[GlobalEnumatedAndExtern::btDI2]);
+   ui->DI3->setTitleName(TriggerTracePossible[GlobalEnumatedAndExtern::btDI3]);
+   ui->DI4->setTitleName(TriggerTracePossible[GlobalEnumatedAndExtern::btDI4]);
+   ui->DI5->setTitleName(TriggerTracePossible[GlobalEnumatedAndExtern::btDI5]);
+   ui->DI6->setTitleName(TriggerTracePossible[GlobalEnumatedAndExtern::btDI6]);
+   ui->DI7->setTitleName(TriggerTracePossible[GlobalEnumatedAndExtern::btDI7]);
+   ui->DI8->setTitleName(TriggerTracePossible[GlobalEnumatedAndExtern::btDI8]);
+   ui->DI9->setTitleName(TriggerTracePossible[GlobalEnumatedAndExtern::btDI9]);
+   ui->DI10->setTitleName(TriggerTracePossible[GlobalEnumatedAndExtern::btDI10]);
+   ui->DI11->setTitleName(TriggerTracePossible[GlobalEnumatedAndExtern::btDI11]);
+   ui->DI12->setTitleName(TriggerTracePossible[GlobalEnumatedAndExtern::btDI12]);
+   ui->DI13->setTitleName(TriggerTracePossible[GlobalEnumatedAndExtern::btDI13]);
+   ui->DI14->setTitleName(TriggerTracePossible[GlobalEnumatedAndExtern::btDI14]);
+   ui->DI15->setTitleName(TriggerTracePossible[GlobalEnumatedAndExtern::btDI15]);
+   ui->DI16->setTitleName(TriggerTracePossible[GlobalEnumatedAndExtern::btDI16]);
+
+   ui->AI1->setTitleName(TriggerTracePossible[GlobalEnumatedAndExtern::btAI1]);
+   ui->AI2->setTitleName(TriggerTracePossible[GlobalEnumatedAndExtern::btAI2]);
+   ui->AI3->setTitleName(TriggerTracePossible[GlobalEnumatedAndExtern::btAI3]);
+   ui->AI4->setTitleName(TriggerTracePossible[GlobalEnumatedAndExtern::btAI4]);
+
+
+}
+
+void DisplayWindows::_hideAllTrace()
+{
+    ui->DI1->hide();
+    ui->DI2->hide();
+    ui->DI3->hide();
+    ui->DI4->hide();
+    ui->DI5->hide();
+    ui->DI6->hide();
+    ui->DI7->hide();
+    ui->DI8->hide();
+    ui->DI9->hide();
+    ui->DI10->hide();
+    ui->DI11->hide();
+    ui->DI12->hide();
+    ui->DI13->hide();
+    ui->DI14->hide();
+    ui->DI15->hide();
+    ui->DI16->hide();
+
+    ui->AI1->hide();
+    ui->AI2->hide();
+    ui->AI3->hide();
+    ui->AI4->hide();
 }

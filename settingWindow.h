@@ -30,6 +30,8 @@ private slots:
 signals:
     void _addTraceInTriggerMenu(int traceNumber);
     void _removeTraceInTriggerMenu(int traceNumber);
+    void _addTraceInDisplayMenu(int traceNumber);
+    void _removeTraceInDisplayMenu(int traceNumber);
 };
 
 #endif // SETTINGWINDOW_H
