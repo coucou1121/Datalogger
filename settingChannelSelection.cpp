@@ -111,7 +111,7 @@ void SettingChannelSelection::setupButtonBackGround(QPushButton *pushbutton, QCo
     }
 }
 
-void SettingChannelSelection::emitBtdSignal(int buttonNumber, bool btSelected)
+void SettingChannelSelection::emitBtSignal(int buttonNumber, bool btSelected)
 {
 
     if(btSelected)
@@ -149,7 +149,7 @@ void SettingChannelSelection::on_btDI1_released()
     btSelected = btSelected == true? false : true;
 
     this->setupButtonBackGround(ui->btDI1, _myStyle.getTraceColorDigitalPlot(), btSelected);
-    this->emitBtdSignal(GlobalEnumatedAndExtern::btDI1, btSelected);
+    this->emitBtSignal(GlobalEnumatedAndExtern::btDI1, btSelected);
 }
 
 void SettingChannelSelection::on_btDI2_released()
@@ -158,7 +158,7 @@ void SettingChannelSelection::on_btDI2_released()
     btSelected = btSelected == true? false : true;
 
     this->setupButtonBackGround(ui->btDI2, _myStyle.getTraceColorDigitalPlot(), btSelected);
-    this->emitBtdSignal(GlobalEnumatedAndExtern::btDI2, btSelected);
+    this->emitBtSignal(GlobalEnumatedAndExtern::btDI2, btSelected);
 }
 
 void SettingChannelSelection::on_btDI3_released()
@@ -167,7 +167,7 @@ void SettingChannelSelection::on_btDI3_released()
     btSelected = btSelected == true? false : true;
 
     this->setupButtonBackGround(ui->btDI3, _myStyle.getTraceColorDigitalPlot(), btSelected);
-    this->emitBtdSignal(GlobalEnumatedAndExtern::btDI3, btSelected);
+    this->emitBtSignal(GlobalEnumatedAndExtern::btDI3, btSelected);
 }
 
 void SettingChannelSelection::on_btDI4_released()
@@ -176,7 +176,7 @@ void SettingChannelSelection::on_btDI4_released()
     btSelected = btSelected == true? false : true;
 
     this->setupButtonBackGround(ui->btDI4, _myStyle.getTraceColorDigitalPlot(), btSelected);
-    this->emitBtdSignal(GlobalEnumatedAndExtern::btDI4, btSelected);
+    this->emitBtSignal(GlobalEnumatedAndExtern::btDI4, btSelected);
 }
 
 void SettingChannelSelection::on_btDI5_released()
@@ -185,7 +185,7 @@ void SettingChannelSelection::on_btDI5_released()
     btSelected = btSelected == true? false : true;
 
     this->setupButtonBackGround(ui->btDI5, _myStyle.getTraceColorDigitalPlot(), btSelected);
-    this->emitBtdSignal(GlobalEnumatedAndExtern::btDI5, btSelected);
+    this->emitBtSignal(GlobalEnumatedAndExtern::btDI5, btSelected);
 }
 
 void SettingChannelSelection::on_btDI6_released()
@@ -194,7 +194,7 @@ void SettingChannelSelection::on_btDI6_released()
     btSelected = btSelected == true? false : true;
 
     this->setupButtonBackGround(ui->btDI6, _myStyle.getTraceColorDigitalPlot(), btSelected);
-    this->emitBtdSignal(GlobalEnumatedAndExtern::btDI6, btSelected);
+    this->emitBtSignal(GlobalEnumatedAndExtern::btDI6, btSelected);
 }
 
 void SettingChannelSelection::on_btDI7_released()
@@ -203,7 +203,7 @@ void SettingChannelSelection::on_btDI7_released()
     btSelected = btSelected == true? false : true;
 
     this->setupButtonBackGround(ui->btDI7, _myStyle.getTraceColorDigitalPlot(), btSelected);
-    this->emitBtdSignal(GlobalEnumatedAndExtern::btDI7, btSelected);
+    this->emitBtSignal(GlobalEnumatedAndExtern::btDI7, btSelected);
 }
 
 void SettingChannelSelection::on_btDI8_released()
@@ -212,7 +212,7 @@ void SettingChannelSelection::on_btDI8_released()
     btSelected = btSelected == true? false : true;
 
     this->setupButtonBackGround(ui->btDI8, _myStyle.getTraceColorDigitalPlot(), btSelected);
-    this->emitBtdSignal(GlobalEnumatedAndExtern::btDI8, btSelected);
+    this->emitBtSignal(GlobalEnumatedAndExtern::btDI8, btSelected);
 }
 
 void SettingChannelSelection::on_btDI9_released()
@@ -221,7 +221,7 @@ void SettingChannelSelection::on_btDI9_released()
     btSelected = btSelected == true? false : true;
 
     this->setupButtonBackGround(ui->btDI9, _myStyle.getTraceColorDigitalPlot(), btSelected);
-    this->emitBtdSignal(GlobalEnumatedAndExtern::btDI9, btSelected);
+    this->emitBtSignal(GlobalEnumatedAndExtern::btDI9, btSelected);
 }
 
 void SettingChannelSelection::on_btDI10_released()
@@ -230,7 +230,7 @@ void SettingChannelSelection::on_btDI10_released()
     btSelected = btSelected == true? false : true;
 
     this->setupButtonBackGround(ui->btDI10, _myStyle.getTraceColorDigitalPlot(), btSelected);
-    this->emitBtdSignal(GlobalEnumatedAndExtern::btDI10, btSelected);
+    this->emitBtSignal(GlobalEnumatedAndExtern::btDI10, btSelected);
 }
 
 void SettingChannelSelection::on_btDI11_released()
@@ -239,7 +239,7 @@ void SettingChannelSelection::on_btDI11_released()
     btSelected = btSelected == true? false : true;
 
     this->setupButtonBackGround(ui->btDI11, _myStyle.getTraceColorDigitalPlot(), btSelected);
-    this->emitBtdSignal(GlobalEnumatedAndExtern::btDI11, btSelected);
+    this->emitBtSignal(GlobalEnumatedAndExtern::btDI11, btSelected);
 }
 
 void SettingChannelSelection::on_btDI12_released()
@@ -248,7 +248,7 @@ void SettingChannelSelection::on_btDI12_released()
     btSelected = btSelected == true? false : true;
 
     this->setupButtonBackGround(ui->btDI12, _myStyle.getTraceColorDigitalPlot(), btSelected);
-    this->emitBtdSignal(GlobalEnumatedAndExtern::btDI12, btSelected);
+    this->emitBtSignal(GlobalEnumatedAndExtern::btDI12, btSelected);
 }
 
 void SettingChannelSelection::on_btDI13_released()
@@ -257,7 +257,7 @@ void SettingChannelSelection::on_btDI13_released()
     btSelected = btSelected == true? false : true;
 
     this->setupButtonBackGround(ui->btDI13, _myStyle.getTraceColorDigitalPlot(), btSelected);
-    this->emitBtdSignal(GlobalEnumatedAndExtern::btDI13, btSelected);
+    this->emitBtSignal(GlobalEnumatedAndExtern::btDI13, btSelected);
 }
 
 void SettingChannelSelection::on_btDI14_released()
@@ -266,7 +266,7 @@ void SettingChannelSelection::on_btDI14_released()
     btSelected = btSelected == true? false : true;
 
     this->setupButtonBackGround(ui->btDI14, _myStyle.getTraceColorDigitalPlot(), btSelected);
-    this->emitBtdSignal(GlobalEnumatedAndExtern::btDI14, btSelected);
+    this->emitBtSignal(GlobalEnumatedAndExtern::btDI14, btSelected);
 }
 
 void SettingChannelSelection::on_btDI15_released()
@@ -275,7 +275,7 @@ void SettingChannelSelection::on_btDI15_released()
     btSelected = btSelected == true? false : true;
 
     this->setupButtonBackGround(ui->btDI15, _myStyle.getTraceColorDigitalPlot(), btSelected);
-    this->emitBtdSignal(GlobalEnumatedAndExtern::btDI15, btSelected);
+    this->emitBtSignal(GlobalEnumatedAndExtern::btDI15, btSelected);
 }
 
 void SettingChannelSelection::on_btDI16_released()
@@ -284,7 +284,7 @@ void SettingChannelSelection::on_btDI16_released()
     btSelected = btSelected == true? false : true;
 
     this->setupButtonBackGround(ui->btDI16, _myStyle.getTraceColorDigitalPlot(), btSelected);
-    this->emitBtdSignal(GlobalEnumatedAndExtern::btDI16, btSelected);
+    this->emitBtSignal(GlobalEnumatedAndExtern::btDI16, btSelected);
 }
 
 void SettingChannelSelection::on_btAI1_released()
@@ -293,7 +293,7 @@ void SettingChannelSelection::on_btAI1_released()
     btSelected = btSelected == true? false : true;
 
     this->setupButtonBackGround(ui->btAI1, _myStyle.getTraceColorAnalogPlot(), btSelected);
-    this->emitBtdSignal(GlobalEnumatedAndExtern::btAI1, btSelected);
+    this->emitBtSignal(GlobalEnumatedAndExtern::btAI1, btSelected);
 }
 
 void SettingChannelSelection::on_btAI2_released()
@@ -302,7 +302,7 @@ void SettingChannelSelection::on_btAI2_released()
     btSelected = btSelected == true? false : true;
 
     this->setupButtonBackGround(ui->btAI2, _myStyle.getTraceColorAnalogPlot(), btSelected);
-    this->emitBtdSignal(GlobalEnumatedAndExtern::btAI2, btSelected);
+    this->emitBtSignal(GlobalEnumatedAndExtern::btAI2, btSelected);
 }
 
 void SettingChannelSelection::on_btAI3_released()
@@ -311,7 +311,7 @@ void SettingChannelSelection::on_btAI3_released()
     btSelected = btSelected == true? false : true;
 
     this->setupButtonBackGround(ui->btAI3, _myStyle.getTraceColorAnalogPlot(), btSelected);
-    this->emitBtdSignal(GlobalEnumatedAndExtern::btAI3, btSelected);
+    this->emitBtSignal(GlobalEnumatedAndExtern::btAI3, btSelected);
 }
 
 void SettingChannelSelection::on_btAI4_released()
@@ -320,5 +320,5 @@ void SettingChannelSelection::on_btAI4_released()
     btSelected = btSelected == true? false : true;
 
     this->setupButtonBackGround(ui->btAI4, _myStyle.getTraceColorAnalogPlot(), btSelected);
-    this->emitBtdSignal(GlobalEnumatedAndExtern::btAI4, btSelected);
+    this->emitBtSignal(GlobalEnumatedAndExtern::btAI4, btSelected);
 }

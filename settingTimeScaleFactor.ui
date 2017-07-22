@@ -55,7 +55,7 @@
       </font>
      </property>
      <property name="text">
-      <string>TextLabel</string>
+      <string>Time scale factor</string>
      </property>
      <property name="alignment">
       <set>Qt::AlignCenter</set>
@@ -229,30 +229,10 @@
       <property name="spacing">
        <number>7</number>
       </property>
-      <item row="2" column="3">
-       <widget class="QLabel" name="labelSec">
+      <item row="1" column="1">
+       <widget class="QLabel" name="labelTitleMonth">
         <property name="text">
-         <string/>
-        </property>
-        <property name="alignment">
-         <set>Qt::AlignCenter</set>
-        </property>
-       </widget>
-      </item>
-      <item row="2" column="1">
-       <widget class="QLabel" name="labelHrs">
-        <property name="text">
-         <string/>
-        </property>
-        <property name="alignment">
-         <set>Qt::AlignCenter</set>
-        </property>
-       </widget>
-      </item>
-      <item row="2" column="0">
-       <widget class="QLabel" name="labelDay">
-        <property name="text">
-         <string/>
+         <string>Month</string>
         </property>
         <property name="alignment">
          <set>Qt::AlignCenter</set>
@@ -260,9 +240,19 @@
        </widget>
       </item>
       <item row="1" column="3">
-       <widget class="QLabel" name="labelTitleSec">
+       <widget class="QLabel" name="labelTitleHrs">
         <property name="text">
-         <string>sec</string>
+         <string>hrs</string>
+        </property>
+        <property name="alignment">
+         <set>Qt::AlignCenter</set>
+        </property>
+       </widget>
+      </item>
+      <item row="0" column="2" colspan="4">
+       <widget class="QLabel" name="labelTitleDuration">
+        <property name="text">
+         <string>Duration</string>
         </property>
         <property name="alignment">
          <set>Qt::AlignCenter</set>
@@ -270,26 +260,6 @@
        </widget>
       </item>
       <item row="1" column="2">
-       <widget class="QLabel" name="labelTitleMin">
-        <property name="text">
-         <string>min</string>
-        </property>
-        <property name="alignment">
-         <set>Qt::AlignCenter</set>
-        </property>
-       </widget>
-      </item>
-      <item row="2" column="2">
-       <widget class="QLabel" name="labelMin">
-        <property name="text">
-         <string/>
-        </property>
-        <property name="alignment">
-         <set>Qt::AlignCenter</set>
-        </property>
-       </widget>
-      </item>
-      <item row="1" column="0">
        <widget class="QLabel" name="labelTitleDay">
         <property name="midLineWidth">
          <number>0</number>
@@ -302,20 +272,90 @@
         </property>
        </widget>
       </item>
-      <item row="0" column="0" colspan="4">
-       <widget class="QLabel" name="labelTitleDuration">
+      <item row="2" column="4">
+       <widget class="QLabel" name="labelMin">
         <property name="text">
-         <string>Duration</string>
+         <string/>
         </property>
         <property name="alignment">
          <set>Qt::AlignCenter</set>
         </property>
        </widget>
       </item>
-      <item row="1" column="1">
-       <widget class="QLabel" name="labelTitleHrs">
+      <item row="1" column="4">
+       <widget class="QLabel" name="labelTitleMin">
         <property name="text">
-         <string>hrs</string>
+         <string>min</string>
+        </property>
+        <property name="alignment">
+         <set>Qt::AlignCenter</set>
+        </property>
+       </widget>
+      </item>
+      <item row="1" column="5">
+       <widget class="QLabel" name="labelTitleSec">
+        <property name="text">
+         <string>sec</string>
+        </property>
+        <property name="alignment">
+         <set>Qt::AlignCenter</set>
+        </property>
+       </widget>
+      </item>
+      <item row="2" column="2">
+       <widget class="QLabel" name="labelDay">
+        <property name="text">
+         <string/>
+        </property>
+        <property name="alignment">
+         <set>Qt::AlignCenter</set>
+        </property>
+       </widget>
+      </item>
+      <item row="2" column="5">
+       <widget class="QLabel" name="labelSec">
+        <property name="text">
+         <string/>
+        </property>
+        <property name="alignment">
+         <set>Qt::AlignCenter</set>
+        </property>
+       </widget>
+      </item>
+      <item row="2" column="3">
+       <widget class="QLabel" name="labelHrs">
+        <property name="text">
+         <string/>
+        </property>
+        <property name="alignment">
+         <set>Qt::AlignCenter</set>
+        </property>
+       </widget>
+      </item>
+      <item row="1" column="0">
+       <widget class="QLabel" name="labelTitleYear">
+        <property name="text">
+         <string>Year</string>
+        </property>
+        <property name="alignment">
+         <set>Qt::AlignCenter</set>
+        </property>
+       </widget>
+      </item>
+      <item row="2" column="1">
+       <widget class="QLabel" name="labelMonth">
+        <property name="text">
+         <string/>
+        </property>
+        <property name="alignment">
+         <set>Qt::AlignCenter</set>
+        </property>
+       </widget>
+      </item>
+      <item row="2" column="0">
+       <widget class="QLabel" name="labelYear">
+        <property name="text">
+         <string/>
         </property>
         <property name="alignment">
          <set>Qt::AlignCenter</set>

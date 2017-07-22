@@ -55,8 +55,10 @@
 #define DIGITAL_PLOT_AXIS_SUB_TICK_COLOR     250, 250, 250           //RGB, R=140,   G=140,  B=140   aplha = 255
 #define DIGITAL_PLOT_AXIS_TICK_LABEL_COLOR   250, 250, 250           //RGB, R=140,   G=140,  B=140   aplha = 255
 //pen
-#define DIGITAL_PLOT_TRACE                   51, 204, 51               //RGB, R=51,   G=204,  B=51   aplha = 255
+#define DIGITAL_PLOT_TRACE                   51, 204, 51             //RGB, R=51,   G=204,  B=51   aplha = 255
 
+//error
+#define ERROR_LINE_COLOR_IN_TROUBLE           255, 0, 0              //RGB, R=255,   G=0,  B=0   aplha = 255
 
 class CommonStyle
 {
@@ -87,6 +89,9 @@ public:
     //digital trace
     QColor getTraceColorDigitalPlot() const;
 
+    //error line
+    QColor getErrorLineInTrouble() const;
+
     //pushbutton unselect Shape
     void setPushButtonUnselected(QPushButton *pushButton);
     void setPushButtonBlocked(QPushButton *pushButton);
@@ -106,7 +111,6 @@ private:
     QColor backGroundColorButtonStatusbarSelected;
     QColor backGroundColorButtonStatusbarUnselected;
 
-
     //Grid
     QColor gridColorAnalogPlot;
     QColor axisGridColorAnalogPlot;
@@ -123,6 +127,9 @@ private:
 
     //digital trace
     QColor traceColorDigitalPlot;
+
+    //error line
+    QColor errorLineInTrouble;
 };
 
 #endif // COMMONSTYLE_H

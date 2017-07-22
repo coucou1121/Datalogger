@@ -13,6 +13,7 @@
 #include "settingWindow.h"
 #include "triggerWindow.h"
 #include "displayWindows.h"
+#include "debugWindow.h"
 
 namespace Ui {
 
@@ -37,11 +38,11 @@ private:
     Ui::MainWindow *ui;
 
     // diffrent windows
-    BaseWindow *baseWindow;
-    SettingWindow *settingWindow;
-    TriggerWindow *triggerWindow;
-    DisplayWindows *displayWindow;
-
+    BaseWindow *_baseWindow;
+    SettingWindow *_settingWindow;
+    TriggerWindow *_triggerWindow;
+    DisplayWindows *_displayWindow;
+    DebugWindow *_debugWindow;
 
     //Style
     CommonStyle _myStyle;
@@ -63,6 +64,8 @@ private:
 
     //setup signal and slot
     void setupSignalAndSlot();
+
+    void setupDefaultValue();
 
 private slots:
 

@@ -5,6 +5,14 @@ GlobalEnumatedAndExtern::GlobalEnumatedAndExtern()
 
 }
 
+QMap<int, QString> GlobalEnumatedAndExtern::initErrorPossible()
+{
+    QMap<int, QString> ret;
+    ret.insert(noError, "no error");
+    ret.insert(ErrorSamplingFrequencyToHigh, "Periode too low \n or \n baudrate too high");
+    return ret;
+}
+
 QMap<int, QString> GlobalEnumatedAndExtern::initTriggerTracePossible()
 {
 
@@ -36,12 +44,20 @@ QMap<int, QString> GlobalEnumatedAndExtern::initTriggerTracePossible()
 
 QMap<int, double> GlobalEnumatedAndExtern::initPeridePossible()
 {
+    // all time are in millisecondes
     QMap<int, double> ret;
-    ret.insert(periode0_1_ms, 0.1);
+    ret.insert(periode0_5_microsec, 0.0005);
+    ret.insert(periode1_microsec, 0.001);
+    ret.insert(periode50_microsec, 0.05);
+    ret.insert(periode100_microsec, 0.1);
     ret.insert(periode1_ms, 1);
+    ret.insert(periode5_ms, 5);
     ret.insert(periode10_ms, 10);
+    ret.insert(periode50_ms, 50);
     ret.insert(periode100_ms, 100);
+    ret.insert(periode500_ms, 500);
     ret.insert(periode1_s, 1000);
+    ret.insert(periode5_s, 5000);
     ret.insert(periode10_s, 10000);
     return ret;
 }
@@ -49,11 +65,18 @@ QMap<int, double> GlobalEnumatedAndExtern::initPeridePossible()
 QMap<int, QString> GlobalEnumatedAndExtern::initPeridePossibleTxt()
 {
     QMap<int, QString> ret;
-    ret.insert(periode0_1_ms, "0.1 ms");
+    ret.insert(periode0_5_microsec, "0.5 μs max resolution");
+    ret.insert(periode1_microsec, "1 μs");
+    ret.insert(periode50_microsec, "50 μs");
+    ret.insert(periode100_microsec, "100 μs");
     ret.insert(periode1_ms, "1 ms");
+    ret.insert(periode5_ms, "5 ms");
     ret.insert(periode10_ms, "10 ms");
+    ret.insert(periode50_ms, "50 ms");
     ret.insert(periode100_ms, "100 ms");
+    ret.insert(periode500_ms, "500 ms");
     ret.insert(periode1_s, "1 s");
+    ret.insert(periode5_s, "5 s");
     ret.insert(periode10_s, "10 s");
     return ret;
 }

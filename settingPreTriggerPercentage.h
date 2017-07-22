@@ -20,11 +20,6 @@ public:
     void setMaximumRange(int maximumRange);
     void setStepOnClick(int stepOnClick);
 
-private slots:
-    void on_spinBoxTimeBeforeTrig_valueChanged(int arg1);
-
-    void on_spinBoxTimeAfterTrig_valueChanged(int arg1);
-
 private:
     Ui::SettingPreTriggerPercentage *ui;
 
@@ -36,6 +31,10 @@ private:
 
     //step for one click
     int _stepOnClick;
+
+private slots:
+    void on_spinBoxTimeBeforeTrig_valueChanged(int arg1);
+    void on_spinBoxTimeAfterTrig_valueChanged(int arg1);
 };
 
 #endif // SETTINGPRETRIGGERPERCENTAGE_H

@@ -22,6 +22,21 @@ public:
 
 public slots:
 
+private:
+    Ui::DisplayWindows *ui;
+
+    //key value for Trace label name
+    QMap<int, QString> TriggerTracePossible;
+
+    void _setAllTraceName();
+    void _hideAllTrace();
+
+    //style
+    QPalette _palette;
+    CommonStyle _myStyle;
+    QElapsedTimer timerElapse;
+    void setupStyle();
+
 public slots:
     void _addTrace(int enumTrace);
     void _hideTrace(int enumTrace);
@@ -37,20 +52,6 @@ public slots:
     void addValueAI3(quint8 value);
     void addValueAI4(quint8 value);
 
-private:
-    Ui::DisplayWindows *ui;
-
-    //key value for Trace label name
-    QMap<int, QString> TriggerTracePossible;
-
-    void _setAllTraceName();
-    void _hideAllTrace();
-
-    //style
-    QPalette _palette;
-    CommonStyle _myStyle;
-    QElapsedTimer timerElapse;
-    void setupStyle();
 };
 
 #endif // DISPLAYWINDOWS_H

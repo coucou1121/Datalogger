@@ -24,6 +24,9 @@ CommonStyle::CommonStyle()
 
     //Digital trace
     traceColorDigitalPlot.setRgb(DIGITAL_PLOT_TRACE);
+
+    //error line
+    errorLineInTrouble.setRgb(ERROR_LINE_COLOR_IN_TROUBLE);
 }
 
 QColor CommonStyle::getBackGroundColor() const
@@ -127,4 +130,9 @@ void CommonStyle::setDoublespinBoxShape(QDoubleSpinBox *doubleSpinBox)
                                  "QDoubleSpinBox::down-button { subcontrol-position: right; width: 30px; height: 40px;}"
                                  "QDoubleSpinBox {background-color: " + this->getBackGroundColorButtonStatusbarUnselected().name()+ ";}"
                                  "QDoubleSpinBox { border: 3px inset grey; }");
+}
+
+QColor CommonStyle::getErrorLineInTrouble() const
+{
+    return errorLineInTrouble;
 }

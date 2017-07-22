@@ -2,6 +2,9 @@
 #define ERRORMESSAGE_H
 
 #include <QWidget>
+#include <QDebug>
+#include "commonStyle.h"
+#include "globalEnumatedAndExtern.h"
 
 namespace Ui {
 class ErrorMessage;
@@ -15,8 +18,22 @@ public:
     explicit ErrorMessage(QWidget *parent = 0);
     ~ErrorMessage();
 
+
 private:
     Ui::ErrorMessage *ui;
+
+    //Style
+    CommonStyle _myStyle;
+
+    QMap<int, QString> _errorListPossible;
+    QMap<int, QString> _errorListNow;
+
+    void _setColor(bool inTrouble);
+    void _displayMessage();
+
+private slots:
+    void _reveivedError(int errorNumber, bool active);
+
 };
 
 #endif // ERRORMESSAGE_H

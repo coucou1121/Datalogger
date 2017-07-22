@@ -12,6 +12,17 @@ private:
 public:
     GlobalEnumatedAndExtern();
 
+
+    //ErrorPossible
+    typedef enum
+    {
+        noError = 0,
+        ErrorSamplingFrequencyToHigh
+    }eError;
+
+
+    static QMap<int, QString> initErrorPossible();
+
     //trace range
     typedef enum
     {
@@ -77,20 +88,26 @@ public:
     //button in trigger function
     typedef enum
     {
-        periode0_1_ms = 0,
+        periode0_5_microsec = 0,
+        periode1_microsec,
+        periode50_microsec,
+        periode100_microsec,
         periode1_ms,
+        periode5_ms,
         periode10_ms,
+        periode50_ms,
         periode100_ms,
+        periode500_ms,
         periode1_s,
+        periode5_s,
         periode10_s
     }ePeriodePossible;
 
-    static QMap<int, QString> initTriggerTracePossible();
+    static QMap<int, QString> TriggerTracePossible;
 
+    static QMap<int, QString> initTriggerTracePossible();
     static QMap<int, double> initPeridePossible();
     static QMap<int, QString> initPeridePossibleTxt();
-
-    static QMap<int, QString> TriggerTracePossible;
 
 };
 

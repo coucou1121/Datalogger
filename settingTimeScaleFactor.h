@@ -4,12 +4,9 @@
 #include <QFrame>
 #include <QDebug>
 #include <QString>
+#include <QDateTime>
 #include "commonStyle.h"
 #include "globalEnumatedAndExtern.h"
-
-#define UNIT_SECONDES " [s]"
-#define UNIT_MILLI_SECONDES " [ms]"
-#define TRAME_VALUE 65536
 
 namespace Ui {
 class SettingTimeScaleFactor;
@@ -24,13 +21,24 @@ public:
     ~SettingTimeScaleFactor();
 
 private slots:
-    void on_comboBoxPeriod_currentTextChanged(const QString &arg1);
 
+    void on_comboBoxPeriod_currentTextChanged(const QString &arg1);
     void on_comboBoxPeriod_currentIndexChanged(int index);
 
 private:
     Ui::SettingTimeScaleFactor *ui;
 
+    // _frequancy
+    int _frequency;
+
+    //nombre of saved frame
+    quint64 _nbFrameSaved;
+
+    //size of frame
+    int _frameSize;
+
+    //FTDI baudrate
+    int _FTDIbaudrate;
 
     //key value for periode possible
     QMap<int, double> _peridePossible;
@@ -42,8 +50,16 @@ private:
     void setupStyle();
 
     void _initPeriode();
-    void _initDuration(int index);
-    void _initSampleSeconde();
+    void _initDuration();
+    void _initSampleRate(int index);
+
+private slots:
+    void _nbFrameSavedWasChanged(quint64 nbFrameChanged);
+    void _sizeFrameWasChanged(int frameSize);
+    void _FTDIBaudrateWasChanged(int FTDIBaudrate);
+
+signals:
+    void _errorFrequencyToLow(int errorNumber, bool active);
 };
 
 #endif // SETTINGTIMESCALEFACTOR_H

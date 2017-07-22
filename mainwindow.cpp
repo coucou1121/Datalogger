@@ -11,19 +11,24 @@ MainWindow::MainWindow(QWidget *parent) :
     setMinimumSize(MINIMUM_WIDTH_SIZE, MINIMUM_HEIGHT_SIZE);
 
     //create windows object
-    baseWindow = new BaseWindow();
-    settingWindow = new SettingWindow();
-    triggerWindow = new TriggerWindow();
-    displayWindow = new DisplayWindows();
+    _baseWindow = new BaseWindow();
+    _settingWindow = new SettingWindow();
+    _triggerWindow = new TriggerWindow();
+    _displayWindow = new DisplayWindows();
+    _debugWindow = new DebugWindow();
 
     this->mainSetup();
     this->setupStyle();
     this->setStatusBar();
 
+    //select Setting menu when start the application
     this->_btSetting_released();
 
     //setup signal and slot
     this->setupSignalAndSlot();
+
+    //setup default values
+    this->setupDefaultValue();
 }
 
 MainWindow::~MainWindow()
@@ -34,32 +39,52 @@ MainWindow::~MainWindow()
 void MainWindow::mainSetup()
 {
     //add base windows in windows layout
-    ui->gridLayout->addWidget(baseWindow, 0, 1, 6, 1);
+    ui->gridLayout->addWidget(_baseWindow, 0, 1, 6, 1);
 
     //add setting windows in windows layout
-    ui->gridLayout->addWidget(settingWindow, 0, 1, 6, 1);
+    ui->gridLayout->addWidget(_settingWindow, 0, 1, 6, 1);
 
     //add setting windows in windows layout
-    ui->gridLayout->addWidget(triggerWindow, 0, 1, 6, 1);
+    ui->gridLayout->addWidget(_triggerWindow, 0, 1, 6, 1);
 
     //add display window in window layout
-    ui->gridLayout->addWidget(displayWindow, 0, 1, 6, 1);
+    ui->gridLayout->addWidget(_displayWindow, 0, 1, 6, 1);
+
+    //add debug window in window layout
+    ui->gridLayout->addWidget(_debugWindow, 0, 1, 6, 1);
 
     //set title on baseWindows
-    baseWindow->setTitle("Datalogger");
+    _baseWindow->setTitle("Datalogger");
 
     //set version on baseWindows
-    baseWindow->setVersion("1.0");
+    _baseWindow->setVersion("1.0");
 
+}
+
+void MainWindow::setupDefaultValue()
+{
+    _debugWindow->setNbSavedFrame(65536); //max 999999999 for the slot
+    _debugWindow->setFrameSize(64);
+    _debugWindow->setBaudRateFTDI(2000000);
 }
 
 void MainWindow::setupSignalAndSlot()
 {
-    QObject::connect(this->settingWindow, SIGNAL(_addTraceInTriggerMenu(int)), this->triggerWindow, SLOT(_addTrace(int)));
-    QObject::connect(this->settingWindow, SIGNAL(_removeTraceInTriggerMenu(int)), this->triggerWindow, SLOT(_hideTrace(int)));
+    //manage trace in trigger menu
+    QObject::connect(this->_settingWindow, SIGNAL(_addTraceInTriggerMenu(int)), this->_triggerWindow, SLOT(_addTrace(int)));
+    QObject::connect(this->_settingWindow, SIGNAL(_removeTraceInTriggerMenu(int)), this->_triggerWindow, SLOT(_hideTrace(int)));
 
-    QObject::connect(this->settingWindow, SIGNAL(_addTraceInDisplayMenu(int)), this->displayWindow, SLOT(_addTrace(int)));
-    QObject::connect(this->settingWindow, SIGNAL(_removeTraceInDisplayMenu(int)), this->displayWindow, SLOT(_hideTrace(int)));
+    //manage trace in display menu
+    QObject::connect(this->_settingWindow, SIGNAL(_addTraceInDisplayMenu(int)), this->_displayWindow, SLOT(_addTrace(int)));
+    QObject::connect(this->_settingWindow, SIGNAL(_removeTraceInDisplayMenu(int)), this->_displayWindow, SLOT(_hideTrace(int)));
+
+    //send new value for scale factor in setting menu
+    QObject::connect(this->_debugWindow, SIGNAL(_nbFrameSavedChanged(quint64)), this->_settingWindow, SLOT(_recievedNbFrameSavedChanged(quint64)));
+    QObject::connect(this->_debugWindow, SIGNAL(_frameSizeChanged(int)), this->_settingWindow, SLOT(_recievedSizeFrameChange(int)));
+    QObject::connect(this->_debugWindow, SIGNAL(_FTDIBaudrateChanged(int)), this->_settingWindow, SLOT(_recievedFTDIBaudrateChange(int)));
+
+    //error management
+    QObject::connect(this->_settingWindow, SIGNAL(_errorFrequencyToLow(int,bool)), ui->widgetError, SLOT(_reveivedError(int,bool)));
 }
 
 void MainWindow::setupStyle()
@@ -135,10 +160,11 @@ void MainWindow::resetPushButtonColor()
     _btDebug->setStyleSheet("background-color:" + _myStyle.getBackGroundColorButtonStatusbarUnselected().name() +
                            "; color:" + _myStyle.getBackGroundColorButtonStatusbarSelected().name() + ";");
 
-    baseWindow->hide();
-    settingWindow->hide();
-    triggerWindow->hide();
-    displayWindow->hide();
+    _baseWindow->hide();
+    _settingWindow->hide();
+    _triggerWindow->hide();
+    _displayWindow->hide();
+    _debugWindow->hide();
 }
 
 void MainWindow::_btBase_released()
@@ -146,7 +172,7 @@ void MainWindow::_btBase_released()
     this->resetPushButtonColor();
     _btBase->setStyleSheet("background-color:" + _myStyle.getBackGroundColorButtonStatusbarSelected().name() +
                            "; color:" + _myStyle.getBackGroundColorButtonStatusbarUnselected().name() + ";");
-    baseWindow->show();
+    _baseWindow->show();
 }
 
 void MainWindow::_btSetting_released()
@@ -154,7 +180,7 @@ void MainWindow::_btSetting_released()
     this->resetPushButtonColor();
     _btSetting->setStyleSheet("background-color:" + _myStyle.getBackGroundColorButtonStatusbarSelected().name() +
                            "; color:" + _myStyle.getBackGroundColorButtonStatusbarUnselected().name() + ";");
-    settingWindow->show();
+    _settingWindow->show();
 }
 
 void MainWindow::_btTrigger_released()
@@ -162,7 +188,7 @@ void MainWindow::_btTrigger_released()
     this->resetPushButtonColor();
     _btTrigger->setStyleSheet("background-color:" + _myStyle.getBackGroundColorButtonStatusbarSelected().name() +
                            "; color:" + _myStyle.getBackGroundColorButtonStatusbarUnselected().name() + ";");
-    triggerWindow->show();
+    _triggerWindow->show();
 }
 
 void MainWindow::_btDisplay_released()
@@ -170,7 +196,7 @@ void MainWindow::_btDisplay_released()
     this->resetPushButtonColor();
     _btDisplay->setStyleSheet("background-color:" + _myStyle.getBackGroundColorButtonStatusbarSelected().name() +
                            "; color:" + _myStyle.getBackGroundColorButtonStatusbarUnselected().name() + ";");
-    displayWindow->show();
+    _displayWindow->show();
 }
 
 void MainWindow::_btDebug_released()
@@ -178,5 +204,6 @@ void MainWindow::_btDebug_released()
     this->resetPushButtonColor();
     _btDebug->setStyleSheet("background-color:" + _myStyle.getBackGroundColorButtonStatusbarSelected().name() +
                            "; color:" + _myStyle.getBackGroundColorButtonStatusbarUnselected().name() + ";");
+    _debugWindow->show();
 }
 
