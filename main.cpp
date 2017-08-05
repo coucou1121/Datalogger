@@ -63,7 +63,7 @@ int main(int argc, char *argv[])
 
     //frame simulator
     QVector<DataFrame> _dataFrameVector;
-    DataFrameSimulator *dataFrameSimulator = new DataFrameSimulator("Frame Simulator");
+    //DataFrameSimulator *dataFrameSimulator = new DataFrameSimulator("Frame Simulator");
 
     //move time into the thread
     tickTimer->moveToThread(threadTick);

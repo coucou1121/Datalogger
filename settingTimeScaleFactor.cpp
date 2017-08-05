@@ -204,7 +204,7 @@ void SettingTimeScaleFactor::_FTDIBaudrateWasChanged(int FTDIBaudrate)
 
 void SettingTimeScaleFactor::on_comboBoxPeriod_currentTextChanged(const QString &arg1)
 {
-//    qDebug() << arg1;
+    qDebug() << arg1;
 }
 
 void SettingTimeScaleFactor::on_comboBoxPeriod_currentIndexChanged(int index)
