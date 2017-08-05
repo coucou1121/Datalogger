@@ -16,14 +16,12 @@ SOURCES += main.cpp\
     qcustomplot.cpp \
     analogPlot.cpp \
     commonStyle.cpp \
-    graphicTracePlot.cpp \
     frameSimulator.cpp \
     frameThread.cpp \
     startThread.cpp \
     startstopemuldata.cpp \
     refreshTimer.cpp \
     displayWindows.cpp \
-    graphicPlot.cpp \
     frame.cpp \
     dataFrame.cpp \
     dataFrameSimulator.cpp \
@@ -47,14 +45,12 @@ HEADERS  += mainwindow.h \
     qcustomplot.h \
     analogPlot.h \
     commonStyle.h \
-    graphicTracePlot.h \
     frameSimulator.h \
     frameThread.h \
     startThread.h \
     startstopemuldata.h \
     refreshTimer.h \
     displayWindows.h \
-    graphicPlot.h \
     frame.h \
     dataFrame.h \
     dataFrameSimulator.h \
@@ -75,10 +71,8 @@ HEADERS  += mainwindow.h \
 
 FORMS    += mainwindow.ui \
     analogPlot.ui \
-    graphicTracePlot.ui \
     startstopemuldata.ui \
     displayWindows.ui \
-    graphicPlot.ui \
     analogPlot_copy.ui \
     digitalPlot.ui \
     logoDateTime.ui \

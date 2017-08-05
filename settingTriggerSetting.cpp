@@ -172,6 +172,8 @@ void SettingTriggerSetting::on_pushButtonRangeAI1_released()
     {
         ui->pushButtonRangeAI1->setText(range15_15Txt);
     }
+
+    emit _pushButtonRangeAI1WasChanged();
 }
 
 void SettingTriggerSetting::on_pushButtonRangeAI2_released()
@@ -199,6 +201,8 @@ void SettingTriggerSetting::on_pushButtonRangeAI2_released()
     {
         ui->pushButtonRangeAI2->setText(range15_15Txt);
     }
+
+    emit _pushButtonRangeAI2WasChanged();
 }
 
 void SettingTriggerSetting::on_pushButtonRangeAI3_released()
@@ -458,6 +462,58 @@ void SettingTriggerSetting::_btSelected(int buttonNumber, bool btSelected)
     default:
         break;
     }
+}
+
+void SettingTriggerSetting::_pushButtonRangeAI1Changed()
+{
+    qDebug() << objectName() << "recieved _pushButtonRangeAI1Changed";
+    static GlobalEnumatedAndExtern::eRangeValue selection;
+
+    if(ui->pushButtonRangeAI1->text() == range0_30Txt)
+    {
+        selection = GlobalEnumatedAndExtern::range0_30;
+    }
+    else
+    {
+        selection = GlobalEnumatedAndExtern::range15_15;
+    }
+
+    selection = selection == GlobalEnumatedAndExtern::range0_30 ? GlobalEnumatedAndExtern::range15_15 : GlobalEnumatedAndExtern::range0_30;
+
+    if(selection == GlobalEnumatedAndExtern::range0_30)
+    {
+        ui->pushButtonRangeAI1->setText(range0_30Txt);
+    }
+    if(selection == GlobalEnumatedAndExtern::range15_15)
+    {
+        ui->pushButtonRangeAI1->setText(range15_15Txt);
+    }
+}
+
+void SettingTriggerSetting::_pushButtonRangeAI2Changed()
+{
+    static GlobalEnumatedAndExtern::eRangeValue selection;
+
+    if(ui->pushButtonRangeAI2->text() == range0_30Txt)
+    {
+        selection = GlobalEnumatedAndExtern::range0_30;
+    }
+    else
+    {
+        selection = GlobalEnumatedAndExtern::range15_15;
+    }
+
+    selection = selection == GlobalEnumatedAndExtern::range0_30 ? GlobalEnumatedAndExtern::range15_15 : GlobalEnumatedAndExtern::range0_30;
+
+    if(selection == GlobalEnumatedAndExtern::range0_30)
+    {
+        ui->pushButtonRangeAI2->setText(range0_30Txt);
+    }
+    if(selection == GlobalEnumatedAndExtern::range15_15)
+    {
+        ui->pushButtonRangeAI2->setText(range15_15Txt);
+    }
+
 }
 
 void SettingTriggerSetting::setEdgeIcon(QPushButton *pushbutton, GlobalEnumatedAndExtern::eEdge edgeType)

@@ -22,7 +22,7 @@ SettingTriggerFunction::SettingTriggerFunction(QWidget *parent) :
     // add all logical operator in all comboboxes
     this->setupLogicalCombobox(ui->comboBoxTopMiddle);
     this->setupLogicalCombobox(ui->comboBoxMiddle);
-    this->setupLogicalCombobox(ui->comboBottomMiddle);
+    this->setupLogicalCombobox(ui->comboBoxBottomMiddle);
 
     // add "none" of all trace comboboxes
     this->setupTraceCombobox();
@@ -78,14 +78,91 @@ void SettingTriggerFunction::updateCombobox()
     }
 }
 
-void SettingTriggerFunction::_comboboxAddItem(int buttonNummer)
+void SettingTriggerFunction::_comboboxAddItem(int buttonNumber)
 {
-    TriggerTraceSelected[buttonNummer] = TriggerTracePossible[buttonNummer];
+    TriggerTraceSelected[buttonNumber] = TriggerTracePossible[buttonNumber];
     this->updateCombobox();
 }
 
-void SettingTriggerFunction::_comboboxRevmoveItem(int buttonNummer)
+void SettingTriggerFunction::_comboboxRevmoveItem(int buttonNumber)
 {
-    TriggerTraceSelected.remove(buttonNummer);
+    TriggerTraceSelected.remove(buttonNumber);
     this->updateCombobox();
+}
+
+void SettingTriggerFunction::_comboBoxTopLeft_currentIndexChanged(int index)
+{
+//    qDebug()<< objectName() << " comboBoxTopLeft received index changed : " << index;
+    ui->comboBoxTopLeft->setCurrentIndex(index);
+}
+
+void SettingTriggerFunction::_comboBoxTopRight_currentIndexChanged(int index)
+{
+//    qDebug()<< objectName() << " comboBoxTopRight received index changed : " << index;
+    ui->comboBoxTopRight->setCurrentIndex(index);
+}
+
+void SettingTriggerFunction::_comboBoxBottomLeft_currentIndexChanged(int index)
+{
+//    qDebug()<< objectName() << " comboBoxBottomLeft received index changed : " << index;
+    ui->comboBoxBottomLeft->setCurrentIndex(index);
+}
+
+void SettingTriggerFunction::_comboBoxBottomRight_currentIndexChanged(int index)
+{
+//    qDebug()<< objectName() << " comboBoxBottomRight received index changed : " << index;
+    ui->comboBoxBottomRight->setCurrentIndex(index);
+}
+
+void SettingTriggerFunction::_comboBoxTopMiddle_currentIndexChanged(int index)
+{
+//    qDebug()<< objectName() << " comboBoxTopMiddle received index changed : " << index;
+    ui->comboBoxTopMiddle->setCurrentIndex(index);
+}
+
+void SettingTriggerFunction::_comboBoxMiddle_currentIndexChanged(int index)
+{
+//    qDebug()<< objectName() << " comboBoxMiddle received index changed : " << index;
+    ui->comboBoxMiddle->setCurrentIndex(index);
+}
+
+void SettingTriggerFunction::_comboBoxBottomMiddle_currentIndexChanged(int index)
+{
+//    qDebug()<< objectName() << " comboBoxBottomMiddle received index changed : " << index;
+    ui->comboBoxBottomMiddle->setCurrentIndex(index);
+}
+
+void SettingTriggerFunction::on_comboBoxTopLeft_currentIndexChanged(int index)
+{
+    emit _comboBoxTopLeft_currentIndexWasChanged(index);
+}
+
+void SettingTriggerFunction::on_comboBoxTopRight_currentIndexChanged(int index)
+{
+    emit _comboBoxTopRight_currentIndexWasChanged(index);
+}
+
+void SettingTriggerFunction::on_comboBoxBottomLeft_currentIndexChanged(int index)
+{
+    emit _comboBoxBottomLeft_currentIndexWasChanged(index);
+}
+
+void SettingTriggerFunction::on_comboBoxBottomRight_currentIndexChanged(int index)
+{
+    emit _comboBoxBottomRight_currentIndexWasChanged(index);
+}
+
+void SettingTriggerFunction::on_comboBoxTopMiddle_currentIndexChanged(int index)
+{
+    emit _comboBoxTopMiddle_currentIndexWasChanged(index);
+}
+
+void SettingTriggerFunction::on_comboBoxMiddle_currentIndexChanged(int index)
+{
+    emit _comboBoxMiddle_currentIndexWasChanged(index);
+}
+
+void SettingTriggerFunction::on_comboBoxBottomMiddle_currentIndexChanged(int index)
+{
+    emit _comboBoxBottomMiddle_currentIndexWasChanged(index);
 }

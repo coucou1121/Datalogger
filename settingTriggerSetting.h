@@ -54,7 +54,15 @@ private:
 
 public slots:
     void _btSelected(int buttonNumber, bool btSelected);
+    void _pushButtonRangeAI1Changed();
+    void _pushButtonRangeAI2Changed();
 
+//    void _pushButtonEdgeDI1Changed(GlobalEnumatedAndExtern::risingEdge edge);
+//    void _pushButtonEdgeDI2Changed(GlobalEnumatedAndExtern::risingEdge edge);
+//    void _pushButtonEdgeDI3Changed(GlobalEnumatedAndExtern::risingEdge edge);
+//    void _pushButtonEdgeDI4Changed(GlobalEnumatedAndExtern::risingEdge edge);
+//    void _pushButtonEdgeAI1Changed(GlobalEnumatedAndExtern::risingEdge edge);
+//    void _pushButtonEdgeAI2Changed(GlobalEnumatedAndExtern::risingEdge edge);
 
 private slots:
     void on_pushButtonRangeDI1_released();
@@ -73,6 +81,16 @@ private slots:
     void on_pushButtonEdgeAI1_released();
     void on_pushButtonEdgeAI2_released();
 
+signals:
+    void _pushButtonRangeAI1WasChanged();
+    void _pushButtonRangeAI2WasChanged();
+
+//    void _pushButtonEdgeDI1WasChanged(GlobalEnumatedAndExtern::risingEdge edge);
+//    void _pushButtonEdgeDI2WasChanged(GlobalEnumatedAndExtern::risingEdge edge);
+//    void _pushButtonEdgeDI3WasChanged(GlobalEnumatedAndExtern::risingEdge edge);
+//    void _pushButtonEdgeDI4WasChanged(GlobalEnumatedAndExtern::risingEdge edge);
+//    void _pushButtonEdgeAI1WasChanged(GlobalEnumatedAndExtern::risingEdge edge);
+//    void _pushButtonEdgeAI2WasChanged(GlobalEnumatedAndExtern::risingEdge edge);
 
 };
 
