@@ -38,6 +38,20 @@ private slots:
     void _recieved_pushButtonRangeAI1ChangedFromTriggerMenu();
     void _recieved_pushButtonRangeAI2ChangedFromTriggerMenu();
 
+    void _recieved_pushButtonEdgeDI1ChangedFromSettingMenu(int eEdge);
+    void _recieved_pushButtonEdgeDI2ChangedFromSettingMenu(int eEdge);
+    void _recieved_pushButtonEdgeDI3ChangedFromSettingMenu(int eEdge);
+    void _recieved_pushButtonEdgeDI4ChangedFromSettingMenu(int eEdge);
+    void _recieved_pushButtonEdgeAI1ChangedFromSettingMenu(int eEdge);
+    void _recieved_pushButtonEdgeAI2ChangedFromSettingMenu(int eEdge);
+
+    void _recieved_pushButtonEdgeDI1ChangedFromTriggerMenu(int eEdge);
+    void _recieved_pushButtonEdgeDI2ChangedFromTriggerMenu(int eEdge);
+    void _recieved_pushButtonEdgeDI3ChangedFromTriggerMenu(int eEdge);
+    void _recieved_pushButtonEdgeDI4ChangedFromTriggerMenu(int eEdge);
+    void _recieved_pushButtonEdgeAI1ChangedFromTriggerMenu(int eEdge);
+    void _recieved_pushButtonEdgeAI2ChangedFromTriggerMenu(int eEdge);
+
     void _recievedComboBoxTopLeft_currentIndexChanged(int index);
     void _recievedComboBoxTopRight_currentIndexChanged(int index);
     void _recievedComboBoxBottomLeft_currentIndexChanged(int index);
@@ -58,8 +72,13 @@ signals:
 
     void _pushButtonRangeAI1WasChangedFromSettingMenu();
     void _pushButtonRangeAI2WasChangedFromSettingMenu();
-    void _pushButtonRangeAI1WasChangedFromTriggerMenu();
-    void _pushButtonRangeAI2WasChangedFromTriggerMenu();
+
+    void _pushButtonEdgeDI1WasChangedFromSettingMenu(int eEdge);
+    void _pushButtonEdgeDI2WasChangedFromSettingMenu(int eEdge);
+    void _pushButtonEdgeDI3WasChangedFromSettingMenu(int eEdge);
+    void _pushButtonEdgeDI4WasChangedFromSettingMenu(int eEdge);
+    void _pushButtonEdgeAI1WasChangedFromSettingMenu(int eEdge);
+    void _pushButtonEdgeAI2WasChangedFromSettingMenu(int eEdge);
 
     void _comboBoxTopLeft_currentIndexWasChanged(int index);
     void _comboBoxTopRight_currentIndexWasChanged(int index);

@@ -51,11 +51,26 @@ void TriggerWindow::_hideAllTrace()
 
 void TriggerWindow::setupSignalAndSlot()
 {
-    //manage range in trigger menu
+    //connect all signals from trigger menu to outside
+    //manage range
     QObject::connect(ui->widgetTriggerSettingT, SIGNAL(_pushButtonRangeAI1WasChanged()),
                      this, SLOT(_recieved_pushButtonRangeAI1Changed()));
     QObject::connect(ui->widgetTriggerSettingT, SIGNAL(_pushButtonRangeAI2WasChanged()),
                      this, SLOT(_recieved_pushButtonRangeAI2Changed()));
+
+    //manage eEdge
+    QObject::connect(ui->widgetTriggerSettingT, SIGNAL(_pushButtonEdgeDI1WasChanged(int)),
+                     this, SLOT(_recieved_pushButtonEdgeDI1Changed(int)));
+    QObject::connect(ui->widgetTriggerSettingT, SIGNAL(_pushButtonEdgeDI2WasChanged(int)),
+                     this, SLOT(_recieved_pushButtonEdgeDI2Changed(int)));
+    QObject::connect(ui->widgetTriggerSettingT, SIGNAL(_pushButtonEdgeDI3WasChanged(int)),
+                     this, SLOT(_recieved_pushButtonEdgeDI3Changed(int)));
+    QObject::connect(ui->widgetTriggerSettingT, SIGNAL(_pushButtonEdgeDI4WasChanged(int)),
+                     this, SLOT(_recieved_pushButtonEdgeDI4Changed(int)));
+    QObject::connect(ui->widgetTriggerSettingT, SIGNAL(_pushButtonEdgeAI1WasChanged(int)),
+                     this, SLOT(_recieved_pushButtonEdgeAI1Changed(int)));
+    QObject::connect(ui->widgetTriggerSettingT, SIGNAL(_pushButtonEdgeAI2WasChanged(int)),
+                     this, SLOT(_recieved_pushButtonEdgeAI2Changed(int)));
 }
 
 void TriggerWindow::_addTrace(int enumTrace)
@@ -130,6 +145,46 @@ void TriggerWindow::_hideTrace(int enumTrace)
     ui->widgetTriggerFunction->_comboboxRevmoveItem(enumTrace);
 }
 
+void TriggerWindow::_pushButtonRangeAI1Changed()
+{
+    ui->widgetTriggerSettingT->pushButtonRangeAI1Changed();
+}
+
+void TriggerWindow::_pushButtonRangeAI2Changed()
+{
+    ui->widgetTriggerSettingT->pushButtonRangeAI2Changed();
+}
+
+void TriggerWindow::_pushButtonEdgeDI1Changed(int eEdge)
+{
+    ui->widgetTriggerSettingT->pushButtonEdgeDI1Changed(eEdge);
+}
+
+void TriggerWindow::_pushButtonEdgeDI2Changed(int eEdge)
+{
+    ui->widgetTriggerSettingT->pushButtonEdgeDI2Changed(eEdge);
+}
+
+void TriggerWindow::_pushButtonEdgeDI3Changed(int eEdge)
+{
+    ui->widgetTriggerSettingT->pushButtonEdgeDI3Changed(eEdge);
+}
+
+void TriggerWindow::_pushButtonEdgeDI4Changed(int eEdge)
+{
+    ui->widgetTriggerSettingT->pushButtonEdgeDI4Changed(eEdge);
+}
+
+void TriggerWindow::_pushButtonEdgeAI1Changed(int eEdge)
+{
+    ui->widgetTriggerSettingT->pushButtonEdgeAI1Changed(eEdge);
+}
+
+void TriggerWindow::_pushButtonEdgeAI2Changed(int eEdge)
+{
+    ui->widgetTriggerSettingT->pushButtonEdgeAI2Changed(eEdge);
+}
+
 void TriggerWindow::_comboBoxTopLeft_currentIndexChanged(int index)
 {
     ui->widgetTriggerFunction->_comboBoxTopLeft_currentIndexChanged(index);
@@ -165,16 +220,6 @@ void TriggerWindow::_comboBoxBottomMiddle_currentIndexChanged(int index)
     ui->widgetTriggerFunction->_comboBoxBottomMiddle_currentIndexChanged(index);
 }
 
-void TriggerWindow::_pushButtonRangeAI1Changed()
-{
-    ui->widgetTriggerSettingT->_pushButtonRangeAI1Changed();
-}
-
-void TriggerWindow::_pushButtonRangeAI2Changed()
-{
-    ui->widgetTriggerSettingT->_pushButtonRangeAI2Changed();
-}
-
 void TriggerWindow::_recieved_pushButtonRangeAI1Changed()
 {
     emit _pushButtonRangeAI1WasChanged();
@@ -183,4 +228,34 @@ void TriggerWindow::_recieved_pushButtonRangeAI1Changed()
 void TriggerWindow::_recieved_pushButtonRangeAI2Changed()
 {
     emit _pushButtonRangeAI2WasChanged();
+}
+
+void TriggerWindow::_recieved_pushButtonEdgeDI1Changed(int eEdge)
+{
+    emit _pushButtonEdgeDI1WasChanged(eEdge);
+}
+
+void TriggerWindow::_recieved_pushButtonEdgeDI2Changed(int eEdge)
+{
+    emit _pushButtonEdgeDI2WasChanged(eEdge);
+}
+
+void TriggerWindow::_recieved_pushButtonEdgeDI3Changed(int eEdge)
+{
+    emit _pushButtonEdgeDI3WasChanged(eEdge);
+}
+
+void TriggerWindow::_recieved_pushButtonEdgeDI4Changed(int eEdge)
+{
+    emit _pushButtonEdgeDI4WasChanged(eEdge);
+}
+
+void TriggerWindow::_recieved_pushButtonEdgeAI1Changed(int eEdge)
+{
+    emit _pushButtonEdgeAI1WasChanged(eEdge);
+}
+
+void TriggerWindow::_recieved_pushButtonEdgeAI2Changed(int eEdge)
+{
+    emit _pushButtonEdgeAI2WasChanged(eEdge);
 }

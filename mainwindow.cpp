@@ -86,6 +86,35 @@ void MainWindow::setupSignalAndSlot()
     QObject::connect(this->_triggerWindow, SIGNAL(_pushButtonRangeAI2WasChanged()),
                      this->_settingWindow, SLOT(_recieved_pushButtonRangeAI2ChangedFromTriggerMenu()));
 
+    //manage edge in trigger menu
+    //setting menu -> trigger menu
+    QObject::connect(this->_settingWindow, SIGNAL(_pushButtonEdgeDI1WasChangedFromSettingMenu(int)),
+                     this->_triggerWindow, SLOT(_pushButtonEdgeDI1Changed(int)));
+    QObject::connect(this->_settingWindow, SIGNAL(_pushButtonEdgeDI2WasChangedFromSettingMenu(int)),
+                     this->_triggerWindow, SLOT(_pushButtonEdgeDI2Changed(int)));
+    QObject::connect(this->_settingWindow, SIGNAL(_pushButtonEdgeDI3WasChangedFromSettingMenu(int)),
+                     this->_triggerWindow, SLOT(_pushButtonEdgeDI3Changed(int)));
+    QObject::connect(this->_settingWindow, SIGNAL(_pushButtonEdgeDI4WasChangedFromSettingMenu(int)),
+                     this->_triggerWindow, SLOT(_pushButtonEdgeDI4Changed(int)));
+    QObject::connect(this->_settingWindow, SIGNAL(_pushButtonEdgeAI1WasChangedFromSettingMenu(int)),
+                     this->_triggerWindow, SLOT(_pushButtonEdgeAI1Changed(int)));
+    QObject::connect(this->_settingWindow, SIGNAL(_pushButtonEdgeAI2WasChangedFromSettingMenu(int)),
+                     this->_triggerWindow, SLOT(_pushButtonEdgeAI2Changed(int)));
+
+    //trigger menu -> setting menu
+    QObject::connect(this->_triggerWindow, SIGNAL(_pushButtonEdgeDI1WasChanged(int)),
+                     this->_settingWindow, SLOT(_recieved_pushButtonEdgeDI1ChangedFromTriggerMenu(int)));
+    QObject::connect(this->_triggerWindow, SIGNAL(_pushButtonEdgeDI2WasChanged(int)),
+                     this->_settingWindow, SLOT(_recieved_pushButtonEdgeDI2ChangedFromTriggerMenu(int)));
+    QObject::connect(this->_triggerWindow, SIGNAL(_pushButtonEdgeDI3WasChanged(int)),
+                     this->_settingWindow, SLOT(_recieved_pushButtonEdgeDI3ChangedFromTriggerMenu(int)));
+    QObject::connect(this->_triggerWindow, SIGNAL(_pushButtonEdgeDI4WasChanged(int)),
+                     this->_settingWindow, SLOT(_recieved_pushButtonEdgeDI4ChangedFromTriggerMenu(int)));
+    QObject::connect(this->_triggerWindow, SIGNAL(_pushButtonEdgeAI1WasChanged(int)),
+                     this->_settingWindow, SLOT(_recieved_pushButtonEdgeAI1ChangedFromTriggerMenu(int)));
+    QObject::connect(this->_triggerWindow, SIGNAL(_pushButtonEdgeAI2WasChanged(int)),
+                     this->_settingWindow, SLOT(_recieved_pushButtonEdgeAI2ChangedFromTriggerMenu(int)));
+
     //manage select trace in trigger fonction menu of setting menu to trigger menu
     QObject::connect(this->_settingWindow, SIGNAL(_comboBoxTopLeft_currentIndexWasChanged(int)),
                      this->_triggerWindow, SLOT(_comboBoxTopLeft_currentIndexChanged(int)));

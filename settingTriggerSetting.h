@@ -19,6 +19,18 @@ public:
     explicit SettingTriggerSetting(QWidget *parent = 0);
     ~SettingTriggerSetting();
 
+    //change range selection
+    void pushButtonRangeAI1Changed();
+    void pushButtonRangeAI2Changed();
+
+    //change edge selection
+    void pushButtonEdgeDI1Changed(int eEdge);
+    void pushButtonEdgeDI2Changed(int eEdge);
+    void pushButtonEdgeDI3Changed(int eEdge);
+    void pushButtonEdgeDI4Changed(int eEdge);
+    void pushButtonEdgeAI1Changed(int eEdge);
+    void pushButtonEdgeAI2Changed(int eEdge);
+
 private:
     Ui::SettingTriggerSetting *ui;
 
@@ -54,15 +66,6 @@ private:
 
 public slots:
     void _btSelected(int buttonNumber, bool btSelected);
-    void _pushButtonRangeAI1Changed();
-    void _pushButtonRangeAI2Changed();
-
-//    void _pushButtonEdgeDI1Changed(GlobalEnumatedAndExtern::risingEdge edge);
-//    void _pushButtonEdgeDI2Changed(GlobalEnumatedAndExtern::risingEdge edge);
-//    void _pushButtonEdgeDI3Changed(GlobalEnumatedAndExtern::risingEdge edge);
-//    void _pushButtonEdgeDI4Changed(GlobalEnumatedAndExtern::risingEdge edge);
-//    void _pushButtonEdgeAI1Changed(GlobalEnumatedAndExtern::risingEdge edge);
-//    void _pushButtonEdgeAI2Changed(GlobalEnumatedAndExtern::risingEdge edge);
 
 private slots:
     void on_pushButtonRangeDI1_released();
@@ -85,12 +88,12 @@ signals:
     void _pushButtonRangeAI1WasChanged();
     void _pushButtonRangeAI2WasChanged();
 
-//    void _pushButtonEdgeDI1WasChanged(GlobalEnumatedAndExtern::risingEdge edge);
-//    void _pushButtonEdgeDI2WasChanged(GlobalEnumatedAndExtern::risingEdge edge);
-//    void _pushButtonEdgeDI3WasChanged(GlobalEnumatedAndExtern::risingEdge edge);
-//    void _pushButtonEdgeDI4WasChanged(GlobalEnumatedAndExtern::risingEdge edge);
-//    void _pushButtonEdgeAI1WasChanged(GlobalEnumatedAndExtern::risingEdge edge);
-//    void _pushButtonEdgeAI2WasChanged(GlobalEnumatedAndExtern::risingEdge edge);
+    void _pushButtonEdgeDI1WasChanged(int eEdge);
+    void _pushButtonEdgeDI2WasChanged(int eEdge);
+    void _pushButtonEdgeDI3WasChanged(int eEdge);
+    void _pushButtonEdgeDI4WasChanged(int eEdge);
+    void _pushButtonEdgeAI1WasChanged(int eEdge);
+    void _pushButtonEdgeAI2WasChanged(int eEdge);
 
 };
 

@@ -19,17 +19,26 @@ void SettingWindow::setupSignalAndSlot()
     //lock or unlock the selection in trigger setting menu
     QObject::connect(ui->widgetChannelSelection, SIGNAL(_btSeleccted(int,bool)), ui->widgetTriggerSetting, SLOT(_btSelected(int,bool)));
 
-    //manage range in trigger menu
-    //setting menu -> trigger menu
+    //connection of all signals from setting menu to outside
+    //manage range
     QObject::connect(ui->widgetTriggerSetting, SIGNAL(_pushButtonRangeAI1WasChanged()),
                      this, SLOT(_recieved_pushButtonRangeAI1ChangedFromSettingMenu()));
     QObject::connect(ui->widgetTriggerSetting, SIGNAL(_pushButtonRangeAI2WasChanged()),
                      this, SLOT(_recieved_pushButtonRangeAI2ChangedFromSettingMenu()));
-    //trigger menu -> setting menu
-    QObject::connect(this, SIGNAL(_pushButtonRangeAI1WasChangedFromTriggerMenu()),
-                     ui->widgetTriggerSetting, SLOT(_pushButtonRangeAI1Changed()));
-    QObject::connect(this, SIGNAL(_pushButtonRangeAI2WasChangedFromTriggerMenu()),
-                     ui->widgetTriggerSetting, SLOT(_pushButtonRangeAI2Changed()));
+
+    //manage eEdge
+    QObject::connect(ui->widgetTriggerSetting, SIGNAL(_pushButtonEdgeDI1WasChanged(int)),
+                     this, SLOT(_recieved_pushButtonEdgeDI1ChangedFromSettingMenu(int)));
+    QObject::connect(ui->widgetTriggerSetting, SIGNAL(_pushButtonEdgeDI2WasChanged(int)),
+                     this, SLOT(_recieved_pushButtonEdgeDI2ChangedFromSettingMenu(int)));
+    QObject::connect(ui->widgetTriggerSetting, SIGNAL(_pushButtonEdgeDI3WasChanged(int)),
+                     this, SLOT(_recieved_pushButtonEdgeDI3ChangedFromSettingMenu(int)));
+    QObject::connect(ui->widgetTriggerSetting, SIGNAL(_pushButtonEdgeDI4WasChanged(int)),
+                     this, SLOT(_recieved_pushButtonEdgeDI4ChangedFromSettingMenu(int)));
+    QObject::connect(ui->widgetTriggerSetting, SIGNAL(_pushButtonEdgeAI1WasChanged(int)),
+                     this, SLOT(_recieved_pushButtonEdgeAI1ChangedFromSettingMenu(int)));
+    QObject::connect(ui->widgetTriggerSetting, SIGNAL(_pushButtonEdgeAI2WasChanged(int)),
+                     this, SLOT(_recieved_pushButtonEdgeAI2ChangedFromSettingMenu(int)));
 
     //add button in all trigger function combobox
     QObject::connect(ui->widgetChannelSelection, SIGNAL(_btAddList(int)),ui->widgetTriggerFunction, SLOT(_comboboxAddItem(int)));
@@ -107,36 +116,94 @@ void SettingWindow::_recieved_pushButtonRangeAI2ChangedFromSettingMenu()
 
 void SettingWindow::_recieved_pushButtonRangeAI1ChangedFromTriggerMenu()
 {
-    qDebug() << objectName() << "recieved _recieved_pushButtonRangeAI1ChangedFromTriggerMenu";
-    emit _pushButtonRangeAI1WasChangedFromTriggerMenu();
+    ui->widgetTriggerSetting->pushButtonRangeAI1Changed();
 }
 
 void SettingWindow::_recieved_pushButtonRangeAI2ChangedFromTriggerMenu()
 {
-    emit _pushButtonRangeAI2WasChangedFromTriggerMenu();
+    ui->widgetTriggerSetting->pushButtonRangeAI2Changed();
+}
+
+void SettingWindow::_recieved_pushButtonEdgeDI1ChangedFromSettingMenu(int eEdge)
+{
+    emit _pushButtonEdgeDI1WasChangedFromSettingMenu(eEdge);
+}
+
+void SettingWindow::_recieved_pushButtonEdgeDI2ChangedFromSettingMenu(int eEdge)
+{
+    emit _pushButtonEdgeDI2WasChangedFromSettingMenu(eEdge);
+}
+
+void SettingWindow::_recieved_pushButtonEdgeDI3ChangedFromSettingMenu(int eEdge)
+{
+    emit _pushButtonEdgeDI3WasChangedFromSettingMenu(eEdge);
+}
+
+void SettingWindow::_recieved_pushButtonEdgeDI4ChangedFromSettingMenu(int eEdge)
+{
+    emit _pushButtonEdgeDI4WasChangedFromSettingMenu(eEdge);
+}
+
+void SettingWindow::_recieved_pushButtonEdgeAI1ChangedFromSettingMenu(int eEdge)
+{
+    emit _pushButtonEdgeAI1WasChangedFromSettingMenu(eEdge);
+}
+
+void SettingWindow::_recieved_pushButtonEdgeAI2ChangedFromSettingMenu(int eEdge)
+{
+    emit _pushButtonEdgeAI2WasChangedFromSettingMenu(eEdge);
+}
+
+void SettingWindow::_recieved_pushButtonEdgeDI1ChangedFromTriggerMenu(int eEdge)
+{
+    ui->widgetTriggerSetting->pushButtonEdgeDI1Changed(eEdge);
+}
+
+void SettingWindow::_recieved_pushButtonEdgeDI2ChangedFromTriggerMenu(int eEdge)
+{
+    ui->widgetTriggerSetting->pushButtonEdgeDI2Changed(eEdge);
+}
+
+void SettingWindow::_recieved_pushButtonEdgeDI3ChangedFromTriggerMenu(int eEdge)
+{
+    ui->widgetTriggerSetting->pushButtonEdgeDI3Changed(eEdge);
+}
+
+void SettingWindow::_recieved_pushButtonEdgeDI4ChangedFromTriggerMenu(int eEdge)
+{
+    ui->widgetTriggerSetting->pushButtonEdgeDI4Changed(eEdge);
+
+}
+
+void SettingWindow::_recieved_pushButtonEdgeAI1ChangedFromTriggerMenu(int eEdge)
+{
+    ui->widgetTriggerSetting->pushButtonEdgeAI1Changed(eEdge);
+
+}
+
+void SettingWindow::_recieved_pushButtonEdgeAI2ChangedFromTriggerMenu(int eEdge)
+{
+    ui->widgetTriggerSetting->pushButtonEdgeAI2Changed(eEdge);
+
 }
 
 void SettingWindow::_recievedNbFrameSavedChanged(quint64 nbFrameChanged)
 {
- //   qDebug() << objectName() << nbFrameChanged;
     emit _nbFrameSavedChange(nbFrameChanged);
 }
 
 void SettingWindow::_recievedSizeFrameChange(int frameSize)
 {
-//    qDebug() << objectName() << frameSize;
     emit _sizeFrameChange(frameSize);
 }
 
 void SettingWindow::_recievedFTDIBaudrateChange(int FTDIBaudrate)
 {
- //   qDebug() << objectName() << FTDIBaudrate;
     emit _FTDIBaudrateChange(FTDIBaudrate);
 }
 
 void SettingWindow::_recievedComboBoxTopLeft_currentIndexChanged(int index)
 {
-//    qDebug()<< objectName() << " comboBoxTopLeft received index changed : " << index;
     emit _comboBoxTopLeft_currentIndexWasChanged(index);
 }
 

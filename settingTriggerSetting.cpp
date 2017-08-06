@@ -263,36 +263,42 @@ void SettingTriggerSetting::on_pushButtonEdgeDI1_released()
 {
     _btDI1Edge = _btDI1Edge == GlobalEnumatedAndExtern::risingEdge ? GlobalEnumatedAndExtern::fallingEdge : GlobalEnumatedAndExtern::risingEdge;
     this->setEdgeIcon(ui->pushButtonEdgeDI1, _btDI1Edge);
+    emit _pushButtonEdgeDI1WasChanged((int)_btDI1Edge);
 }
 
 void SettingTriggerSetting::on_pushButtonEdgeDI2_released()
 {
     _btDI2Edge = _btDI2Edge == GlobalEnumatedAndExtern::risingEdge ? GlobalEnumatedAndExtern::fallingEdge : GlobalEnumatedAndExtern::risingEdge;
     this->setEdgeIcon(ui->pushButtonEdgeDI2, _btDI2Edge);
+    emit _pushButtonEdgeDI2WasChanged((int)_btDI2Edge);
 }
 
 void SettingTriggerSetting::on_pushButtonEdgeDI3_released()
 {
     _btDI3Edge = _btDI3Edge == GlobalEnumatedAndExtern::risingEdge ? GlobalEnumatedAndExtern::fallingEdge : GlobalEnumatedAndExtern::risingEdge;
     this->setEdgeIcon(ui->pushButtonEdgeDI3, _btDI3Edge);
+    emit _pushButtonEdgeDI3WasChanged((int)_btDI3Edge);
 }
 
 void SettingTriggerSetting::on_pushButtonEdgeDI4_released()
 {
     _btDI4Edge = _btDI4Edge == GlobalEnumatedAndExtern::risingEdge ? GlobalEnumatedAndExtern::fallingEdge : GlobalEnumatedAndExtern::risingEdge;
     this->setEdgeIcon(ui->pushButtonEdgeDI4, _btDI4Edge);
+    emit _pushButtonEdgeDI4WasChanged((int)_btDI4Edge);
 }
 
 void SettingTriggerSetting::on_pushButtonEdgeAI1_released()
 {
     _btAI1Edge = _btAI1Edge == GlobalEnumatedAndExtern::risingEdge ? GlobalEnumatedAndExtern::fallingEdge : GlobalEnumatedAndExtern::risingEdge;
     this->setEdgeIcon(ui->pushButtonEdgeAI1, _btAI1Edge);
+    emit _pushButtonEdgeAI1WasChanged((int)_btAI1Edge);
 }
 
 void SettingTriggerSetting::on_pushButtonEdgeAI2_released()
 {
     _btAI2Edge = _btAI2Edge == GlobalEnumatedAndExtern::risingEdge ? GlobalEnumatedAndExtern::fallingEdge : GlobalEnumatedAndExtern::risingEdge;
     this->setEdgeIcon(ui->pushButtonEdgeAI2, _btAI2Edge);
+    emit _pushButtonEdgeAI2WasChanged((int)_btAI2Edge);
 }
 
 void SettingTriggerSetting::_DI1select(bool btselected)
@@ -464,9 +470,9 @@ void SettingTriggerSetting::_btSelected(int buttonNumber, bool btSelected)
     }
 }
 
-void SettingTriggerSetting::_pushButtonRangeAI1Changed()
+void SettingTriggerSetting::pushButtonRangeAI1Changed()
 {
-    qDebug() << objectName() << "recieved _pushButtonRangeAI1Changed";
+
     static GlobalEnumatedAndExtern::eRangeValue selection;
 
     if(ui->pushButtonRangeAI1->text() == range0_30Txt)
@@ -490,7 +496,7 @@ void SettingTriggerSetting::_pushButtonRangeAI1Changed()
     }
 }
 
-void SettingTriggerSetting::_pushButtonRangeAI2Changed()
+void SettingTriggerSetting::pushButtonRangeAI2Changed()
 {
     static GlobalEnumatedAndExtern::eRangeValue selection;
 
@@ -514,6 +520,44 @@ void SettingTriggerSetting::_pushButtonRangeAI2Changed()
         ui->pushButtonRangeAI2->setText(range15_15Txt);
     }
 
+}
+
+void SettingTriggerSetting::pushButtonEdgeDI1Changed(int eEdge)
+{
+    _btDI1Edge = (GlobalEnumatedAndExtern::eEdge)eEdge;
+    this->setEdgeIcon(ui->pushButtonEdgeDI1, _btDI1Edge);
+    qDebug() << objectName() << "received pushButtonEdgeDI1Changed" << _btDI1Edge;
+}
+
+void SettingTriggerSetting::pushButtonEdgeDI2Changed(int eEdge)
+{
+    _btDI2Edge = (GlobalEnumatedAndExtern::eEdge)eEdge;
+    this->setEdgeIcon(ui->pushButtonEdgeDI2, _btDI2Edge);
+    qDebug() << objectName() << "received pushButtonEdgeDI2Changed" << _btDI2Edge;
+}
+
+void SettingTriggerSetting::pushButtonEdgeDI3Changed(int eEdge)
+{
+    _btDI3Edge = (GlobalEnumatedAndExtern::eEdge)eEdge;
+    this->setEdgeIcon(ui->pushButtonEdgeDI3, _btDI3Edge);
+}
+
+void SettingTriggerSetting::pushButtonEdgeDI4Changed(int eEdge)
+{
+    _btDI4Edge = (GlobalEnumatedAndExtern::eEdge)eEdge;
+    this->setEdgeIcon(ui->pushButtonEdgeDI4, _btDI4Edge);
+}
+
+void SettingTriggerSetting::pushButtonEdgeAI1Changed(int eEdge)
+{
+    _btAI1Edge = (GlobalEnumatedAndExtern::eEdge)eEdge;
+    this->setEdgeIcon(ui->pushButtonEdgeAI1, _btAI1Edge);
+}
+
+void SettingTriggerSetting::pushButtonEdgeAI2Changed(int eEdge)
+{
+    _btAI2Edge = (GlobalEnumatedAndExtern::eEdge)eEdge;
+    this->setEdgeIcon(ui->pushButtonEdgeAI2, _btAI2Edge);
 }
 
 void SettingTriggerSetting::setEdgeIcon(QPushButton *pushbutton, GlobalEnumatedAndExtern::eEdge edgeType)
