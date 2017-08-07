@@ -14,7 +14,7 @@ int main(int argc, char *argv[])
     //FrameSimulator frame;
     //FrameThread frameThreadTest;
     //StartStopEmulData emuldata;
-    DisplayWindows displayWindows;
+    //DisplayWindows displayWindows;
     //AnalogPlot analogPlot;
     //GraphicPlot graphicPlot;
     //DataFrame dataFrame;
@@ -96,7 +96,7 @@ int main(int argc, char *argv[])
     //refresh the plot
     //QObject::connect(refreshDisplayTimer, SIGNAL(tickFinished()), &graphicPlot, SLOT(updatePlot()));
     //QObject::connect(refreshDisplayTimer, SIGNAL(tickFinished()), &analogPlot, SLOT(updatePlot()));
-    QObject::connect(refreshDisplayTimer, SIGNAL(tickFinished()), &displayWindows, SLOT(updatePlot()));
+    //QObject::connect(refreshDisplayTimer, SIGNAL(tickFinished()), &displayWindows, SLOT(updatePlot()));
 
     //thread start
     //threadTick->start();

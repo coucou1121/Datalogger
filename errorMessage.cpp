@@ -59,10 +59,10 @@ void ErrorMessage::_displayMessage()
     else
     {
         this->_setColor(true);
-        //update all traces
-        for(auto e : _errorListNow.keys())
+
+        foreach(int key, _errorListNow.keys() )
         {
-            ui->label->setText(_errorListNow[e]);
+            ui->label->setText(_errorListNow[key]);
         }
     }
 }

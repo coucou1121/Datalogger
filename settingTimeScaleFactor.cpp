@@ -7,6 +7,9 @@ SettingTimeScaleFactor::SettingTimeScaleFactor(QWidget *parent) :
 {
     ui->setupUi(this);
 
+    _frequency = 0;
+    _FTDIbaudrate = 0;
+
     //key value for peridoe possible value
     _peridePossible  = GlobalEnumatedAndExtern::initPeridePossible();;
 
@@ -45,10 +48,9 @@ void SettingTimeScaleFactor::setupStyle()
 
 void SettingTimeScaleFactor::_initPeriode()
 {
-    //update all traces
-    for(auto e : _peridePossibleTxt.keys())
+    foreach(int key, _peridePossibleTxt.keys() )
     {
-        ui->comboBoxPeriod->addItem(_peridePossibleTxt[e], e);
+        ui->comboBoxPeriod->addItem(_peridePossibleTxt[key], key);
     }
 }
 
@@ -85,6 +87,7 @@ void SettingTimeScaleFactor::_initDuration()
     }
     else
     {
+        qDebug() << "_frequency" << _frequency << ", _FTDIbaudrate" << _FTDIbaudrate;
         recordTimeInMiliSeconde = 0;
         emit _errorFrequencyToLow(GlobalEnumatedAndExtern::ErrorSamplingFrequencyToHigh, true);
     }
@@ -168,6 +171,7 @@ void SettingTimeScaleFactor::_initSampleRate(int index)
 {
 
     _frequency = 1/_peridePossible[index]*1000;
+    _FTDIbaudrate = _frequency;
     QString frequencyTxt = QString::number(_frequency, 10);
     int w_size = frequencyTxt.size();
 
@@ -204,11 +208,11 @@ void SettingTimeScaleFactor::_FTDIBaudrateWasChanged(int FTDIBaudrate)
 
 void SettingTimeScaleFactor::on_comboBoxPeriod_currentTextChanged(const QString &arg1)
 {
-    qDebug() << arg1;
+    qDebug() << "on_comboBoxPeriod_currentTextChanged" << arg1;
 }
 
 void SettingTimeScaleFactor::on_comboBoxPeriod_currentIndexChanged(int index)
 {
- //   qDebug() << index;
+//    qDebug() << "on_comboBoxPeriod_currentIndexChanged" << index;
     _initSampleRate(index);
 }
