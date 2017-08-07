@@ -20,16 +20,24 @@ public:
     ~SettingTriggerSetting();
 
     //change range selection
-    void pushButtonRangeAI1Changed();
-    void pushButtonRangeAI2Changed();
+    void pushButtonRangeAI1_ChangeRange();
+    void pushButtonRangeAI2_ChangeRange();
 
     //change edge selection
-    void pushButtonEdgeDI1Changed(int eEdge);
-    void pushButtonEdgeDI2Changed(int eEdge);
-    void pushButtonEdgeDI3Changed(int eEdge);
-    void pushButtonEdgeDI4Changed(int eEdge);
-    void pushButtonEdgeAI1Changed(int eEdge);
-    void pushButtonEdgeAI2Changed(int eEdge);
+    void pushButtonEdgeDI1_changeEdge(int eEdge);
+    void pushButtonEdgeDI2_changeEdge(int eEdge);
+    void pushButtonEdgeDI3_changeEdge(int eEdge);
+    void pushButtonEdgeDI4_changeEdge(int eEdge);
+    void pushButtonEdgeAI1_changeEdge(int eEdge);
+    void pushButtonEdgeAI2_changeEdge(int eEdge);
+
+    //change value in doubleSpinBox
+    void doubleSpinBoxDI1_changeValue(double value);
+    void doubleSpinBoxDI2_changeValue(double value);
+    void doubleSpinBoxDI3_changeValue(double value);
+    void doubleSpinBoxDI4_changeValue(double value);
+    void doubleSpinBoxAI1_changeValue(double value);
+    void doubleSpinBoxAI2_changeValue(double value);
 
 private:
     Ui::SettingTriggerSetting *ui;
@@ -49,6 +57,7 @@ private:
     GlobalEnumatedAndExtern::eEdge _btAI2Edge;
 
     void setEdgeIcon(QPushButton *pushbutton, GlobalEnumatedAndExtern::eEdge edgeType);
+    void setRangeValue();
 
     //picture on button
     QPixmap _pixmapFallingEdge;
@@ -84,6 +93,13 @@ private slots:
     void on_pushButtonEdgeAI1_released();
     void on_pushButtonEdgeAI2_released();
 
+    void on_doubleSpinBoxDI1_valueChanged(double value);
+    void on_doubleSpinBoxDI2_valueChanged(double value);
+    void on_doubleSpinBoxDI3_valueChanged(double value);
+    void on_doubleSpinBoxDI4_valueChanged(double value);
+    void on_doubleSpinBoxAI1_valueChanged(double value);
+    void on_doubleSpinBoxAI2_valueChanged(double value);
+
 signals:
     void _pushButtonRangeAI1WasChanged();
     void _pushButtonRangeAI2WasChanged();
@@ -95,6 +111,12 @@ signals:
     void _pushButtonEdgeAI1WasChanged(int eEdge);
     void _pushButtonEdgeAI2WasChanged(int eEdge);
 
+    void _doubleSpinBoxDI1_valueWasChanged(double value);
+    void _doubleSpinBoxDI2_valueWasChanged(double value);
+    void _doubleSpinBoxDI3_valueWasChanged(double value);
+    void _doubleSpinBoxDI4_valueWasChanged(double value);
+    void _doubleSpinBoxAI1_valueWasChanged(double value);
+    void _doubleSpinBoxAI2_valueWasChanged(double value);
 };
 
 #endif // SETTINGTRIGGERSETTING_H

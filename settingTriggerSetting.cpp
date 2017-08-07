@@ -470,7 +470,7 @@ void SettingTriggerSetting::_btSelected(int buttonNumber, bool btSelected)
     }
 }
 
-void SettingTriggerSetting::pushButtonRangeAI1Changed()
+void SettingTriggerSetting::pushButtonRangeAI1_ChangeRange()
 {
 
     static GlobalEnumatedAndExtern::eRangeValue selection;
@@ -496,7 +496,7 @@ void SettingTriggerSetting::pushButtonRangeAI1Changed()
     }
 }
 
-void SettingTriggerSetting::pushButtonRangeAI2Changed()
+void SettingTriggerSetting::pushButtonRangeAI2_ChangeRange()
 {
     static GlobalEnumatedAndExtern::eRangeValue selection;
 
@@ -522,42 +522,70 @@ void SettingTriggerSetting::pushButtonRangeAI2Changed()
 
 }
 
-void SettingTriggerSetting::pushButtonEdgeDI1Changed(int eEdge)
+void SettingTriggerSetting::pushButtonEdgeDI1_changeEdge(int eEdge)
 {
     _btDI1Edge = (GlobalEnumatedAndExtern::eEdge)eEdge;
     this->setEdgeIcon(ui->pushButtonEdgeDI1, _btDI1Edge);
-    qDebug() << objectName() << "received pushButtonEdgeDI1Changed" << _btDI1Edge;
 }
 
-void SettingTriggerSetting::pushButtonEdgeDI2Changed(int eEdge)
+void SettingTriggerSetting::pushButtonEdgeDI2_changeEdge(int eEdge)
 {
     _btDI2Edge = (GlobalEnumatedAndExtern::eEdge)eEdge;
     this->setEdgeIcon(ui->pushButtonEdgeDI2, _btDI2Edge);
-    qDebug() << objectName() << "received pushButtonEdgeDI2Changed" << _btDI2Edge;
 }
 
-void SettingTriggerSetting::pushButtonEdgeDI3Changed(int eEdge)
+void SettingTriggerSetting::pushButtonEdgeDI3_changeEdge(int eEdge)
 {
     _btDI3Edge = (GlobalEnumatedAndExtern::eEdge)eEdge;
     this->setEdgeIcon(ui->pushButtonEdgeDI3, _btDI3Edge);
 }
 
-void SettingTriggerSetting::pushButtonEdgeDI4Changed(int eEdge)
+void SettingTriggerSetting::pushButtonEdgeDI4_changeEdge(int eEdge)
 {
     _btDI4Edge = (GlobalEnumatedAndExtern::eEdge)eEdge;
     this->setEdgeIcon(ui->pushButtonEdgeDI4, _btDI4Edge);
 }
 
-void SettingTriggerSetting::pushButtonEdgeAI1Changed(int eEdge)
+void SettingTriggerSetting::pushButtonEdgeAI1_changeEdge(int eEdge)
 {
     _btAI1Edge = (GlobalEnumatedAndExtern::eEdge)eEdge;
     this->setEdgeIcon(ui->pushButtonEdgeAI1, _btAI1Edge);
 }
 
-void SettingTriggerSetting::pushButtonEdgeAI2Changed(int eEdge)
+void SettingTriggerSetting::pushButtonEdgeAI2_changeEdge(int eEdge)
 {
     _btAI2Edge = (GlobalEnumatedAndExtern::eEdge)eEdge;
     this->setEdgeIcon(ui->pushButtonEdgeAI2, _btAI2Edge);
+}
+
+void SettingTriggerSetting::doubleSpinBoxDI1_changeValue(double value)
+{
+    ui->doubleSpinBoxDI1->setValue(value);
+}
+
+void SettingTriggerSetting::doubleSpinBoxDI2_changeValue(double value)
+{
+    ui->doubleSpinBoxDI2->setValue(value);
+}
+
+void SettingTriggerSetting::doubleSpinBoxDI3_changeValue(double value)
+{
+    ui->doubleSpinBoxDI3->setValue(value);
+}
+
+void SettingTriggerSetting::doubleSpinBoxDI4_changeValue(double value)
+{
+    ui->doubleSpinBoxDI4->setValue(value);
+}
+
+void SettingTriggerSetting::doubleSpinBoxAI1_changeValue(double value)
+{
+    ui->doubleSpinBoxAI1->setValue(value);
+}
+
+void SettingTriggerSetting::doubleSpinBoxAI2_changeValue(double value)
+{
+    ui->doubleSpinBoxAI2->setValue(value);
 }
 
 void SettingTriggerSetting::setEdgeIcon(QPushButton *pushbutton, GlobalEnumatedAndExtern::eEdge edgeType)
@@ -571,4 +599,34 @@ void SettingTriggerSetting::setEdgeIcon(QPushButton *pushbutton, GlobalEnumatedA
         pushbutton->setIcon(_pixmapRisingEdge);
     }
     pushbutton->setIconSize(QSize(30,30));
+}
+
+void SettingTriggerSetting::on_doubleSpinBoxDI1_valueChanged(double value)
+{
+    emit _doubleSpinBoxDI1_valueWasChanged(value);
+}
+
+void SettingTriggerSetting::on_doubleSpinBoxDI2_valueChanged(double value)
+{
+    emit _doubleSpinBoxDI2_valueWasChanged(value);
+}
+
+void SettingTriggerSetting::on_doubleSpinBoxDI3_valueChanged(double value)
+{
+    emit _doubleSpinBoxDI3_valueWasChanged(value);
+}
+
+void SettingTriggerSetting::on_doubleSpinBoxDI4_valueChanged(double value)
+{
+    emit _doubleSpinBoxDI4_valueWasChanged(value);
+}
+
+void SettingTriggerSetting::on_doubleSpinBoxAI1_valueChanged(double value)
+{
+    emit _doubleSpinBoxAI1_valueWasChanged(value);
+}
+
+void SettingTriggerSetting::on_doubleSpinBoxAI2_valueChanged(double value)
+{
+    emit _doubleSpinBoxAI2_valueWasChanged(value);
 }
