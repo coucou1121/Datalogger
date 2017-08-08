@@ -7,6 +7,7 @@ SettingWindow::SettingWindow(QWidget *parent) :
 {
     ui->setupUi(this);
     this->setupSignalAndSlot();
+    this->enableWindows(true);
 }
 
 SettingWindow::~SettingWindow()
@@ -83,16 +84,16 @@ void SettingWindow::setupSignalAndSlot()
     QObject::connect(ui->widgetChannelSelection, SIGNAL(_removeTrace(int)),this, SLOT(_recievedRemoveTraceFromChannelSelection(int)));
 
     //update save frame number in time scale factor menu
-    QObject::connect(this, SIGNAL(_nbFrameSavedChange(quint64)),ui->widgetTimeScallFactor, SLOT(_nbFrameSavedWasChanged(quint64)));
+    QObject::connect(this, SIGNAL(_nbFrameSavedChange(quint64)),ui->widgetTimeScaleFactor, SLOT(_nbFrameSavedWasChanged(quint64)));
 
     //update size of one frame
-    QObject::connect(this, SIGNAL(_sizeFrameChange(int)),ui->widgetTimeScallFactor, SLOT(_sizeFrameWasChanged(int)));
+    QObject::connect(this, SIGNAL(_sizeFrameChange(int)),ui->widgetTimeScaleFactor, SLOT(_sizeFrameWasChanged(int)));
 
     //update save frame number in time scale factor menu
-    QObject::connect(this, SIGNAL(_FTDIBaudrateChange(int)),ui->widgetTimeScallFactor, SLOT(_FTDIBaudrateWasChanged(int)));
+    QObject::connect(this, SIGNAL(_FTDIBaudrateChange(int)),ui->widgetTimeScaleFactor, SLOT(_FTDIBaudrateWasChanged(int)));
 
     //error management
-    QObject::connect(ui->widgetTimeScallFactor, SIGNAL(_errorFrequencyToLow(int,bool)),this, SLOT(_recievedErrorFrequencyToLow(int,bool)));
+    QObject::connect(ui->widgetTimeScaleFactor, SIGNAL(_errorFrequencyToLow(int,bool)),this, SLOT(_recievedErrorFrequencyToLow(int,bool)));
 }
 
 void SettingWindow::_recievedAddTraceFromChannelSelection(int traceNumber)
@@ -171,6 +172,12 @@ void SettingWindow::_recievedSizeFrameChange(int frameSize)
 void SettingWindow::_recievedFTDIBaudrateChange(int FTDIBaudrate)
 {
     emit _FTDIBaudrateChange(FTDIBaudrate);
+}
+
+void SettingWindow::enableWindows(bool enableState)
+{
+    ui->widgetTriggerFunction->setEnabled(enableState);
+    ui->widgetTriggerSetting->setEnabled(enableState);
 }
 
 void SettingWindow::pushButtonRangeAI1_changeRange()

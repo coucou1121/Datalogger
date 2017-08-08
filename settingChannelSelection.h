@@ -70,7 +70,7 @@ private slots:
 
 signals:
 
-    //send if button is seleced or not
+    //button pushed
     void _btSeleccted(int buttonNumber, bool btSelected);
 
     //add button in all trigger function combobox

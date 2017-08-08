@@ -12,6 +12,17 @@ private:
 public:
     GlobalEnumatedAndExtern();
 
+    //start stop button state possible
+    typedef enum
+    {
+        block = 0,
+        start,
+        stop
+    }eBPStartStopState;
+
+    QString BPStartStopStateBlockTxt;
+    QString BPStartStopStateStartTxt;
+    QString BPStartStopStateStopTxt;
 
     //ErrorPossible
     typedef enum

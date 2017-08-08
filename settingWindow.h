@@ -28,6 +28,8 @@ public slots:
     void _recievedSizeFrameChange(int frameSize);
     void _recievedFTDIBaudrateChange(int FTDIBaudrate);
 
+    void enableWindows(bool enableState);
+
     void pushButtonRangeAI1_changeRange();
     void pushButtonRangeAI2_changeRange();
 

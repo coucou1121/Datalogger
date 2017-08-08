@@ -21,7 +21,7 @@
     <widget class="SettingChannelSelection" name="widgetChannelSelection" native="true"/>
    </item>
    <item row="1" column="0">
-    <widget class="SettingTimeScaleFactor" name="widgetTimeScallFactor" native="true"/>
+    <widget class="SettingTimeScaleFactor" name="widgetTimeScaleFactor" native="true"/>
    </item>
    <item row="0" column="1" rowspan="2">
     <widget class="SettingTriggerSetting" name="widgetTriggerSetting" native="true"/>
@@ -32,6 +32,18 @@
   </layout>
  </widget>
  <customwidgets>
+  <customwidget>
+   <class>SettingTriggerFunction</class>
+   <extends>QWidget</extends>
+   <header>settingTriggerFunction.h</header>
+   <container>1</container>
+  </customwidget>
+  <customwidget>
+   <class>SettingTriggerSetting</class>
+   <extends>QWidget</extends>
+   <header>settingTriggerSetting.h</header>
+   <container>1</container>
+  </customwidget>
   <customwidget>
    <class>SettingChannelSelection</class>
    <extends>QWidget</extends>
@@ -48,18 +60,6 @@
    <class>SettingTimeScaleFactor</class>
    <extends>QWidget</extends>
    <header>settingTimeScaleFactor.h</header>
-   <container>1</container>
-  </customwidget>
-  <customwidget>
-   <class>SettingTriggerFunction</class>
-   <extends>QWidget</extends>
-   <header>settingTriggerFunction.h</header>
-   <container>1</container>
-  </customwidget>
-  <customwidget>
-   <class>SettingTriggerSetting</class>
-   <extends>QWidget</extends>
-   <header>settingTriggerSetting.h</header>
    <container>1</container>
   </customwidget>
  </customwidgets>

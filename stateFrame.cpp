@@ -17,7 +17,6 @@ StateFrame::~StateFrame()
 void StateFrame::setStateStop()
 {
     QPixmap pix(":/images/StateStop.png");
-    //ui->label->setStyleSheet("border-image:url(:/2.png);");
     ui->labelLogoState->setPixmap(pix);
     ui->labelState->setText("Stop");
 }

@@ -12,7 +12,9 @@ class refreshTimer : public QObject
     Q_OBJECT
 
 public:
-    explicit refreshTimer(bool wantToSleep, QString name, int timeInterval, QObject *parent = 0);
+    explicit refreshTimer(bool isCounting, QString name, int timeInterval, QObject *parent = 0);
+    void startTimer();
+    void stopTimer();
 
 public slots:
     void updateCount();
@@ -24,7 +26,8 @@ signals:
 private:
     QTimer *timer;
     quint64 count = 0;
-    bool m_wantToSleep;
+    bool _isCounting;
+    int _timeInterval;
 
     QElapsedTimer timerElapse;     
 };

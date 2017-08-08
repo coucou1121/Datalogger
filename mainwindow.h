@@ -7,6 +7,7 @@
 #include <QHBoxLayout>
 #include <QTimer>
 #include <QThread>
+
 #include "main.h"
 #include "commonStyle.h"
 #include "baseWindow.h"
@@ -14,6 +15,9 @@
 #include "triggerWindow.h"
 #include "displayWindows.h"
 #include "debugWindow.h"
+#include "refreshTimer.h"
+#include "dataFrameSimulator.h"
+
 
 namespace Ui {
 
@@ -37,7 +41,18 @@ public:
 private:
     Ui::MainWindow *ui;
 
-    // diffrent windows
+    //thread
+    QThread *_threadTick;               // create tick for frequency simulation
+    QThread *_threadNewDataFrame;       // create a new data
+    QThread *_threadDisplayRefresh;     // Display refreshement
+    QThread *_threadDataFramSimulator;  // data frame simulation
+
+    //timer for thread
+    refreshTimer *_tickTimer;
+    refreshTimer *_newDataFrame;
+    refreshTimer *_refreshDisplayTimer;
+
+    //ui windows
     BaseWindow *_baseWindow;
     SettingWindow *_settingWindow;
     TriggerWindow *_triggerWindow;
@@ -58,22 +73,42 @@ private:
     QPushButton *_btDisplay;
     QPushButton *_btDebug;
 
+    //set the bottom status bar
     void setStatusBar();
+
+    //set the pushbutton color to grey
     void resetPushButtonColor();
+
+    //set the application with default value
     void mainSetup();
 
     //setup signal and slot
     void setupSignalAndSlot();
 
+    //setup default start value for all variable in this application
     void setupDefaultValue();
 
-private slots:
+    //manage state of the startStop button
+    void _startStopButtonManager(int state);
 
+    //array for new data
+    QVector<DataFrame> _dataFrameVector;
+
+    //frame simulator
+    DataFrameSimulator *_dataFrameSimulator;
+
+public slots:
+    void changeStateStartStopButton(int state);
+    void startThread();
+    void stopThread();
+
+private slots:
     void _btBase_released();
     void _btSetting_released();
     void _btTrigger_released();
     void _btDisplay_released();
     void _btDebug_released();
+    void on_pushButton_StartStop_released();
 };
 
 #endif // MAINWINDOW_H
