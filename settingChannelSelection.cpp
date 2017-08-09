@@ -49,17 +49,6 @@ void SettingChannelSelection::setupUILayout()
     setupButton(ui->btAI2, _myStyle.getBackGroundColor());
     setupButton(ui->btAI3, _myStyle.getBackGroundColor());
     setupButton(ui->btAI4, _myStyle.getBackGroundColor());
-
-    //selecte button DI1 -> DI4 and AI1 -> AI4
-    //    this->on_btDI1_released();
-    //    this->on_btDI2_released();
-    //    this->on_btDI3_released();
-    //    this->on_btDI4_released();
-    //    this->on_btAI1_released();
-    //    this->on_btAI2_released();
-    //    this->on_btAI3_released();
-    //    this->on_btAI4_released();
-
 }
 
 void SettingChannelSelection::setupLabel()
@@ -90,8 +79,6 @@ void SettingChannelSelection::setupLabel()
 
 void SettingChannelSelection::setupButton(QPushButton *pushbutton, QColor btColor)
 {
-    //    pushbutton->setMinimumSize(40,25);
-    //    pushbutton->setMaximumSize(140,125);
     this->setupButtonBackGround(pushbutton, btColor, false);
 }
 

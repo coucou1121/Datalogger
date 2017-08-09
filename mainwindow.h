@@ -7,6 +7,7 @@
 #include <QHBoxLayout>
 #include <QTimer>
 #include <QThread>
+#include <QMetaType>
 
 #include "main.h"
 #include "commonStyle.h"
@@ -35,8 +36,11 @@ public:
     //timer for x axis
     QTimer dataTimer;
 
-    //cetup the basic style for the main wondows
+    //setup basic style for the main wondows
     void setupStyle();
+
+    //add value for display
+    void addNewFrame( QVector<DataFrame> dataFrameVector);
 
 private:
     Ui::MainWindow *ui;
@@ -45,11 +49,10 @@ private:
     QThread *_threadTick;               // create tick for frequency simulation
     QThread *_threadNewDataFrame;       // create a new data
     QThread *_threadDisplayRefresh;     // Display refreshement
-    QThread *_threadDataFramSimulator;  // data frame simulation
 
     //timer for thread
     refreshTimer *_tickTimer;
-    refreshTimer *_newDataFrame;
+    refreshTimer *_newDataFrameTimer;
     refreshTimer *_refreshDisplayTimer;
 
     //ui windows
@@ -91,8 +94,8 @@ private:
     //manage state of the startStop button
     void _startStopButtonManager(int state);
 
-    //array for new data
-    QVector<DataFrame> _dataFrameVector;
+    //array for data recorder
+    QVector<DataFrame> _dataFrameVectorReccorder;
 
     //frame simulator
     DataFrameSimulator *_dataFrameSimulator;
@@ -101,6 +104,7 @@ public slots:
     void changeStateStartStopButton(int state);
     void startThread();
     void stopThread();
+    void addNewDataFrame(QVector<DataFrame> newDataFrameVector);
 
 private slots:
     void _btBase_released();

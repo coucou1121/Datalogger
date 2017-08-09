@@ -200,7 +200,7 @@ void DisplayWindows::updatePlot()
 
 void DisplayWindows::addNewDataFrame(QVector<DataFrame> newDataFrameVector)
 {
-    //qDebug() << objectName() << " nb frame recieved size" << newDataFrameVector.size();
+    qDebug() << objectName() << " nb frame recieved size" << newDataFrameVector.size();
     quint8 valueDI1_9 = 0;
     quint8 valueDI10_18 = 0;
 
@@ -233,8 +233,8 @@ void DisplayWindows::addNewDataFrame(QVector<DataFrame> newDataFrameVector)
         ui->AI3->addYValue(newDataFrameVector[i].AI3());
         ui->AI4->addYValue(newDataFrameVector[i].AI4());
     }
-   // qDebug() << objectName() << "replot";
-    //updatePlot();
+    qDebug() << objectName() << "replot";
+    updatePlot();
 }
 
 void DisplayWindows::addValueDI1_8(quint8 value)

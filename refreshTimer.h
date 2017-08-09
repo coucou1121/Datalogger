@@ -16,20 +16,19 @@ public:
     void startTimer();
     void stopTimer();
 
-public slots:
-    void updateCount();
-
-signals:
-    void error(QString err);
-    void tickFinished();
-
 private:
-    QTimer *timer;
-    quint64 count = 0;
+    QTimer *_timer;
+    quint64 _count;
     bool _isCounting;
     int _timeInterval;
+    QElapsedTimer _timerElapse;
 
-    QElapsedTimer timerElapse;     
+private slots:
+    void _updateCount();
+
+signals:
+    void _tickFinished();
+
 };
 
 #endif // REFRESHTIMER_H

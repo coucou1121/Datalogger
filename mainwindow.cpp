@@ -16,23 +16,19 @@ MainWindow::MainWindow(QWidget *parent) :
     _threadTick = new QThread;
     _threadNewDataFrame = new QThread;
     _threadDisplayRefresh = new QThread;
-    _threadDataFramSimulator = new QThread;
 
     //create timerfor thread
-    _tickTimer = new refreshTimer(false, "Tick", 1000);
-    _newDataFrame = new refreshTimer(false, "Data updated", 10);
-    _refreshDisplayTimer = new refreshTimer(false, "Refres Display", 100);
+    _tickTimer = new refreshTimer(false, "Tick timer", 1000);
+    _newDataFrameTimer = new refreshTimer(false, "Data updated timer", 500);
+    _refreshDisplayTimer = new refreshTimer(false, "Refres Display timer", 1000);
 
     //create data frame simulautor
     _dataFrameSimulator = new DataFrameSimulator("Frame Simulator");
 
     //move timer into the thread
     _tickTimer->moveToThread(_threadTick);
-    _newDataFrame->moveToThread(_threadNewDataFrame);
+    _newDataFrameTimer->moveToThread(_threadNewDataFrame);
     _refreshDisplayTimer->moveToThread(_threadDisplayRefresh);
-
-    //move data frame simulator in thread
-    _dataFrameSimulator->moveToThread(_threadDataFramSimulator);
 
     //create windows object
     _baseWindow = new BaseWindow();
@@ -58,6 +54,9 @@ MainWindow::MainWindow(QWidget *parent) :
     _threadDisplayRefresh->start();
     _threadTick->start();
     _threadNewDataFrame->start();
+
+    //perso type for signal
+    qRegisterMetaType< QVector<DataFrame> >("QVector<DataFrame>");
 }
 
 MainWindow::~MainWindow()
@@ -109,7 +108,7 @@ void MainWindow::_startStopButtonManager(int state)
     case GlobalEnumatedAndExtern::block:
         //set backgroud color
         ui->pushButton_StartStop->setStyleSheet("background-color: qlineargradient(x1: 0, y1: 0, x2: 0, y2: 1, "
-                                                "stop: 1" + _myStyle.getBackGroundColorBottomBar().name() +
+                                                "stop: 1" + _myStyle.getBackGroundColorErrorFrame().name() +
                                                 ", stop: 0 #ffffff);");
         //set text
         ui->pushButton_StartStop->setText(BPStartStopStateBlockTxt);
@@ -129,7 +128,7 @@ void MainWindow::_startStopButtonManager(int state)
     case GlobalEnumatedAndExtern::stop:
         //set backgroud color
         ui->pushButton_StartStop->setStyleSheet("background-color: qlineargradient(x1: 0, y1: 0, x2: 0, y2: 1, "
-                                                "stop: 1" + _myStyle.getBackGroundColorErrorFrame().name() +
+                                                "stop: 1" + _myStyle.getBackGroundColorBottomBar().name() +
                                                 ", stop: 0 #ffffff);");
         //set text
         ui->pushButton_StartStop->setText(BPStartStopStateStopTxt);
@@ -148,16 +147,33 @@ void MainWindow::changeStateStartStopButton(int state)
 
 void MainWindow::startThread()
 {
-    _tickTimer->startTimer();
-    _newDataFrame->startTimer();
-    _refreshDisplayTimer->startTimer();
+    //_tickTimer->startTimer();
+    _newDataFrameTimer->startTimer();
+    //_refreshDisplayTimer->startTimer();
 }
 
 void MainWindow::stopThread()
 {
     _tickTimer->stopTimer();
-    _newDataFrame->stopTimer();
+    _newDataFrameTimer->stopTimer();
     _refreshDisplayTimer->stopTimer();
+}
+
+void MainWindow::addNewDataFrame(QVector<DataFrame> dataFrameVector)
+{
+
+    for(QVector<DataFrame>::iterator it = dataFrameVector.begin(); it != dataFrameVector.end(); it++)
+    {
+       _dataFrameVectorReccorder.append(*it);
+
+       //adapte the size with pretrigger value
+       if( _dataFrameVectorReccorder.size() > 65536)
+       {
+           _dataFrameVectorReccorder.remove(0);
+       }
+    }
+    this->_displayWindow->addNewDataFrame(dataFrameVector);
+    qDebug() << objectName() << "nbValue" << _dataFrameVectorReccorder.size();
 }
 
 void MainWindow::setupSignalAndSlot()
@@ -287,12 +303,12 @@ void MainWindow::setupSignalAndSlot()
 //    QObject::connect(this->_threadDisplayRefresh, SIGNAL(started), this->_refreshDisplayTimer, SLOT(start()));
 //    QObject::connect(this->_threadDataFramSimulator, SIGNAL(started), this->_dataFrameSimulator, SLOT(start()));
 
-    //increment the data frame simulator
-    QObject::connect(_refreshDisplayTimer, SIGNAL(tickFinished()), _dataFrameSimulator, SLOT(incValue()));
-    QObject::connect(_newDataFrame, SIGNAL(tickFinished()), _dataFrameSimulator, SLOT(createDataFrame()));
+    //create new data frame from dataFrameSimulator
+    //QObject::connect(_refreshDisplayTimer, SIGNAL(tickFinished()), _dataFrameSimulator, SLOT(incValue()));
+    QObject::connect(this->_newDataFrameTimer, SIGNAL(_tickFinished()), _dataFrameSimulator, SLOT(createDataFrame()));
     //QObject::connect(_dataFrameSimulator, SIGNAL(valueUpdated(quint8)), &graphicPlot, SLOT(addYValue(quint8)));
     //QObject::connect(dataFrameSimulator, SIGNAL(valueUpdated(quint8)), &analogPlot, SLOT(addYValue(quint8)));
-    //QObject::connect(dataFrameSimulator, SIGNAL(dataFramUpdate(QVector<DataFrame>)), &displayWindows, SLOT(addNewDataFrame(QVector<DataFrame>)));
+    QObject::connect(_dataFrameSimulator, SIGNAL(dataFrameWasSent(QVector<DataFrame>)),this,SLOT(addNewDataFrame(QVector<DataFrame>)));
 
     //QObject::connect(dataFrameSimulator, SIGNAL(valueDI1_8Updated(quint8)), &displayWindows, SLOT(addValueDI1_8(quint8)));
     //QObject::connect(dataFrameSimulator, SIGNAL(valueDI9_16Updated(quint8)), &displayWindows, SLOT(addValueDI9_16(quint8)));
@@ -434,10 +450,12 @@ void MainWindow::on_pushButton_StartStop_released()
     {
         this->_startStopButtonManager((int)GlobalEnumatedAndExtern::start);
         this->stopThread();
+        ui->widgetState->setMainState(GlobalEnumatedAndExtern::mainStateStop);
     }
     else
     {
         this->_startStopButtonManager((int)GlobalEnumatedAndExtern::stop);
         this->startThread();
+        ui->widgetState->setMainState(GlobalEnumatedAndExtern::mainStateRollOn);
     }
 }

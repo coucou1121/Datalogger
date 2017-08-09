@@ -12,7 +12,23 @@ private:
 public:
     GlobalEnumatedAndExtern();
 
-    //start stop button state possible
+    //application state possible
+    typedef enum
+    {
+        mainStateStop = 0,
+        mainStatePause,
+        mainStateRunTrig,
+        mainStateOnTrig,
+        mainStateRollOn
+    }eMainState;
+
+    QString mainStateStopTxt;
+    QString mainStatePauseTxt;
+    QString mainStateRunTrigTxt;
+    QString mainStateOnTrigTxt;
+    QString mainStaterollOnTxt;
+
+    //startStop button state possible
     typedef enum
     {
         block = 0,
@@ -119,6 +135,8 @@ public:
     static QMap<int, QString> initTriggerTracePossible();
     static QMap<int, double> initPeridePossible();
     static QMap<int, QString> initPeridePossibleTxt();
+
+    static QMap<int, QString> initMainStatePossibleTxt();
 
 };
 

@@ -6,10 +6,10 @@ refreshTimer::refreshTimer(bool isCounting, QString name, int timeInterval, QObj
     this->setObjectName(name);
     _isCounting = isCounting;
     _timeInterval = timeInterval;
-    count = 0;
-    timer = new QTimer(this);
-    connect(timer, SIGNAL(timeout()), this, SLOT(updateCount()));
-    timer->start(_timeInterval);
+    _count = 0;
+    _timer = new QTimer(this);
+    connect(_timer, SIGNAL(timeout()), this, SLOT(_updateCount()));
+    _timer->start(_timeInterval);
 }
 
 void refreshTimer::startTimer()
@@ -22,7 +22,7 @@ void refreshTimer::stopTimer()
     _isCounting = false;
 }
 
-void refreshTimer::updateCount()
+void refreshTimer::_updateCount()
 {
  //   count++;
     // qDebug() << objectName() << " count: " << count;
@@ -32,9 +32,9 @@ void refreshTimer::updateCount()
     // }
     if(_isCounting)
     {
- //       qDebug() << objectName() <<  "took" << timerElapse.elapsed() << "millisecondes";
-        timerElapse.restart();
-        emit tickFinished();
+        qDebug() << objectName() <<  "took" << _timerElapse.elapsed() << "millisecondes";
+        _timerElapse.restart();
+        emit _tickFinished();
     }
 }
 

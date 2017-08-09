@@ -81,6 +81,17 @@ QMap<int, QString> GlobalEnumatedAndExtern::initPeridePossibleTxt()
     return ret;
 }
 
+QMap<int, QString> GlobalEnumatedAndExtern::initMainStatePossibleTxt()
+{
+    QMap<int, QString> ret;
+    ret.insert(mainStateStop, "Stop");
+    ret.insert(mainStatePause, "Pause");
+    ret.insert(mainStateRunTrig, "Run Trig");
+    ret.insert(mainStateOnTrig, "On Trig");
+    ret.insert(mainStateRollOn, "Roll On");
+    return ret;
+}
+
 
 //initialise the Key - Value for combobx
 extern QMap<int, QString> TriggerTracePossible = GlobalEnumatedAndExtern::initTriggerTracePossible();
