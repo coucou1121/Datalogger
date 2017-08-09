@@ -24,8 +24,143 @@ DisplayWindows::~DisplayWindows()
     delete ui;
 }
 
+void DisplayWindows::setDrawLeftToRight(bool drawLeftToRight)
+{
+    ui->DI1->setDrawLeftToRight(drawLeftToRight);
+    ui->DI2->setDrawLeftToRight(drawLeftToRight);
+    ui->DI3->setDrawLeftToRight(drawLeftToRight);
+    ui->DI4->setDrawLeftToRight(drawLeftToRight);
+    ui->DI5->setDrawLeftToRight(drawLeftToRight);
+    ui->DI6->setDrawLeftToRight(drawLeftToRight);
+    ui->DI7->setDrawLeftToRight(drawLeftToRight);
+    ui->DI8->setDrawLeftToRight(drawLeftToRight);
+    ui->DI9->setDrawLeftToRight(drawLeftToRight);
+    ui->DI10->setDrawLeftToRight(drawLeftToRight);
+    ui->DI11->setDrawLeftToRight(drawLeftToRight);
+    ui->DI12->setDrawLeftToRight(drawLeftToRight);
+    ui->DI13->setDrawLeftToRight(drawLeftToRight);
+    ui->DI14->setDrawLeftToRight(drawLeftToRight);
+    ui->DI15->setDrawLeftToRight(drawLeftToRight);
+    ui->DI16->setDrawLeftToRight(drawLeftToRight);
+
+    ui->AI1->setDrawLeftToRight(drawLeftToRight);
+    ui->AI2->setDrawLeftToRight(drawLeftToRight);
+    ui->AI3->setDrawLeftToRight(drawLeftToRight);
+    ui->AI4->setDrawLeftToRight(drawLeftToRight);
+}
+
+void DisplayWindows::refreshPlot()
+{
+    if(this->isVisible())
+    {
+    if(ui->DI1->isVisible())
+    {
+        ui->DI1->updatePlot();
+        ui->DI1->replot();
+    }
+    if(ui->DI2->isVisible())
+    {
+        ui->DI2->updatePlot();
+        ui->DI2->replot();
+    }
+    if(ui->DI3->isVisible())
+    {
+        ui->DI3->updatePlot();
+        ui->DI3->replot();
+    }
+    if(ui->DI4->isVisible())
+    {
+        ui->DI4->updatePlot();
+        ui->DI4->replot();
+    }
+    if(ui->DI5->isVisible())
+    {
+        ui->DI5->updatePlot();
+        ui->DI5->replot();
+    }
+    if(ui->DI6->isVisible())
+    {
+        ui->DI6->updatePlot();
+        ui->DI6->replot();
+    }
+    if(ui->DI7->isVisible())
+    {
+        ui->DI7->updatePlot();
+        ui->DI7->replot();
+    }
+    if(ui->DI8->isVisible())
+    {
+        ui->DI8->updatePlot();
+        ui->DI8->replot();
+    }
+    if(ui->DI9->isVisible())
+    {
+        ui->DI9->updatePlot();
+        ui->DI9->replot();
+    }
+    if(ui->DI10->isVisible())
+    {
+        ui->DI10->updatePlot();
+        ui->DI10->replot();
+    }
+    if(ui->DI11->isVisible())
+    {
+        ui->DI11->updatePlot();
+        ui->DI11->replot();
+    }
+    if(ui->DI12->isVisible())
+    {
+        ui->DI12->updatePlot();
+        ui->DI12->replot();
+    }
+    if(ui->DI13->isVisible())
+    {
+        ui->DI13->updatePlot();
+        ui->DI13->replot();
+    }
+    if(ui->DI14->isVisible())
+    {
+        ui->DI14->updatePlot();
+        ui->DI14->replot();
+    }
+    if(ui->DI15->isVisible())
+    {
+        ui->DI15->updatePlot();
+        ui->DI15->replot();
+    }
+    if(ui->DI16->isVisible())
+    {
+        ui->DI16->updatePlot();
+        ui->DI16->replot();
+    }
+    if(ui->AI1->isVisible())
+    {
+        ui->AI1->updatePlot();
+        ui->AI1->replot();
+    }
+    if(ui->AI2->isVisible())
+    {
+        ui->AI2->updatePlot();
+        ui->AI2->replot();
+    }
+    if(ui->AI3->isVisible())
+    {
+        ui->AI3->updatePlot();
+        ui->AI3->replot();
+    }
+    if(ui->AI4->isVisible())
+    {
+        ui->AI4->updatePlot();
+        ui->AI4->replot();
+    }
+    //qDebug() << objectName() << "took" << timerElapse.elapsed() << "miliseconds" << " for refresh";
+    timerElapse.restart();
+    }
+}
+
 void DisplayWindows::_addTrace(int enumTrace)
 {
+    qDebug() << objectName() << "recieved " << "_addTrace : " << enumTrace;
     switch(enumTrace)
     {
     case GlobalEnumatedAndExtern::btDI1:
@@ -168,39 +303,9 @@ void DisplayWindows::setupStyle()
     this->setPalette(_palette);
 }
 
-void DisplayWindows::updatePlot()
-{
-    //qDebug() << objectName() << " replot recieved ";
-    ui->DI1->updatePlot();
-    ui->DI2->updatePlot();
-    ui->DI3->updatePlot();
-    ui->DI4->updatePlot();
-    ui->DI5->updatePlot();
-    ui->DI6->updatePlot();
-    ui->DI7->updatePlot();
-    ui->DI8->updatePlot();
-    ui->DI9->updatePlot();
-    ui->DI10->updatePlot();
-    ui->DI11->updatePlot();
-    ui->DI12->updatePlot();
-    ui->DI13->updatePlot();
-    ui->DI14->updatePlot();
-    ui->DI15->updatePlot();
-    ui->DI16->updatePlot();
-
-    ui->AI1->updatePlot();
-    ui->AI2->updatePlot();
-    ui->AI3->updatePlot();
-    ui->AI4->updatePlot();
-    //qDebug() << objectName() << "plot udated";
-    qDebug() << objectName() << "took" << timerElapse.elapsed() << "miliseconds" << " for refresh";
-    timerElapse.restart();
-
-}
-
 void DisplayWindows::addNewDataFrame(QVector<DataFrame> newDataFrameVector)
 {
-    qDebug() << objectName() << " nb frame recieved size" << newDataFrameVector.size();
+//    qDebug() << objectName() << " nb frame recieved size" << newDataFrameVector.size();
     quint8 valueDI1_9 = 0;
     quint8 valueDI10_18 = 0;
 
@@ -233,8 +338,8 @@ void DisplayWindows::addNewDataFrame(QVector<DataFrame> newDataFrameVector)
         ui->AI3->addYValue(newDataFrameVector[i].AI3());
         ui->AI4->addYValue(newDataFrameVector[i].AI4());
     }
-    qDebug() << objectName() << "replot";
-    updatePlot();
+    // qDebug() << objectName() << "replot";
+    // updatePlot();
 }
 
 void DisplayWindows::addValueDI1_8(quint8 value)
@@ -289,27 +394,27 @@ void DisplayWindows::addValueAI4(quint8 value)
 
 void DisplayWindows::_setAllTraceName()
 {
-   ui->DI1->setTitleName(TriggerTracePossible[GlobalEnumatedAndExtern::btDI1]);
-   ui->DI2->setTitleName(TriggerTracePossible[GlobalEnumatedAndExtern::btDI2]);
-   ui->DI3->setTitleName(TriggerTracePossible[GlobalEnumatedAndExtern::btDI3]);
-   ui->DI4->setTitleName(TriggerTracePossible[GlobalEnumatedAndExtern::btDI4]);
-   ui->DI5->setTitleName(TriggerTracePossible[GlobalEnumatedAndExtern::btDI5]);
-   ui->DI6->setTitleName(TriggerTracePossible[GlobalEnumatedAndExtern::btDI6]);
-   ui->DI7->setTitleName(TriggerTracePossible[GlobalEnumatedAndExtern::btDI7]);
-   ui->DI8->setTitleName(TriggerTracePossible[GlobalEnumatedAndExtern::btDI8]);
-   ui->DI9->setTitleName(TriggerTracePossible[GlobalEnumatedAndExtern::btDI9]);
-   ui->DI10->setTitleName(TriggerTracePossible[GlobalEnumatedAndExtern::btDI10]);
-   ui->DI11->setTitleName(TriggerTracePossible[GlobalEnumatedAndExtern::btDI11]);
-   ui->DI12->setTitleName(TriggerTracePossible[GlobalEnumatedAndExtern::btDI12]);
-   ui->DI13->setTitleName(TriggerTracePossible[GlobalEnumatedAndExtern::btDI13]);
-   ui->DI14->setTitleName(TriggerTracePossible[GlobalEnumatedAndExtern::btDI14]);
-   ui->DI15->setTitleName(TriggerTracePossible[GlobalEnumatedAndExtern::btDI15]);
-   ui->DI16->setTitleName(TriggerTracePossible[GlobalEnumatedAndExtern::btDI16]);
+    ui->DI1->setTitleName(TriggerTracePossible[GlobalEnumatedAndExtern::btDI1]);
+    ui->DI2->setTitleName(TriggerTracePossible[GlobalEnumatedAndExtern::btDI2]);
+    ui->DI3->setTitleName(TriggerTracePossible[GlobalEnumatedAndExtern::btDI3]);
+    ui->DI4->setTitleName(TriggerTracePossible[GlobalEnumatedAndExtern::btDI4]);
+    ui->DI5->setTitleName(TriggerTracePossible[GlobalEnumatedAndExtern::btDI5]);
+    ui->DI6->setTitleName(TriggerTracePossible[GlobalEnumatedAndExtern::btDI6]);
+    ui->DI7->setTitleName(TriggerTracePossible[GlobalEnumatedAndExtern::btDI7]);
+    ui->DI8->setTitleName(TriggerTracePossible[GlobalEnumatedAndExtern::btDI8]);
+    ui->DI9->setTitleName(TriggerTracePossible[GlobalEnumatedAndExtern::btDI9]);
+    ui->DI10->setTitleName(TriggerTracePossible[GlobalEnumatedAndExtern::btDI10]);
+    ui->DI11->setTitleName(TriggerTracePossible[GlobalEnumatedAndExtern::btDI11]);
+    ui->DI12->setTitleName(TriggerTracePossible[GlobalEnumatedAndExtern::btDI12]);
+    ui->DI13->setTitleName(TriggerTracePossible[GlobalEnumatedAndExtern::btDI13]);
+    ui->DI14->setTitleName(TriggerTracePossible[GlobalEnumatedAndExtern::btDI14]);
+    ui->DI15->setTitleName(TriggerTracePossible[GlobalEnumatedAndExtern::btDI15]);
+    ui->DI16->setTitleName(TriggerTracePossible[GlobalEnumatedAndExtern::btDI16]);
 
-   ui->AI1->setTitleName(TriggerTracePossible[GlobalEnumatedAndExtern::btAI1]);
-   ui->AI2->setTitleName(TriggerTracePossible[GlobalEnumatedAndExtern::btAI2]);
-   ui->AI3->setTitleName(TriggerTracePossible[GlobalEnumatedAndExtern::btAI3]);
-   ui->AI4->setTitleName(TriggerTracePossible[GlobalEnumatedAndExtern::btAI4]);
+    ui->AI1->setTitleName(TriggerTracePossible[GlobalEnumatedAndExtern::btAI1]);
+    ui->AI2->setTitleName(TriggerTracePossible[GlobalEnumatedAndExtern::btAI2]);
+    ui->AI3->setTitleName(TriggerTracePossible[GlobalEnumatedAndExtern::btAI3]);
+    ui->AI4->setTitleName(TriggerTracePossible[GlobalEnumatedAndExtern::btAI4]);
 
 
 }

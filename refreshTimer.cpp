@@ -32,7 +32,7 @@ void refreshTimer::_updateCount()
     // }
     if(_isCounting)
     {
-        qDebug() << objectName() <<  "took" << _timerElapse.elapsed() << "millisecondes";
+//        qDebug() << objectName() <<  "took" << _timerElapse.elapsed() << "millisecondes";
         _timerElapse.restart();
         emit _tickFinished();
     }

@@ -108,9 +108,9 @@ void SettingChannelSelection::emitBtSignal(int buttonNumber, bool btSelected)
 
 
         //if its DI1 -> DI4, AI1 and AI2
-        if(     buttonNumber < GlobalEnumatedAndExtern::btDI5 ||
-                buttonNumber == GlobalEnumatedAndExtern::btAI1 ||
-                buttonNumber == GlobalEnumatedAndExtern::btAI2)
+//        if(     buttonNumber < GlobalEnumatedAndExtern::btDI5 ||
+//                buttonNumber == GlobalEnumatedAndExtern::btAI1 ||
+//                buttonNumber == GlobalEnumatedAndExtern::btAI2)
         {
             //add selection in trigger function combobox
             emit _btAddList(buttonNumber);

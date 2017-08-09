@@ -8,6 +8,8 @@ SettingWindow::SettingWindow(QWidget *parent) :
     ui->setupUi(this);
     this->setupSignalAndSlot();
     this->enableWindows(true);
+
+    _triggerFunctionEnable = false;
 }
 
 SettingWindow::~SettingWindow()
@@ -96,22 +98,38 @@ void SettingWindow::setupSignalAndSlot()
     QObject::connect(ui->widgetTimeScaleFactor, SIGNAL(_errorFrequencyToLow(int,bool)),this, SLOT(_recievedErrorFrequencyToLow(int,bool)));
 }
 
-void SettingWindow::_recievedAddTraceFromChannelSelection(int traceNumber)
+bool SettingWindow::triggerFunctionEnable() const
 {
+    return _triggerFunctionEnable;
+}
+
+void SettingWindow::_recievedAddTraceFromChannelSelection(int traceNumber)
+{    
     // add in trigger menu
     emit _addTraceInTriggerMenu(traceNumber);
 
     // add in display menu
     emit _addTraceInDisplayMenu(traceNumber);
+
+    //check if trace selected
+    _triggerFunctionEnable = ui->widgetTriggerFunction->areSomeTraceSelected();
+
+    qDebug() << "_recievedAddTraceFromChannelSelection" << _triggerFunctionEnable;
+
 }
 
 void SettingWindow::_recievedRemoveTraceFromChannelSelection(int traceNumber)
-{
+{   
     //remove in trigger menu
     emit _removeTraceInTriggerMenu(traceNumber);
 
     //remove in display menu
     emit _removeTraceInDisplayMenu(traceNumber);
+
+    //check if trace selected
+    _triggerFunctionEnable = ui->widgetTriggerFunction->areSomeTraceSelected();
+
+    qDebug() << "_recievedRemoveTraceFromChannelSelection" << _triggerFunctionEnable;
 }
 
 void SettingWindow::_recievedErrorFrequencyToLow(int errorNumber, bool active)

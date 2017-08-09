@@ -18,9 +18,9 @@ MainWindow::MainWindow(QWidget *parent) :
     _threadDisplayRefresh = new QThread;
 
     //create timerfor thread
-    _tickTimer = new refreshTimer(false, "Tick timer", 1000);
-    _newDataFrameTimer = new refreshTimer(false, "Data updated timer", 500);
-    _refreshDisplayTimer = new refreshTimer(false, "Refres Display timer", 1000);
+    _tickTimer = new refreshTimer(false, "Tick timer", 1);
+    _newDataFrameTimer = new refreshTimer(false, "Data updated timer", 1000);
+    _refreshDisplayTimer = new refreshTimer(false, "Refres Display timer", 100);
 
     //create data frame simulautor
     _dataFrameSimulator = new DataFrameSimulator("Frame Simulator");
@@ -89,6 +89,9 @@ void MainWindow::mainSetup()
 
     //set backGroud color and text on pushButton StartStop
     this->_startStopButtonManager((int)GlobalEnumatedAndExtern::start);
+
+    //set basic draw on roll on
+    _displayWindow->setDrawLeftToRight(false);
 }
 
 void MainWindow::setupDefaultValue()
@@ -149,7 +152,7 @@ void MainWindow::startThread()
 {
     //_tickTimer->startTimer();
     _newDataFrameTimer->startTimer();
-    //_refreshDisplayTimer->startTimer();
+    _refreshDisplayTimer->startTimer();
 }
 
 void MainWindow::stopThread()
@@ -167,13 +170,18 @@ void MainWindow::addNewDataFrame(QVector<DataFrame> dataFrameVector)
        _dataFrameVectorReccorder.append(*it);
 
        //adapte the size with pretrigger value
-       if( _dataFrameVectorReccorder.size() > 65536)
+       if( _dataFrameVectorReccorder.size() > 1000)
        {
            _dataFrameVectorReccorder.remove(0);
        }
     }
     this->_displayWindow->addNewDataFrame(dataFrameVector);
     qDebug() << objectName() << "nbValue" << _dataFrameVectorReccorder.size();
+}
+
+void MainWindow::refreshDisplay()
+{
+    this->_displayWindow->refreshPlot();
 }
 
 void MainWindow::setupSignalAndSlot()
@@ -304,11 +312,13 @@ void MainWindow::setupSignalAndSlot()
 //    QObject::connect(this->_threadDataFramSimulator, SIGNAL(started), this->_dataFrameSimulator, SLOT(start()));
 
     //create new data frame from dataFrameSimulator
-    //QObject::connect(_refreshDisplayTimer, SIGNAL(tickFinished()), _dataFrameSimulator, SLOT(incValue()));
     QObject::connect(this->_newDataFrameTimer, SIGNAL(_tickFinished()), _dataFrameSimulator, SLOT(createDataFrame()));
     //QObject::connect(_dataFrameSimulator, SIGNAL(valueUpdated(quint8)), &graphicPlot, SLOT(addYValue(quint8)));
     //QObject::connect(dataFrameSimulator, SIGNAL(valueUpdated(quint8)), &analogPlot, SLOT(addYValue(quint8)));
     QObject::connect(_dataFrameSimulator, SIGNAL(dataFrameWasSent(QVector<DataFrame>)),this,SLOT(addNewDataFrame(QVector<DataFrame>)));
+
+    //refresh the display
+    QObject::connect(_refreshDisplayTimer, SIGNAL(_tickFinished()), this, SLOT(refreshDisplay()));
 
     //QObject::connect(dataFrameSimulator, SIGNAL(valueDI1_8Updated(quint8)), &displayWindows, SLOT(addValueDI1_8(quint8)));
     //QObject::connect(dataFrameSimulator, SIGNAL(valueDI9_16Updated(quint8)), &displayWindows, SLOT(addValueDI9_16(quint8)));
@@ -451,11 +461,22 @@ void MainWindow::on_pushButton_StartStop_released()
         this->_startStopButtonManager((int)GlobalEnumatedAndExtern::start);
         this->stopThread();
         ui->widgetState->setMainState(GlobalEnumatedAndExtern::mainStateStop);
+        _displayWindow->setDrawLeftToRight(_settingWindow->triggerFunctionEnable());
+        qDebug() << objectName() << "trigger Enable" << _settingWindow->triggerFunctionEnable();
     }
     else
     {
         this->_startStopButtonManager((int)GlobalEnumatedAndExtern::stop);
         this->startThread();
-        ui->widgetState->setMainState(GlobalEnumatedAndExtern::mainStateRollOn);
+        if(_settingWindow->triggerFunctionEnable())
+        {
+            ui->widgetState->setMainState(GlobalEnumatedAndExtern::mainStateOnTrig);
+        }
+        else
+        {
+            ui->widgetState->setMainState(GlobalEnumatedAndExtern::mainStateRollOn);
+        }
+        _displayWindow->setDrawLeftToRight(_settingWindow->triggerFunctionEnable());
+        qDebug() << objectName() << "trigger Enable" << _settingWindow->triggerFunctionEnable();
     }
 }

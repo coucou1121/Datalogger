@@ -22,6 +22,16 @@ void AnalogPlot::setTitleName(QString name)
     ui->TLname_AI->setText(name);
 }
 
+void AnalogPlot::setDrawLeftToRight(bool drawLeftToRight)
+{
+    ui->widget_AI->xAxis->setRangeReversed(!drawLeftToRight);
+}
+
+void AnalogPlot::replot()
+{
+    ui->widget_AI->replot();
+}
+
 void AnalogPlot::setupStyle(QCustomPlot *customPlot)
 {
 
@@ -179,7 +189,7 @@ void AnalogPlot::updatePlot()
     //ui->tracePlot->yAxis->rescale();
 
     // Update the plot widget
-    ui->widget_AI->replot();
+    //ui->widget_AI->replot();
 }
 
 void AnalogPlot::addYValue(quint8 value)

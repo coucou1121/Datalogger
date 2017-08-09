@@ -22,6 +22,11 @@ void DigitalPlot::setTitleName(QString name)
     ui->TLname_DI->setText(name);
 }
 
+void DigitalPlot::setDrawLeftToRight(bool drawLeftToRight)
+{
+      ui->widget_DI->xAxis->setRangeReversed(!drawLeftToRight);
+}
+
 void DigitalPlot::setupStyle(QCustomPlot *customPlot)
 {
 
@@ -76,7 +81,6 @@ void DigitalPlot::setupStyle(QCustomPlot *customPlot)
     //set the axis range
     customPlot->xAxis->setRange(0, DI_NB_X_VALUES_DISPLAY_LIVE);
     customPlot->yAxis->setRange(DI_Y_AXIS_MIN_VALUE, DI_Y_AXIS_MAX_VALUE);
-
 }
 
 void DigitalPlot::setupTrace(QCustomPlot *customPlot)
@@ -118,7 +122,7 @@ void DigitalPlot::updatePlot()
     ui->widget_DI->xAxis->setRange(_CPT, DI_NB_X_VALUES_DISPLAY_LIVE, Qt::AlignRight);
 
     // Update the plot widget
-     ui->widget_DI->replot();
+    //ui->widget_DI->replot();
 }
 
 void DigitalPlot::addYValue(quint8 value)

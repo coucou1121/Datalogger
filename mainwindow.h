@@ -105,6 +105,7 @@ public slots:
     void startThread();
     void stopThread();
     void addNewDataFrame(QVector<DataFrame> newDataFrameVector);
+    void refreshDisplay();
 
 private slots:
     void _btBase_released();

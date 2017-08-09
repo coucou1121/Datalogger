@@ -38,10 +38,17 @@ public:
     //change title name
     void setTitleName(QString name);
 
+    //direction du draw
+    // if true, draw left to right, mode roll on
+    // if flase, draw right to left, mode trig
+    void setDrawLeftToRight(bool drawLeftToRight);
+
+    //update plot
+    void replot();
+
 public slots:
     void updatePlot();
     void addYValue(quint8 value);
-    void replot();
 
 private:
     Ui::DigitalPlot *ui;

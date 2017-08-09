@@ -16,12 +16,17 @@ public:
     explicit SettingWindow(QWidget *parent = 0);
     ~SettingWindow();
 
+    bool triggerFunctionEnable() const;
+
 private:
     Ui::SettingWindow *ui;
     CommonStyle _myStyle;
 
     //setup signal and slot
     void setupSignalAndSlot();
+
+    //trigger function enable
+    bool _triggerFunctionEnable;
 
 public slots:
     void _recievedNbFrameSavedChanged(quint64 nbFrameChanged);

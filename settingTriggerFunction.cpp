@@ -27,11 +27,19 @@ SettingTriggerFunction::SettingTriggerFunction(QWidget *parent) :
     // add "none" of all trace comboboxes
     this->setupTraceCombobox();
 
+    //set no trace selected
+    this->_areSomeTraceSelected = false;
+
 }
 
 SettingTriggerFunction::~SettingTriggerFunction()
 {
     delete ui;
+}
+
+bool SettingTriggerFunction::areSomeTraceSelected() const
+{
+    return _areSomeTraceSelected;
 }
 
 void SettingTriggerFunction::setupStyle()
@@ -59,6 +67,7 @@ void SettingTriggerFunction::setupLogicalCombobox(QComboBox *combobox)
 
 void SettingTriggerFunction::updateCombobox()
 {
+    int nbItem = 0;
     //empty the combobox
     ui->comboBoxTopLeft->clear();
     ui->comboBoxTopRight->clear();
@@ -75,13 +84,25 @@ void SettingTriggerFunction::updateCombobox()
         ui->comboBoxTopRight->addItem(TriggerTraceSelected[e], e);
         ui->comboBoxBottomLeft->addItem(TriggerTraceSelected[e], e);
         ui->comboBoxBottomRight->addItem(TriggerTraceSelected[e], e);
+        nbItem++;
     }
+    //set if are some selected trace
+    _areSomeTraceSelected = nbItem == 0 ? false : true;
+
+    qDebug() << objectName() << "areSomeTraceSelected" << _areSomeTraceSelected;
 }
 
 void SettingTriggerFunction::_comboboxAddItem(int buttonNumber)
 {
-    TriggerTraceSelected[buttonNumber] = TriggerTracePossible[buttonNumber];
-    this->updateCombobox();
+    //if its DI1 -> DI4, AI1 and AI2
+    if(     buttonNumber < GlobalEnumatedAndExtern::btDI5 ||
+            buttonNumber == GlobalEnumatedAndExtern::btAI1 ||
+            buttonNumber == GlobalEnumatedAndExtern::btAI2)
+    {
+        TriggerTraceSelected[buttonNumber] = TriggerTracePossible[buttonNumber];
+        this->updateCombobox();
+    }
+
 }
 
 void SettingTriggerFunction::_comboboxRevmoveItem(int buttonNumber)
@@ -92,43 +113,43 @@ void SettingTriggerFunction::_comboboxRevmoveItem(int buttonNumber)
 
 void SettingTriggerFunction::_comboBoxTopLeft_currentIndexChanged(int index)
 {
-//    qDebug()<< objectName() << " comboBoxTopLeft received index changed : " << index;
+    //    qDebug()<< objectName() << " comboBoxTopLeft received index changed : " << index;
     ui->comboBoxTopLeft->setCurrentIndex(index);
 }
 
 void SettingTriggerFunction::_comboBoxTopRight_currentIndexChanged(int index)
 {
-//    qDebug()<< objectName() << " comboBoxTopRight received index changed : " << index;
+    //    qDebug()<< objectName() << " comboBoxTopRight received index changed : " << index;
     ui->comboBoxTopRight->setCurrentIndex(index);
 }
 
 void SettingTriggerFunction::_comboBoxBottomLeft_currentIndexChanged(int index)
 {
-//    qDebug()<< objectName() << " comboBoxBottomLeft received index changed : " << index;
+    //    qDebug()<< objectName() << " comboBoxBottomLeft received index changed : " << index;
     ui->comboBoxBottomLeft->setCurrentIndex(index);
 }
 
 void SettingTriggerFunction::_comboBoxBottomRight_currentIndexChanged(int index)
 {
-//    qDebug()<< objectName() << " comboBoxBottomRight received index changed : " << index;
+    //    qDebug()<< objectName() << " comboBoxBottomRight received index changed : " << index;
     ui->comboBoxBottomRight->setCurrentIndex(index);
 }
 
 void SettingTriggerFunction::_comboBoxTopMiddle_currentIndexChanged(int index)
 {
-//    qDebug()<< objectName() << " comboBoxTopMiddle received index changed : " << index;
+    //    qDebug()<< objectName() << " comboBoxTopMiddle received index changed : " << index;
     ui->comboBoxTopMiddle->setCurrentIndex(index);
 }
 
 void SettingTriggerFunction::_comboBoxMiddle_currentIndexChanged(int index)
 {
-//    qDebug()<< objectName() << " comboBoxMiddle received index changed : " << index;
+    //    qDebug()<< objectName() << " comboBoxMiddle received index changed : " << index;
     ui->comboBoxMiddle->setCurrentIndex(index);
 }
 
 void SettingTriggerFunction::_comboBoxBottomMiddle_currentIndexChanged(int index)
 {
-//    qDebug()<< objectName() << " comboBoxBottomMiddle received index changed : " << index;
+    //    qDebug()<< objectName() << " comboBoxBottomMiddle received index changed : " << index;
     ui->comboBoxBottomMiddle->setCurrentIndex(index);
 }
 

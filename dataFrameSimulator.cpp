@@ -68,7 +68,7 @@ void DataFrameSimulator::incValue()
 
 void DataFrameSimulator::createDataFrame()
 {
-    qDebug() << objectName() << "received " << "createDataFrame";
+//    qDebug() << objectName() << "received " << "createDataFrame";
     timerElapse.restart();
     quint16 i = 0;
     for(i=0; i<NB_FRAME_CREATE_AT_EVERY_TICK; i++)
@@ -80,7 +80,7 @@ void DataFrameSimulator::createDataFrame()
     }
     //qDebug() << "createDataFrame took" << timerElapse.nsecsElapsed()/1000 << "micro oseconds" << " for " << i << " values.";
     emit dataFrameWasSent(_dataFrameVector);
-    qDebug() << objectName() << "newDataFrameSent size : " << _dataFrameVector.size();
+//    qDebug() << objectName() << "newDataFrameSent size : " << _dataFrameVector.size();
     _dataFrameVector.clear();
 }
 

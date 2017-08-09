@@ -19,8 +19,13 @@ public:
     explicit SettingTriggerFunction(QWidget *parent = 0);
     ~SettingTriggerFunction();
 
+    bool areSomeTraceSelected() const;
+
 private:
     Ui::SettingTriggerFunction *ui;
+
+    //check if trig trace is selected
+    bool _areSomeTraceSelected;
 
     CommonStyle _myStyle;
     void setupStyle();

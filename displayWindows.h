@@ -20,6 +20,13 @@ public:
     explicit DisplayWindows(QWidget *parent = 0);
     ~DisplayWindows();
 
+    //direction du draw
+    // if true, draw left to right, mode roll on
+    // if flase, draw right to left, mode trig
+    void setDrawLeftToRight(bool drawLeftToRight);
+
+    void refreshPlot();
+
 public slots:
 
 private:
@@ -37,11 +44,11 @@ private:
     QElapsedTimer timerElapse;
     void setupStyle();
 
+//    void _updatePlot();
+
 public slots:
     void _addTrace(int enumTrace);
     void _hideTrace(int enumTrace);
-
-    void updatePlot();
 
     void addNewDataFrame(QVector<DataFrame> newDataFrameVector);
     void addValueDI1_8(quint8 value);
