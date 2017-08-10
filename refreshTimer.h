@@ -4,7 +4,6 @@
 #include <QObject>
 #include <QTimer>
 #include <QDebug>
-#include <Windows.h>
 #include <QElapsedTimer>
 
 class refreshTimer : public QObject

@@ -44,7 +44,8 @@ public:
     typedef enum
     {
         noError = 0,
-        ErrorSamplingFrequencyToHigh
+        errorSamplingFrequencyToHigh,
+        errorWrongEquation
     }eError;
 
 
@@ -73,10 +74,10 @@ public:
     typedef enum
     {
         opNone = 0,
-        opOr,
         opAnd,
-        opNotOr,
-        opNotAnd
+        opOr,
+        opNotAnd,
+        opNotOr
     }eLogicOperator;
 
     QString opNoneTxt;
@@ -85,7 +86,7 @@ public:
     QString opNotOrTxt;
     QString opNoTAnd;
 
-    //button in trigger function
+    //button in setting windows
     typedef enum
     {
         btNone = 0,

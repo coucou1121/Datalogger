@@ -3,6 +3,7 @@
 
 #include <QFrame>
 #include "globalEnumatedAndExtern.h"
+#include "dataFrame.h"
 
 namespace Ui {
 class TriggerWindow;
@@ -15,6 +16,15 @@ class TriggerWindow : public QFrame
 public:
     explicit TriggerWindow(QWidget *parent = 0);
     ~TriggerWindow();
+
+    //direction du draw
+    // if true, draw left to right, mode roll on
+    // if flase, draw right to left, mode trig
+    void setDrawLeftToRight(bool drawLeftToRight);
+
+    // update the plot
+    void refreshPlot();
+
 
 private:
     Ui::TriggerWindow *ui;
@@ -56,6 +66,8 @@ public slots:
     void comboBoxTopMiddle_changeCurrentIndex(int index);
     void comboBoxMiddle_changeCurrentIndex(int index);
     void comboBoxBottomMiddle_changeCurrentIndex(int index);
+
+    void addNewDataFrame(QVector<DataFrame> newDataFrameVector);
 
 private slots:
     void _recieved_pushButtonRangeAI1Changed();

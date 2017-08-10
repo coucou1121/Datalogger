@@ -83,13 +83,13 @@ void SettingTimeScaleFactor::_initDuration()
     if(_frequency <= _FTDIbaudrate)
     {
         recordTimeInMiliSeconde = ((_nbFrameSaved*_frameSize*1000)/(float)_frequency);
-        emit _errorFrequencyToLow(GlobalEnumatedAndExtern::ErrorSamplingFrequencyToHigh, false);
+        emit _errorFrequencyToLow(GlobalEnumatedAndExtern::errorSamplingFrequencyToHigh, false);
     }
     else
     {
         qDebug() << "_frequency" << _frequency << ", _FTDIbaudrate" << _FTDIbaudrate;
         recordTimeInMiliSeconde = 0;
-        emit _errorFrequencyToLow(GlobalEnumatedAndExtern::ErrorSamplingFrequencyToHigh, true);
+        emit _errorFrequencyToLow(GlobalEnumatedAndExtern::errorSamplingFrequencyToHigh, true);
     }
     //keep the the rest after the comma
     //timeSecondeComma = recordTimeInSeconde - (quint64)recordTimeInSeconde;

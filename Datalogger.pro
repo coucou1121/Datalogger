@@ -39,7 +39,8 @@ SOURCES += main.cpp\
     globalEnumatedAndExtern.cpp \
     triggerWindow.cpp \
     debugWindow.cpp \
-    dataAnalyser.cpp
+    dataAnalyser.cpp \
+    triggerFunctions.cpp
 
 HEADERS  += mainwindow.h \
     main.h \
@@ -69,7 +70,8 @@ HEADERS  += mainwindow.h \
     globalEnumatedAndExtern.h \
     triggerWindow.h \
     debugWindow.h \
-    dataAnalyser.h
+    dataAnalyser.h \
+    triggerFunctions.h
 
 FORMS    += mainwindow.ui \
     analogPlot.ui \

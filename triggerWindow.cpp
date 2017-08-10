@@ -28,6 +28,54 @@ TriggerWindow::~TriggerWindow()
     delete ui;
 }
 
+void TriggerWindow::setDrawLeftToRight(bool drawLeftToRight)
+{
+    ui->widgetDI1->setDrawLeftToRight(drawLeftToRight);
+    ui->widgetDI2->setDrawLeftToRight(drawLeftToRight);
+    ui->widgetDI3->setDrawLeftToRight(drawLeftToRight);
+    ui->widgetDI4->setDrawLeftToRight(drawLeftToRight);
+
+    ui->widgetAI1->setDrawLeftToRight(drawLeftToRight);
+    ui->widgetAI2->setDrawLeftToRight(drawLeftToRight);
+}
+
+void TriggerWindow::refreshPlot()
+{
+    if(this->isVisible())
+    {
+        if(ui->widgetDI1->isVisible())
+        {
+            ui->widgetDI1->updatePlot();
+            ui->widgetDI1->replot();
+        }
+        if(ui->widgetDI2->isVisible())
+        {
+            ui->widgetDI2->updatePlot();
+            ui->widgetDI2->replot();
+        }
+        if(ui->widgetDI3->isVisible())
+        {
+            ui->widgetDI3->updatePlot();
+            ui->widgetDI3->replot();
+        }
+        if(ui->widgetDI4->isVisible())
+        {
+            ui->widgetDI4->updatePlot();
+            ui->widgetDI4->replot();
+        }
+        if(ui->widgetAI1->isVisible())
+        {
+            ui->widgetAI1->updatePlot();
+            ui->widgetAI1->replot();
+        }
+        if(ui->widgetAI2->isVisible())
+        {
+            ui->widgetAI2->updatePlot();
+            ui->widgetAI2->replot();
+        }
+    }
+}
+
 void TriggerWindow::_setAllTraceName()
 {
     ui->widgetDI1->setTitleName(TriggerTracePossible[GlobalEnumatedAndExtern::btDI1]);
@@ -278,6 +326,28 @@ void TriggerWindow::comboBoxMiddle_changeCurrentIndex(int index)
 void TriggerWindow::comboBoxBottomMiddle_changeCurrentIndex(int index)
 {
     ui->widgetTriggerFunctionT->_comboBoxBottomMiddle_currentIndexChanged(index);
+}
+
+void TriggerWindow::addNewDataFrame(QVector<DataFrame> newDataFrameVector)
+{
+    //    qDebug() << objectName() << " nb frame recieved size" << newDataFrameVector.size();
+    quint8 valueDI1_9 = 0;
+
+    for(int i = 0; i < newDataFrameVector.size(); i++)
+    {
+        valueDI1_9 = newDataFrameVector[i].DI1_8();
+
+        //qDebug() << objectName() << "value DI1" << (value);
+        ui->widgetDI1->addYValue((valueDI1_9 & 0x01) >> 0);
+        ui->widgetDI2->addYValue((valueDI1_9 & 0x02) >> 1);
+        ui->widgetDI3->addYValue((valueDI1_9 & 0x04) >> 2);
+        ui->widgetDI4->addYValue((valueDI1_9 & 0x08) >> 3);
+
+        ui->widgetAI1->addYValue(newDataFrameVector[i].AI1());
+        ui->widgetAI2->addYValue(newDataFrameVector[i].AI2());
+     }
+    // qDebug() << objectName() << "replot";
+    // updatePlot();
 }
 
 void TriggerWindow::_recieved_pushButtonRangeAI1Changed()

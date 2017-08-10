@@ -9,7 +9,8 @@ QMap<int, QString> GlobalEnumatedAndExtern::initErrorPossible()
 {
     QMap<int, QString> ret;
     ret.insert(noError, "no error");
-    ret.insert(ErrorSamplingFrequencyToHigh, "Periode too low \n or \n baudrate too high");
+    ret.insert(errorSamplingFrequencyToHigh, "Periode too low \n or \n baudrate too high");
+    ret.insert(errorWrongEquation, "Wrong Equation");
     return ret;
 }
 
@@ -109,6 +110,6 @@ extern QString range15_15Txt = "-15/+15";
 extern QString opNoneTxt = "NONE";
 extern QString opOrTxt = "OR";
 extern QString opAndTxt = "AND";
-extern QString opNotOrTxt = "/ OR";
-extern QString opNoTAnd = "/ AND";
+extern QString opNotOrTxt = "OR NOT";
+extern QString opNoTAndTxt = "AND NOT";
 

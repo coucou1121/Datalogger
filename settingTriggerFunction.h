@@ -6,6 +6,7 @@
 #include <QComboBox>
 #include "commonStyle.h"
 #include "globalEnumatedAndExtern.h"
+#include "triggerFunctions.h"
 
 namespace Ui {
 class SettingTriggerFunction;
@@ -24,8 +25,20 @@ public:
 private:
     Ui::SettingTriggerFunction *ui;
 
+    //value of the selected trigger function
+    TriggerFunctions *_triggerFuntion;
+
     //check if trig trace is selected
     bool _areSomeTraceSelected;
+
+    //not none state
+    bool _comboBoxTopLeftNotNone;
+    bool _comboBoxTopMiddleNotNone;
+    bool _comboBoxTopRightNotNone;
+    bool _comboBoxMiddleNotNone;
+    bool _comboBoxBottomLeftNotNone;
+    bool _comboBoxBottomRightNotNone;
+    bool _comboBoxBottomMiddleNotNone;
 
     CommonStyle _myStyle;
     void setupStyle();
@@ -37,6 +50,7 @@ private:
     // base is define in GlobalEnumated class
     QMap<int, QString> TriggerTraceSelected;
     QMap<int, QString> TriggerTracePossible;
+
     void updateCombobox();
 
 public slots:

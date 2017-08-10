@@ -18,6 +18,7 @@
 #include "debugWindow.h"
 #include "refreshTimer.h"
 #include "dataFrameSimulator.h"
+#include "triggerWindow.h"
 
 
 namespace Ui {
@@ -44,6 +45,9 @@ public:
 
 private:
     Ui::MainWindow *ui;
+
+    //value of the selected trigger function
+    quint16 _valueTriggerFunction;
 
     //thread
     QThread *_threadTick;               // create tick for frequency simulation

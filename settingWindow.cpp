@@ -126,9 +126,6 @@ void SettingWindow::_recievedRemoveTraceFromChannelSelection(int traceNumber)
     //remove in display menu
     emit _removeTraceInDisplayMenu(traceNumber);
 
-    //check if trace selected
-    _triggerFunctionEnable = ui->widgetTriggerFunction->areSomeTraceSelected();
-
     qDebug() << "_recievedRemoveTraceFromChannelSelection" << _triggerFunctionEnable;
 }
 
@@ -300,6 +297,9 @@ void SettingWindow::_recieved_doubleSpinBoxAI2_valueChanged(double value)
 
 void SettingWindow::_recieved_ComboBoxTopLeft_currentIndexChanged(int index)
 {
+    //check if trace selected
+    _triggerFunctionEnable = ui->widgetTriggerFunction->areSomeTraceSelected();
+
     emit _comboBoxTopLeft_currentIndexWasChanged(index);
 }
 

@@ -33,6 +33,9 @@ public:
     quint8 AI4() const;
     void setAI4(const quint8 &AI4);
 
+    quint8 TR1() const;
+    void setTR1(const quint8 &TR1);
+
     void displayValue();
 
 private:
@@ -46,6 +49,7 @@ private:
     quint8 _AI2;
     quint8 _AI3;
     quint8 _AI4;
+    quint8 _TR1;
 };
 
 #endif // DATAFRAME_H

@@ -176,12 +176,14 @@ void MainWindow::addNewDataFrame(QVector<DataFrame> dataFrameVector)
        }
     }
     this->_displayWindow->addNewDataFrame(dataFrameVector);
+    this->_triggerWindow->addNewDataFrame(dataFrameVector);
     qDebug() << objectName() << "nbValue" << _dataFrameVectorReccorder.size();
 }
 
 void MainWindow::refreshDisplay()
 {
     this->_displayWindow->refreshPlot();
+    this->_triggerWindow->refreshPlot();
 }
 
 void MainWindow::setupSignalAndSlot()
@@ -333,7 +335,6 @@ void MainWindow::setupStyle()
 {
     QPalette palette;
     palette.setColor(backgroundRole(), _myStyle.getBackGroundColor());
-    //palette.setColor(QPalette::Foreground,Qt::red);
     this->setPalette(palette);
 }
 

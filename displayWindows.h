@@ -25,6 +25,7 @@ public:
     // if flase, draw right to left, mode trig
     void setDrawLeftToRight(bool drawLeftToRight);
 
+    // update the plot
     void refreshPlot();
 
 public slots:
@@ -43,8 +44,6 @@ private:
     CommonStyle _myStyle;
     QElapsedTimer timerElapse;
     void setupStyle();
-
-//    void _updatePlot();
 
 public slots:
     void _addTrace(int enumTrace);
