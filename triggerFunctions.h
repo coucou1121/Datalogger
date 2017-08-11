@@ -4,8 +4,10 @@
 #include <QDebug>
 #include "globalEnumatedAndExtern.h"
 
-class TriggerFunctions
+class TriggerFunctions : public QObject
 {
+    Q_OBJECT
+
 public:
     TriggerFunctions();
 
@@ -50,9 +52,7 @@ private:
     GlobalEnumatedAndExtern::eLogicOperator _logicalOperator_Bottom;
 
 signals:
-
-    void _errorWrongEquation(int errorNumber, bool active);
-
+     void _errorWrongEquation(int errorNumber,bool active);
 };
 
 #endif // TRIGGERFUNCTIONS_H

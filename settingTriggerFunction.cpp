@@ -41,6 +41,10 @@ SettingTriggerFunction::SettingTriggerFunction(QWidget *parent) :
     ui->comboBoxTopMiddle->setEnabled(false);
     ui->comboBoxMiddle->setEnabled(false);
     ui->comboBoxBottomMiddle->setEnabled(false);
+
+    //error management
+    QObject::connect(this->_triggerFuntion, SIGNAL(_errorWrongEquation(int,bool)),
+                     this, SLOT(_received_errorWrongEquation(int,bool)));
 }
 
 SettingTriggerFunction::~SettingTriggerFunction()
@@ -328,4 +332,9 @@ void SettingTriggerFunction::on_comboBoxBottomMiddle_currentIndexChanged(int ind
     this->_triggerFuntion->displayValue();
 
     emit _comboBoxBottomMiddle_currentIndexWasChanged(index);
+}
+
+void SettingTriggerFunction::_received_errorWrongEquation(int errorNumber, bool active)
+{
+    emit _errorWrongEquation(errorNumber,active);
 }

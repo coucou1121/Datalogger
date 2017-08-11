@@ -95,7 +95,10 @@ void SettingWindow::setupSignalAndSlot()
     QObject::connect(this, SIGNAL(_FTDIBaudrateChange(int)),ui->widgetTimeScaleFactor, SLOT(_FTDIBaudrateWasChanged(int)));
 
     //error management
-    QObject::connect(ui->widgetTimeScaleFactor, SIGNAL(_errorFrequencyToLow(int,bool)),this, SLOT(_recievedErrorFrequencyToLow(int,bool)));
+    QObject::connect(ui->widgetTimeScaleFactor, SIGNAL(_errorFrequencyToLow(int,bool)),
+                     this, SLOT(_recieved_errorFrequencyToLow(int,bool)));
+    QObject::connect(ui->widgetTriggerFunction, SIGNAL(_errorWrongEquation(int,bool)),
+                     this, SLOT(_received_errorWrongEquation(int,bool)));
 }
 
 bool SettingWindow::triggerFunctionEnable() const
@@ -129,9 +132,14 @@ void SettingWindow::_recievedRemoveTraceFromChannelSelection(int traceNumber)
     qDebug() << "_recievedRemoveTraceFromChannelSelection" << _triggerFunctionEnable;
 }
 
-void SettingWindow::_recievedErrorFrequencyToLow(int errorNumber, bool active)
+void SettingWindow::_recieved_errorFrequencyToLow(int errorNumber, bool active)
 {
     emit _errorFrequencyToLow(errorNumber, active);
+}
+
+void SettingWindow::_received_errorWrongEquation(int errorNumber, bool active)
+{
+    emit _errorWrongEquation(errorNumber, active);
 }
 
 void SettingWindow::_recieved_pushButtonRangeAI1Changed()

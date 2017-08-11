@@ -63,7 +63,8 @@ public slots:
 private slots:
     void _recievedAddTraceFromChannelSelection(int traceNumber);
     void _recievedRemoveTraceFromChannelSelection(int traceNumber);
-    void _recievedErrorFrequencyToLow(int errorNumber, bool active);
+    void _recieved_errorFrequencyToLow(int errorNumber, bool active);
+    void _received_errorWrongEquation(int errorNumber,bool active);
 
     void _recieved_pushButtonRangeAI1Changed();
     void _recieved_pushButtonRangeAI2Changed();
@@ -99,6 +100,7 @@ signals:
     void _sizeFrameChange(int frameSize);
     void _FTDIBaudrateChange(int FTDIBaudrate);
     void _errorFrequencyToLow(int errorNumber,bool active);
+    void _errorWrongEquation(int errorNumber,bool active);
 
     void _pushButtonRangeAI1WasChangedFromSettingMenu();
     void _pushButtonRangeAI2WasChangedFromSettingMenu();
@@ -124,6 +126,7 @@ signals:
     void _comboBoxTopMiddle_currentIndexWasChanged(int index);
     void _comboBoxMiddle_currentIndexWasChanged(int index);
     void _comboBoxBottomMiddle_currentIndexWasChanged(int index);
+
 };
 
 #endif // SETTINGWINDOW_H

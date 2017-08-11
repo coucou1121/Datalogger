@@ -10,7 +10,7 @@ QMap<int, QString> GlobalEnumatedAndExtern::initErrorPossible()
     QMap<int, QString> ret;
     ret.insert(noError, "no error");
     ret.insert(errorSamplingFrequencyToHigh, "Periode too low \n or \n baudrate too high");
-    ret.insert(errorWrongEquation, "Wrong Equation");
+    ret.insert(errorWrongEquation, "Wrong Equation in\n Trigger Tunction \nmenu");
     return ret;
 }
 

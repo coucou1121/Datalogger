@@ -307,6 +307,7 @@ void MainWindow::setupSignalAndSlot()
 
     //error management
     QObject::connect(this->_settingWindow, SIGNAL(_errorFrequencyToLow(int,bool)), ui->widgetError, SLOT(_reveivedError(int,bool)));
+    QObject::connect(this->_settingWindow, SIGNAL(_errorWrongEquation(int,bool)), ui->widgetError, SLOT(_reveivedError(int,bool)));
 
     //timer management to be sure they start correctly
 //    QObject::connect(this->_threadTick, SIGNAL(started), this->_tickTimer, SLOT(start()));
@@ -449,7 +450,6 @@ void MainWindow::_btDebug_released()
                            "; color:" + _myStyle.getBackGroundColorButtonStatusbarUnselected().name() + ";");
     _debugWindow->show();
 }
-
 
 void MainWindow::on_pushButton_StartStop_released()
 {

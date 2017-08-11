@@ -66,6 +66,7 @@ public slots:
     void _comboBoxMiddle_currentIndexChanged(int index);
     void _comboBoxBottomMiddle_currentIndexChanged(int index);
 
+
 private slots:
     // recieved when other trace was selected on this windows
     void on_comboBoxTopLeft_currentIndexChanged(int index);
@@ -76,6 +77,9 @@ private slots:
     void on_comboBoxMiddle_currentIndexChanged(int index);
     void on_comboBoxBottomMiddle_currentIndexChanged(int index);
 
+    //received error
+    void _received_errorWrongEquation(int errorNumber,bool active);
+
 signals:
     // send for change the sychronize the selection in the other trigger function menu
     void _comboBoxTopLeft_currentIndexWasChanged(int index);
@@ -85,6 +89,9 @@ signals:
     void _comboBoxTopMiddle_currentIndexWasChanged(int index);
     void _comboBoxMiddle_currentIndexWasChanged(int index);
     void _comboBoxBottomMiddle_currentIndexWasChanged(int index);
+
+    //error
+    void _errorWrongEquation(int errorNumber,bool active);
 
 };
 

@@ -228,5 +228,7 @@ bool TriggerFunctions::_checkValideEquation()
         break;
     }
 
+    emit _errorWrongEquation(GlobalEnumatedAndExtern::errorWrongEquation, !valide);
+
     return valide;
 }
