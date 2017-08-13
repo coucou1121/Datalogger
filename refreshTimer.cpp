@@ -1,6 +1,6 @@
-#include "refreshTimer.h"
+#include "RefreshTimer.h"
 
-refreshTimer::refreshTimer(bool isCounting, QString name, int timeInterval, QObject *parent) :
+RefreshTimer::RefreshTimer(bool isCounting, QString name, int timeInterval, QObject *parent) :
     QObject(parent)
 {
     this->setObjectName(name);
@@ -12,17 +12,17 @@ refreshTimer::refreshTimer(bool isCounting, QString name, int timeInterval, QObj
     _timer->start(_timeInterval);
 }
 
-void refreshTimer::startTimer()
+void RefreshTimer::startTimer()
 {
     _isCounting = true;
 }
 
-void refreshTimer::stopTimer()
+void RefreshTimer::stopTimer()
 {
     _isCounting = false;
 }
 
-void refreshTimer::_updateCount()
+void RefreshTimer::_updateCount()
 {
  //   count++;
     // qDebug() << objectName() << " count: " << count;

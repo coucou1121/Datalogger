@@ -20,10 +20,10 @@ public:
 
 private:  
     Ui::LogoDateTime *ui;
-    QTimer *timer;
-    QDate dateToDay;
-    QTime TimeToDay;
-    QDateTime today;
+    QTimer *_timer;
+    QDate _dateToDay;
+    QTime _timeToDay;
+    QDateTime _dateTimeToDay;
 
     //style
     CommonStyle _myStyle;

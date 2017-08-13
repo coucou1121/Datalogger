@@ -26,6 +26,7 @@ void DataFrameSimulator::resetFrame()
     _dataFrame.setAI2(0);
     _dataFrame.setAI3(0);
     _dataFrame.setAI4(0);
+    _dataFrame.setTR1(0);
 }
 
 void DataFrameSimulator::incValue()
@@ -35,6 +36,7 @@ void DataFrameSimulator::incValue()
     quint8 DI_1_8;
     quint8 DI_9_16;
     quint8 AI1, AI2, AI3, AI4;
+    quint8 TR1;
 
     _CPT++;
     lsbCPT = (_CPT & 0xFF);
@@ -54,16 +56,7 @@ void DataFrameSimulator::incValue()
     _dataFrame.setAI2(AI2);
     _dataFrame.setAI3(AI3);
     _dataFrame.setAI4(AI4);
-
-
-    //qDebug() << objectName() << " Data increased " << _CPT;
-    //qDebug() << objectName() << " emit lsbCPT " << lsbCPT;
-    //emit valueDI1_8Updated(DI_1_8);
-    //emit valueDI9_16Updated(DI_9_16);
-    //emit valueAI1Updated(AI1);
-    //emit valueAI2Updated(AI2);
-    //emit valueAI3Updated(AI3);
-    //emit valueAI4Updated(AI4);
+    _dataFrame.setTR1(TR1);
 }
 
 void DataFrameSimulator::createDataFrame()

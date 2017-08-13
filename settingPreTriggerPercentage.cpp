@@ -47,19 +47,19 @@ void SettingPreTriggerPercentage::setupStyle()
     _myStyle.setSpinBoxShape(ui->spinBoxTimeAfterTrig);
 }
 
-void SettingPreTriggerPercentage::setStepOnClick(int stepOnClick)
+void SettingPreTriggerPercentage::setStepOnClick(const quint8 &stepOnClick)
 {
     _stepOnClick = stepOnClick;
 }
 
-void SettingPreTriggerPercentage::setMaximumRange(int maximumRange)
+void SettingPreTriggerPercentage::setMaximumRange(const quint16 &maximumRange)
 {
     _maximumRange = maximumRange;
 }
 
 void SettingPreTriggerPercentage::on_spinBoxTimeBeforeTrig_valueChanged(int arg1)
 {
-    int percentValue = (arg1 * ui->progressBar->maximum())/_maximumRange;
+    quint8 percentValue = (arg1 * ui->progressBar->maximum())/_maximumRange;
 
     //modify the vlue at the time after trig
     ui->spinBoxTimeAfterTrig->setValue(_maximumRange-arg1);

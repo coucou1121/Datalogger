@@ -17,18 +17,18 @@ SettingTriggerFunction::SettingTriggerFunction(QWidget *parent) :
     _triggerFuntion = new TriggerFunctions();
 
     //initialise the Key - Value for combobx
-    TriggerTracePossible = GlobalEnumatedAndExtern::initTriggerTracePossible();
+    _triggerTracePossible = GlobalEnumatedAndExtern::initTriggerTracePossible();
 
     // setup the style
-    this->setupStyle();
+    this->_setupStyle();
 
     // add all logical operator in all comboboxes
-    this->setupLogicalCombobox(ui->comboBoxTopMiddle);
-    this->setupLogicalCombobox(ui->comboBoxMiddle);
-    this->setupLogicalCombobox(ui->comboBoxBottomMiddle);
+    this->_setupLogicalCombobox(ui->comboBoxTopMiddle);
+    this->_setupLogicalCombobox(ui->comboBoxMiddle);
+    this->_setupLogicalCombobox(ui->comboBoxBottomMiddle);
 
     // add "none" of all trace comboboxes
-    this->setupTraceCombobox();
+    this->_setupTraceCombobox();
 
     //set no trace selected
     this->_areSomeTraceSelected = false;
@@ -57,21 +57,26 @@ bool SettingTriggerFunction::areSomeTraceSelected() const
     return _areSomeTraceSelected;
 }
 
-void SettingTriggerFunction::setupStyle()
+TriggerFunctions *SettingTriggerFunction::triggerFuntion() const
+{
+    return _triggerFuntion;
+}
+
+void SettingTriggerFunction::_setupStyle()
 {
     ui->labelTitleTriggerFunction->setStyleSheet("background-color:" + _myStyle.getBackGroundColorButtonStatusbarSelected().name() +
                                                  "; color:" + _myStyle.getBackGroundColorButtonStatusbarUnselected().name() + ";");
 }
 
-void SettingTriggerFunction::setupTraceCombobox()
+void SettingTriggerFunction::_setupTraceCombobox()
 {
-    ui->comboBoxTopLeft->addItem(TriggerTracePossible[0]);
-    ui->comboBoxTopRight->addItem(TriggerTracePossible[0]);
-    ui->comboBoxBottomLeft->addItem(TriggerTracePossible[0]);
-    ui->comboBoxBottomRight->addItem(TriggerTracePossible[0]);
+    ui->comboBoxTopLeft->addItem(_triggerTracePossible[0]);
+    ui->comboBoxTopRight->addItem(_triggerTracePossible[0]);
+    ui->comboBoxBottomLeft->addItem(_triggerTracePossible[0]);
+    ui->comboBoxBottomRight->addItem(_triggerTracePossible[0]);
 }
 
-void SettingTriggerFunction::setupLogicalCombobox(QComboBox *combobox)
+void SettingTriggerFunction::_setupLogicalCombobox(QComboBox *combobox)
 {
     combobox->addItem(opNoneTxt);
     combobox->addItem(opAndTxt);
@@ -80,7 +85,7 @@ void SettingTriggerFunction::setupLogicalCombobox(QComboBox *combobox)
     combobox->addItem(opNotOrTxt);
 }
 
-void SettingTriggerFunction::updateCombobox()
+void SettingTriggerFunction::_updateCombobox()
 {
     int nbItem = 0;
     //empty the combobox
@@ -90,10 +95,10 @@ void SettingTriggerFunction::updateCombobox()
     ui->comboBoxBottomRight->clear();
 
     //add "none"
-    this->setupTraceCombobox();
+    this->_setupTraceCombobox();
 
     //update all traces
-    for(QMap<int, QString>::iterator it = TriggerTraceSelected.begin(); it != TriggerTraceSelected.end(); it++)
+    for(QMap<int, QString>::iterator it = _triggerTraceSelected.begin(); it != _triggerTraceSelected.end(); it++)
     {
         ui->comboBoxTopLeft->addItem(*it);
         ui->comboBoxTopRight->addItem(*it);
@@ -110,16 +115,16 @@ void SettingTriggerFunction::_comboboxAddItem(int buttonNumber)
             buttonNumber == GlobalEnumatedAndExtern::btAI1 ||
             buttonNumber == GlobalEnumatedAndExtern::btAI2)
     {
-        TriggerTraceSelected[buttonNumber] = TriggerTracePossible[buttonNumber];
-        this->updateCombobox();
+        _triggerTraceSelected[buttonNumber] = _triggerTracePossible[buttonNumber];
+        this->_updateCombobox();
     }
 
 }
 
 void SettingTriggerFunction::_comboboxRevmoveItem(int buttonNumber)
 {
-    TriggerTraceSelected.remove(buttonNumber);
-    this->updateCombobox();
+    _triggerTraceSelected.remove(buttonNumber);
+    this->_updateCombobox();
 }
 
 void SettingTriggerFunction::_comboBoxTopLeft_currentIndexChanged(int index)
@@ -167,7 +172,7 @@ void SettingTriggerFunction::_comboBoxBottomMiddle_currentIndexChanged(int index
 void SettingTriggerFunction::on_comboBoxTopLeft_currentIndexChanged(int index)
 {
     //set the selected signal in trigger function
-    int selectedTrace = TriggerTracePossible.key(ui->comboBoxTopLeft->currentText());
+    int selectedTrace = _triggerTracePossible.key(ui->comboBoxTopLeft->currentText());
     GlobalEnumatedAndExtern::eTracePossible trace = (GlobalEnumatedAndExtern::eTracePossible)selectedTrace;
     this->_triggerFuntion->setTraceA(trace);
 
@@ -194,7 +199,7 @@ void SettingTriggerFunction::on_comboBoxTopLeft_currentIndexChanged(int index)
 void SettingTriggerFunction::on_comboBoxTopRight_currentIndexChanged(int index)
 {
     //set the selected signal in trigger function
-    int selectedTrace = TriggerTracePossible.key(ui->comboBoxTopRight->currentText());
+    int selectedTrace = _triggerTracePossible.key(ui->comboBoxTopRight->currentText());
     GlobalEnumatedAndExtern::eTracePossible trace = (GlobalEnumatedAndExtern::eTracePossible)selectedTrace;
     if(ui->comboBoxTopRight->isEnabled())
     {
@@ -218,15 +223,13 @@ void SettingTriggerFunction::on_comboBoxTopRight_currentIndexChanged(int index)
         ui->comboBoxBottomMiddle->setEnabled(false);
     }
 
-    this->_triggerFuntion->displayValue();
-
     emit _comboBoxTopRight_currentIndexWasChanged(index);
 }
 
 void SettingTriggerFunction::on_comboBoxBottomLeft_currentIndexChanged(int index)
 {
     //set the selected signal in trigger function
-    int selectedTrace = TriggerTracePossible.key(ui->comboBoxBottomLeft->currentText());
+    int selectedTrace = _triggerTracePossible.key(ui->comboBoxBottomLeft->currentText());
     GlobalEnumatedAndExtern::eTracePossible trace = (GlobalEnumatedAndExtern::eTracePossible)selectedTrace;
     this->_triggerFuntion->setTraceC(trace);
 
@@ -242,19 +245,15 @@ void SettingTriggerFunction::on_comboBoxBottomLeft_currentIndexChanged(int index
         ui->comboBoxBottomMiddle->setEnabled(false);
     }
 
-    this->_triggerFuntion->displayValue();
-
     emit _comboBoxBottomLeft_currentIndexWasChanged(index);
 }
 
 void SettingTriggerFunction::on_comboBoxBottomRight_currentIndexChanged(int index)
 {
     //set the selected signal in trigger function
-    int selectedTrace = TriggerTracePossible.key(ui->comboBoxBottomRight->currentText());
+    int selectedTrace = _triggerTracePossible.key(ui->comboBoxBottomRight->currentText());
     GlobalEnumatedAndExtern::eTracePossible trace = (GlobalEnumatedAndExtern::eTracePossible)selectedTrace;
     this->_triggerFuntion->setTraceD(trace);
-
-    this->_triggerFuntion->displayValue();
 
     emit _comboBoxBottomRight_currentIndexWasChanged(index);
 }
@@ -283,8 +282,6 @@ void SettingTriggerFunction::on_comboBoxTopMiddle_currentIndexChanged(int index)
         this->_triggerFuntion->setLogicalOperator_Bottom(GlobalEnumatedAndExtern::opNone);
     }
 
-    this->_triggerFuntion->displayValue();
-
     emit _comboBoxTopMiddle_currentIndexWasChanged(index);
 }
 
@@ -308,8 +305,6 @@ void SettingTriggerFunction::on_comboBoxMiddle_currentIndexChanged(int index)
         this->_triggerFuntion->setLogicalOperator_Bottom(GlobalEnumatedAndExtern::opNone);
     }
 
-    this->_triggerFuntion->displayValue();
-
     emit _comboBoxMiddle_currentIndexWasChanged(index);
 }
 
@@ -328,8 +323,6 @@ void SettingTriggerFunction::on_comboBoxBottomMiddle_currentIndexChanged(int ind
         ui->comboBoxBottomRight->setEnabled(false);
         this->_triggerFuntion->setTraceD(GlobalEnumatedAndExtern::btNone);
     }
-
-    this->_triggerFuntion->displayValue();
 
     emit _comboBoxBottomMiddle_currentIndexWasChanged(index);
 }

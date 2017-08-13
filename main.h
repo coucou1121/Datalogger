@@ -20,7 +20,7 @@
 #include "startThread.h"
 #include "startstopemuldata.h"
 #include "refreshTimer.h"
-#include "displayWindows.h"
+#include "displayWindow.h"
 #include "dataFrame.h"
 #include "dataFrameSimulator.h"
 #include "logoDateTime.h"

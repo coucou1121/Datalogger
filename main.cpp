@@ -26,7 +26,7 @@ int main(int argc, char *argv[])
     //SettingTriggerSetting settingTriggerSetting;
     //SettingWindow settingWindow;
 
-    qRegisterMetaType< QVector<DataFrame> >("QVector<DataFrame>");
+    //qRegisterMetaType< QVector<DataFrame> >("QVector<DataFrame>");
 
     //mainWindows.setupStyle();
     mainWindows.show();
@@ -50,25 +50,25 @@ int main(int argc, char *argv[])
     //settingWindow.show();
 
     //thread
-    QThread *threadTick = new QThread;              // First thread
-    QThread *threadNewDataFrame = new QThread;    // Second thread
-    QThread *threadDisplayRefresh = new QThread;    // Second thread
+//    QThread *threadTick = new QThread;              // First thread
+//    QThread *threadNewDataFrame = new QThread;    // Second thread
+//    QThread *threadDisplayRefresh = new QThread;    // Second thread
 
-    //QThread *threadDataFramSimulator = new QThread; // data frame simulation
+//    //QThread *threadDataFramSimulator = new QThread; // data frame simulation
 
-    //timer for thread
-    refreshTimer *tickTimer = new refreshTimer(false, "Tick", 1000);
-    refreshTimer *newDataFrame = new refreshTimer(true, "Data updated", 10);
-    refreshTimer *refreshDisplayTimer = new refreshTimer(true, "Refres Display", 100);
+//    //timer for thread
+//    RefreshTimer *tickTimer = new RefreshTimer(false, "Tick", 1000);
+//    RefreshTimer *newDataFrame = new RefreshTimer(true, "Data updated", 10);
+//    RefreshTimer *refreshDisplayTimer = new RefreshTimer(true, "Refres Display", 100);
 
-    //frame simulator
-    QVector<DataFrame> _dataFrameVector;
-    //DataFrameSimulator *dataFrameSimulator = new DataFrameSimulator("Frame Simulator");
+//    //frame simulator
+//    QVector<DataFrame> _dataFrameVector;
+//    //DataFrameSimulator *dataFrameSimulator = new DataFrameSimulator("Frame Simulator");
 
-    //move time into the thread
-    tickTimer->moveToThread(threadTick);
-    newDataFrame->moveToThread(threadNewDataFrame);
-    refreshDisplayTimer->moveToThread(threadDisplayRefresh);
+//    //move time into the thread
+//    tickTimer->moveToThread(threadTick);
+//    newDataFrame->moveToThread(threadNewDataFrame);
+//    refreshDisplayTimer->moveToThread(threadDisplayRefresh);
 
     //dataFrameSimulator->moveToThread(threadDataFramSimulator);
 

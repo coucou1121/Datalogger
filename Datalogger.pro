@@ -21,7 +21,6 @@ SOURCES += main.cpp\
     startThread.cpp \
     startstopemuldata.cpp \
     refreshTimer.cpp \
-    displayWindows.cpp \
     frame.cpp \
     dataFrame.cpp \
     dataFrameSimulator.cpp \
@@ -40,7 +39,8 @@ SOURCES += main.cpp\
     triggerWindow.cpp \
     debugWindow.cpp \
     dataAnalyser.cpp \
-    triggerFunctions.cpp
+    triggerFunctions.cpp \
+    displayWindow.cpp
 
 HEADERS  += mainwindow.h \
     main.h \
@@ -52,7 +52,6 @@ HEADERS  += mainwindow.h \
     startThread.h \
     startstopemuldata.h \
     refreshTimer.h \
-    displayWindows.h \
     frame.h \
     dataFrame.h \
     dataFrameSimulator.h \
@@ -71,12 +70,12 @@ HEADERS  += mainwindow.h \
     triggerWindow.h \
     debugWindow.h \
     dataAnalyser.h \
-    triggerFunctions.h
+    triggerFunctions.h \
+    displayWindow.h
 
 FORMS    += mainwindow.ui \
     analogPlot.ui \
     startstopemuldata.ui \
-    displayWindows.ui \
     analogPlot_copy.ui \
     digitalPlot.ui \
     logoDateTime.ui \
@@ -90,7 +89,8 @@ FORMS    += mainwindow.ui \
     settingWindow.ui \
     baseWindow.ui \
     triggerWindow.ui \
-    debugWindow.ui
+    debugWindow.ui \
+    displayWindow.ui
 
 RESOURCES += \
     images.qrc

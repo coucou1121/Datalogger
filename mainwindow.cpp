@@ -18,9 +18,9 @@ MainWindow::MainWindow(QWidget *parent) :
     _threadDisplayRefresh = new QThread;
 
     //create timerfor thread
-    _tickTimer = new refreshTimer(false, "Tick timer", 1);
-    _newDataFrameTimer = new refreshTimer(false, "Data updated timer", 1000);
-    _refreshDisplayTimer = new refreshTimer(false, "Refres Display timer", 100);
+    _tickTimer = new RefreshTimer(false, "Tick timer", 1);
+    _newDataFrameTimer = new RefreshTimer(false, "Data updated timer", 100);
+    _refreshDisplayTimer = new RefreshTimer(false, "Refres Display timer", 200);
 
     //create data frame simulautor
     _dataFrameSimulator = new DataFrameSimulator("Frame Simulator");
@@ -34,21 +34,23 @@ MainWindow::MainWindow(QWidget *parent) :
     _baseWindow = new BaseWindow();
     _settingWindow = new SettingWindow();
     _triggerWindow = new TriggerWindow();
-    _displayWindow = new DisplayWindows();
+    _displayWindow = new DisplayWindow();
     _debugWindow = new DebugWindow();
 
-    this->mainSetup();
+    _hlayoutStatus = new QHBoxLayout();
+
+    this->_mainSetup();
     this->setupStyle();
-    this->setStatusBar();
+    this->_setStatusBar();
 
     //select Setting menu when start the application
     this->_btSetting_released();
 
     //setup signal and slot
-    this->setupSignalAndSlot();
+    this->_setupSignalAndSlot();
 
     //setup default values
-    this->setupDefaultValue();
+    this->_setupDefaultValue();
 
     //start thread for display refreshement
     _threadDisplayRefresh->start();
@@ -56,7 +58,10 @@ MainWindow::MainWindow(QWidget *parent) :
     _threadNewDataFrame->start();
 
     //perso type for signal
-    qRegisterMetaType< QVector<DataFrame> >("QVector<DataFrame>");
+    qRegisterMetaType<QVector<DataFrame>>("QVector<DataFrame>");
+    //qRegisterMetaType<TriggerFunctions>("TriggerFunctions");
+
+    this->_triggerFuntion = _settingWindow->getTriggerFuntion();
 }
 
 MainWindow::~MainWindow()
@@ -64,7 +69,7 @@ MainWindow::~MainWindow()
     delete ui;
 }
 
-void MainWindow::mainSetup()
+void MainWindow::_mainSetup()
 {
     //add base windows in windows layout
     ui->gridLayout->addWidget(_baseWindow, 0, 1, 6, 1);
@@ -94,7 +99,7 @@ void MainWindow::mainSetup()
     _displayWindow->setDrawLeftToRight(false);
 }
 
-void MainWindow::setupDefaultValue()
+void MainWindow::_setupDefaultValue()
 {
     _debugWindow->setNbSavedFrame(65536); //max 999999999 for the slot
     _debugWindow->setFrameSize(64);
@@ -178,6 +183,8 @@ void MainWindow::addNewDataFrame(QVector<DataFrame> dataFrameVector)
     this->_displayWindow->addNewDataFrame(dataFrameVector);
     this->_triggerWindow->addNewDataFrame(dataFrameVector);
     qDebug() << objectName() << "nbValue" << _dataFrameVectorReccorder.size();
+    this->_triggerFuntion->displayValue();
+    this->_triggerFuntion->onTrig(0,0,1);
 }
 
 void MainWindow::refreshDisplay()
@@ -186,7 +193,7 @@ void MainWindow::refreshDisplay()
     this->_triggerWindow->refreshPlot();
 }
 
-void MainWindow::setupSignalAndSlot()
+void MainWindow::_setupSignalAndSlot()
 {
     //manage trace in trigger menu
     QObject::connect(this->_settingWindow, SIGNAL(_addTraceInTriggerMenu(int)), this->_triggerWindow, SLOT(addTrace(int)));
@@ -323,13 +330,14 @@ void MainWindow::setupSignalAndSlot()
     //refresh the display
     QObject::connect(_refreshDisplayTimer, SIGNAL(_tickFinished()), this, SLOT(refreshDisplay()));
 
-    //QObject::connect(dataFrameSimulator, SIGNAL(valueDI1_8Updated(quint8)), &displayWindows, SLOT(addValueDI1_8(quint8)));
-    //QObject::connect(dataFrameSimulator, SIGNAL(valueDI9_16Updated(quint8)), &displayWindows, SLOT(addValueDI9_16(quint8)));
+    //application on trig
+    //QObject::connect(dataFrameSimulator, SIGNAL(valueDI1_8Updated(quint8)), &DisplayWindow, SLOT(addValueDI1_8(quint8)));
+    //QObject::connect(dataFrameSimulator, SIGNAL(valueDI9_16Updated(quint8)), &DisplayWindow, SLOT(addValueDI9_16(quint8)));
 
-   // QObject::connect(dataFrameSimulator, SIGNAL(valueAI1Updated(quint8)), &displayWindows, SLOT(addValueAI1(quint8)));
-   // QObject::connect(dataFrameSimulator, SIGNAL(valueAI2Updated(quint8)), &displayWindows, SLOT(addValueAI2(quint8)));
-   // QObject::connect(dataFrameSimulator, SIGNAL(valueAI3Updated(quint8)), &displayWindows, SLOT(addValueAI3(quint8)));
-   // QObject::connect(dataFrameSimulator, SIGNAL(valueAI4Updated(quint8)), &displayWindows, SLOT(addValueAI4(quint8)));
+   // QObject::connect(dataFrameSimulator, SIGNAL(valueAI1Updated(quint8)), &DisplayWindow, SLOT(addValueAI1(quint8)));
+   // QObject::connect(dataFrameSimulator, SIGNAL(valueAI2Updated(quint8)), &DisplayWindow, SLOT(addValueAI2(quint8)));
+   // QObject::connect(dataFrameSimulator, SIGNAL(valueAI3Updated(quint8)), &DisplayWindow, SLOT(addValueAI3(quint8)));
+   // QObject::connect(dataFrameSimulator, SIGNAL(valueAI4Updated(quint8)), &DisplayWindow, SLOT(addValueAI4(quint8)));
 }
 
 void MainWindow::setupStyle()
@@ -339,7 +347,7 @@ void MainWindow::setupStyle()
     this->setPalette(palette);
 }
 
-void MainWindow::setStatusBar()
+void MainWindow::_setStatusBar()
 {
     _widgetStatusBar = new QWidget();
     _btBase = new QPushButton("Base");
@@ -391,7 +399,7 @@ void MainWindow::setStatusBar()
 
 }
 
-void MainWindow::resetPushButtonColor()
+void MainWindow::_resetPushButtonColor()
 {
     _btBase->setStyleSheet("background-color:" + _myStyle.getBackGroundColorButtonStatusbarUnselected().name() +
                            "; color:" + _myStyle.getBackGroundColorButtonStatusbarSelected().name() + ";");
@@ -413,7 +421,7 @@ void MainWindow::resetPushButtonColor()
 
 void MainWindow::_btBase_released()
 {
-    this->resetPushButtonColor();
+    this->_resetPushButtonColor();
     _btBase->setStyleSheet("background-color:" + _myStyle.getBackGroundColorButtonStatusbarSelected().name() +
                            "; color:" + _myStyle.getBackGroundColorButtonStatusbarUnselected().name() + ";");
     _baseWindow->show();
@@ -421,7 +429,7 @@ void MainWindow::_btBase_released()
 
 void MainWindow::_btSetting_released()
 {
-    this->resetPushButtonColor();
+    this->_resetPushButtonColor();
     _btSetting->setStyleSheet("background-color:" + _myStyle.getBackGroundColorButtonStatusbarSelected().name() +
                            "; color:" + _myStyle.getBackGroundColorButtonStatusbarUnselected().name() + ";");
     _settingWindow->show();
@@ -429,7 +437,7 @@ void MainWindow::_btSetting_released()
 
 void MainWindow::_btTrigger_released()
 {
-    this->resetPushButtonColor();
+    this->_resetPushButtonColor();
     _btTrigger->setStyleSheet("background-color:" + _myStyle.getBackGroundColorButtonStatusbarSelected().name() +
                            "; color:" + _myStyle.getBackGroundColorButtonStatusbarUnselected().name() + ";");
     _triggerWindow->show();
@@ -437,7 +445,7 @@ void MainWindow::_btTrigger_released()
 
 void MainWindow::_btDisplay_released()
 {
-    this->resetPushButtonColor();
+    this->_resetPushButtonColor();
     _btDisplay->setStyleSheet("background-color:" + _myStyle.getBackGroundColorButtonStatusbarSelected().name() +
                            "; color:" + _myStyle.getBackGroundColorButtonStatusbarUnselected().name() + ";");
     _displayWindow->show();
@@ -445,7 +453,7 @@ void MainWindow::_btDisplay_released()
 
 void MainWindow::_btDebug_released()
 {
-    this->resetPushButtonColor();
+    this->_resetPushButtonColor();
     _btDebug->setStyleSheet("background-color:" + _myStyle.getBackGroundColorButtonStatusbarSelected().name() +
                            "; color:" + _myStyle.getBackGroundColorButtonStatusbarUnselected().name() + ";");
     _debugWindow->show();
@@ -462,8 +470,8 @@ void MainWindow::on_pushButton_StartStop_released()
         this->_startStopButtonManager((int)GlobalEnumatedAndExtern::start);
         this->stopThread();
         ui->widgetState->setMainState(GlobalEnumatedAndExtern::mainStateStop);
-        _displayWindow->setDrawLeftToRight(_settingWindow->triggerFunctionEnable());
-        qDebug() << objectName() << "trigger Enable" << _settingWindow->triggerFunctionEnable();
+//        _displayWindow->setDrawLeftToRight(_settingWindow->triggerFunctionEnable());
+//        qDebug() << objectName() << "trigger Enable" << _settingWindow->triggerFunctionEnable();
     }
     else
     {
@@ -477,7 +485,9 @@ void MainWindow::on_pushButton_StartStop_released()
         {
             ui->widgetState->setMainState(GlobalEnumatedAndExtern::mainStateRollOn);
         }
-        _displayWindow->setDrawLeftToRight(_settingWindow->triggerFunctionEnable());
-        qDebug() << objectName() << "trigger Enable" << _settingWindow->triggerFunctionEnable();
+//        _displayWindow->setDrawLeftToRight(_settingWindow->triggerFunctionEnable());
+//        qDebug() << objectName() << "trigger Enable" << _settingWindow->triggerFunctionEnable();
     }
+    _displayWindow->setDrawLeftToRight(_settingWindow->triggerFunctionEnable());
+    qDebug() << objectName() << "trigger Enable" << _settingWindow->triggerFunctionEnable();
 }

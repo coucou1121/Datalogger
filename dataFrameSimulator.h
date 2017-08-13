@@ -40,8 +40,7 @@ signals:
     void valueAI2Updated(quint8 value);
     void valueAI3Updated(quint8 value);
     void valueAI4Updated(quint8 value);
-
-
+    void valueTR1Updated(quint8 value);
 };
 
 #endif // DATAFRAMESIMULATOR_H

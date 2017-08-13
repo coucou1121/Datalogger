@@ -5,10 +5,10 @@ LogoDateTime::LogoDateTime(QWidget *parent) :
     QWidget(parent),
     ui(new Ui::LogoDateTime)
 {
-    timer = new QTimer(this);
+    _timer = new QTimer(this);
     ui->setupUi(this);
-    connect(timer, SIGNAL(timeout()), this, SLOT(showTime()));
-    timer->start(1000);
+    connect(_timer, SIGNAL(timeout()), this, SLOT(showTime()));
+    _timer->start(1000);
     showTime();
 }
 
@@ -19,12 +19,12 @@ LogoDateTime::~LogoDateTime()
 
 void LogoDateTime::showTime()
 {
-    QDateTime dateTime = QDateTime::currentDateTime();
-    QTime time = dateTime.time();
-    QString timeStr = time.toString("hh : mm : ss");
+    _dateTimeToDay = QDateTime::currentDateTime();
+    _timeToDay = _dateTimeToDay.time();
+    QString timeStr = _timeToDay.toString("hh : mm : ss");
     ui->labelTime->setText(timeStr);
 
-    QDate dateToDay = dateTime.date();
-    QString dateToDayStr = dateToDay.toString("dd  MMMM  yyyy");
+    _dateToDay = _dateTimeToDay.date();
+    QString dateToDayStr = _dateToDay.toString("dd  MMMM  yyyy");
     ui->labelDate->setText(dateToDayStr);
 }

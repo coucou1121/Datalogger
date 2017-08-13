@@ -34,7 +34,11 @@ public:
     GlobalEnumatedAndExtern::eLogicOperator logicalOperator_Bottom() const;
     void setLogicalOperator_Bottom(const GlobalEnumatedAndExtern::eLogicOperator &logicalOperator_Bottom);
 
+    bool onTrig(quint8 valueA, quint8 valueB = 0, quint8 valueC = 0, quint8 valueD = 0);
+
 private:
+
+    bool _onTrigStatus;
 
     quint16 _valueFunction;
 
@@ -52,7 +56,7 @@ private:
     GlobalEnumatedAndExtern::eLogicOperator _logicalOperator_Bottom;
 
 signals:
-     void _errorWrongEquation(int errorNumber,bool active);
+   void _errorWrongEquation(int errorNumber,bool active);
 };
 
 #endif // TRIGGERFUNCTIONS_H

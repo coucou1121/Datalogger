@@ -1,15 +1,15 @@
-#include "displayWindows.h"
-#include "ui_displayWindows.h"
+#include "DisplayWindow.h"
+#include "ui_DisplayWindow.h"
 
-DisplayWindows::DisplayWindows(QWidget *parent) :
+DisplayWindow::DisplayWindow(QWidget *parent) :
     QWidget(parent),
-    ui(new Ui::DisplayWindows)
+    ui(new Ui::DisplayWindow)
 {
     //initialise the Key - Value for combobx
     TriggerTracePossible = GlobalEnumatedAndExtern::initTriggerTracePossible();
 
     ui->setupUi(this);
-    this->setupStyle();
+    //this->setupStyle();
 
     //setup title name of all trace
     this->_setAllTraceName();
@@ -19,12 +19,12 @@ DisplayWindows::DisplayWindows(QWidget *parent) :
 }
 
 
-DisplayWindows::~DisplayWindows()
+DisplayWindow::~DisplayWindow()
 {
     delete ui;
 }
 
-void DisplayWindows::setDrawLeftToRight(bool drawLeftToRight)
+void DisplayWindow::setDrawLeftToRight(bool drawLeftToRight)
 {
     ui->DI1->setDrawLeftToRight(drawLeftToRight);
     ui->DI2->setDrawLeftToRight(drawLeftToRight);
@@ -49,7 +49,7 @@ void DisplayWindows::setDrawLeftToRight(bool drawLeftToRight)
     ui->AI4->setDrawLeftToRight(drawLeftToRight);
 }
 
-void DisplayWindows::refreshPlot()
+void DisplayWindow::refreshPlot()
 {
     if(this->isVisible())
     {
@@ -158,7 +158,7 @@ void DisplayWindows::refreshPlot()
     }
 }
 
-void DisplayWindows::_addTrace(int enumTrace)
+void DisplayWindow::_addTrace(int enumTrace)
 {
     qDebug() << objectName() << "recieved " << "_addTrace : " << enumTrace;
     switch(enumTrace)
@@ -228,7 +228,7 @@ void DisplayWindows::_addTrace(int enumTrace)
     }
 }
 
-void DisplayWindows::_hideTrace(int enumTrace)
+void DisplayWindow::_hideTrace(int enumTrace)
 {
     switch(enumTrace)
     {
@@ -297,13 +297,13 @@ void DisplayWindows::_hideTrace(int enumTrace)
     }
 }
 
-void DisplayWindows::setupStyle()
-{
-    _palette.setColor(backgroundRole(), _myStyle.getBackGroundColor());
-    this->setPalette(_palette);
-}
+//void DisplayWindow::setupStyle()
+//{
+//    _palette.setColor(backgroundRole(), _myStyle.getBackGroundColor());
+//    this->setPalette(_palette);
+//}
 
-void DisplayWindows::addNewDataFrame(QVector<DataFrame> newDataFrameVector)
+void DisplayWindow::addNewDataFrame(QVector<DataFrame> newDataFrameVector)
 {
     //    qDebug() << objectName() << " nb frame recieved size" << newDataFrameVector.size();
     quint8 valueDI1_9 = 0;
@@ -342,7 +342,7 @@ void DisplayWindows::addNewDataFrame(QVector<DataFrame> newDataFrameVector)
     // updatePlot();
 }
 
-void DisplayWindows::addValueDI1_8(quint8 value)
+void DisplayWindow::addValueDI1_8(quint8 value)
 {
     //qDebug() << objectName() << " Data recieved " << value;
     ui->DI1->addYValue((value & 0x01) >> 0);
@@ -355,7 +355,7 @@ void DisplayWindows::addValueDI1_8(quint8 value)
     //    ui->DI8->addYValue((value & 0x80) >> 7);
 }
 
-void DisplayWindows::addValueDI9_16(quint8 value)
+void DisplayWindow::addValueDI9_16(quint8 value)
 {
     //qDebug() << objectName() << " Data recieved " << value;
     ui->DI9->addYValue((value & 0x01) >> 0);
@@ -368,31 +368,31 @@ void DisplayWindows::addValueDI9_16(quint8 value)
     ui->DI16->addYValue((value & 0x80) >> 7);
 }
 
-void DisplayWindows::addValueAI1(quint8 value)
+void DisplayWindow::addValueAI1(quint8 value)
 {
     //qDebug() << objectName() << " Data recieved " << value;
     ui->AI1->addYValue(value);
 }
 
-void DisplayWindows::addValueAI2(quint8 value)
+void DisplayWindow::addValueAI2(quint8 value)
 {
     //qDebug() << objectName() << " Data recieved " << value;
     ui->AI2->addYValue(value);
 }
 
-void DisplayWindows::addValueAI3(quint8 value)
+void DisplayWindow::addValueAI3(quint8 value)
 {
     //qDebug() << objectName() << " Data recieved " << value;
     ui->AI3->addYValue(value);
 }
 
-void DisplayWindows::addValueAI4(quint8 value)
+void DisplayWindow::addValueAI4(quint8 value)
 {
     //qDebug() << objectName() << " Data recieved " << value;
     ui->AI4->addYValue(value);
 }
 
-void DisplayWindows::_setAllTraceName()
+void DisplayWindow::_setAllTraceName()
 {
     ui->DI1->setTitleName(TriggerTracePossible[GlobalEnumatedAndExtern::btDI1]);
     ui->DI2->setTitleName(TriggerTracePossible[GlobalEnumatedAndExtern::btDI2]);
@@ -419,7 +419,7 @@ void DisplayWindows::_setAllTraceName()
 
 }
 
-void DisplayWindows::_hideAllTrace()
+void DisplayWindow::_hideAllTrace()
 {
     ui->DI1->hide();
     ui->DI2->hide();

@@ -6,12 +6,12 @@
 #include <QDebug>
 #include <QElapsedTimer>
 
-class refreshTimer : public QObject
+class RefreshTimer : public QObject
 {
     Q_OBJECT
 
 public:
-    explicit refreshTimer(bool isCounting, QString name, int timeInterval, QObject *parent = 0);
+    explicit RefreshTimer(bool isCounting, QString name, int timeInterval, QObject *parent = 0);
     void startTimer();
     void stopTimer();
 
@@ -19,7 +19,7 @@ private:
     QTimer *_timer;
     quint64 _count;
     bool _isCounting;
-    int _timeInterval;
+    quint16 _timeInterval;
     QElapsedTimer _timerElapse;
 
 private slots:

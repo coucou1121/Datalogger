@@ -14,7 +14,7 @@ SettingTriggerSetting::SettingTriggerSetting(QWidget *parent) :
     ui->setupUi(this);
 
     //initialise the Key - Value for combobx
-    TriggerTracePossible = GlobalEnumatedAndExtern::initTriggerTracePossible();
+    _triggerTracePossible = GlobalEnumatedAndExtern::initTriggerTracePossible();
 
     setupStyle();
 
@@ -35,14 +35,14 @@ void SettingTriggerSetting::setupStyle()
                                                 "; color:" + _myStyle.getBackGroundColorButtonStatusbarUnselected().name() + ";");
 
     //set label text
-    ui->labelDI1->setText(TriggerTracePossible[GlobalEnumatedAndExtern::btDI1]);
-    ui->labelDI2->setText(TriggerTracePossible[GlobalEnumatedAndExtern::btDI2]);
-    ui->labelDI3->setText(TriggerTracePossible[GlobalEnumatedAndExtern::btDI3]);
-    ui->labelDI4->setText(TriggerTracePossible[GlobalEnumatedAndExtern::btDI4]);
-    ui->labelAI1->setText(TriggerTracePossible[GlobalEnumatedAndExtern::btAI1]);
-    ui->labelAI2->setText(TriggerTracePossible[GlobalEnumatedAndExtern::btAI2]);
-    ui->labelAI3->setText(TriggerTracePossible[GlobalEnumatedAndExtern::btAI3]);
-    ui->labelAI4->setText(TriggerTracePossible[GlobalEnumatedAndExtern::btAI4]);
+    ui->labelDI1->setText(_triggerTracePossible[GlobalEnumatedAndExtern::btDI1]);
+    ui->labelDI2->setText(_triggerTracePossible[GlobalEnumatedAndExtern::btDI2]);
+    ui->labelDI3->setText(_triggerTracePossible[GlobalEnumatedAndExtern::btDI3]);
+    ui->labelDI4->setText(_triggerTracePossible[GlobalEnumatedAndExtern::btDI4]);
+    ui->labelAI1->setText(_triggerTracePossible[GlobalEnumatedAndExtern::btAI1]);
+    ui->labelAI2->setText(_triggerTracePossible[GlobalEnumatedAndExtern::btAI2]);
+    ui->labelAI3->setText(_triggerTracePossible[GlobalEnumatedAndExtern::btAI3]);
+    ui->labelAI4->setText(_triggerTracePossible[GlobalEnumatedAndExtern::btAI4]);
 
     //set defaut value for trigger setting
     ui->pushButtonRangeDI1->setText(range0_24Txt);
@@ -79,12 +79,12 @@ void SettingTriggerSetting::setupStyle()
     _btAI2Edge = GlobalEnumatedAndExtern::risingEdge;
 
     //set the picure on push button egge
-    this->setEdgeIcon(ui->pushButtonEdgeDI1, _btDI1Edge);
-    this->setEdgeIcon(ui->pushButtonEdgeDI2, _btDI2Edge);
-    this->setEdgeIcon(ui->pushButtonEdgeDI3, _btDI3Edge);
-    this->setEdgeIcon(ui->pushButtonEdgeDI4, _btDI4Edge);
-    this->setEdgeIcon(ui->pushButtonEdgeAI1, _btAI1Edge);
-    this->setEdgeIcon(ui->pushButtonEdgeAI2, _btAI2Edge);
+    this->_setEdgeIcon(ui->pushButtonEdgeDI1, _btDI1Edge);
+    this->_setEdgeIcon(ui->pushButtonEdgeDI2, _btDI2Edge);
+    this->_setEdgeIcon(ui->pushButtonEdgeDI3, _btDI3Edge);
+    this->_setEdgeIcon(ui->pushButtonEdgeDI4, _btDI4Edge);
+    this->_setEdgeIcon(ui->pushButtonEdgeAI1, _btAI1Edge);
+    this->_setEdgeIcon(ui->pushButtonEdgeAI2, _btAI2Edge);
 
     //set doublespinbox shape
     //setup style all spinbox
@@ -262,42 +262,42 @@ void SettingTriggerSetting::on_pushButtonRangeAI4_released()
 void SettingTriggerSetting::on_pushButtonEdgeDI1_released()
 {
     _btDI1Edge = _btDI1Edge == GlobalEnumatedAndExtern::risingEdge ? GlobalEnumatedAndExtern::fallingEdge : GlobalEnumatedAndExtern::risingEdge;
-    this->setEdgeIcon(ui->pushButtonEdgeDI1, _btDI1Edge);
+    this->_setEdgeIcon(ui->pushButtonEdgeDI1, _btDI1Edge);
     emit _pushButtonEdgeDI1WasChanged((int)_btDI1Edge);
 }
 
 void SettingTriggerSetting::on_pushButtonEdgeDI2_released()
 {
     _btDI2Edge = _btDI2Edge == GlobalEnumatedAndExtern::risingEdge ? GlobalEnumatedAndExtern::fallingEdge : GlobalEnumatedAndExtern::risingEdge;
-    this->setEdgeIcon(ui->pushButtonEdgeDI2, _btDI2Edge);
+    this->_setEdgeIcon(ui->pushButtonEdgeDI2, _btDI2Edge);
     emit _pushButtonEdgeDI2WasChanged((int)_btDI2Edge);
 }
 
 void SettingTriggerSetting::on_pushButtonEdgeDI3_released()
 {
     _btDI3Edge = _btDI3Edge == GlobalEnumatedAndExtern::risingEdge ? GlobalEnumatedAndExtern::fallingEdge : GlobalEnumatedAndExtern::risingEdge;
-    this->setEdgeIcon(ui->pushButtonEdgeDI3, _btDI3Edge);
+    this->_setEdgeIcon(ui->pushButtonEdgeDI3, _btDI3Edge);
     emit _pushButtonEdgeDI3WasChanged((int)_btDI3Edge);
 }
 
 void SettingTriggerSetting::on_pushButtonEdgeDI4_released()
 {
     _btDI4Edge = _btDI4Edge == GlobalEnumatedAndExtern::risingEdge ? GlobalEnumatedAndExtern::fallingEdge : GlobalEnumatedAndExtern::risingEdge;
-    this->setEdgeIcon(ui->pushButtonEdgeDI4, _btDI4Edge);
+    this->_setEdgeIcon(ui->pushButtonEdgeDI4, _btDI4Edge);
     emit _pushButtonEdgeDI4WasChanged((int)_btDI4Edge);
 }
 
 void SettingTriggerSetting::on_pushButtonEdgeAI1_released()
 {
     _btAI1Edge = _btAI1Edge == GlobalEnumatedAndExtern::risingEdge ? GlobalEnumatedAndExtern::fallingEdge : GlobalEnumatedAndExtern::risingEdge;
-    this->setEdgeIcon(ui->pushButtonEdgeAI1, _btAI1Edge);
+    this->_setEdgeIcon(ui->pushButtonEdgeAI1, _btAI1Edge);
     emit _pushButtonEdgeAI1WasChanged((int)_btAI1Edge);
 }
 
 void SettingTriggerSetting::on_pushButtonEdgeAI2_released()
 {
     _btAI2Edge = _btAI2Edge == GlobalEnumatedAndExtern::risingEdge ? GlobalEnumatedAndExtern::fallingEdge : GlobalEnumatedAndExtern::risingEdge;
-    this->setEdgeIcon(ui->pushButtonEdgeAI2, _btAI2Edge);
+    this->_setEdgeIcon(ui->pushButtonEdgeAI2, _btAI2Edge);
     emit _pushButtonEdgeAI2WasChanged((int)_btAI2Edge);
 }
 
@@ -522,40 +522,40 @@ void SettingTriggerSetting::pushButtonRangeAI2_ChangeRange()
 
 }
 
-void SettingTriggerSetting::pushButtonEdgeDI1_changeEdge(int eEdge)
+void SettingTriggerSetting::pushButtonEdgeDI1_changeEdge(quint8 eEdge)
 {
     _btDI1Edge = (GlobalEnumatedAndExtern::eEdge)eEdge;
-    this->setEdgeIcon(ui->pushButtonEdgeDI1, _btDI1Edge);
+    this->_setEdgeIcon(ui->pushButtonEdgeDI1, _btDI1Edge);
 }
 
-void SettingTriggerSetting::pushButtonEdgeDI2_changeEdge(int eEdge)
+void SettingTriggerSetting::pushButtonEdgeDI2_changeEdge(quint8 eEdge)
 {
     _btDI2Edge = (GlobalEnumatedAndExtern::eEdge)eEdge;
-    this->setEdgeIcon(ui->pushButtonEdgeDI2, _btDI2Edge);
+    this->_setEdgeIcon(ui->pushButtonEdgeDI2, _btDI2Edge);
 }
 
-void SettingTriggerSetting::pushButtonEdgeDI3_changeEdge(int eEdge)
+void SettingTriggerSetting::pushButtonEdgeDI3_changeEdge(quint8 eEdge)
 {
     _btDI3Edge = (GlobalEnumatedAndExtern::eEdge)eEdge;
-    this->setEdgeIcon(ui->pushButtonEdgeDI3, _btDI3Edge);
+    this->_setEdgeIcon(ui->pushButtonEdgeDI3, _btDI3Edge);
 }
 
-void SettingTriggerSetting::pushButtonEdgeDI4_changeEdge(int eEdge)
+void SettingTriggerSetting::pushButtonEdgeDI4_changeEdge(quint8 eEdge)
 {
     _btDI4Edge = (GlobalEnumatedAndExtern::eEdge)eEdge;
-    this->setEdgeIcon(ui->pushButtonEdgeDI4, _btDI4Edge);
+    this->_setEdgeIcon(ui->pushButtonEdgeDI4, _btDI4Edge);
 }
 
-void SettingTriggerSetting::pushButtonEdgeAI1_changeEdge(int eEdge)
+void SettingTriggerSetting::pushButtonEdgeAI1_changeEdge(quint8 eEdge)
 {
     _btAI1Edge = (GlobalEnumatedAndExtern::eEdge)eEdge;
-    this->setEdgeIcon(ui->pushButtonEdgeAI1, _btAI1Edge);
+    this->_setEdgeIcon(ui->pushButtonEdgeAI1, _btAI1Edge);
 }
 
-void SettingTriggerSetting::pushButtonEdgeAI2_changeEdge(int eEdge)
+void SettingTriggerSetting::pushButtonEdgeAI2_changeEdge(quint8 eEdge)
 {
     _btAI2Edge = (GlobalEnumatedAndExtern::eEdge)eEdge;
-    this->setEdgeIcon(ui->pushButtonEdgeAI2, _btAI2Edge);
+    this->_setEdgeIcon(ui->pushButtonEdgeAI2, _btAI2Edge);
 }
 
 void SettingTriggerSetting::doubleSpinBoxDI1_changeValue(double value)
@@ -588,7 +588,7 @@ void SettingTriggerSetting::doubleSpinBoxAI2_changeValue(double value)
     ui->doubleSpinBoxAI2->setValue(value);
 }
 
-void SettingTriggerSetting::setEdgeIcon(QPushButton *pushbutton, GlobalEnumatedAndExtern::eEdge edgeType)
+void SettingTriggerSetting::_setEdgeIcon(QPushButton *pushbutton, GlobalEnumatedAndExtern::eEdge edgeType)
 {
     if(edgeType == GlobalEnumatedAndExtern::fallingEdge)
     {

@@ -3,105 +3,105 @@
 CommonStyle::CommonStyle()
 {
     //main windows
-    backGroundColor.setRgb(BACKGROUD_COLOR);
-    backGroundColorBottomBar.setRgb(BACKGROUD_COLOR_BOTTOM_BAR);
-    backGroundColorFrame.setRgb(BACKGROUD_COLOR_FRAME);
-    backGroundColorErrorFrame.setRgb(BACKGROUD_COLOR_ERROR_FRAME);
-    backGroundColorButtonStatusbarSelected.setRgb(BACKGROUD_COLOR_BUTTON_STATUS_BAR_SELECTED);
-    backGroundColorButtonStatusbarUnselected.setRgb(BACKGROUD_COLOR_BUTTON_STATUS_BAR_UNSELECTED);
+    _backGroundColor.setRgb(BACKGROUD_COLOR);
+    _backGroundColorBottomBar.setRgb(BACKGROUD_COLOR_BOTTOM_BAR);
+    _backGroundColorFrame.setRgb(BACKGROUD_COLOR_FRAME);
+    _backGroundColorErrorFrame.setRgb(BACKGROUD_COLOR_ERROR_FRAME);
+    _backGroundColorButtonStatusbarSelected.setRgb(BACKGROUD_COLOR_BUTTON_STATUS_BAR_SELECTED);
+    _backGroundColorButtonStatusbarUnselected.setRgb(BACKGROUD_COLOR_BUTTON_STATUS_BAR_UNSELECTED);
 
     //Analog plot
-    backGroundColorAnalogPlot.setRgb(ANALOG_PLOT_BACKGROUD_COLOR);
-    gridColorAnalogPlot.setRgb(ANALOG_PLOT_GRID_COLOR);
-    axisGridColorAnalogPlot.setRgb(ANALOG_PLOT_AXE_GRID_COLOR);
-    axisTickColorAnalogPlot.setRgb(ANALOG_PLOT_AXIS_TICK_COLOR);
-    axisSubTickColorAnalogPlot.setRgb(ANALOG_PLOT_AXIS_SUB_TICK_COLOR);
-    axisTickLabelColorAnalogPlot.setRgb(ANALOG_PLOT_AXIS_TICK_LABEL_COLOR);
+    _backGroundColorAnalogPlot.setRgb(ANALOG_PLOT_BACKGROUD_COLOR);
+    _gridColorAnalogPlot.setRgb(ANALOG_PLOT_GRID_COLOR);
+    _axisGridColorAnalogPlot.setRgb(ANALOG_PLOT_AXE_GRID_COLOR);
+    _axisTickColorAnalogPlot.setRgb(ANALOG_PLOT_AXIS_TICK_COLOR);
+    _axisSubTickColorAnalogPlot.setRgb(ANALOG_PLOT_AXIS_SUB_TICK_COLOR);
+    _axisTickLabelColorAnalogPlot.setRgb(ANALOG_PLOT_AXIS_TICK_LABEL_COLOR);
 
     //pen
     //analog trace
-    traceColorAnalogPlot.setRgb(ANALOG_PLOT_TRACE);
+    _traceColorAnalogPlot.setRgb(ANALOG_PLOT_TRACE);
 
     //Digital trace
-    traceColorDigitalPlot.setRgb(DIGITAL_PLOT_TRACE);
+    _traceColorDigitalPlot.setRgb(DIGITAL_PLOT_TRACE);
 
     //error line
-    errorLineInTrouble.setRgb(ERROR_LINE_COLOR_IN_TROUBLE);
+    _errorLineInTrouble.setRgb(ERROR_LINE_COLOR_IN_TROUBLE);
 }
 
 QColor CommonStyle::getBackGroundColor() const
 {
-    return backGroundColor;
+    return _backGroundColor;
 }
 
 QColor CommonStyle::getBackGroundColorBottomBar() const
 {
-    return backGroundColorBottomBar;
+    return _backGroundColorBottomBar;
 }
 
 QColor CommonStyle::getBackGroundColorAnalogPlot() const
 {
-    return backGroundColorAnalogPlot;
+    return _backGroundColorAnalogPlot;
 }
 
 QColor CommonStyle::getGridColorAnalogPlot() const
 {
-    return gridColorAnalogPlot;
+    return _gridColorAnalogPlot;
 }
 
 QColor CommonStyle::getAxisGridColorAnalogPlot() const
 {
-    return axisGridColorAnalogPlot;
+    return _axisGridColorAnalogPlot;
 }
 
 QColor CommonStyle::getAxisColorAnalogPlot() const
 {
-    return axisColorAnalogPlot;
+    return _axisColorAnalogPlot;
 }
 
 QColor CommonStyle::getAxisTickColorAnalogPlot() const
 {
-    return axisTickColorAnalogPlot;
+    return _axisTickColorAnalogPlot;
 }
 
 QColor CommonStyle::getAxisSubTickColorAnalogPlot() const
 {
-    return axisSubTickColorAnalogPlot;
+    return _axisSubTickColorAnalogPlot;
 }
 
 QColor CommonStyle::getAxisTickLabelColorAnalogPlot() const
 {
-    return axisTickLabelColorAnalogPlot;
+    return _axisTickLabelColorAnalogPlot;
 }
 
 QColor CommonStyle::getTraceColorAnalogPlot() const
 {
-    return traceColorAnalogPlot;
+    return _traceColorAnalogPlot;
 }
 
 QColor CommonStyle::getTraceColorDigitalPlot() const
 {
-    return traceColorDigitalPlot;
+    return _traceColorDigitalPlot;
 }
 
 QColor CommonStyle::getBackGroundColorFrame() const
 {
-    return backGroundColorFrame;
+    return _backGroundColorFrame;
 }
 
 QColor CommonStyle::getBackGroundColorButtonStatusbarSelected() const
 {
-    return backGroundColorButtonStatusbarSelected;
+    return _backGroundColorButtonStatusbarSelected;
 }
 
 QColor CommonStyle::getBackGroundColorButtonStatusbarUnselected() const
 {
-    return backGroundColorButtonStatusbarUnselected;
+    return _backGroundColorButtonStatusbarUnselected;
 }
 
 QColor CommonStyle::getBackGroundColorErrorFrame() const
 {
-    return backGroundColorErrorFrame;
+    return _backGroundColorErrorFrame;
 }
 
 void CommonStyle::setPushButtonUnselected(QPushButton *pushButton)
@@ -134,5 +134,5 @@ void CommonStyle::setDoublespinBoxShape(QDoubleSpinBox *doubleSpinBox)
 
 QColor CommonStyle::getErrorLineInTrouble() const
 {
-    return errorLineInTrouble;
+    return _errorLineInTrouble;
 }

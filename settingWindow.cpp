@@ -6,7 +6,7 @@ SettingWindow::SettingWindow(QWidget *parent) :
     ui(new Ui::SettingWindow)
 {
     ui->setupUi(this);
-    this->setupSignalAndSlot();
+    this->_setupSignalAndSlot();
     this->enableWindows(true);
 
     _triggerFunctionEnable = false;
@@ -17,7 +17,7 @@ SettingWindow::~SettingWindow()
     delete ui;
 }
 
-void SettingWindow::setupSignalAndSlot()
+void SettingWindow::_setupSignalAndSlot()
 {
     //lock or unlock the selection in trigger setting menu
     QObject::connect(ui->widgetChannelSelection, SIGNAL(_btSeleccted(int,bool)), ui->widgetTriggerSetting, SLOT(_btSelected(int,bool)));
@@ -104,6 +104,11 @@ void SettingWindow::setupSignalAndSlot()
 bool SettingWindow::triggerFunctionEnable() const
 {
     return _triggerFunctionEnable;
+}
+
+TriggerFunctions *SettingWindow::getTriggerFuntion()
+{
+    return ui->widgetTriggerFunction->triggerFuntion();
 }
 
 void SettingWindow::_recievedAddTraceFromChannelSelection(int traceNumber)

@@ -46,16 +46,12 @@ public:
     //update plot
     void replot();
 
-public slots:
-    void updatePlot();
-    void addYValue(quint8 value);
-
 private:
     Ui::DigitalPlot *ui;
 
     quint64 _CPT;
     quint8 _yValue;
-    int _minValue = 0;
+    //int _minValue = 0;
 
     // Data buffers
     QVector<double> _YData;
@@ -74,6 +70,10 @@ private:
 
     //set curve style
     void setupTrace(QCustomPlot *customPlot);
+
+public slots:
+    void updatePlot();
+    void addYValue(quint8 value);
 };
 
 #endif // DIGITALPLOT_H

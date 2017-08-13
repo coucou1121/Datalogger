@@ -24,12 +24,12 @@ public:
     void pushButtonRangeAI2_ChangeRange();
 
     //change edge selection
-    void pushButtonEdgeDI1_changeEdge(int eEdge);
-    void pushButtonEdgeDI2_changeEdge(int eEdge);
-    void pushButtonEdgeDI3_changeEdge(int eEdge);
-    void pushButtonEdgeDI4_changeEdge(int eEdge);
-    void pushButtonEdgeAI1_changeEdge(int eEdge);
-    void pushButtonEdgeAI2_changeEdge(int eEdge);
+    void pushButtonEdgeDI1_changeEdge(quint8 eEdge);
+    void pushButtonEdgeDI2_changeEdge(quint8 eEdge);
+    void pushButtonEdgeDI3_changeEdge(quint8 eEdge);
+    void pushButtonEdgeDI4_changeEdge(quint8 eEdge);
+    void pushButtonEdgeAI1_changeEdge(quint8 eEdge);
+    void pushButtonEdgeAI2_changeEdge(quint8 eEdge);
 
     //change value in doubleSpinBox
     void doubleSpinBoxDI1_changeValue(double value);
@@ -46,7 +46,7 @@ private:
     void setupStyle();
 
     //key value for Trace label name
-    QMap<int, QString> TriggerTracePossible;
+    QMap<int, QString> _triggerTracePossible;
 
     //state of edge
     GlobalEnumatedAndExtern::eEdge _btDI1Edge;
@@ -56,8 +56,8 @@ private:
     GlobalEnumatedAndExtern::eEdge _btAI1Edge;
     GlobalEnumatedAndExtern::eEdge _btAI2Edge;
 
-    void setEdgeIcon(QPushButton *pushbutton, GlobalEnumatedAndExtern::eEdge edgeType);
-    void setRangeValue();
+    void _setEdgeIcon(QPushButton *pushbutton, GlobalEnumatedAndExtern::eEdge edgeType);
+    void _setRangeValue();
 
     //picture on button
     QPixmap _pixmapFallingEdge;

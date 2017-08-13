@@ -103,33 +103,33 @@ public:
 private:
     //analog plot
     //backrgound
-    QColor backGroundColor;
-    QColor backGroundColorBottomBar;
-    QColor backGroundColorAnalogPlot;
-    QColor backGroundColorFrame;
-    QColor backGroundColorErrorFrame;
-    QColor backGroundColorButtonStatusbarSelected;
-    QColor backGroundColorButtonStatusbarUnselected;
+    QColor _backGroundColor;
+    QColor _backGroundColorBottomBar;
+    QColor _backGroundColorAnalogPlot;
+    QColor _backGroundColorFrame;
+    QColor _backGroundColorErrorFrame;
+    QColor _backGroundColorButtonStatusbarSelected;
+    QColor _backGroundColorButtonStatusbarUnselected;
 
     //Grid
-    QColor gridColorAnalogPlot;
-    QColor axisGridColorAnalogPlot;
+    QColor _gridColorAnalogPlot;
+    QColor _axisGridColorAnalogPlot;
 
     //Axis
-    QColor axisColorAnalogPlot;
-    QColor axisTickColorAnalogPlot;
-    QColor axisSubTickColorAnalogPlot;
-    QColor axisTickLabelColorAnalogPlot;
+    QColor _axisColorAnalogPlot;
+    QColor _axisTickColorAnalogPlot;
+    QColor _axisSubTickColorAnalogPlot;
+    QColor _axisTickLabelColorAnalogPlot;
 
     //pen
     //analoge trace
-    QColor traceColorAnalogPlot;
+    QColor _traceColorAnalogPlot;
 
     //digital trace
-    QColor traceColorDigitalPlot;
+    QColor _traceColorDigitalPlot;
 
     //error line
-    QColor errorLineInTrouble;
+    QColor _errorLineInTrouble;
 };
 
 #endif // COMMONSTYLE_H

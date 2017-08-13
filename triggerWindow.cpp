@@ -7,6 +7,8 @@ TriggerWindow::TriggerWindow(QWidget *parent) :
 {
     ui->setupUi(this);
 
+    this->_triggerFunctionEnable = false;
+
     //initialise the Key - Value for combobx
     TriggerTracePossible = GlobalEnumatedAndExtern::initTriggerTracePossible();
 
@@ -17,7 +19,7 @@ TriggerWindow::TriggerWindow(QWidget *parent) :
     this->_hideAllTrace();
 
     //setup signal and slot
-    this->setupSignalAndSlot();
+    this->_setupSignalAndSlot();
 
     // force the trigger trace to be on bottom
     ui->verticalLayout->setAlignment(ui->widgetFunction,Qt::AlignBottom);
@@ -41,7 +43,9 @@ void TriggerWindow::setDrawLeftToRight(bool drawLeftToRight)
 
 void TriggerWindow::refreshPlot()
 {
-    if(this->isVisible())
+    this->_triggerFunctionEnable = ui->widgetTriggerFunctionT->areSomeTraceSelected();
+
+    if(this->isVisible() && this->_triggerFunctionEnable)
     {
         if(ui->widgetDI1->isVisible())
         {
@@ -97,7 +101,7 @@ void TriggerWindow::_hideAllTrace()
     ui->widgetAI2->hide();
 }
 
-void TriggerWindow::setupSignalAndSlot()
+void TriggerWindow::_setupSignalAndSlot()
 {
     //connect all slots and signals from trigger menu and emit signal to outside
     //manage range

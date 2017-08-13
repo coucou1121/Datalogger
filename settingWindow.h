@@ -3,6 +3,7 @@
 
 #include <QWidget>
 #include "commonStyle.h"
+#include "triggerFunctions.h"
 
 namespace Ui {
 class SettingWindow;
@@ -18,12 +19,14 @@ public:
 
     bool triggerFunctionEnable() const;
 
+    TriggerFunctions *getTriggerFuntion();
+
 private:
     Ui::SettingWindow *ui;
     CommonStyle _myStyle;
 
     //setup signal and slot
-    void setupSignalAndSlot();
+    void _setupSignalAndSlot();
 
     //trigger function enable
     bool _triggerFunctionEnable;

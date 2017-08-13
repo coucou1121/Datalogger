@@ -26,22 +26,22 @@ private:
     CommonStyle _myStyle;
 
     //set the color and shape of this windows
-    void setupStyle();
+    void _setupStyle();
 
     //set the background color of all push button on UI
-    void setupUILayout();
+    void _setupUILayout();
 
     //set the label of all push button on UI
-    void setupLabel();
+    void _setupLabel();
 
     //setup shap and background of the push button
-    void setupButton(QPushButton *pushbutton, QColor btColor);
+    void _setupButton(QPushButton *pushbutton, QColor btColor);
 
     //setup background color of the push button
-    void setupButtonBackGround(QPushButton *pushbutton, QColor btSelectedColor, bool btSelected);
+    void _setupButtonBackGround(QPushButton *pushbutton, QColor btSelectedColor, bool btSelected);
 
     //key value for pushbutton name
-    QMap<int, QString> TriggerTracePossible;
+    QMap<int, QString> _triggerTracePossible;
 
     //generic emit signal for all button
     void emitBtSignal(int buttonNumber, bool btSelected);

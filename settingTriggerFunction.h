@@ -22,6 +22,8 @@ public:
 
     bool areSomeTraceSelected() const;
 
+    TriggerFunctions *triggerFuntion() const;
+
 private:
     Ui::SettingTriggerFunction *ui;
 
@@ -41,17 +43,17 @@ private:
     bool _comboBoxBottomMiddleNotNone;
 
     CommonStyle _myStyle;
-    void setupStyle();
+    void _setupStyle();
 
-    void setupTraceCombobox();
-    void setupLogicalCombobox(QComboBox *combobox);
+    void _setupTraceCombobox();
+    void _setupLogicalCombobox(QComboBox *combobox);
 
     // key - value for insert the text in comboboxe according mithe the button number selected in channel selection
     // base is define in GlobalEnumated class
-    QMap<int, QString> TriggerTraceSelected;
-    QMap<int, QString> TriggerTracePossible;
+    QMap<int, QString> _triggerTraceSelected;
+    QMap<int, QString> _triggerTracePossible;
 
-    void updateCombobox();
+    void _updateCombobox();
 
 public slots:
     void _comboboxAddItem(int buttonNumber);
@@ -81,6 +83,7 @@ private slots:
     void _received_errorWrongEquation(int errorNumber,bool active);
 
 signals:
+
     // send for change the sychronize the selection in the other trigger function menu
     void _comboBoxTopLeft_currentIndexWasChanged(int index);
     void _comboBoxTopRight_currentIndexWasChanged(int index);
@@ -92,7 +95,6 @@ signals:
 
     //error
     void _errorWrongEquation(int errorNumber,bool active);
-
 };
 
 #endif // SETTINGTRIGGERFUNCTION_H

@@ -14,12 +14,12 @@
 #include "baseWindow.h"
 #include "settingWindow.h"
 #include "triggerWindow.h"
-#include "displayWindows.h"
+#include "displayWindow.h"
 #include "debugWindow.h"
-#include "refreshTimer.h"
+#include "RefreshTimer.h"
 #include "dataFrameSimulator.h"
 #include "triggerWindow.h"
-
+#include "triggerFunctions.h"
 
 namespace Ui {
 
@@ -47,7 +47,7 @@ private:
     Ui::MainWindow *ui;
 
     //value of the selected trigger function
-    quint16 _valueTriggerFunction;
+    //quint16 _valueTriggerFunction;
 
     //thread
     QThread *_threadTick;               // create tick for frequency simulation
@@ -55,15 +55,15 @@ private:
     QThread *_threadDisplayRefresh;     // Display refreshement
 
     //timer for thread
-    refreshTimer *_tickTimer;
-    refreshTimer *_newDataFrameTimer;
-    refreshTimer *_refreshDisplayTimer;
+    RefreshTimer *_tickTimer;
+    RefreshTimer *_newDataFrameTimer;
+    RefreshTimer *_refreshDisplayTimer;
 
     //ui windows
     BaseWindow *_baseWindow;
     SettingWindow *_settingWindow;
     TriggerWindow *_triggerWindow;
-    DisplayWindows *_displayWindow;
+    DisplayWindow *_displayWindow;
     DebugWindow *_debugWindow;
 
     //Style
@@ -72,7 +72,7 @@ private:
     //widget for status bar
     QWidget *_widgetStatusBar;
 
-    QHBoxLayout *_hlayoutStatus = new QHBoxLayout;
+    QHBoxLayout *_hlayoutStatus;
 
     QPushButton *_btBase;
     QPushButton *_btSetting;
@@ -81,19 +81,19 @@ private:
     QPushButton *_btDebug;
 
     //set the bottom status bar
-    void setStatusBar();
+    void _setStatusBar();
 
     //set the pushbutton color to grey
-    void resetPushButtonColor();
+    void _resetPushButtonColor();
 
     //set the application with default value
-    void mainSetup();
+    void _mainSetup();
 
     //setup signal and slot
-    void setupSignalAndSlot();
+    void _setupSignalAndSlot();
 
     //setup default start value for all variable in this application
-    void setupDefaultValue();
+    void _setupDefaultValue();
 
     //manage state of the startStop button
     void _startStopButtonManager(int state);
@@ -103,6 +103,9 @@ private:
 
     //frame simulator
     DataFrameSimulator *_dataFrameSimulator;
+
+    //value of the selected trigger function
+    TriggerFunctions *_triggerFuntion;
 
 public slots:
     void changeStateStartStopButton(int state);

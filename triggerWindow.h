@@ -36,7 +36,10 @@ private:
     void _hideAllTrace();
 
     //setup signal and slot
-    void setupSignalAndSlot();
+    void _setupSignalAndSlot();
+
+    //trigger function enable
+    bool _triggerFunctionEnable;
 
 public slots:
     void addTrace(int enumTrace);

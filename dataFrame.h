@@ -4,7 +4,7 @@
 #include "frame.h"
 #include <QDebug>
 
-class DataFrame: public Frame
+class DataFrame
 {
 public:
     DataFrame();

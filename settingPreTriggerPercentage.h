@@ -17,8 +17,8 @@ public:
     explicit SettingPreTriggerPercentage(QWidget *parent = 0);
     ~SettingPreTriggerPercentage();
 
-    void setMaximumRange(int maximumRange);
-    void setStepOnClick(int stepOnClick);
+    void setMaximumRange(const quint16 &maximumRange);
+    void setStepOnClick(const quint8 &stepOnClick);
 
 private:
     Ui::SettingPreTriggerPercentage *ui;
@@ -27,10 +27,10 @@ private:
     void setupStyle();
 
     //maximum reccord time
-    int _maximumRange;
+    quint16 _maximumRange;
 
     //step for one click
-    int _stepOnClick;
+    quint8 _stepOnClick;
 
 private slots:
     void on_spinBoxTimeBeforeTrig_valueChanged(int arg1);
