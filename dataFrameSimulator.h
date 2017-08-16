@@ -7,6 +7,7 @@
 #include <QDebug>
 #include <QElapsedTimer>
 #include "dataFrame.h"
+#include "triggerFunctions.h"
 
 class DataFrameSimulator : public QObject
 {
@@ -26,6 +27,7 @@ private:
     quint64 _CPT;
     QElapsedTimer timerElapse;
     QVector<DataFrame> _dataFrameVector;
+    TriggerFunctions *_triggerFunction;
 
 public slots:
     void resetFrame();

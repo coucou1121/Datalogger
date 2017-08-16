@@ -9,6 +9,7 @@ DigitalPlot::DigitalPlot(QWidget *parent) :
     setupStyle(ui->widget_DI);
     setupTrace(ui->widget_DI);
     ui->TLname_DI->setStyleSheet("background-color:" + _myStyle.getBackGroundColorBottomBar().name() + ";");
+    _arrayPlotContainerPointer = ui->widget_DI->graph(0)->data();
     _CPT = 0;
 }
 
@@ -115,7 +116,9 @@ void DigitalPlot::updatePlot()
 {
 
     // add data on th plot
-    ui->widget_DI->graph(0)->setData(_XData , _YData, true);
+    //ui->widget_DI->graph(0)->setData(_XData , _YData, true);
+    ui->widget_DI->graph(0)->setData(_arrayPlotContainerPointer);
+
     //ui->widget_DI->graph(0)->addData(_XData , _YData);
 
     // make key axis range scroll with the data:
@@ -137,14 +140,16 @@ void DigitalPlot::addYValue(quint8 value)
         ui->TLname_DI->setStyleSheet("background-color:" + _myStyle.getBackGroundColorBottomBar().name() + ";");
     }
     _CPT++;
-    _XData.append(_CPT);
 
-    _YData.append(value);
-    if( _XData.size() > DI_NB_X_VALUES_DISPLAY_LIVE){
-        _XData.remove(0);
-        _YData.remove(0);
-       // _minusYData.remove(0);
-    }
+    _arrayPlotContainerPointer->add(QCPGraphData(_CPT, value));
+//    _XData.append(_CPT);
+
+//    _YData.append(value);
+//    if( _XData.size() > DI_NB_X_VALUES_DISPLAY_LIVE){
+//        _XData.remove(0);
+//        _YData.remove(0);
+//       // _minusYData.remove(0);
+//    }
 }
 
 void DigitalPlot::replot()

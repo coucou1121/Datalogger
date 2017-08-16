@@ -5,6 +5,12 @@ extern QString range0_24Txt;
 extern QString range0_30Txt;
 extern QString range15_15Txt;
 
+extern qint8 minRange0;
+extern qint8 maxRange0_24;
+extern qint8 maxRange0_30;
+extern qint8 minRange_15_15;
+extern qint8 maxRange_15_15;
+
 SettingTriggerSetting::SettingTriggerSetting(QWidget *parent) :
     QFrame(parent),
     _pixmapFallingEdge(":/images/FollingEdge.png"),
@@ -12,6 +18,9 @@ SettingTriggerSetting::SettingTriggerSetting(QWidget *parent) :
     ui(new Ui::SettingTriggerSetting)
 {
     ui->setupUi(this);
+
+    //set value of the trigger funtion to 0
+    _triggerSetting = new TriggerFunctions();
 
     //initialise the Key - Value for combobx
     _triggerTracePossible = GlobalEnumatedAndExtern::initTriggerTracePossible();
@@ -96,6 +105,11 @@ void SettingTriggerSetting::setupStyle()
     _myStyle.setDoublespinBoxShape(ui->doubleSpinBoxAI2);
 }
 
+TriggerFunctions *SettingTriggerSetting::triggerSetting() const
+{
+    return _triggerSetting;
+}
+
 SettingTriggerSetting::~SettingTriggerSetting()
 {
     delete ui;
@@ -103,75 +117,32 @@ SettingTriggerSetting::~SettingTriggerSetting()
 
 void SettingTriggerSetting::on_pushButtonRangeDI1_released()
 {
-    static GlobalEnumatedAndExtern::eRangeValue selection;
 
-    selection = selection == GlobalEnumatedAndExtern::range0_24 ? GlobalEnumatedAndExtern::range0_24 : GlobalEnumatedAndExtern::range0_24;
-
-    if(selection == GlobalEnumatedAndExtern::range0_24)
-    {
-        ui->pushButtonRangeDI1->setText(range0_24Txt);
-    }
 }
 
 void SettingTriggerSetting::on_pushButtonRangeDI2_released()
 {
-    static GlobalEnumatedAndExtern::eRangeValue selection;
 
-    selection = selection == GlobalEnumatedAndExtern::range0_24 ? GlobalEnumatedAndExtern::range0_24 : GlobalEnumatedAndExtern::range0_24;
-
-    if(selection == GlobalEnumatedAndExtern::range0_24)
-    {
-        ui->pushButtonRangeDI2->setText(range0_24Txt);
-    }
 }
 
 void SettingTriggerSetting::on_pushButtonRangeDI3_released()
 {
-    static GlobalEnumatedAndExtern::eRangeValue selection;
 
-    selection = selection == GlobalEnumatedAndExtern::range0_24 ? GlobalEnumatedAndExtern::range0_24 : GlobalEnumatedAndExtern::range0_24;
-
-    if(selection == GlobalEnumatedAndExtern::range0_24)
-    {
-        ui->pushButtonRangeDI3->setText(range0_24Txt);
-    }
 }
 
 void SettingTriggerSetting::on_pushButtonRangeDI4_released()
 {
-    static GlobalEnumatedAndExtern::eRangeValue selection;
 
-    selection = selection == GlobalEnumatedAndExtern::range0_24 ? GlobalEnumatedAndExtern::range0_24 : GlobalEnumatedAndExtern::range0_24;
-
-    if(selection == GlobalEnumatedAndExtern::range0_24)
-    {
-        ui->pushButtonRangeDI4->setText(range0_24Txt);
-    }
 }
 
 void SettingTriggerSetting::on_pushButtonRangeAI1_released()
 {
-    static GlobalEnumatedAndExtern::eRangeValue selection;
+    GlobalEnumatedAndExtern::eRangeValue selection;
+    //swap range
+    selection = ui->pushButtonRangeAI1->text() == range0_30Txt ? GlobalEnumatedAndExtern::range15_15 : GlobalEnumatedAndExtern::range0_30;
 
-    if(ui->pushButtonRangeAI1->text() == range0_30Txt)
-    {
-        selection = GlobalEnumatedAndExtern::range0_30;
-    }
-    else
-    {
-        selection = GlobalEnumatedAndExtern::range15_15;
-    }
-
-    selection = selection == GlobalEnumatedAndExtern::range0_30 ? GlobalEnumatedAndExtern::range15_15 : GlobalEnumatedAndExtern::range0_30;
-
-    if(selection == GlobalEnumatedAndExtern::range0_30)
-    {
-        ui->pushButtonRangeAI1->setText(range0_30Txt);
-    }
-    if(selection == GlobalEnumatedAndExtern::range15_15)
-    {
-        ui->pushButtonRangeAI1->setText(range15_15Txt);
-    }
+    //configur widget
+    setRangeAndTextTrace(GlobalEnumatedAndExtern::btAI1, selection);
 
     emit _pushButtonRangeAI1WasChanged();
 }
@@ -180,28 +151,11 @@ void SettingTriggerSetting::on_pushButtonRangeAI2_released()
 {
     GlobalEnumatedAndExtern::eRangeValue selection;
 
-    //check the state
-    if(ui->pushButtonRangeAI2->text() == range0_30Txt)
-    {
-        selection = GlobalEnumatedAndExtern::range0_30;
-    }
-    else
-    {
-        selection = GlobalEnumatedAndExtern::range15_15;
-    }
+    //swap range
+    selection = ui->pushButtonRangeAI2->text() == range0_30Txt ? GlobalEnumatedAndExtern::range15_15 : GlobalEnumatedAndExtern::range0_30;
 
-    selection = selection == GlobalEnumatedAndExtern::range0_30 ? GlobalEnumatedAndExtern::range15_15 : GlobalEnumatedAndExtern::range0_30;
-
-    //swap the state
-    if(selection == GlobalEnumatedAndExtern::range0_30)
-    {
-        ui->pushButtonRangeAI2->setText(range0_30Txt);
-    }
-    if(selection == GlobalEnumatedAndExtern::range15_15)
-    {
-        ui->pushButtonRangeAI2->setText(range15_15Txt);
-    }
-
+    //configur widget
+    setRangeAndTextTrace(GlobalEnumatedAndExtern::btAI2, selection);
     emit _pushButtonRangeAI2WasChanged();
 }
 
@@ -209,60 +163,29 @@ void SettingTriggerSetting::on_pushButtonRangeAI3_released()
 {
     GlobalEnumatedAndExtern::eRangeValue selection;
 
-    //check the state
-    if(ui->pushButtonRangeAI3->text() == range0_30Txt)
-    {
-        selection = GlobalEnumatedAndExtern::range0_30;
-    }
-    else
-    {
-        selection = GlobalEnumatedAndExtern::range15_15;
-    }
+    //swap range
+    selection = ui->pushButtonRangeAI3->text() == range0_30Txt ? GlobalEnumatedAndExtern::range15_15 : GlobalEnumatedAndExtern::range0_30;
 
-    selection = selection == GlobalEnumatedAndExtern::range0_30 ? GlobalEnumatedAndExtern::range15_15 : GlobalEnumatedAndExtern::range0_30;
-
-    //swap the state
-    if(selection == GlobalEnumatedAndExtern::range0_30)
-    {
-        ui->pushButtonRangeAI3->setText(range0_30Txt);
-    }
-    if(selection == GlobalEnumatedAndExtern::range15_15)
-    {
-        ui->pushButtonRangeAI3->setText(range15_15Txt);
-    }
+    //configur widget
+    setRangeAndTextTrace(GlobalEnumatedAndExtern::btAI3, selection);
 }
 
 void SettingTriggerSetting::on_pushButtonRangeAI4_released()
 {
     GlobalEnumatedAndExtern::eRangeValue selection;
 
-    //check the state
-    if(ui->pushButtonRangeAI4->text() == range0_30Txt)
-    {
-        selection = GlobalEnumatedAndExtern::range0_30;
-    }
-    else
-    {
-        selection = GlobalEnumatedAndExtern::range15_15;
-    }
+    //swap range
+    selection = ui->pushButtonRangeAI4->text() == range0_30Txt ? GlobalEnumatedAndExtern::range15_15 : GlobalEnumatedAndExtern::range0_30;
 
-    selection = selection == GlobalEnumatedAndExtern::range0_30 ? GlobalEnumatedAndExtern::range15_15 : GlobalEnumatedAndExtern::range0_30;
-
-    //swap the state
-    if(selection == GlobalEnumatedAndExtern::range0_30)
-    {
-        ui->pushButtonRangeAI4->setText(range0_30Txt);
-    }
-    if(selection == GlobalEnumatedAndExtern::range15_15)
-    {
-        ui->pushButtonRangeAI4->setText(range15_15Txt);
-    }
+    //configur widget
+    setRangeAndTextTrace(GlobalEnumatedAndExtern::btAI4, selection);
 }
 
 void SettingTriggerSetting::on_pushButtonEdgeDI1_released()
 {
     _btDI1Edge = _btDI1Edge == GlobalEnumatedAndExtern::risingEdge ? GlobalEnumatedAndExtern::fallingEdge : GlobalEnumatedAndExtern::risingEdge;
     this->_setEdgeIcon(ui->pushButtonEdgeDI1, _btDI1Edge);
+    this->_triggerSetting->setBtDI1Edge(_btDI1Edge);
     emit _pushButtonEdgeDI1WasChanged((int)_btDI1Edge);
 }
 
@@ -270,6 +193,7 @@ void SettingTriggerSetting::on_pushButtonEdgeDI2_released()
 {
     _btDI2Edge = _btDI2Edge == GlobalEnumatedAndExtern::risingEdge ? GlobalEnumatedAndExtern::fallingEdge : GlobalEnumatedAndExtern::risingEdge;
     this->_setEdgeIcon(ui->pushButtonEdgeDI2, _btDI2Edge);
+    this->_triggerSetting->setBtDI2Edge(_btDI2Edge);
     emit _pushButtonEdgeDI2WasChanged((int)_btDI2Edge);
 }
 
@@ -277,6 +201,7 @@ void SettingTriggerSetting::on_pushButtonEdgeDI3_released()
 {
     _btDI3Edge = _btDI3Edge == GlobalEnumatedAndExtern::risingEdge ? GlobalEnumatedAndExtern::fallingEdge : GlobalEnumatedAndExtern::risingEdge;
     this->_setEdgeIcon(ui->pushButtonEdgeDI3, _btDI3Edge);
+    this->_triggerSetting->setBtDI3Edge(_btDI3Edge);
     emit _pushButtonEdgeDI3WasChanged((int)_btDI3Edge);
 }
 
@@ -284,6 +209,7 @@ void SettingTriggerSetting::on_pushButtonEdgeDI4_released()
 {
     _btDI4Edge = _btDI4Edge == GlobalEnumatedAndExtern::risingEdge ? GlobalEnumatedAndExtern::fallingEdge : GlobalEnumatedAndExtern::risingEdge;
     this->_setEdgeIcon(ui->pushButtonEdgeDI4, _btDI4Edge);
+    this->_triggerSetting->setBtDI4Edge(_btDI4Edge);
     emit _pushButtonEdgeDI4WasChanged((int)_btDI4Edge);
 }
 
@@ -291,6 +217,7 @@ void SettingTriggerSetting::on_pushButtonEdgeAI1_released()
 {
     _btAI1Edge = _btAI1Edge == GlobalEnumatedAndExtern::risingEdge ? GlobalEnumatedAndExtern::fallingEdge : GlobalEnumatedAndExtern::risingEdge;
     this->_setEdgeIcon(ui->pushButtonEdgeAI1, _btAI1Edge);
+    this->_triggerSetting->setBtAI1Edge(_btAI1Edge);
     emit _pushButtonEdgeAI1WasChanged((int)_btAI1Edge);
 }
 
@@ -298,6 +225,7 @@ void SettingTriggerSetting::on_pushButtonEdgeAI2_released()
 {
     _btAI2Edge = _btAI2Edge == GlobalEnumatedAndExtern::risingEdge ? GlobalEnumatedAndExtern::fallingEdge : GlobalEnumatedAndExtern::risingEdge;
     this->_setEdgeIcon(ui->pushButtonEdgeAI2, _btAI2Edge);
+    this->_triggerSetting->setBtAI2Edge(_btAI2Edge);
     emit _pushButtonEdgeAI2WasChanged((int)_btAI2Edge);
 }
 
@@ -437,6 +365,111 @@ void SettingTriggerSetting::_AI4select(bool btselected)
     }
 }
 
+void SettingTriggerSetting::setRangeAndTextTrace(GlobalEnumatedAndExtern::eTracePossible trace, GlobalEnumatedAndExtern::eRangeValue range)
+{
+    double minRangeValue = 0;
+    double maxRangeValue = 0;
+    QString rangeTxt = "";
+
+    switch (range)
+    {
+    case GlobalEnumatedAndExtern::range0_24:
+        minRangeValue = minRange0;
+        maxRangeValue = maxRange0_24;
+        rangeTxt = range0_24Txt;
+        break;
+    case GlobalEnumatedAndExtern::range0_30:
+        minRangeValue = minRange0;
+        maxRangeValue = maxRange0_30;
+        rangeTxt = range0_30Txt;
+        break;
+    case GlobalEnumatedAndExtern::range15_15:
+        minRangeValue = minRange_15_15;
+        maxRangeValue = maxRange_15_15;
+        rangeTxt = range15_15Txt;
+        break;
+    default:
+        break;
+    }
+
+    switch (trace)
+    {
+    case GlobalEnumatedAndExtern::btDI1:
+        ui->doubleSpinBoxDI1->setMinimum(minRangeValue);
+        ui->doubleSpinBoxDI1->setMaximum(maxRangeValue);
+        ui->pushButtonRangeDI1->setText(rangeTxt);
+        break;
+    case GlobalEnumatedAndExtern::btDI2:
+        ui->doubleSpinBoxDI2->setMinimum(minRangeValue);
+        ui->doubleSpinBoxDI2->setMaximum(maxRangeValue);
+        ui->pushButtonRangeDI2->setText(rangeTxt);
+        break;
+    case GlobalEnumatedAndExtern::btDI3:
+        ui->doubleSpinBoxDI3->setMinimum(minRangeValue);
+        ui->doubleSpinBoxDI3->setMaximum(maxRangeValue);
+        ui->pushButtonRangeDI3->setText(rangeTxt);
+        break;
+    case GlobalEnumatedAndExtern::btDI4:
+        ui->doubleSpinBoxDI4->setMinimum(minRangeValue);
+        ui->doubleSpinBoxDI4->setMaximum(maxRangeValue);
+        ui->pushButtonRangeDI4->setText(rangeTxt);
+        break;
+    case GlobalEnumatedAndExtern::btAI1:
+        ui->doubleSpinBoxAI1->setMinimum(minRangeValue);
+        ui->doubleSpinBoxAI1->setMaximum(maxRangeValue);
+        ui->pushButtonRangeAI1->setText(rangeTxt);
+        break;
+    case GlobalEnumatedAndExtern::btAI2:
+        ui->doubleSpinBoxAI2->setMinimum(minRangeValue);
+        ui->doubleSpinBoxAI2->setMaximum(maxRangeValue);
+        ui->pushButtonRangeAI2->setText(rangeTxt);
+        break;
+    case GlobalEnumatedAndExtern::btAI3:
+        ui->pushButtonRangeAI3->setText(rangeTxt);
+        break;
+    case GlobalEnumatedAndExtern::btAI4:
+        ui->pushButtonRangeAI4->setText(rangeTxt);
+        break;
+    default:
+        break;
+    }
+}
+
+GlobalEnumatedAndExtern::eRangeValue SettingTriggerSetting::rangeAI4() const
+{
+    return _rangeAI4;
+}
+
+GlobalEnumatedAndExtern::eRangeValue SettingTriggerSetting::rangeAI3() const
+{
+    return _rangeAI3;
+}
+
+GlobalEnumatedAndExtern::eRangeValue SettingTriggerSetting::rangeAI2() const
+{
+    return _rangeAI2;
+}
+
+GlobalEnumatedAndExtern::eRangeValue SettingTriggerSetting::rangeAI1() const
+{
+    return _rangeAI1;
+}
+
+GlobalEnumatedAndExtern::eRangeValue SettingTriggerSetting::rangeDI4() const
+{
+    return _rangeDI4;
+}
+
+GlobalEnumatedAndExtern::eRangeValue SettingTriggerSetting::rangeDI2() const
+{
+    return _rangeDI2;
+}
+
+GlobalEnumatedAndExtern::eRangeValue SettingTriggerSetting::rangeDI1() const
+{
+    return _rangeDI1;
+}
+
 void SettingTriggerSetting::_btSelected(int buttonNumber, bool btSelected)
 {
     switch(buttonNumber)
@@ -472,119 +505,98 @@ void SettingTriggerSetting::_btSelected(int buttonNumber, bool btSelected)
 
 void SettingTriggerSetting::pushButtonRangeAI1_ChangeRange()
 {
+    GlobalEnumatedAndExtern::eRangeValue selection;
 
-    static GlobalEnumatedAndExtern::eRangeValue selection;
-
-    if(ui->pushButtonRangeAI1->text() == range0_30Txt)
-    {
-        selection = GlobalEnumatedAndExtern::range0_30;
-    }
-    else
-    {
-        selection = GlobalEnumatedAndExtern::range15_15;
-    }
-
-    selection = selection == GlobalEnumatedAndExtern::range0_30 ? GlobalEnumatedAndExtern::range15_15 : GlobalEnumatedAndExtern::range0_30;
-
-    if(selection == GlobalEnumatedAndExtern::range0_30)
-    {
-        ui->pushButtonRangeAI1->setText(range0_30Txt);
-    }
-    if(selection == GlobalEnumatedAndExtern::range15_15)
-    {
-        ui->pushButtonRangeAI1->setText(range15_15Txt);
-    }
+    //swap the range
+    selection = ui->pushButtonRangeAI1->text() == range0_30Txt ? GlobalEnumatedAndExtern::range15_15 : GlobalEnumatedAndExtern::range0_30;
+    setRangeAndTextTrace(GlobalEnumatedAndExtern::btAI1, selection);
 }
 
 void SettingTriggerSetting::pushButtonRangeAI2_ChangeRange()
 {
-    static GlobalEnumatedAndExtern::eRangeValue selection;
+    GlobalEnumatedAndExtern::eRangeValue selection;
 
-    if(ui->pushButtonRangeAI2->text() == range0_30Txt)
-    {
-        selection = GlobalEnumatedAndExtern::range0_30;
-    }
-    else
-    {
-        selection = GlobalEnumatedAndExtern::range15_15;
-    }
-
-    selection = selection == GlobalEnumatedAndExtern::range0_30 ? GlobalEnumatedAndExtern::range15_15 : GlobalEnumatedAndExtern::range0_30;
-
-    if(selection == GlobalEnumatedAndExtern::range0_30)
-    {
-        ui->pushButtonRangeAI2->setText(range0_30Txt);
-    }
-    if(selection == GlobalEnumatedAndExtern::range15_15)
-    {
-        ui->pushButtonRangeAI2->setText(range15_15Txt);
-    }
+    //swap the range
+    selection = ui->pushButtonRangeAI2->text() == range0_30Txt ? GlobalEnumatedAndExtern::range15_15 : GlobalEnumatedAndExtern::range0_30;
+    setRangeAndTextTrace(GlobalEnumatedAndExtern::btAI2, selection);
 
 }
 
 void SettingTriggerSetting::pushButtonEdgeDI1_changeEdge(quint8 eEdge)
 {
     _btDI1Edge = (GlobalEnumatedAndExtern::eEdge)eEdge;
+    this->_triggerSetting->setBtDI1Edge(_btDI1Edge);
     this->_setEdgeIcon(ui->pushButtonEdgeDI1, _btDI1Edge);
 }
 
 void SettingTriggerSetting::pushButtonEdgeDI2_changeEdge(quint8 eEdge)
 {
     _btDI2Edge = (GlobalEnumatedAndExtern::eEdge)eEdge;
+    this->_triggerSetting->setBtDI2Edge(_btDI2Edge);
     this->_setEdgeIcon(ui->pushButtonEdgeDI2, _btDI2Edge);
 }
 
 void SettingTriggerSetting::pushButtonEdgeDI3_changeEdge(quint8 eEdge)
 {
     _btDI3Edge = (GlobalEnumatedAndExtern::eEdge)eEdge;
+    this->_triggerSetting->setBtDI3Edge(_btDI3Edge);
     this->_setEdgeIcon(ui->pushButtonEdgeDI3, _btDI3Edge);
 }
 
 void SettingTriggerSetting::pushButtonEdgeDI4_changeEdge(quint8 eEdge)
 {
     _btDI4Edge = (GlobalEnumatedAndExtern::eEdge)eEdge;
+    this->_triggerSetting->setBtDI4Edge(_btDI4Edge);
     this->_setEdgeIcon(ui->pushButtonEdgeDI4, _btDI4Edge);
 }
 
 void SettingTriggerSetting::pushButtonEdgeAI1_changeEdge(quint8 eEdge)
 {
     _btAI1Edge = (GlobalEnumatedAndExtern::eEdge)eEdge;
+    this->_triggerSetting->setBtAI1Edge(_btAI1Edge);
     this->_setEdgeIcon(ui->pushButtonEdgeAI1, _btAI1Edge);
 }
 
 void SettingTriggerSetting::pushButtonEdgeAI2_changeEdge(quint8 eEdge)
 {
     _btAI2Edge = (GlobalEnumatedAndExtern::eEdge)eEdge;
+    this->_triggerSetting->setBtAI2Edge(_btAI2Edge);
     this->_setEdgeIcon(ui->pushButtonEdgeAI2, _btAI2Edge);
 }
 
 void SettingTriggerSetting::doubleSpinBoxDI1_changeValue(double value)
 {
+    this->_triggerSetting->setDoubleSpinBoxDI1(value);
     ui->doubleSpinBoxDI1->setValue(value);
 }
 
 void SettingTriggerSetting::doubleSpinBoxDI2_changeValue(double value)
 {
+    this->_triggerSetting->setDoubleSpinBoxDI2(value);
     ui->doubleSpinBoxDI2->setValue(value);
 }
 
 void SettingTriggerSetting::doubleSpinBoxDI3_changeValue(double value)
 {
+    this->_triggerSetting->setDoubleSpinBoxDI3(value);
     ui->doubleSpinBoxDI3->setValue(value);
 }
 
 void SettingTriggerSetting::doubleSpinBoxDI4_changeValue(double value)
 {
+    this->_triggerSetting->setDoubleSpinBoxDI4(value);
     ui->doubleSpinBoxDI4->setValue(value);
 }
 
 void SettingTriggerSetting::doubleSpinBoxAI1_changeValue(double value)
 {
+    this->_triggerSetting->setDoubleSpinBoxAI1(value);
     ui->doubleSpinBoxAI1->setValue(value);
 }
 
 void SettingTriggerSetting::doubleSpinBoxAI2_changeValue(double value)
 {
+    this->_triggerSetting->setDoubleSpinBoxAI2(value);
     ui->doubleSpinBoxAI2->setValue(value);
 }
 

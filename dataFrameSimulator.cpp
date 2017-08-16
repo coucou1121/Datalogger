@@ -5,6 +5,7 @@ QObject(parent)
 {
     this->setObjectName(name);
     this->resetFrame();
+    _triggerFunction = new TriggerFunctions();
 }
 
 quint64 DataFrameSimulator::CPT() const
@@ -56,6 +57,9 @@ void DataFrameSimulator::incValue()
     _dataFrame.setAI2(AI2);
     _dataFrame.setAI3(AI3);
     _dataFrame.setAI4(AI4);
+
+    //check trigger
+
     _dataFrame.setTR1(TR1);
 }
 

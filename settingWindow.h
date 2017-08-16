@@ -31,6 +31,15 @@ private:
     //trigger function enable
     bool _triggerFunctionEnable;
 
+    //trigger function setting
+    TriggerFunctions *_triggerFunction;
+
+    //trigger setting
+    TriggerFunctions *_triggerSetting;
+
+    //double to int converter
+    double doubleToQint8(double value, GlobalEnumatedAndExtern::eRangeValue range);
+
 public slots:
     void _recievedNbFrameSavedChanged(quint64 nbFrameChanged);
     void _recievedSizeFrameChange(int frameSize);

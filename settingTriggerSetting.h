@@ -6,6 +6,8 @@
 #include <QPushButton>
 #include "commonStyle.h"
 #include "globalEnumatedAndExtern.h"
+#include "triggerFunctions.h"
+
 
 namespace Ui {
 class SettingTriggerSetting;
@@ -39,6 +41,16 @@ public:
     void doubleSpinBoxAI1_changeValue(double value);
     void doubleSpinBoxAI2_changeValue(double value);
 
+    TriggerFunctions *triggerSetting() const;
+
+    GlobalEnumatedAndExtern::eRangeValue rangeDI1() const;
+    GlobalEnumatedAndExtern::eRangeValue rangeDI2() const;
+    GlobalEnumatedAndExtern::eRangeValue rangeDI4() const;
+    GlobalEnumatedAndExtern::eRangeValue rangeAI1() const;
+    GlobalEnumatedAndExtern::eRangeValue rangeAI2() const;
+    GlobalEnumatedAndExtern::eRangeValue rangeAI3() const;
+    GlobalEnumatedAndExtern::eRangeValue rangeAI4() const;
+
 private:
     Ui::SettingTriggerSetting *ui;
 
@@ -47,6 +59,9 @@ private:
 
     //key value for Trace label name
     QMap<int, QString> _triggerTracePossible;
+
+    //value of the selected trigger function
+    TriggerFunctions *_triggerSetting;
 
     //state of edge
     GlobalEnumatedAndExtern::eEdge _btDI1Edge;
@@ -72,6 +87,19 @@ private:
     void _AI2select(bool btselected);
     void _AI3select(bool btselected);
     void _AI4select(bool btselected);
+
+    //selected range
+     GlobalEnumatedAndExtern::eRangeValue _rangeDI1;
+     GlobalEnumatedAndExtern::eRangeValue _rangeDI2;
+     GlobalEnumatedAndExtern::eRangeValue _rangeDI3;
+     GlobalEnumatedAndExtern::eRangeValue _rangeDI4;
+     GlobalEnumatedAndExtern::eRangeValue _rangeAI1;
+     GlobalEnumatedAndExtern::eRangeValue _rangeAI2;
+     GlobalEnumatedAndExtern::eRangeValue _rangeAI3;
+     GlobalEnumatedAndExtern::eRangeValue _rangeAI4;
+
+     //set range and text in trace setting button and doubleSpinBox
+     void setRangeAndTextTrace(GlobalEnumatedAndExtern::eTracePossible trace, GlobalEnumatedAndExtern::eRangeValue range);
 
 public slots:
     void _btSelected(int buttonNumber, bool btSelected);

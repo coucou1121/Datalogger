@@ -2,16 +2,33 @@
 
 TriggerFunctions::TriggerFunctions()
 {
-    _valueFunction = 0;
+    this->_valueFunction = 0;
 
-    _traceA = GlobalEnumatedAndExtern::btNone;
-    _traceB = GlobalEnumatedAndExtern::btNone;
-    _traceC = GlobalEnumatedAndExtern::btNone;
-    _traceD = GlobalEnumatedAndExtern::btNone;
+    this->_traceA = GlobalEnumatedAndExtern::btNone;
+    this->_traceB = GlobalEnumatedAndExtern::btNone;
+    this->_traceC = GlobalEnumatedAndExtern::btNone;
+    this->_traceD = GlobalEnumatedAndExtern::btNone;
 
-    _logicalOperator_Top = GlobalEnumatedAndExtern::opNone;
-    _logicalOperator_Middle = GlobalEnumatedAndExtern::opNone;
-    _logicalOperator_Bottom = GlobalEnumatedAndExtern::opNone;
+    this->_logicalOperator_Top = GlobalEnumatedAndExtern::opNone;
+    this->_logicalOperator_Middle = GlobalEnumatedAndExtern::opNone;
+    this->_logicalOperator_Bottom = GlobalEnumatedAndExtern::opNone;
+
+    this->_btDI1Edge = GlobalEnumatedAndExtern::risingEdge;
+    this->_btDI2Edge = GlobalEnumatedAndExtern::risingEdge;
+    this->_btDI3Edge = GlobalEnumatedAndExtern::risingEdge;
+    this->_btDI4Edge = GlobalEnumatedAndExtern::risingEdge;
+    this->_btAI1Edge = GlobalEnumatedAndExtern::risingEdge;
+    this->_btAI2Edge = GlobalEnumatedAndExtern::risingEdge;
+
+    this->_doubleSpinBoxDI1 = 0;
+    this->_doubleSpinBoxDI2 = 0;
+    this->_doubleSpinBoxDI3 = 0;
+    this->_doubleSpinBoxDI4 = 0;
+    this->_doubleSpinBoxAI1 = 0;
+    this->_doubleSpinBoxAI2 = 0;
+
+    this->_newFrame = new DataFrame();
+    this->_memoFrame = new DataFrame();
 }
 
 void TriggerFunctions::displayValue()
@@ -22,6 +39,18 @@ void TriggerFunctions::displayValue()
     qDebug() << "value eq : " << _valueFunction;
     qDebug() << "equation valide : " << this->_checkValideEquation();
     qDebug() << "equation onTrig : " << this->_onTrigStatus;
+    qDebug() << "DI1 edge : " << (this->_btDI1Edge == GlobalEnumatedAndExtern::fallingEdge ? "falling edge" : "rising edge");
+    qDebug() << "DI2 edge : " << (this->_btDI2Edge == GlobalEnumatedAndExtern::fallingEdge ? "falling edge" : "rising edge");
+    qDebug() << "DI3 edge : " << (this->_btDI3Edge == GlobalEnumatedAndExtern::fallingEdge ? "falling edge" : "rising edge");
+    qDebug() << "DI4 edge : " << (this->_btDI4Edge == GlobalEnumatedAndExtern::fallingEdge ? "falling edge" : "rising edge");
+    qDebug() << "AI1 edge : " << (this->_btAI1Edge == GlobalEnumatedAndExtern::fallingEdge ? "falling edge" : "rising edge");
+    qDebug() << "AI2 edge : " << (this->_btAI2Edge == GlobalEnumatedAndExtern::fallingEdge ? "falling edge" : "rising edge");
+    qDebug() << "doubleSpinBoxDI1 value : " << _doubleSpinBoxDI1;
+    qDebug() << "doubleSpinBoxDI2 value : " << _doubleSpinBoxDI2;
+    qDebug() << "doubleSpinBoxDI3 value : " << _doubleSpinBoxDI3;
+    qDebug() << "doubleSpinBoxDI4 value : " << _doubleSpinBoxDI4;
+    qDebug() << "doubleSpinBoxAI1 value : " << _doubleSpinBoxAI1;
+    qDebug() << "doubleSpinBoxAI2 value : " << _doubleSpinBoxAI2;
 }
 
 GlobalEnumatedAndExtern::eTracePossible TriggerFunctions::traceA() const
@@ -540,4 +569,124 @@ bool TriggerFunctions::_checkValideEquation()
     }
 
     return valide;
+}
+
+double TriggerFunctions::doubleSpinBoxAI2() const
+{
+    return _doubleSpinBoxAI2;
+}
+
+void TriggerFunctions::setDoubleSpinBoxAI2(double doubleSpinBoxAI2)
+{
+    _doubleSpinBoxAI2 = doubleSpinBoxAI2;
+}
+
+double TriggerFunctions::doubleSpinBoxAI1() const
+{
+    return _doubleSpinBoxAI1;
+}
+
+void TriggerFunctions::setDoubleSpinBoxAI1(double doubleSpinBoxAI1)
+{
+    _doubleSpinBoxAI1 = doubleSpinBoxAI1;
+}
+
+double TriggerFunctions::doubleSpinBoxDI4() const
+{
+    return _doubleSpinBoxDI4;
+}
+
+void TriggerFunctions::setDoubleSpinBoxDI4(double doubleSpinBoxDI4)
+{
+    _doubleSpinBoxDI4 = doubleSpinBoxDI4;
+}
+
+double TriggerFunctions::doubleSpinBoxDI3() const
+{
+    return _doubleSpinBoxDI3;
+}
+
+void TriggerFunctions::setDoubleSpinBoxDI3(double doubleSpinBoxDI3)
+{
+    _doubleSpinBoxDI3 = doubleSpinBoxDI3;
+}
+
+double TriggerFunctions::doubleSpinBoxDI2() const
+{
+    return _doubleSpinBoxDI2;
+}
+
+void TriggerFunctions::setDoubleSpinBoxDI2(double doubleSpinBoxDI2)
+{
+    _doubleSpinBoxDI2 = doubleSpinBoxDI2;
+}
+
+double TriggerFunctions::doubleSpinBoxDI1() const
+{
+    return _doubleSpinBoxDI1;
+}
+
+void TriggerFunctions::setDoubleSpinBoxDI1(double doubleSpinBoxDI1)
+{
+    _doubleSpinBoxDI1 = doubleSpinBoxDI1;
+}
+
+GlobalEnumatedAndExtern::eEdge TriggerFunctions::btAI2Edge() const
+{
+    return _btAI2Edge;
+}
+
+void TriggerFunctions::setBtAI2Edge(const GlobalEnumatedAndExtern::eEdge &btAI2Edge)
+{
+    _btAI2Edge = btAI2Edge;
+}
+
+GlobalEnumatedAndExtern::eEdge TriggerFunctions::btAI1Edge() const
+{
+    return _btAI1Edge;
+}
+
+void TriggerFunctions::setBtAI1Edge(const GlobalEnumatedAndExtern::eEdge &btAI1Edge)
+{
+    _btAI1Edge = btAI1Edge;
+}
+
+GlobalEnumatedAndExtern::eEdge TriggerFunctions::btDI4Edge() const
+{
+    return _btDI4Edge;
+}
+
+void TriggerFunctions::setBtDI4Edge(const GlobalEnumatedAndExtern::eEdge &btDI4Edge)
+{
+    _btDI4Edge = btDI4Edge;
+}
+
+GlobalEnumatedAndExtern::eEdge TriggerFunctions::btDI3Edge() const
+{
+    return _btDI3Edge;
+}
+
+void TriggerFunctions::setBtDI3Edge(const GlobalEnumatedAndExtern::eEdge &btDI3Edge)
+{
+    _btDI3Edge = btDI3Edge;
+}
+
+GlobalEnumatedAndExtern::eEdge TriggerFunctions::btDI2Edge() const
+{
+    return _btDI2Edge;
+}
+
+void TriggerFunctions::setBtDI2Edge(const GlobalEnumatedAndExtern::eEdge &btDI2Edge)
+{
+    _btDI2Edge = btDI2Edge;
+}
+
+GlobalEnumatedAndExtern::eEdge TriggerFunctions::btDI1Edge() const
+{
+    return _btDI1Edge;
+}
+
+void TriggerFunctions::setBtDI1Edge(const GlobalEnumatedAndExtern::eEdge &btDI1Edge)
+{
+    _btDI1Edge = btDI1Edge;
 }

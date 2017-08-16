@@ -3,6 +3,7 @@
 
 #include <QWidget>
 #include <QTimer>
+#include <QSharedPointer>
 #include "qcustomplot.h"
 #include "commonStyle.h"
 
@@ -70,6 +71,9 @@ private:
 
     //set curve style
     void setupTrace(QCustomPlot *customPlot);
+
+    //plot array pointer
+    QSharedPointer<QCPGraphDataContainer>  _arrayPlotContainerPointer;
 
 public slots:
     void updatePlot();

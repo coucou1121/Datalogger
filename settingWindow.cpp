@@ -1,6 +1,12 @@
 #include "settingWindow.h"
 #include "ui_settingWindow.h"
 
+extern qint8 minRange0;
+extern qint8 maxRange0_24;
+extern qint8 maxRange0_30;
+extern qint8 minRange_15_15;
+extern qint8 maxRange_15_15;
+
 SettingWindow::SettingWindow(QWidget *parent) :
     QWidget(parent),
     ui(new Ui::SettingWindow)
@@ -10,6 +16,9 @@ SettingWindow::SettingWindow(QWidget *parent) :
     this->enableWindows(true);
 
     _triggerFunctionEnable = false;
+
+    _triggerFunction = new TriggerFunctions();
+    _triggerSetting = new TriggerFunctions();
 }
 
 SettingWindow::~SettingWindow()
@@ -101,6 +110,33 @@ void SettingWindow::_setupSignalAndSlot()
                      this, SLOT(_received_errorWrongEquation(int,bool)));
 }
 
+double SettingWindow::doubleToQint8(double value, GlobalEnumatedAndExtern::eRangeValue range)
+{
+    qint8 minRangeValue = 0;
+    qint8 maxRangeValue = 0;
+
+    qDebug() << value;
+    switch (range)
+    {
+    case GlobalEnumatedAndExtern::range0_24:
+        minRangeValue = minRange0;
+        maxRangeValue = maxRange0_24;
+        break;
+    case GlobalEnumatedAndExtern::range0_30:
+        minRangeValue = minRange0;
+        maxRangeValue = maxRange0_30;
+        break;
+    case GlobalEnumatedAndExtern::range15_15:
+        minRangeValue = minRange_15_15;
+        maxRangeValue = maxRange_15_15;
+        break;
+    default:
+        break;
+    }
+
+    return (255*value) / 24;
+}
+
 bool SettingWindow::triggerFunctionEnable() const
 {
     return _triggerFunctionEnable;
@@ -108,7 +144,26 @@ bool SettingWindow::triggerFunctionEnable() const
 
 TriggerFunctions *SettingWindow::getTriggerFuntion()
 {
-    return ui->widgetTriggerFunction->triggerFuntion();
+    _triggerFunction = ui->widgetTriggerFunction->triggerFuntion();
+    _triggerSetting = ui->widgetTriggerSetting->triggerSetting();
+
+    //collapse value from trigger setting to trigger function
+    this->_triggerFunction->setBtDI1Edge(_triggerSetting->btDI1Edge());
+    this->_triggerFunction->setBtDI2Edge(_triggerSetting->btDI2Edge());
+    this->_triggerFunction->setBtDI3Edge(_triggerSetting->btDI3Edge());
+    this->_triggerFunction->setBtDI4Edge(_triggerSetting->btDI4Edge());
+    this->_triggerFunction->setBtAI1Edge(_triggerSetting->btAI1Edge());
+    this->_triggerFunction->setBtAI2Edge(_triggerSetting->btAI2Edge());
+
+    this->_triggerFunction->setDoubleSpinBoxDI1(this->doubleToQint8(_triggerSetting->doubleSpinBoxDI1(), ui->widgetTriggerSetting->rangeDI1()));
+ //   this->_triggerFunction->setDoubleSpinBoxDI1(_triggerSetting->doubleSpinBoxDI1());
+    this->_triggerFunction->setDoubleSpinBoxDI2(_triggerSetting->doubleSpinBoxDI2());
+    this->_triggerFunction->setDoubleSpinBoxDI3(_triggerSetting->doubleSpinBoxDI3());
+    this->_triggerFunction->setDoubleSpinBoxDI4(_triggerSetting->doubleSpinBoxDI4());
+    this->_triggerFunction->setDoubleSpinBoxAI1(_triggerSetting->doubleSpinBoxAI1());
+    this->_triggerFunction->setDoubleSpinBoxAI2(_triggerSetting->doubleSpinBoxAI2());
+
+    return this->_triggerFunction;
 }
 
 void SettingWindow::_recievedAddTraceFromChannelSelection(int traceNumber)

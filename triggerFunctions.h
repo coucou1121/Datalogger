@@ -3,6 +3,7 @@
 
 #include <QDebug>
 #include "globalEnumatedAndExtern.h"
+#include "dataFrame.h"
 
 class TriggerFunctions : public QObject
 {
@@ -36,15 +37,55 @@ public:
 
     bool onTrig(quint8 valueA, quint8 valueB = 0, quint8 valueC = 0, quint8 valueD = 0);
 
+    bool _checkOnTrigData(DataFrame newDataFrame);
+
+    void setBtDI1Edge(const GlobalEnumatedAndExtern::eEdge &btDI1Edge);
+    GlobalEnumatedAndExtern::eEdge btDI1Edge() const;
+
+    GlobalEnumatedAndExtern::eEdge btDI2Edge() const;
+    void setBtDI2Edge(const GlobalEnumatedAndExtern::eEdge &btDI2Edge);
+
+    GlobalEnumatedAndExtern::eEdge btDI3Edge() const;
+    void setBtDI3Edge(const GlobalEnumatedAndExtern::eEdge &btDI3Edge);
+
+    GlobalEnumatedAndExtern::eEdge btDI4Edge() const;
+    void setBtDI4Edge(const GlobalEnumatedAndExtern::eEdge &btDI4Edge);
+
+    GlobalEnumatedAndExtern::eEdge btAI1Edge() const;
+    void setBtAI1Edge(const GlobalEnumatedAndExtern::eEdge &btAI1Edge);
+
+    GlobalEnumatedAndExtern::eEdge btAI2Edge() const;
+    void setBtAI2Edge(const GlobalEnumatedAndExtern::eEdge &btAI2Edge);
+
+    double doubleSpinBoxDI1() const;
+    void setDoubleSpinBoxDI1(double doubleSpinBoxDI1);
+
+    double doubleSpinBoxDI2() const;
+    void setDoubleSpinBoxDI2(double doubleSpinBoxDI2);
+
+    double doubleSpinBoxDI3() const;
+    void setDoubleSpinBoxDI3(double doubleSpinBoxDI3);
+
+    double doubleSpinBoxDI4() const;
+    void setDoubleSpinBoxDI4(double doubleSpinBoxDI4);
+
+    double doubleSpinBoxAI1() const;
+    void setDoubleSpinBoxAI1(double doubleSpinBoxAI1);
+
+    double doubleSpinBoxAI2() const;
+    void setDoubleSpinBoxAI2(double doubleSpinBoxAI2);
+
 private:
 
     bool _onTrigStatus;
+
 
     quint16 _valueFunction;
 
     void _setValueFunction();
 
     bool _checkValideEquation();
+
 
     GlobalEnumatedAndExtern::eTracePossible _traceA;
     GlobalEnumatedAndExtern::eTracePossible _traceB;
@@ -54,6 +95,26 @@ private:
     GlobalEnumatedAndExtern::eLogicOperator _logicalOperator_Top;
     GlobalEnumatedAndExtern::eLogicOperator _logicalOperator_Middle;
     GlobalEnumatedAndExtern::eLogicOperator _logicalOperator_Bottom;
+
+    //state of edge
+    GlobalEnumatedAndExtern::eEdge _btDI1Edge;
+    GlobalEnumatedAndExtern::eEdge _btDI2Edge;
+    GlobalEnumatedAndExtern::eEdge _btDI3Edge;
+    GlobalEnumatedAndExtern::eEdge _btDI4Edge;
+    GlobalEnumatedAndExtern::eEdge _btAI1Edge;
+    GlobalEnumatedAndExtern::eEdge _btAI2Edge;
+
+    //doubleSpinBox value
+    quint8 _doubleSpinBoxDI1;
+    quint8 _doubleSpinBoxDI2;
+    quint8 _doubleSpinBoxDI3;
+    quint8 _doubleSpinBoxDI4;
+    quint8 _doubleSpinBoxAI1;
+    quint8 _doubleSpinBoxAI2;
+
+    //analysed frame
+    DataFrame *_newFrame;
+    DataFrame *_memoFrame;
 
 signals:
    void _errorWrongEquation(int errorNumber,bool active);

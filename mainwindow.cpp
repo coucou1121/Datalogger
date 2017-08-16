@@ -19,8 +19,8 @@ MainWindow::MainWindow(QWidget *parent) :
 
     //create timerfor thread
     _tickTimer = new RefreshTimer(false, "Tick timer", 1);
-    _newDataFrameTimer = new RefreshTimer(false, "Data updated timer", 100);
-    _refreshDisplayTimer = new RefreshTimer(false, "Refres Display timer", 200);
+    _newDataFrameTimer = new RefreshTimer(false, "Data updated timer", 1000);
+    _refreshDisplayTimer = new RefreshTimer(false, "Refres Display timer", 1000);
 
     //create data frame simulautor
     _dataFrameSimulator = new DataFrameSimulator("Frame Simulator");
@@ -61,7 +61,11 @@ MainWindow::MainWindow(QWidget *parent) :
     qRegisterMetaType<QVector<DataFrame>>("QVector<DataFrame>");
     //qRegisterMetaType<TriggerFunctions>("TriggerFunctions");
 
+    //get the setting in trigger function windows
     this->_triggerFuntion = _settingWindow->getTriggerFuntion();
+
+    //get edge selection in trigger setting windows
+
 }
 
 MainWindow::~MainWindow()
@@ -183,6 +187,7 @@ void MainWindow::addNewDataFrame(QVector<DataFrame> dataFrameVector)
     this->_displayWindow->addNewDataFrame(dataFrameVector);
     this->_triggerWindow->addNewDataFrame(dataFrameVector);
     qDebug() << objectName() << "nbValue" << _dataFrameVectorReccorder.size();
+    this->_triggerFuntion = _settingWindow->getTriggerFuntion();
     this->_triggerFuntion->displayValue();
     this->_triggerFuntion->onTrig(0,0,1);
 }

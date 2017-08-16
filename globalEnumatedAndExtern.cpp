@@ -106,6 +106,11 @@ extern QString range0_24Txt = "0/24";
 extern QString range0_30Txt = "0/30";
 extern QString range15_15Txt = "-15/+15";
 
+extern qint8 minRange0 = 0;
+extern qint8 maxRange0_24 = 24;
+extern qint8 maxRange0_30 = 30;
+extern qint8 minRange_15_15 = -15;
+extern qint8 maxRange_15_15 = 15;
 
 extern QString opNoneTxt = "NONE";
 extern QString opOrTxt = "OR";
