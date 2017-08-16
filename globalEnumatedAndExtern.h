@@ -66,7 +66,8 @@ public:
     //edge type
     typedef enum
     {
-        fallingEdge = 0,
+        noEdge = 0,
+        fallingEdge,
         risingEdge
     }eEdge;
 

@@ -80,6 +80,9 @@ private:
     QPushButton *_btDisplay;
     QPushButton *_btDebug;
 
+    //evaluation of the trigger function
+    bool _triggerFunctionEvaluatedTrue;
+
     //set the bottom status bar
     void _setStatusBar();
 

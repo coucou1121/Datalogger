@@ -110,7 +110,7 @@ void SettingWindow::_setupSignalAndSlot()
                      this, SLOT(_received_errorWrongEquation(int,bool)));
 }
 
-double SettingWindow::doubleToQint8(double value, GlobalEnumatedAndExtern::eRangeValue range)
+quint8 SettingWindow::doubleToQint8(double value, GlobalEnumatedAndExtern::eRangeValue range)
 {
     qint8 minRangeValue = 0;
     qint8 maxRangeValue = 0;
@@ -134,7 +134,12 @@ double SettingWindow::doubleToQint8(double value, GlobalEnumatedAndExtern::eRang
         break;
     }
 
-    return (255*value) / 24;
+    double result = value;
+    qDebug() << "double value : " << result;
+    quint8 resultInt = (quint8)result;
+    qDebug() << "int value : " << resultInt;
+
+    return resultInt;
 }
 
 bool SettingWindow::triggerFunctionEnable() const
@@ -155,14 +160,14 @@ TriggerFunctions *SettingWindow::getTriggerFuntion()
     this->_triggerFunction->setBtAI1Edge(_triggerSetting->btAI1Edge());
     this->_triggerFunction->setBtAI2Edge(_triggerSetting->btAI2Edge());
 
-    this->_triggerFunction->setDoubleSpinBoxDI1(this->doubleToQint8(_triggerSetting->doubleSpinBoxDI1(), ui->widgetTriggerSetting->rangeDI1()));
- //   this->_triggerFunction->setDoubleSpinBoxDI1(_triggerSetting->doubleSpinBoxDI1());
+    this->_triggerFunction->setDoubleSpinBoxDI1(_triggerSetting->doubleSpinBoxDI1());
     this->_triggerFunction->setDoubleSpinBoxDI2(_triggerSetting->doubleSpinBoxDI2());
     this->_triggerFunction->setDoubleSpinBoxDI3(_triggerSetting->doubleSpinBoxDI3());
     this->_triggerFunction->setDoubleSpinBoxDI4(_triggerSetting->doubleSpinBoxDI4());
     this->_triggerFunction->setDoubleSpinBoxAI1(_triggerSetting->doubleSpinBoxAI1());
     this->_triggerFunction->setDoubleSpinBoxAI2(_triggerSetting->doubleSpinBoxAI2());
 
+    qDebug() << objectName() << "AI2 : " << _triggerSetting->doubleSpinBoxAI2();
     return this->_triggerFunction;
 }
 

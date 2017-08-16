@@ -77,6 +77,9 @@ void TriggerWindow::refreshPlot()
             ui->widgetAI2->updatePlot();
             ui->widgetAI2->replot();
         }
+
+        ui->widgetFunction->updatePlot();
+        ui->widgetFunction->replot();
     }
 }
 
@@ -349,6 +352,8 @@ void TriggerWindow::addNewDataFrame(QVector<DataFrame> newDataFrameVector)
 
         ui->widgetAI1->addYValue(newDataFrameVector[i].AI1());
         ui->widgetAI2->addYValue(newDataFrameVector[i].AI2());
+
+        ui->widgetFunction->addYValue(newDataFrameVector[i].TR1());
      }
     // qDebug() << objectName() << "replot";
     // updatePlot();

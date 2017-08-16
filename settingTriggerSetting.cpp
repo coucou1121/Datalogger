@@ -15,6 +15,7 @@ SettingTriggerSetting::SettingTriggerSetting(QWidget *parent) :
     QFrame(parent),
     _pixmapFallingEdge(":/images/FollingEdge.png"),
     _pixmapRisingEdge(":/images/RisingEdge.png"),
+    _pixmapNoEdge(":/images/StateStop.png"),
     ui(new Ui::SettingTriggerSetting)
 {
     ui->setupUi(this);
@@ -62,6 +63,15 @@ void SettingTriggerSetting::setupStyle()
     ui->pushButtonRangeAI2->setText(range0_30Txt);
     ui->pushButtonRangeAI3->setText(range0_30Txt);
     ui->pushButtonRangeAI4->setText(range0_30Txt);
+
+    this->_rangeDI1 = GlobalEnumatedAndExtern::range0_24;
+    this->_rangeDI2 = GlobalEnumatedAndExtern::range0_24;
+    this->_rangeDI3 = GlobalEnumatedAndExtern::range0_24;
+    this->_rangeDI4 = GlobalEnumatedAndExtern::range0_24;
+    this->_rangeAI1 = GlobalEnumatedAndExtern::range0_30;
+    this->_rangeAI2 = GlobalEnumatedAndExtern::range0_30;
+    this->_rangeAI3 = GlobalEnumatedAndExtern::range0_30;
+    this->_rangeAI4 = GlobalEnumatedAndExtern::range0_30;
 
     //set backgroud of all buttom
     _myStyle.setPushButtonUnselected(ui->pushButtonRangeDI1);
@@ -183,7 +193,20 @@ void SettingTriggerSetting::on_pushButtonRangeAI4_released()
 
 void SettingTriggerSetting::on_pushButtonEdgeDI1_released()
 {
-    _btDI1Edge = _btDI1Edge == GlobalEnumatedAndExtern::risingEdge ? GlobalEnumatedAndExtern::fallingEdge : GlobalEnumatedAndExtern::risingEdge;
+    switch (_btDI1Edge)
+    {
+    case GlobalEnumatedAndExtern::risingEdge:
+        _btDI1Edge = GlobalEnumatedAndExtern::fallingEdge;
+        break;
+    case GlobalEnumatedAndExtern::fallingEdge:
+        _btDI1Edge = GlobalEnumatedAndExtern::noEdge;
+        break;
+    case GlobalEnumatedAndExtern::noEdge:
+        _btDI1Edge = GlobalEnumatedAndExtern::risingEdge;
+        break;
+    default:
+        break;
+    }
     this->_setEdgeIcon(ui->pushButtonEdgeDI1, _btDI1Edge);
     this->_triggerSetting->setBtDI1Edge(_btDI1Edge);
     emit _pushButtonEdgeDI1WasChanged((int)_btDI1Edge);
@@ -191,7 +214,20 @@ void SettingTriggerSetting::on_pushButtonEdgeDI1_released()
 
 void SettingTriggerSetting::on_pushButtonEdgeDI2_released()
 {
-    _btDI2Edge = _btDI2Edge == GlobalEnumatedAndExtern::risingEdge ? GlobalEnumatedAndExtern::fallingEdge : GlobalEnumatedAndExtern::risingEdge;
+    switch (_btDI2Edge)
+    {
+    case GlobalEnumatedAndExtern::risingEdge:
+        _btDI2Edge = GlobalEnumatedAndExtern::fallingEdge;
+        break;
+    case GlobalEnumatedAndExtern::fallingEdge:
+        _btDI2Edge = GlobalEnumatedAndExtern::noEdge;
+        break;
+    case GlobalEnumatedAndExtern::noEdge:
+        _btDI2Edge = GlobalEnumatedAndExtern::risingEdge;
+        break;
+    default:
+        break;
+    }
     this->_setEdgeIcon(ui->pushButtonEdgeDI2, _btDI2Edge);
     this->_triggerSetting->setBtDI2Edge(_btDI2Edge);
     emit _pushButtonEdgeDI2WasChanged((int)_btDI2Edge);
@@ -199,7 +235,20 @@ void SettingTriggerSetting::on_pushButtonEdgeDI2_released()
 
 void SettingTriggerSetting::on_pushButtonEdgeDI3_released()
 {
-    _btDI3Edge = _btDI3Edge == GlobalEnumatedAndExtern::risingEdge ? GlobalEnumatedAndExtern::fallingEdge : GlobalEnumatedAndExtern::risingEdge;
+    switch (_btDI3Edge)
+    {
+    case GlobalEnumatedAndExtern::risingEdge:
+        _btDI3Edge = GlobalEnumatedAndExtern::fallingEdge;
+        break;
+    case GlobalEnumatedAndExtern::fallingEdge:
+        _btDI3Edge = GlobalEnumatedAndExtern::noEdge;
+        break;
+    case GlobalEnumatedAndExtern::noEdge:
+        _btDI3Edge = GlobalEnumatedAndExtern::risingEdge;
+        break;
+    default:
+        break;
+    }
     this->_setEdgeIcon(ui->pushButtonEdgeDI3, _btDI3Edge);
     this->_triggerSetting->setBtDI3Edge(_btDI3Edge);
     emit _pushButtonEdgeDI3WasChanged((int)_btDI3Edge);
@@ -207,7 +256,20 @@ void SettingTriggerSetting::on_pushButtonEdgeDI3_released()
 
 void SettingTriggerSetting::on_pushButtonEdgeDI4_released()
 {
-    _btDI4Edge = _btDI4Edge == GlobalEnumatedAndExtern::risingEdge ? GlobalEnumatedAndExtern::fallingEdge : GlobalEnumatedAndExtern::risingEdge;
+    switch (_btDI4Edge)
+    {
+    case GlobalEnumatedAndExtern::risingEdge:
+        _btDI4Edge = GlobalEnumatedAndExtern::fallingEdge;
+        break;
+    case GlobalEnumatedAndExtern::fallingEdge:
+        _btDI4Edge = GlobalEnumatedAndExtern::noEdge;
+        break;
+    case GlobalEnumatedAndExtern::noEdge:
+        _btDI4Edge = GlobalEnumatedAndExtern::risingEdge;
+        break;
+    default:
+        break;
+    }
     this->_setEdgeIcon(ui->pushButtonEdgeDI4, _btDI4Edge);
     this->_triggerSetting->setBtDI4Edge(_btDI4Edge);
     emit _pushButtonEdgeDI4WasChanged((int)_btDI4Edge);
@@ -215,7 +277,20 @@ void SettingTriggerSetting::on_pushButtonEdgeDI4_released()
 
 void SettingTriggerSetting::on_pushButtonEdgeAI1_released()
 {
-    _btAI1Edge = _btAI1Edge == GlobalEnumatedAndExtern::risingEdge ? GlobalEnumatedAndExtern::fallingEdge : GlobalEnumatedAndExtern::risingEdge;
+    switch (_btAI1Edge)
+    {
+    case GlobalEnumatedAndExtern::risingEdge:
+        _btAI1Edge = GlobalEnumatedAndExtern::fallingEdge;
+        break;
+    case GlobalEnumatedAndExtern::fallingEdge:
+        _btAI1Edge = GlobalEnumatedAndExtern::noEdge;
+        break;
+    case GlobalEnumatedAndExtern::noEdge:
+        _btAI1Edge = GlobalEnumatedAndExtern::risingEdge;
+        break;
+    default:
+        break;
+    }
     this->_setEdgeIcon(ui->pushButtonEdgeAI1, _btAI1Edge);
     this->_triggerSetting->setBtAI1Edge(_btAI1Edge);
     emit _pushButtonEdgeAI1WasChanged((int)_btAI1Edge);
@@ -223,7 +298,20 @@ void SettingTriggerSetting::on_pushButtonEdgeAI1_released()
 
 void SettingTriggerSetting::on_pushButtonEdgeAI2_released()
 {
-    _btAI2Edge = _btAI2Edge == GlobalEnumatedAndExtern::risingEdge ? GlobalEnumatedAndExtern::fallingEdge : GlobalEnumatedAndExtern::risingEdge;
+    switch (_btAI2Edge)
+    {
+    case GlobalEnumatedAndExtern::risingEdge:
+        _btAI2Edge = GlobalEnumatedAndExtern::fallingEdge;
+        break;
+    case GlobalEnumatedAndExtern::fallingEdge:
+        _btAI2Edge = GlobalEnumatedAndExtern::noEdge;
+        break;
+    case GlobalEnumatedAndExtern::noEdge:
+        _btAI2Edge = GlobalEnumatedAndExtern::risingEdge;
+        break;
+    default:
+        break;
+    }
     this->_setEdgeIcon(ui->pushButtonEdgeAI2, _btAI2Edge);
     this->_triggerSetting->setBtAI2Edge(_btAI2Edge);
     emit _pushButtonEdgeAI2WasChanged((int)_btAI2Edge);
@@ -398,31 +486,43 @@ void SettingTriggerSetting::setRangeAndTextTrace(GlobalEnumatedAndExtern::eTrace
         ui->doubleSpinBoxDI1->setMinimum(minRangeValue);
         ui->doubleSpinBoxDI1->setMaximum(maxRangeValue);
         ui->pushButtonRangeDI1->setText(rangeTxt);
+        this->_rangeDI1 = range;
+        this->_triggerSetting->setDoubleSpinBoxDI4(_doubleToQuint8(ui->doubleSpinBoxDI1->value(), range));
         break;
     case GlobalEnumatedAndExtern::btDI2:
         ui->doubleSpinBoxDI2->setMinimum(minRangeValue);
         ui->doubleSpinBoxDI2->setMaximum(maxRangeValue);
         ui->pushButtonRangeDI2->setText(rangeTxt);
+        this->_rangeDI2 = range;
+        this->_triggerSetting->setDoubleSpinBoxDI4(_doubleToQuint8(ui->doubleSpinBoxDI2->value(), range));
         break;
     case GlobalEnumatedAndExtern::btDI3:
         ui->doubleSpinBoxDI3->setMinimum(minRangeValue);
         ui->doubleSpinBoxDI3->setMaximum(maxRangeValue);
         ui->pushButtonRangeDI3->setText(rangeTxt);
+        this->_rangeDI3 = range;
+        this->_triggerSetting->setDoubleSpinBoxDI4(_doubleToQuint8(ui->doubleSpinBoxDI3->value(), range));
         break;
     case GlobalEnumatedAndExtern::btDI4:
         ui->doubleSpinBoxDI4->setMinimum(minRangeValue);
         ui->doubleSpinBoxDI4->setMaximum(maxRangeValue);
         ui->pushButtonRangeDI4->setText(rangeTxt);
+        this->_rangeDI4 = range;
+        this->_triggerSetting->setDoubleSpinBoxDI4(_doubleToQuint8(ui->doubleSpinBoxDI4->value(), range));
         break;
     case GlobalEnumatedAndExtern::btAI1:
         ui->doubleSpinBoxAI1->setMinimum(minRangeValue);
         ui->doubleSpinBoxAI1->setMaximum(maxRangeValue);
         ui->pushButtonRangeAI1->setText(rangeTxt);
+        this->_rangeAI1 = range;
+        this->_triggerSetting->setDoubleSpinBoxAI1(_doubleToQuint8(ui->doubleSpinBoxAI1->value(), range));
         break;
     case GlobalEnumatedAndExtern::btAI2:
         ui->doubleSpinBoxAI2->setMinimum(minRangeValue);
         ui->doubleSpinBoxAI2->setMaximum(maxRangeValue);
         ui->pushButtonRangeAI2->setText(rangeTxt);
+        this->_rangeAI2 = range;
+        this->_triggerSetting->setDoubleSpinBoxAI2(_doubleToQuint8(ui->doubleSpinBoxAI2->value(), range));
         break;
     case GlobalEnumatedAndExtern::btAI3:
         ui->pushButtonRangeAI3->setText(rangeTxt);
@@ -433,6 +533,38 @@ void SettingTriggerSetting::setRangeAndTextTrace(GlobalEnumatedAndExtern::eTrace
     default:
         break;
     }
+}
+
+quint8 SettingTriggerSetting::_doubleToQuint8(double value, GlobalEnumatedAndExtern::eRangeValue range)
+{
+    qint8 minRangeValue = 0;
+    qint8 maxRangeValue = 0;
+
+    double result;
+
+    switch (range)
+    {
+    case GlobalEnumatedAndExtern::range0_24:
+        minRangeValue = minRange0;
+        maxRangeValue = maxRange0_24;
+        break;
+    case GlobalEnumatedAndExtern::range0_30:
+        minRangeValue = minRange0;
+        maxRangeValue = maxRange0_30;
+        break;
+    case GlobalEnumatedAndExtern::range15_15:
+        minRangeValue = minRange_15_15;
+        maxRangeValue = maxRange_15_15;
+         break;
+    default:
+        break;
+    }
+    result = ((value - minRangeValue)*255)/(maxRangeValue-minRangeValue);
+
+    qDebug() << "double value  : " << value;
+    qDebug() << "double result : " << minRangeValue << result;
+    quint8 resultInt = (quint8)result;
+    return resultInt;
 }
 
 GlobalEnumatedAndExtern::eRangeValue SettingTriggerSetting::rangeAI4() const
@@ -519,7 +651,6 @@ void SettingTriggerSetting::pushButtonRangeAI2_ChangeRange()
     //swap the range
     selection = ui->pushButtonRangeAI2->text() == range0_30Txt ? GlobalEnumatedAndExtern::range15_15 : GlobalEnumatedAndExtern::range0_30;
     setRangeAndTextTrace(GlobalEnumatedAndExtern::btAI2, selection);
-
 }
 
 void SettingTriggerSetting::pushButtonEdgeDI1_changeEdge(quint8 eEdge)
@@ -566,37 +697,37 @@ void SettingTriggerSetting::pushButtonEdgeAI2_changeEdge(quint8 eEdge)
 
 void SettingTriggerSetting::doubleSpinBoxDI1_changeValue(double value)
 {
-    this->_triggerSetting->setDoubleSpinBoxDI1(value);
+    this->_triggerSetting->setDoubleSpinBoxDI1(_doubleToQuint8(value, _rangeDI1));
     ui->doubleSpinBoxDI1->setValue(value);
 }
 
 void SettingTriggerSetting::doubleSpinBoxDI2_changeValue(double value)
 {
-    this->_triggerSetting->setDoubleSpinBoxDI2(value);
+    this->_triggerSetting->setDoubleSpinBoxDI2(_doubleToQuint8(value, _rangeDI2));
     ui->doubleSpinBoxDI2->setValue(value);
 }
 
 void SettingTriggerSetting::doubleSpinBoxDI3_changeValue(double value)
 {
-    this->_triggerSetting->setDoubleSpinBoxDI3(value);
+    this->_triggerSetting->setDoubleSpinBoxDI3(_doubleToQuint8(value, _rangeDI3));
     ui->doubleSpinBoxDI3->setValue(value);
 }
 
 void SettingTriggerSetting::doubleSpinBoxDI4_changeValue(double value)
 {
-    this->_triggerSetting->setDoubleSpinBoxDI4(value);
+    this->_triggerSetting->setDoubleSpinBoxDI4(_doubleToQuint8(value, _rangeDI4));
     ui->doubleSpinBoxDI4->setValue(value);
 }
 
 void SettingTriggerSetting::doubleSpinBoxAI1_changeValue(double value)
 {
-    this->_triggerSetting->setDoubleSpinBoxAI1(value);
+    this->_triggerSetting->setDoubleSpinBoxAI1(_doubleToQuint8(value, _rangeAI1));
     ui->doubleSpinBoxAI1->setValue(value);
 }
 
 void SettingTriggerSetting::doubleSpinBoxAI2_changeValue(double value)
 {
-    this->_triggerSetting->setDoubleSpinBoxAI2(value);
+    this->_triggerSetting->setDoubleSpinBoxAI2(_doubleToQuint8(value, _rangeAI2));
     ui->doubleSpinBoxAI2->setValue(value);
 }
 
@@ -609,6 +740,10 @@ void SettingTriggerSetting::_setEdgeIcon(QPushButton *pushbutton, GlobalEnumated
     if(edgeType == GlobalEnumatedAndExtern::risingEdge)
     {
         pushbutton->setIcon(_pixmapRisingEdge);
+    }
+    if(edgeType == GlobalEnumatedAndExtern::noEdge)
+    {
+        pushbutton->setIcon(_pixmapNoEdge);
     }
     pushbutton->setIconSize(QSize(30,30));
 }

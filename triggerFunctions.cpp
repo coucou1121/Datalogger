@@ -130,16 +130,141 @@ void TriggerFunctions::setLogicalOperator_Bottom(const GlobalEnumatedAndExtern::
     this->_setValueFunction();
 }
 
-bool TriggerFunctions::onTrig(quint8 valueA, quint8 valueB, quint8 valueC, quint8 valueD)
+bool TriggerFunctions::onTrig(DataFrame *data)
 {
     bool onTrig = false;
+    quint8 onTrigA = 0;
+    quint8 onTrigB = 0;
+    quint8 onTrigC = 0;
+    quint8 onTrigD = 0;
+
+    static quint8 memoValueA = 0;
+    static quint8 memoValueB = 0;
+    static quint8 memoValueC = 0;
+    static quint8 memoValueD = 0;
 
     quint8 value = 0;
+    quint8 valueA = 0;
+    quint8 valueB = 0;
+    quint8 valueC = 0;
+    quint8 valueD = 0;
 
-    value = valueA | (valueB << 1) | (valueC << 2) | (valueD  << 3);
+    GlobalEnumatedAndExtern::eEdge edgeA = GlobalEnumatedAndExtern::risingEdge;
+    GlobalEnumatedAndExtern::eEdge edgeB = GlobalEnumatedAndExtern::risingEdge;
+    GlobalEnumatedAndExtern::eEdge edgeC = GlobalEnumatedAndExtern::risingEdge;
+    GlobalEnumatedAndExtern::eEdge edgeD = GlobalEnumatedAndExtern::risingEdge;
+
+    //set value A
+    switch (this->_traceA)
+    {
+    case GlobalEnumatedAndExtern::btDI1:
+        valueA = data->DI1_8() & 1;
+        edgeA = this->btDI1Edge();
+        break;
+    case GlobalEnumatedAndExtern::btDI2:
+        valueA = (data->DI1_8() >> 1) & 1;
+        edgeA = this->btDI2Edge();
+        break;
+    case GlobalEnumatedAndExtern::btDI3:
+        valueA = (data->DI1_8() >> 2) & 1;
+        edgeA = this->btDI3Edge();
+        break;
+    case GlobalEnumatedAndExtern::btDI4:
+        valueA = (data->DI1_8() >> 3) & 1;
+        edgeA = this->btDI4Edge();
+        break;
+    default:
+        break;
+    }
+
+    //set value B
+    switch (this->_traceB)
+    {
+    case GlobalEnumatedAndExtern::btDI1:
+        valueB = data->DI1_8() & 1;
+        edgeB = this->btDI1Edge();
+        break;
+    case GlobalEnumatedAndExtern::btDI2:
+        valueB = (data->DI1_8() >> 1) & 1;
+        edgeB = this->btDI2Edge();
+        break;
+    case GlobalEnumatedAndExtern::btDI3:
+        valueB = (data->DI1_8() >> 2) & 1;
+        edgeB = this->btDI3Edge();
+        break;
+    case GlobalEnumatedAndExtern::btDI4:
+        valueC = (data->DI1_8() >> 3) & 1;
+        edgeB = this->btDI4Edge();
+        break;
+    default:
+        break;
+    }
+
+    //set value C
+    switch (this->_traceC)
+    {
+    case GlobalEnumatedAndExtern::btDI1:
+        valueC = data->DI1_8() & 1;
+        edgeC = this->btDI1Edge();
+        break;
+    case GlobalEnumatedAndExtern::btDI2:
+        valueC = (data->DI1_8() >> 1) & 1;
+        edgeC = this->btDI2Edge();
+        break;
+    case GlobalEnumatedAndExtern::btDI3:
+        valueC = (data->DI1_8() >> 2) & 1;
+        edgeC = this->btDI3Edge();
+        break;
+    case GlobalEnumatedAndExtern::btDI4:
+        valueC = (data->DI1_8() >> 3) & 1;
+        edgeC = this->btDI4Edge();
+        break;
+    default:
+        break;
+    }
+
+    //set value D
+    switch (this->_traceD)
+    {
+    case GlobalEnumatedAndExtern::btDI1:
+        valueD = data->DI1_8() & 1;
+        edgeD = this->btDI1Edge();
+        break;
+    case GlobalEnumatedAndExtern::btDI2:
+        valueD = (data->DI1_8() >> 1) & 1;
+        edgeD = this->btDI2Edge();
+        break;
+    case GlobalEnumatedAndExtern::btDI3:
+        valueD = (data->DI1_8() >> 2) & 1;
+        edgeD = this->btDI3Edge();
+       break;
+    case GlobalEnumatedAndExtern::btDI4:
+        valueD = (data->DI1_8() >> 3) & 1;
+        edgeD = this->btDI4Edge();
+        break;
+    default:
+        break;
+    }
+
+    qDebug() << "A: " << valueA << ", B: " << valueB << ", C: " << valueC << ", D: " << valueD;
+
+    onTrigA = edgeA == GlobalEnumatedAndExtern::noEdge ? valueA : this->_checkOnTrigTrace(valueA, memoValueA, edgeA);
+    onTrigB = edgeB == GlobalEnumatedAndExtern::noEdge ? valueB : this->_checkOnTrigTrace(valueB, memoValueB, edgeB);
+    onTrigC = edgeC == GlobalEnumatedAndExtern::noEdge ? valueC : this->_checkOnTrigTrace(valueC, memoValueC, edgeC);
+    onTrigD = edgeD == GlobalEnumatedAndExtern::noEdge ? valueD : this->_checkOnTrigTrace(valueD, memoValueD, edgeD);
+
+    memoValueA = valueA;
+    memoValueB = valueB;
+    memoValueC = valueC;
+    memoValueD = valueD;
+
+    qDebug() << "TRA: " << onTrigA << ", TRB: " << onTrigB << ", TRC: " << onTrigC << ", TRD: " << onTrigD;
+
+    value = onTrigA | (onTrigB << 1) | (onTrigC << 2) | (onTrigD  << 3);
 
     qDebug() << "value : " << value;
 
+    qDebug() << "function number : " << _valueFunction;
     switch (this->_valueFunction)
     {
     case 0:
@@ -225,29 +350,29 @@ bool TriggerFunctions::onTrig(quint8 valueA, quint8 valueB, quint8 valueC, quint
         break;
     case 36005:
         onTrig = ((value > 1) && (value < 4)) ||
-                 ((value > 4) && (value < 8)) || (value > 8) ? true : false;
+                ((value > 4) && (value < 8)) || (value > 8) ? true : false;
         break;
     case 36009:
         onTrig = (value == 1) || (value == 5) ||
-                 (value == 9) || (value > 11) ? true : false;
+                (value == 9) || (value > 11) ? true : false;
         break;
     case 36017:
         onTrig = (value < 2) || ((value > 2) && (value < 6)) ||
-                 ((value > 6) && (value < 10)) || (value > 10) ? true : false;
+                ((value > 6) && (value < 10)) || (value > 10) ? true : false;
         break;
     case 36131:
         onTrig = (value == 3) || (value == 7) || (value == 11) ? true : false;
         break;
     case 36133:
         onTrig = ((value > 0) && (value < 4)) ||
-                 ((value > 4) && (value < 8)) || ((value > 8) && (value < 12)) ? true : false;
+                ((value > 4) && (value < 8)) || ((value > 8) && (value < 12)) ? true : false;
         break;
     case 36137:
         onTrig = (value == 1) || (value == 5) || (value == 9) ? true : false;
         break;
     case 36145:
         onTrig = (value < 2) || ((value > 2) && (value < 6)) ||
-                 ((value > 7) && (value < 10)) || (value == 11)? true : false;
+                ((value > 7) && (value < 10)) || (value == 11)? true : false;
         break;
     case 36387:
         onTrig = (value < 12) || (value == 15) ? true : false;
@@ -266,14 +391,14 @@ bool TriggerFunctions::onTrig(quint8 valueA, quint8 valueB, quint8 valueC, quint
         break;
     case 37989:
         onTrig = ((value > 4) && (value < 8)) ||
-                 ((value > 8) && (value < 12)) || (value > 13) ? true : false;
+                ((value > 8) && (value < 12)) || (value > 13) ? true : false;
         break;
     case 37993:
         onTrig = (value == 5) || (value == 9) || (value == 3) ? true : false;
         break;
     case 38001:
         onTrig = ((value > 4) && (value < 8)) || ((value > 6) && (value < 10)) ||
-                 ((value > 10) && (value < 14)) || (value == 15) ? true : false;
+                ((value > 10) && (value < 14)) || (value == 15) ? true : false;
         break;
     case 38051:
         onTrig = value > 2 ? true : false;
@@ -307,7 +432,7 @@ bool TriggerFunctions::onTrig(quint8 valueA, quint8 valueB, quint8 valueC, quint
         break;
     case 38441:
         onTrig = (value < 1) || (value == 4) ||
-                 ((value > 8) && (value < 13)) ? true : false;
+                ((value > 8) && (value < 13)) ? true : false;
         break;
     case 38449:
         onTrig = (value < 5) || (value > 8) ? true : false;
@@ -326,33 +451,33 @@ bool TriggerFunctions::onTrig(quint8 valueA, quint8 valueB, quint8 valueC, quint
         break;
     case 42147:
         onTrig = ((value > 3) && (value < 8)) ||
-                 (value  == 11) || (value == 15) ? true : false;
+                (value  == 11) || (value == 15) ? true : false;
         break;
     case 42149:
         onTrig = ((value > 0) && (value < 8)) ||
-                 ((value > 8) && (value < 12)) || (value > 12) ? true : false;
+                ((value > 8) && (value < 12)) || (value > 12) ? true : false;
         break;
     case 42153:
         onTrig = (value == 1) ||
-                 ((value > 3) && (value < 8)) || (value == 9) ? true : false;
+                ((value > 3) && (value < 8)) || (value == 9) ? true : false;
         break;
     case 42161:
         onTrig = ((value > 0) && (value < 2)) || ((value > 2) && (value < 10)) ||
-                 ((value > 10) && (value < 14)) || (value == 15) ? true : false;
+                ((value > 10) && (value < 14)) || (value == 15) ? true : false;
         break;
     case 42275:
         onTrig = (value == 3) || (value == 11) || (value == 15) ? true : false;
         break;
     case 42277:
         onTrig = ((value > 1) && (value < 4)) || ((value > 4) && (value < 8)) ||
-                 ((value > 8) && (value < 12)) || (value == 15) ? true : false;
+                ((value > 8) && (value < 12)) || (value == 15) ? true : false;
         break;
     case 42281:
         onTrig = (value == 1) || (value == 9) || (value == 13) ? true : false;
         break;
     case 42289:
         onTrig = (value < 2) || ((value > 2) && (value < 6)) || ((value > 6) && (value < 10)) ||
-                 ((value > 10) && (value < 13)) || ((value > 12) && (value < 14)) ? true : false;
+                ((value > 10) && (value < 13)) || ((value > 12) && (value < 14)) ? true : false;
         break;
     case 42531:
         onTrig = ((value < 4) && (value > 6)) ? true : false;
@@ -362,7 +487,7 @@ bool TriggerFunctions::onTrig(quint8 valueA, quint8 valueB, quint8 valueC, quint
         break;
     case 42537:
         onTrig = (value < 4) ||
-                 ((value > 4) && (value < 6)) || (value > 8) ? true : false;
+                ((value > 4) && (value < 6)) || (value > 8) ? true : false;
         break;
     case 42545:
         onTrig = value != 6 ? true : false;
@@ -372,14 +497,14 @@ bool TriggerFunctions::onTrig(quint8 valueA, quint8 valueB, quint8 valueC, quint
         break;
     case 50277:
         onTrig = ((value > 1) && (value < 4)) ||
-                 ((value > 4) && (value < 8)) || (value > 12) ? true : false;
+                ((value > 4) && (value < 8)) || (value > 12) ? true : false;
         break;
     case 50281:
         onTrig = (value == 1) || (value == 5) || (value == 13) ? true : false;
         break;
     case 50289:
         onTrig = (value < 2) || ((value > 3) && (value < 6)) || ((value > 7) && (value < 10)) ||
-                 ((value > 11) && (value < 14)) || (value == 15) ? true : false;
+                ((value > 11) && (value < 14)) || (value == 15) ? true : false;
         break;
     case 50339:
         onTrig = ((value < 8) || (value >10)) ? true : false;
@@ -407,24 +532,27 @@ bool TriggerFunctions::onTrig(quint8 valueA, quint8 valueB, quint8 valueC, quint
         break;
     case 50723:
         onTrig = (value == 3) ||
-                 ((value > 6) && (value < 12)) || (value = 15) ? true : false;
+                ((value > 6) && (value < 12)) || (value = 15) ? true : false;
         break;
     case 50725:
         onTrig = ((value > 0) && (value < 4)) || ((value > 4) && (value < 12)) || (value > 12) ? true : false;
         break;
     case 50729:
         onTrig = (value == 1) || (value == 5) ||
-                 ((value > 7) && (value < 12)) || (value == 13) ? true : false;
+                ((value > 7) && (value < 12)) || (value == 13) ? true : false;
         break;
     case 50737:
         onTrig = (value < 2) || ((value > 2) && (value < 6)) ||
-                 ((value > 6) && (value < 14)) || (value == 15) ? true : false;
+                ((value > 6) && (value < 14)) || (value == 15) ? true : false;
         break;
     default:
         onTrig = false;
         break;
     }
 
+    data->setTR1((quint8) onTrig);
+
+    qDebug() << "On trig : " << onTrig;
     this->_onTrigStatus = onTrig;
 
     return onTrig;
@@ -533,7 +661,7 @@ void TriggerFunctions::_setValueFunction()
     }
 
     this->_checkValideEquation();
-   // this->displayValue();
+    // this->displayValue();
 }
 
 bool TriggerFunctions::_checkValideEquation()
@@ -571,62 +699,78 @@ bool TriggerFunctions::_checkValideEquation()
     return valide;
 }
 
-double TriggerFunctions::doubleSpinBoxAI2() const
+quint8 TriggerFunctions::_checkOnTrigTrace(quint8 trace, quint8 memoTrace, GlobalEnumatedAndExtern::eEdge edge)
+{
+    quint8 onTrig = 0;
+
+    if(edge == GlobalEnumatedAndExtern::risingEdge)
+    {
+        onTrig = (memoTrace == 0 && trace == 1) ? 1 : 0;
+    }
+    else
+    {
+        onTrig = (memoTrace == 1 && trace == 0) ? 1 : 0;
+    }
+
+    return onTrig;
+}
+
+quint8 TriggerFunctions::doubleSpinBoxAI2() const
 {
     return _doubleSpinBoxAI2;
 }
 
-void TriggerFunctions::setDoubleSpinBoxAI2(double doubleSpinBoxAI2)
+void TriggerFunctions::setDoubleSpinBoxAI2(quint8 doubleSpinBoxAI2)
 {
     _doubleSpinBoxAI2 = doubleSpinBoxAI2;
 }
 
-double TriggerFunctions::doubleSpinBoxAI1() const
+quint8 TriggerFunctions::doubleSpinBoxAI1() const
 {
     return _doubleSpinBoxAI1;
 }
 
-void TriggerFunctions::setDoubleSpinBoxAI1(double doubleSpinBoxAI1)
+void TriggerFunctions::setDoubleSpinBoxAI1(quint8 doubleSpinBoxAI1)
 {
     _doubleSpinBoxAI1 = doubleSpinBoxAI1;
 }
 
-double TriggerFunctions::doubleSpinBoxDI4() const
+quint8 TriggerFunctions::doubleSpinBoxDI4() const
 {
     return _doubleSpinBoxDI4;
 }
 
-void TriggerFunctions::setDoubleSpinBoxDI4(double doubleSpinBoxDI4)
+void TriggerFunctions::setDoubleSpinBoxDI4(quint8 doubleSpinBoxDI4)
 {
     _doubleSpinBoxDI4 = doubleSpinBoxDI4;
 }
 
-double TriggerFunctions::doubleSpinBoxDI3() const
+quint8 TriggerFunctions::doubleSpinBoxDI3() const
 {
     return _doubleSpinBoxDI3;
 }
 
-void TriggerFunctions::setDoubleSpinBoxDI3(double doubleSpinBoxDI3)
+void TriggerFunctions::setDoubleSpinBoxDI3(quint8 doubleSpinBoxDI3)
 {
     _doubleSpinBoxDI3 = doubleSpinBoxDI3;
 }
 
-double TriggerFunctions::doubleSpinBoxDI2() const
+quint8 TriggerFunctions::doubleSpinBoxDI2() const
 {
     return _doubleSpinBoxDI2;
 }
 
-void TriggerFunctions::setDoubleSpinBoxDI2(double doubleSpinBoxDI2)
+void TriggerFunctions::setDoubleSpinBoxDI2(quint8 doubleSpinBoxDI2)
 {
     _doubleSpinBoxDI2 = doubleSpinBoxDI2;
 }
 
-double TriggerFunctions::doubleSpinBoxDI1() const
+quint8 TriggerFunctions::doubleSpinBoxDI1() const
 {
     return _doubleSpinBoxDI1;
 }
 
-void TriggerFunctions::setDoubleSpinBoxDI1(double doubleSpinBoxDI1)
+void TriggerFunctions::setDoubleSpinBoxDI1(quint8 doubleSpinBoxDI1)
 {
     _doubleSpinBoxDI1 = doubleSpinBoxDI1;
 }

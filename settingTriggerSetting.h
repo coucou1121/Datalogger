@@ -77,6 +77,7 @@ private:
     //picture on button
     QPixmap _pixmapFallingEdge;
     QPixmap _pixmapRisingEdge;
+    QPixmap _pixmapNoEdge;
 
     //select or unselect the button
     void _DI1select(bool btselected);
@@ -100,6 +101,9 @@ private:
 
      //set range and text in trace setting button and doubleSpinBox
      void setRangeAndTextTrace(GlobalEnumatedAndExtern::eTracePossible trace, GlobalEnumatedAndExtern::eRangeValue range);
+
+     //double to int converter
+     quint8 _doubleToQuint8(double value, GlobalEnumatedAndExtern::eRangeValue range);
 
 public slots:
     void _btSelected(int buttonNumber, bool btSelected);

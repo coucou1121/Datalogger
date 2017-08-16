@@ -35,9 +35,7 @@ public:
     GlobalEnumatedAndExtern::eLogicOperator logicalOperator_Bottom() const;
     void setLogicalOperator_Bottom(const GlobalEnumatedAndExtern::eLogicOperator &logicalOperator_Bottom);
 
-    bool onTrig(quint8 valueA, quint8 valueB = 0, quint8 valueC = 0, quint8 valueD = 0);
-
-    bool _checkOnTrigData(DataFrame newDataFrame);
+    bool onTrig(DataFrame *data);
 
     void setBtDI1Edge(const GlobalEnumatedAndExtern::eEdge &btDI1Edge);
     GlobalEnumatedAndExtern::eEdge btDI1Edge() const;
@@ -57,23 +55,23 @@ public:
     GlobalEnumatedAndExtern::eEdge btAI2Edge() const;
     void setBtAI2Edge(const GlobalEnumatedAndExtern::eEdge &btAI2Edge);
 
-    double doubleSpinBoxDI1() const;
-    void setDoubleSpinBoxDI1(double doubleSpinBoxDI1);
+    quint8 doubleSpinBoxDI1() const;
+    void setDoubleSpinBoxDI1(quint8 doubleSpinBoxDI1);
 
-    double doubleSpinBoxDI2() const;
-    void setDoubleSpinBoxDI2(double doubleSpinBoxDI2);
+    quint8 doubleSpinBoxDI2() const;
+    void setDoubleSpinBoxDI2(quint8 doubleSpinBoxDI2);
 
-    double doubleSpinBoxDI3() const;
-    void setDoubleSpinBoxDI3(double doubleSpinBoxDI3);
+    quint8 doubleSpinBoxDI3() const;
+    void setDoubleSpinBoxDI3(quint8 doubleSpinBoxDI3);
 
-    double doubleSpinBoxDI4() const;
-    void setDoubleSpinBoxDI4(double doubleSpinBoxDI4);
+    quint8 doubleSpinBoxDI4() const;
+    void setDoubleSpinBoxDI4(quint8 doubleSpinBoxDI4);
 
-    double doubleSpinBoxAI1() const;
-    void setDoubleSpinBoxAI1(double doubleSpinBoxAI1);
+    quint8 doubleSpinBoxAI1() const;
+    void setDoubleSpinBoxAI1(quint8 doubleSpinBoxAI1);
 
-    double doubleSpinBoxAI2() const;
-    void setDoubleSpinBoxAI2(double doubleSpinBoxAI2);
+    quint8 doubleSpinBoxAI2() const;
+    void setDoubleSpinBoxAI2(quint8 doubleSpinBoxAI2);
 
 private:
 
@@ -86,6 +84,7 @@ private:
 
     bool _checkValideEquation();
 
+    quint8 _checkOnTrigTrace(quint8 trace, quint8 memoTrace, GlobalEnumatedAndExtern::eEdge edge);
 
     GlobalEnumatedAndExtern::eTracePossible _traceA;
     GlobalEnumatedAndExtern::eTracePossible _traceB;

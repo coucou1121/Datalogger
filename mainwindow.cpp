@@ -19,8 +19,8 @@ MainWindow::MainWindow(QWidget *parent) :
 
     //create timerfor thread
     _tickTimer = new RefreshTimer(false, "Tick timer", 1);
-    _newDataFrameTimer = new RefreshTimer(false, "Data updated timer", 1000);
-    _refreshDisplayTimer = new RefreshTimer(false, "Refres Display timer", 1000);
+    _newDataFrameTimer = new RefreshTimer(false, "Data updated timer", 10);
+    _refreshDisplayTimer = new RefreshTimer(false, "Refres Display timer", 100);
 
     //create data frame simulautor
     _dataFrameSimulator = new DataFrameSimulator("Frame Simulator");
@@ -101,6 +101,9 @@ void MainWindow::_mainSetup()
 
     //set basic draw on roll on
     _displayWindow->setDrawLeftToRight(false);
+
+    //set trigger function to false (no trig at startuo)
+    _triggerFunctionEvaluatedTrue = false;
 }
 
 void MainWindow::_setupDefaultValue()
@@ -176,6 +179,10 @@ void MainWindow::addNewDataFrame(QVector<DataFrame> dataFrameVector)
 
     for(QVector<DataFrame>::iterator it = dataFrameVector.begin(); it != dataFrameVector.end(); it++)
     {
+        //check trigger function
+        this->_triggerFuntion->onTrig(it);
+
+        //add value in buffer
        _dataFrameVectorReccorder.append(*it);
 
        //adapte the size with pretrigger value
@@ -184,12 +191,13 @@ void MainWindow::addNewDataFrame(QVector<DataFrame> dataFrameVector)
            _dataFrameVectorReccorder.remove(0);
        }
     }
+
+    //send value to the plot
     this->_displayWindow->addNewDataFrame(dataFrameVector);
     this->_triggerWindow->addNewDataFrame(dataFrameVector);
     qDebug() << objectName() << "nbValue" << _dataFrameVectorReccorder.size();
     this->_triggerFuntion = _settingWindow->getTriggerFuntion();
-    this->_triggerFuntion->displayValue();
-    this->_triggerFuntion->onTrig(0,0,1);
+    //this->_triggerFuntion->displayValue();
 }
 
 void MainWindow::refreshDisplay()
