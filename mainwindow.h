@@ -66,6 +66,8 @@ private:
     DisplayWindow *_displayWindow;
     DebugWindow *_debugWindow;
 
+    void _hideAllWindows();
+
     //Style
     CommonStyle _myStyle;
 
@@ -79,6 +81,19 @@ private:
     QPushButton *_btTrigger;
     QPushButton *_btDisplay;
     QPushButton *_btDebug;
+
+    bool _btBaseWasPressed;
+    bool _btSettingWasPressed;
+    bool _btTriggerWasPressed;
+    bool _btDisplayWasPressed;
+    bool _btDebugWasPressed;
+
+    GlobalEnumatedAndExtern::eMainStateApplication _mainStateApplication;
+    GlobalEnumatedAndExtern::eMainStateDisplay _mainStateDisplay;
+
+    //main state graph
+    void _mainStateGraphe();
+    void _goToNextState();
 
     //evaluation of the trigger function
     bool _triggerFunctionEvaluatedTrue;

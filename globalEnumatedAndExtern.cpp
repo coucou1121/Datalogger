@@ -82,14 +82,16 @@ QMap<int, QString> GlobalEnumatedAndExtern::initPeridePossibleTxt()
     return ret;
 }
 
-QMap<int, QString> GlobalEnumatedAndExtern::initMainStatePossibleTxt()
+QMap<int, QString> GlobalEnumatedAndExtern::initMainStateDisplayPossibleTxt()
 {
     QMap<int, QString> ret;
-    ret.insert(mainStateStop, "Stop");
-    ret.insert(mainStatePause, "Pause");
-    ret.insert(mainStateRunTrig, "Run Trig");
-    ret.insert(mainStateOnTrig, "On Trig");
-    ret.insert(mainStateRollOn, "Roll On");
+    ret.insert(init, "Init");
+    ret.insert(stopped, "Stopped");
+    ret.insert(ready, "Ready");
+    ret.insert(runTrig, "Run Trig");
+    ret.insert(trigged, "Trigged");
+    ret.insert(rollOn, "Roll on");
+    ret.insert(paused, "Paused");
     return ret;
 }
 
@@ -98,9 +100,9 @@ QMap<int, QString> GlobalEnumatedAndExtern::initMainStatePossibleTxt()
 extern QMap<int, QString> TriggerTracePossible = GlobalEnumatedAndExtern::initTriggerTracePossible();
 
 //externe variable
-extern QString BPStartStopStateBlockTxt = "Block";
 extern QString BPStartStopStateStartTxt = "Start";
 extern QString BPStartStopStateStopTxt = "Stop";
+extern QString BPStartStopStateHoldTxt = "Hold";
 
 extern QString range0_24Txt = "0/24";
 extern QString range0_30Txt = "0/30";

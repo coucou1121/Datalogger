@@ -725,6 +725,11 @@ void TriggerFunctions::setDoubleSpinBoxAI2(quint8 doubleSpinBoxAI2)
     _doubleSpinBoxAI2 = doubleSpinBoxAI2;
 }
 
+bool TriggerFunctions::onTrigStatus() const
+{
+    return _onTrigStatus;
+}
+
 quint8 TriggerFunctions::doubleSpinBoxAI1() const
 {
     return _doubleSpinBoxAI1;

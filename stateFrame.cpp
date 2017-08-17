@@ -8,7 +8,7 @@ StateFrame::StateFrame(QWidget *parent) :
     ui->setupUi(this);
 
     //initialise the Key - Value for main state possible
-    _mainStatePossible = GlobalEnumatedAndExtern::initMainStatePossibleTxt();
+    _mainStatePossible = GlobalEnumatedAndExtern::initMainStateDisplayPossibleTxt();
 
     //set logo
     _pixStateStop = new QPixmap(":/images/StateStop.png");
@@ -18,7 +18,7 @@ StateFrame::StateFrame(QWidget *parent) :
     _pixStateRollOn = new QPixmap(":/images/StateRollOn.png");
 
     //init the default value
-    setMainState(GlobalEnumatedAndExtern::mainStateStop);
+    setMainState(GlobalEnumatedAndExtern::init);
 }
 
 StateFrame::~StateFrame()
@@ -26,32 +26,35 @@ StateFrame::~StateFrame()
     delete ui;
 }
 
-void StateFrame::setMainState(GlobalEnumatedAndExtern::eMainState stateApp)
+void StateFrame::setMainState(GlobalEnumatedAndExtern::eMainStateDisplay stateApp)
 {
     ui->labelState->setText(_mainStatePossible[stateApp]);
 
     switch (stateApp)
     {
-    case GlobalEnumatedAndExtern::mainStateStop:
+    case GlobalEnumatedAndExtern::init:
+        //ui->labelLogoState->setPixmap(*_pixStateStop);
+        break;
+    case GlobalEnumatedAndExtern::stopped:
         ui->labelLogoState->setPixmap(*_pixStateStop);
         break;
-    case GlobalEnumatedAndExtern::mainStatePause:
-        ui->labelLogoState->setPixmap(*_pixStatePause);
+    case GlobalEnumatedAndExtern::ready:
+        //ui->labelLogoState->setPixmap(*_pixStatePause);
         break;
-    case GlobalEnumatedAndExtern::mainStateRunTrig:
+    case GlobalEnumatedAndExtern::runTrig:
         ui->labelLogoState->setPixmap(*_pixStateRunTrig);
         break;
-    case GlobalEnumatedAndExtern::mainStateOnTrig:
+    case GlobalEnumatedAndExtern::trigged:
         ui->labelLogoState->setPixmap(*_pixStateOnTrig);
         break;
-    case GlobalEnumatedAndExtern::mainStateRollOn:
+    case GlobalEnumatedAndExtern::rollOn:
+        ui->labelLogoState->setPixmap(*_pixStateRollOn);
+        break;
+    case GlobalEnumatedAndExtern::paused:
         ui->labelLogoState->setPixmap(*_pixStateRollOn);
         break;
     default:
         break;
     }
-    //QPixmap pix(":/images/StateStop.png");
-    //ui->labelLogoState->setPixmap(pix);
-    //ui->labelState->setText(mainStateStopTxt);
 }
 

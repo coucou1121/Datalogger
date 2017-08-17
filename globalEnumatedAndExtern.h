@@ -15,25 +15,40 @@ public:
     //application state possible
     typedef enum
     {
-        mainStateStop = 0,
-        mainStatePause,
-        mainStateRunTrig,
-        mainStateOnTrig,
-        mainStateRollOn
-    }eMainState;
+        mainStateInit = 0,
+        mainStateStop,
+        mainStateReady,
+        mainStateSet,
+        mainStateTrig,
+        mainStateRoll,
+        mainStateDebug
+    }eMainStateApplication;
 
-    QString mainStateStopTxt;
-    QString mainStatePauseTxt;
-    QString mainStateRunTrigTxt;
-    QString mainStateOnTrigTxt;
-    QString mainStaterollOnTxt;
+    //application state possible
+    typedef enum
+    {
+        init = 0,
+        stopped,
+        ready,
+        runTrig,
+        trigged,
+        rollOn,
+        paused
+    }eMainStateDisplay;
+
+//    QString mainStateInitTxt;
+//    QString mainStateReadyTxt;
+//    QString mainStatePauseTxt;
+//    QString mainStateRunTrigTxt;
+//    QString mainStateOnTrigTxt;
+//    QString mainStateRollOnTxt;
 
     //startStop button state possible
     typedef enum
     {
-        block = 0,
+        stop,
         start,
-        stop
+        hold
     }eBPStartStopState;
 
     QString BPStartStopStateBlockTxt;
@@ -138,7 +153,7 @@ public:
     static QMap<int, double> initPeridePossible();
     static QMap<int, QString> initPeridePossibleTxt();
 
-    static QMap<int, QString> initMainStatePossibleTxt();
+    static QMap<int, QString> initMainStateDisplayPossibleTxt();
 
 };
 

@@ -17,12 +17,12 @@ public:
     explicit StateFrame(QWidget *parent = 0);
     ~StateFrame();
 
-    void setMainState(GlobalEnumatedAndExtern::eMainState stateApp);
+    void setMainState(GlobalEnumatedAndExtern::eMainStateDisplay stateApp);
 
 private:
     Ui::StateFrame *ui;
 
-    GlobalEnumatedAndExtern::eMainState _mainsStateActualy;
+    GlobalEnumatedAndExtern::eMainStateDisplay _mainsStateActualy;
 
     //key value for main state of application
     QMap<int, QString> _mainStatePossible;

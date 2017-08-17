@@ -1,12 +1,17 @@
 #include "mainwindow.h"
 #include "ui_mainwindow.h"
 
-extern QString BPStartStopStateBlockTxt;
 extern QString BPStartStopStateStartTxt;
 extern QString BPStartStopStateStopTxt;
+extern QString BPStartStopStateHoldTxt;
 
 MainWindow::MainWindow(QWidget *parent) :
     QMainWindow(parent),
+    _btBaseWasPressed(false),
+    _btSettingWasPressed(false),
+    _btTriggerWasPressed(false),
+    _btDisplayWasPressed(false),
+    _btDebugWasPressed(false),
     ui(new Ui::MainWindow)
 {
     ui->setupUi(this);
@@ -19,7 +24,7 @@ MainWindow::MainWindow(QWidget *parent) :
 
     //create timerfor thread
     _tickTimer = new RefreshTimer(false, "Tick timer", 1);
-    _newDataFrameTimer = new RefreshTimer(false, "Data updated timer", 10);
+    _newDataFrameTimer = new RefreshTimer(false, "Data updated timer", 500);
     _refreshDisplayTimer = new RefreshTimer(false, "Refres Display timer", 100);
 
     //create data frame simulautor
@@ -63,9 +68,6 @@ MainWindow::MainWindow(QWidget *parent) :
 
     //get the setting in trigger function windows
     this->_triggerFuntion = _settingWindow->getTriggerFuntion();
-
-    //get edge selection in trigger setting windows
-
 }
 
 MainWindow::~MainWindow()
@@ -96,6 +98,12 @@ void MainWindow::_mainSetup()
     //set version on baseWindows
     _baseWindow->setVersion("1.0");
 
+    //set start state of application
+    this->_mainStateApplication = GlobalEnumatedAndExtern::mainStateInit;
+
+    //set start display state of application
+    this->_mainStateDisplay = GlobalEnumatedAndExtern::init;
+
     //set backGroud color and text on pushButton StartStop
     this->_startStopButtonManager((int)GlobalEnumatedAndExtern::start);
 
@@ -104,6 +112,9 @@ void MainWindow::_mainSetup()
 
     //set trigger function to false (no trig at startuo)
     _triggerFunctionEvaluatedTrue = false;
+
+    //start state graph
+    this->_mainStateGraphe();
 }
 
 void MainWindow::_setupDefaultValue()
@@ -120,16 +131,6 @@ void MainWindow::_startStopButtonManager(int state)
 
     switch (eState)
     {
-    case GlobalEnumatedAndExtern::block:
-        //set backgroud color
-        ui->pushButton_StartStop->setStyleSheet("background-color: qlineargradient(x1: 0, y1: 0, x2: 0, y2: 1, "
-                                                "stop: 1" + _myStyle.getBackGroundColorErrorFrame().name() +
-                                                ", stop: 0 #ffffff);");
-        //set text
-        ui->pushButton_StartStop->setText(BPStartStopStateBlockTxt);
-        //set enable
-        ui->pushButton_StartStop->setEnabled(false);
-        break;
     case GlobalEnumatedAndExtern::start:
         //set backgroud color
         ui->pushButton_StartStop->setStyleSheet("background-color: qlineargradient(x1: 0, y1: 0, x2: 0, y2: 1, "
@@ -143,12 +144,22 @@ void MainWindow::_startStopButtonManager(int state)
     case GlobalEnumatedAndExtern::stop:
         //set backgroud color
         ui->pushButton_StartStop->setStyleSheet("background-color: qlineargradient(x1: 0, y1: 0, x2: 0, y2: 1, "
-                                                "stop: 1" + _myStyle.getBackGroundColorBottomBar().name() +
+                                                "stop: 1" + _myStyle.getBackGroundColorErrorFrame().name() +
                                                 ", stop: 0 #ffffff);");
         //set text
         ui->pushButton_StartStop->setText(BPStartStopStateStopTxt);
         //set enable
         ui->pushButton_StartStop->setEnabled(true);
+        break;
+    case GlobalEnumatedAndExtern::hold:
+        //set backgroud color
+        ui->pushButton_StartStop->setStyleSheet("background-color: qlineargradient(x1: 0, y1: 0, x2: 0, y2: 1, "
+                                                "stop: 1" + _myStyle.getBackGroundColorErrorFrame().name() +
+                                                ", stop: 0 #ffffff);");
+        //set text
+        ui->pushButton_StartStop->setText(BPStartStopStateHoldTxt);
+        //set enable
+        ui->pushButton_StartStop->setEnabled(false);
         break;
     default:
         break;
@@ -183,13 +194,13 @@ void MainWindow::addNewDataFrame(QVector<DataFrame> dataFrameVector)
         this->_triggerFuntion->onTrig(it);
 
         //add value in buffer
-       _dataFrameVectorReccorder.append(*it);
+        _dataFrameVectorReccorder.append(*it);
 
-       //adapte the size with pretrigger value
-       if( _dataFrameVectorReccorder.size() > 1000)
-       {
-           _dataFrameVectorReccorder.remove(0);
-       }
+        //adapte the size with pretrigger value
+        if( _dataFrameVectorReccorder.size() > 1000)
+        {
+            _dataFrameVectorReccorder.remove(0);
+        }
     }
 
     //send value to the plot
@@ -330,9 +341,9 @@ void MainWindow::_setupSignalAndSlot()
     QObject::connect(this->_settingWindow, SIGNAL(_errorWrongEquation(int,bool)), ui->widgetError, SLOT(_reveivedError(int,bool)));
 
     //timer management to be sure they start correctly
-//    QObject::connect(this->_threadTick, SIGNAL(started), this->_tickTimer, SLOT(start()));
-//    QObject::connect(this->_threadDisplayRefresh, SIGNAL(started), this->_refreshDisplayTimer, SLOT(start()));
-//    QObject::connect(this->_threadDataFramSimulator, SIGNAL(started), this->_dataFrameSimulator, SLOT(start()));
+    //    QObject::connect(this->_threadTick, SIGNAL(started), this->_tickTimer, SLOT(start()));
+    //    QObject::connect(this->_threadDisplayRefresh, SIGNAL(started), this->_refreshDisplayTimer, SLOT(start()));
+    //    QObject::connect(this->_threadDataFramSimulator, SIGNAL(started), this->_dataFrameSimulator, SLOT(start()));
 
     //create new data frame from dataFrameSimulator
     QObject::connect(this->_newDataFrameTimer, SIGNAL(_tickFinished()), _dataFrameSimulator, SLOT(createDataFrame()));
@@ -347,10 +358,10 @@ void MainWindow::_setupSignalAndSlot()
     //QObject::connect(dataFrameSimulator, SIGNAL(valueDI1_8Updated(quint8)), &DisplayWindow, SLOT(addValueDI1_8(quint8)));
     //QObject::connect(dataFrameSimulator, SIGNAL(valueDI9_16Updated(quint8)), &DisplayWindow, SLOT(addValueDI9_16(quint8)));
 
-   // QObject::connect(dataFrameSimulator, SIGNAL(valueAI1Updated(quint8)), &DisplayWindow, SLOT(addValueAI1(quint8)));
-   // QObject::connect(dataFrameSimulator, SIGNAL(valueAI2Updated(quint8)), &DisplayWindow, SLOT(addValueAI2(quint8)));
-   // QObject::connect(dataFrameSimulator, SIGNAL(valueAI3Updated(quint8)), &DisplayWindow, SLOT(addValueAI3(quint8)));
-   // QObject::connect(dataFrameSimulator, SIGNAL(valueAI4Updated(quint8)), &DisplayWindow, SLOT(addValueAI4(quint8)));
+    // QObject::connect(dataFrameSimulator, SIGNAL(valueAI1Updated(quint8)), &DisplayWindow, SLOT(addValueAI1(quint8)));
+    // QObject::connect(dataFrameSimulator, SIGNAL(valueAI2Updated(quint8)), &DisplayWindow, SLOT(addValueAI2(quint8)));
+    // QObject::connect(dataFrameSimulator, SIGNAL(valueAI3Updated(quint8)), &DisplayWindow, SLOT(addValueAI3(quint8)));
+    // QObject::connect(dataFrameSimulator, SIGNAL(valueAI4Updated(quint8)), &DisplayWindow, SLOT(addValueAI4(quint8)));
 }
 
 void MainWindow::setupStyle()
@@ -358,6 +369,129 @@ void MainWindow::setupStyle()
     QPalette palette;
     palette.setColor(backgroundRole(), _myStyle.getBackGroundColor());
     this->setPalette(palette);
+}
+
+void MainWindow::_hideAllWindows()
+{
+    _baseWindow->hide();
+    _settingWindow->hide();
+    _triggerWindow->hide();
+    _displayWindow->hide();
+    _debugWindow->hide();
+}
+
+void MainWindow::_mainStateGraphe()
+{
+    //hide all windows
+    this->_hideAllWindows();
+
+    //action to do
+    switch (_mainStateApplication)
+    {
+    case GlobalEnumatedAndExtern::mainStateInit:
+        //show home page
+        this->_baseWindow->show();
+
+        //next step
+        this->_mainStateApplication = GlobalEnumatedAndExtern::mainStateReady;
+
+        //go to the next step
+//        this->_goToNextState();
+        qDebug() << "main state on : " << "init";
+        break;
+    case GlobalEnumatedAndExtern::mainStateStop:
+        //stop display refresh and data analyseur thread
+        this->stopThread();
+
+        //remove dark back ground on push button
+        this->_resetPushButtonColor();
+
+        //next step
+        this->_mainStateApplication = GlobalEnumatedAndExtern::mainStateReady;
+
+        // go to next state
+        this->_goToNextState();
+        qDebug() << "main state on : " << "Stop";
+        break;
+    case GlobalEnumatedAndExtern::mainStateReady:
+        _btBase->setStyleSheet("background-color:" + _myStyle.getBackGroundColorButtonStatusbarSelected().name() +
+                               "; color:" + _myStyle.getBackGroundColorButtonStatusbarUnselected().name() + ";");
+        _baseWindow->show();
+
+        qDebug() << "main state on : " << "ready";
+        break;
+    case GlobalEnumatedAndExtern::mainStateSet:
+        _btSetting->setStyleSheet("background-color:" + _myStyle.getBackGroundColorButtonStatusbarSelected().name() +
+                                  "; color:" + _myStyle.getBackGroundColorButtonStatusbarUnselected().name() + ";");
+        _settingWindow->show();
+        qDebug() << "main state on : " << "set";
+        break;
+    case GlobalEnumatedAndExtern::mainStateTrig:
+        _btTrigger->setStyleSheet("background-color:" + _myStyle.getBackGroundColorButtonStatusbarSelected().name() +
+                                  "; color:" + _myStyle.getBackGroundColorButtonStatusbarUnselected().name() + ";");
+        _triggerWindow->show();
+        qDebug() << "main state on : " << "trig";
+        break;
+    case GlobalEnumatedAndExtern::mainStateRoll:
+        _btDisplay->setStyleSheet("background-color:" + _myStyle.getBackGroundColorButtonStatusbarSelected().name() +
+                                  "; color:" + _myStyle.getBackGroundColorButtonStatusbarUnselected().name() + ";");
+        _displayWindow->show();
+        qDebug() << "main state on : " << "roll";
+        break;
+    case GlobalEnumatedAndExtern::mainStateDebug:
+        _btDebug->setStyleSheet("background-color:" + _myStyle.getBackGroundColorButtonStatusbarSelected().name() +
+                                "; color:" + _myStyle.getBackGroundColorButtonStatusbarUnselected().name() + ";");
+        _debugWindow->show();
+        qDebug() << "main state on : " << "Debug";
+        break;
+    default:
+        break;
+    }
+}
+
+void MainWindow::_goToNextState()
+{
+    // init state
+    if(!this->_btBaseWasPressed && !this->_btSettingWasPressed && !this->_btTriggerWasPressed &&
+            !this->_btDisplayWasPressed && this->_btDebugWasPressed)
+    {
+        this->_mainStateApplication = GlobalEnumatedAndExtern::mainStateReady;
+        this->_mainStateGraphe();
+    }
+    // after init state
+    else
+    {
+        if(this->_btBaseWasPressed)
+        {
+            this->_mainStateApplication = GlobalEnumatedAndExtern::mainStateReady;
+            this->_btTriggerWasPressed = false;
+            this->_mainStateGraphe();
+        }
+        if(this->_btSettingWasPressed)
+        {
+            this->_mainStateApplication = GlobalEnumatedAndExtern::mainStateSet;
+            this->_btSettingWasPressed = false;
+            this->_mainStateGraphe();
+        }
+        if(this->_btTriggerWasPressed)
+        {
+            this->_mainStateApplication = GlobalEnumatedAndExtern::mainStateTrig;
+            this->_btTriggerWasPressed = false;
+            this->_mainStateGraphe();
+        }
+        if(this->_btDisplayWasPressed)
+        {
+            this->_mainStateApplication = GlobalEnumatedAndExtern::mainStateRoll;
+            this->_btDisplayWasPressed = false;
+            this->_mainStateGraphe();
+        }
+        if(this->_btDebugWasPressed)
+        {
+            this->_mainStateApplication = GlobalEnumatedAndExtern::mainStateDebug;
+            this->_btDebugWasPressed = false;
+            this->_mainStateGraphe();
+        }
+    }
 }
 
 void MainWindow::_setStatusBar()
@@ -417,59 +551,48 @@ void MainWindow::_resetPushButtonColor()
     _btBase->setStyleSheet("background-color:" + _myStyle.getBackGroundColorButtonStatusbarUnselected().name() +
                            "; color:" + _myStyle.getBackGroundColorButtonStatusbarSelected().name() + ";");
     _btSetting->setStyleSheet("background-color:" + _myStyle.getBackGroundColorButtonStatusbarUnselected().name() +
-                           "; color:" + _myStyle.getBackGroundColorButtonStatusbarSelected().name() + ";");
+                              "; color:" + _myStyle.getBackGroundColorButtonStatusbarSelected().name() + ";");
     _btTrigger->setStyleSheet("background-color:" + _myStyle.getBackGroundColorButtonStatusbarUnselected().name() +
-                           "; color:" + _myStyle.getBackGroundColorButtonStatusbarSelected().name() + ";");
+                              "; color:" + _myStyle.getBackGroundColorButtonStatusbarSelected().name() + ";");
     _btDisplay->setStyleSheet("background-color:" + _myStyle.getBackGroundColorButtonStatusbarUnselected().name() +
-                           "; color:" + _myStyle.getBackGroundColorButtonStatusbarSelected().name() + ";");
+                              "; color:" + _myStyle.getBackGroundColorButtonStatusbarSelected().name() + ";");
     _btDebug->setStyleSheet("background-color:" + _myStyle.getBackGroundColorButtonStatusbarUnselected().name() +
-                           "; color:" + _myStyle.getBackGroundColorButtonStatusbarSelected().name() + ";");
-
-    _baseWindow->hide();
-    _settingWindow->hide();
-    _triggerWindow->hide();
-    _displayWindow->hide();
-    _debugWindow->hide();
+                            "; color:" + _myStyle.getBackGroundColorButtonStatusbarSelected().name() + ";");
 }
 
 void MainWindow::_btBase_released()
 {
-    this->_resetPushButtonColor();
-    _btBase->setStyleSheet("background-color:" + _myStyle.getBackGroundColorButtonStatusbarSelected().name() +
-                           "; color:" + _myStyle.getBackGroundColorButtonStatusbarUnselected().name() + ";");
-    _baseWindow->show();
+    this->_mainStateApplication = GlobalEnumatedAndExtern::mainStateStop;
+    this->_btBaseWasPressed = true;
+    this->_mainStateGraphe();
 }
 
 void MainWindow::_btSetting_released()
 {
-    this->_resetPushButtonColor();
-    _btSetting->setStyleSheet("background-color:" + _myStyle.getBackGroundColorButtonStatusbarSelected().name() +
-                           "; color:" + _myStyle.getBackGroundColorButtonStatusbarUnselected().name() + ";");
-    _settingWindow->show();
+    this->_mainStateApplication = GlobalEnumatedAndExtern::mainStateStop;
+    this->_btSettingWasPressed = true;
+    this->_mainStateGraphe();
 }
 
 void MainWindow::_btTrigger_released()
 {
-    this->_resetPushButtonColor();
-    _btTrigger->setStyleSheet("background-color:" + _myStyle.getBackGroundColorButtonStatusbarSelected().name() +
-                           "; color:" + _myStyle.getBackGroundColorButtonStatusbarUnselected().name() + ";");
-    _triggerWindow->show();
+    this->_mainStateApplication = GlobalEnumatedAndExtern::mainStateStop;
+    this->_btTriggerWasPressed = true;
+    this->_mainStateGraphe();
 }
 
 void MainWindow::_btDisplay_released()
 {
-    this->_resetPushButtonColor();
-    _btDisplay->setStyleSheet("background-color:" + _myStyle.getBackGroundColorButtonStatusbarSelected().name() +
-                           "; color:" + _myStyle.getBackGroundColorButtonStatusbarUnselected().name() + ";");
-    _displayWindow->show();
+    this->_mainStateApplication = GlobalEnumatedAndExtern::mainStateStop;
+    this->_btDisplayWasPressed = true;
+    this->_mainStateGraphe();
 }
 
 void MainWindow::_btDebug_released()
 {
-    this->_resetPushButtonColor();
-    _btDebug->setStyleSheet("background-color:" + _myStyle.getBackGroundColorButtonStatusbarSelected().name() +
-                           "; color:" + _myStyle.getBackGroundColorButtonStatusbarUnselected().name() + ";");
-    _debugWindow->show();
+    this->_mainStateApplication = GlobalEnumatedAndExtern::mainStateStop;
+    this->_btDebugWasPressed = true;
+    this->_mainStateGraphe();
 }
 
 void MainWindow::on_pushButton_StartStop_released()
@@ -482,9 +605,7 @@ void MainWindow::on_pushButton_StartStop_released()
     {
         this->_startStopButtonManager((int)GlobalEnumatedAndExtern::start);
         this->stopThread();
-        ui->widgetState->setMainState(GlobalEnumatedAndExtern::mainStateStop);
-//        _displayWindow->setDrawLeftToRight(_settingWindow->triggerFunctionEnable());
-//        qDebug() << objectName() << "trigger Enable" << _settingWindow->triggerFunctionEnable();
+        //        ui->widgetState->setMainState(GlobalEnumatedAndExtern::mainStateReady);
     }
     else
     {
@@ -492,14 +613,12 @@ void MainWindow::on_pushButton_StartStop_released()
         this->startThread();
         if(_settingWindow->triggerFunctionEnable())
         {
-            ui->widgetState->setMainState(GlobalEnumatedAndExtern::mainStateOnTrig);
+            //            ui->widgetState->setMainState(GlobalEnumatedAndExtern::mainStateOnTrig);
         }
         else
         {
-            ui->widgetState->setMainState(GlobalEnumatedAndExtern::mainStateRollOn);
+            //           ui->widgetState->setMainState(GlobalEnumatedAndExtern::mainStateRollOn);
         }
-//        _displayWindow->setDrawLeftToRight(_settingWindow->triggerFunctionEnable());
-//        qDebug() << objectName() << "trigger Enable" << _settingWindow->triggerFunctionEnable();
     }
     _displayWindow->setDrawLeftToRight(_settingWindow->triggerFunctionEnable());
     qDebug() << objectName() << "trigger Enable" << _settingWindow->triggerFunctionEnable();

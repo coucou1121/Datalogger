@@ -73,10 +73,11 @@ public:
     quint8 doubleSpinBoxAI2() const;
     void setDoubleSpinBoxAI2(quint8 doubleSpinBoxAI2);
 
+    bool onTrigStatus() const;
+
 private:
 
     bool _onTrigStatus;
-
 
     quint16 _valueFunction;
 
