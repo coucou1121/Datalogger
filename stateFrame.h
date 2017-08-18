@@ -17,7 +17,7 @@ public:
     explicit StateFrame(QWidget *parent = 0);
     ~StateFrame();
 
-    void setMainState(GlobalEnumatedAndExtern::eMainStateDisplay stateApp);
+    void setDisplayState(GlobalEnumatedAndExtern::eMainStateDisplay stateToDisplay);
 
 private:
     Ui::StateFrame *ui;

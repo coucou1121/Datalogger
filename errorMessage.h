@@ -32,7 +32,7 @@ private:
     void _displayMessage();
 
 private slots:
-    void _reveivedError(int errorNumber, bool active);
+    void _reveived_Error(int errorNumber, bool active);
 
 };
 

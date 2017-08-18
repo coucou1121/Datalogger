@@ -32,7 +32,7 @@ void ErrorMessage::_setColor(bool inTrouble)
     }
 }
 
-void ErrorMessage::_reveivedError(int errorNumber, bool active)
+void ErrorMessage::_reveived_Error(int errorNumber, bool active)
 {
     qDebug() << objectName() << "recievedError :" << errorNumber << ", " << active;
 
@@ -60,7 +60,7 @@ void ErrorMessage::_displayMessage()
     {
         this->_setColor(true);
 
-        foreach(int key, _errorListNow.keys() )
+        foreach(int key, _errorListNow.keys())
         {
             ui->label->setText(_errorListNow[key]);
         }

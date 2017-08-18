@@ -21,6 +21,9 @@ public:
 
     TriggerFunctions *getTriggerFuntion();
 
+    //check if there is minimum one selected trace
+    void checkIfAreSelectedTrace();
+
 private:
     Ui::SettingWindow *ui;
     CommonStyle _myStyle;
@@ -41,9 +44,9 @@ private:
     quint8 doubleToQint8(double value, GlobalEnumatedAndExtern::eRangeValue range);
 
 public slots:
-    void _recievedNbFrameSavedChanged(quint64 nbFrameChanged);
-    void _recievedSizeFrameChange(int frameSize);
-    void _recievedFTDIBaudrateChange(int FTDIBaudrate);
+    void _received_NbFrameSavedChanged(quint64 nbFrameChanged);
+    void _received_SizeFrameChange(int frameSize);
+    void _received_FTDIBaudrateChange(int FTDIBaudrate);
 
     void enableWindows(bool enableState);
 
@@ -73,35 +76,37 @@ public slots:
     void comboBoxBottomMiddle_changeCurrentIndex(int index);
 
 private slots:
-    void _recievedAddTraceFromChannelSelection(int traceNumber);
-    void _recievedRemoveTraceFromChannelSelection(int traceNumber);
-    void _recieved_errorFrequencyToLow(int errorNumber, bool active);
+    void _received_AddTraceFromChannelSelection(int traceNumber);
+    void _received_RemoveTraceFromChannelSelection(int traceNumber);
+    void _received_noSelectedTrace(int errorNumber, bool active);
+    void _received_noSelectedTriggerTrace(int errorNumber,bool active);
+    void _received_errorFrequencyToLow(int errorNumber, bool active);
     void _received_errorWrongEquation(int errorNumber,bool active);
 
-    void _recieved_pushButtonRangeAI1Changed();
-    void _recieved_pushButtonRangeAI2Changed();
+    void _received_pushButtonRangeAI1Changed();
+    void _received_pushButtonRangeAI2Changed();
 
-    void _recieved_pushButtonEdgeDI1Changed(int eEdge);
-    void _recieved_pushButtonEdgeDI2Changed(int eEdge);
-    void _recieved_pushButtonEdgeDI3Changed(int eEdge);
-    void _recieved_pushButtonEdgeDI4Changed(int eEdge);
-    void _recieved_pushButtonEdgeAI1Changed(int eEdge);
-    void _recieved_pushButtonEdgeAI2Changed(int eEdge);
+    void _received_pushButtonEdgeDI1Changed(int eEdge);
+    void _received_pushButtonEdgeDI2Changed(int eEdge);
+    void _received_pushButtonEdgeDI3Changed(int eEdge);
+    void _received_pushButtonEdgeDI4Changed(int eEdge);
+    void _received_pushButtonEdgeAI1Changed(int eEdge);
+    void _received_pushButtonEdgeAI2Changed(int eEdge);
 
-    void _recieved_doubleSpinBoxDI1_valueChanged(double value);
-    void _recieved_doubleSpinBoxDI2_valueChanged(double value);
-    void _recieved_doubleSpinBoxDI3_valueChanged(double value);
-    void _recieved_doubleSpinBoxDI4_valueChanged(double value);
-    void _recieved_doubleSpinBoxAI1_valueChanged(double value);
-    void _recieved_doubleSpinBoxAI2_valueChanged(double value);
+    void _received_doubleSpinBoxDI1_valueChanged(double value);
+    void _received_doubleSpinBoxDI2_valueChanged(double value);
+    void _received_doubleSpinBoxDI3_valueChanged(double value);
+    void _received_doubleSpinBoxDI4_valueChanged(double value);
+    void _received_doubleSpinBoxAI1_valueChanged(double value);
+    void _received_doubleSpinBoxAI2_valueChanged(double value);
 
-    void _recieved_ComboBoxTopLeft_currentIndexChanged(int index);
-    void _recieved_ComboBoxTopRight_currentIndexChanged(int index);
-    void _recieved_ComboBoxBottomLeft_currentIndexChanged(int index);
-    void _recieved_ComboBoxBottomRight_currentIndexChanged(int index);
-    void _recieved_ComboBoxTopMiddle_currentIndexChanged(int index);
-    void _recieved_ComboBoxMiddle_currentIndexChanged(int index);
-    void _recieved_ComboBoxBottomMiddle_currentIndexChanged(int index);
+    void _received_ComboBoxTopLeft_currentIndexChanged(int index);
+    void _received_ComboBoxTopRight_currentIndexChanged(int index);
+    void _received_ComboBoxBottomLeft_currentIndexChanged(int index);
+    void _received_ComboBoxBottomRight_currentIndexChanged(int index);
+    void _received_ComboBoxTopMiddle_currentIndexChanged(int index);
+    void _received_ComboBoxMiddle_currentIndexChanged(int index);
+    void _received_ComboBoxBottomMiddle_currentIndexChanged(int index);
 
 signals:
     void _addTraceInTriggerMenu(int traceNumber);
@@ -111,6 +116,8 @@ signals:
     void _nbFrameSavedChange(quint64 nbFrameChanges);
     void _sizeFrameChange(int frameSize);
     void _FTDIBaudrateChange(int FTDIBaudrate);
+    void _errorNoSelectedTrace(int errorNumber, bool noSelecetTrace);
+    void _errorNoSelectedTriggerTrace(int errorNumber, bool noSelectedTriggerTrace);
     void _errorFrequencyToLow(int errorNumber,bool active);
     void _errorWrongEquation(int errorNumber,bool active);
 

@@ -19,11 +19,20 @@ public:
     explicit SettingChannelSelection(QWidget *parent = 0);
     ~SettingChannelSelection();
 
+    //check if there is minimum one selected trace
+    void _checkIfAreSelectedTrace();
+
 private:
     Ui::SettingChannelSelection *ui;
 
     //variable for commum style for getting acces of all color and shape
     CommonStyle _myStyle;
+
+    //quantity of selected trace
+    quint8 _sumOfSelectedTrace;
+
+    //quantity of trigger selected trace
+    quint8 _sumOfTriggerSelectedTrace;
 
     //set the color and shape of this windows
     void _setupStyle();
@@ -45,6 +54,8 @@ private:
 
     //generic emit signal for all button
     void emitBtSignal(int buttonNumber, bool btSelected);
+
+
 
 private slots:
     void on_btDI1_released();
@@ -84,6 +95,12 @@ signals:
 
     //remove trace in trigger setting
     void _removeTrace(int enumTrace);
+
+    //error no selected trace
+    void _errorNoSelectedTrace(int errorNumber, bool noSelecetTrace);
+
+    //error no selected trigger trace
+    void _errorNoSelectedTriggerTrace(int errorNumber, bool noSelectedTriggerTrace);
 };
 
 #endif // SETTINGCHANNELSELECTION_H

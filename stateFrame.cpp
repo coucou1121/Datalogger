@@ -18,7 +18,7 @@ StateFrame::StateFrame(QWidget *parent) :
     _pixStateRollOn = new QPixmap(":/images/StateRollOn.png");
 
     //init the default value
-    setMainState(GlobalEnumatedAndExtern::init);
+    setDisplayState(GlobalEnumatedAndExtern::init);
 }
 
 StateFrame::~StateFrame()
@@ -26,11 +26,11 @@ StateFrame::~StateFrame()
     delete ui;
 }
 
-void StateFrame::setMainState(GlobalEnumatedAndExtern::eMainStateDisplay stateApp)
+void StateFrame::setDisplayState(GlobalEnumatedAndExtern::eMainStateDisplay stateToDisplay)
 {
-    ui->labelState->setText(_mainStatePossible[stateApp]);
+    ui->labelState->setText(_mainStatePossible[stateToDisplay]);
 
-    switch (stateApp)
+    switch (stateToDisplay)
     {
     case GlobalEnumatedAndExtern::init:
         //ui->labelLogoState->setPixmap(*_pixStateStop);

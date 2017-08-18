@@ -34,13 +34,13 @@ SOURCES += main.cpp\
     settingTriggerFunction.cpp \
     settingPreTriggerPercentage.cpp \
     settingWindow.cpp \
-    baseWindow.cpp \
     globalEnumatedAndExtern.cpp \
     triggerWindow.cpp \
     debugWindow.cpp \
     dataAnalyser.cpp \
     triggerFunctions.cpp \
-    displayWindow.cpp
+    displayWindow.cpp \
+    homeWindow.cpp
 
 HEADERS  += mainwindow.h \
     main.h \
@@ -65,13 +65,13 @@ HEADERS  += mainwindow.h \
     settingTriggerFunction.h \
     settingPreTriggerPercentage.h \
     settingWindow.h \
-    baseWindow.h \
     globalEnumatedAndExtern.h \
     triggerWindow.h \
     debugWindow.h \
     dataAnalyser.h \
     triggerFunctions.h \
-    displayWindow.h
+    displayWindow.h \
+    homeWindow.h
 
 FORMS    += mainwindow.ui \
     analogPlot.ui \
@@ -87,10 +87,10 @@ FORMS    += mainwindow.ui \
     settingTriggerFunction.ui \
     settingPreTriggerPercentage.ui \
     settingWindow.ui \
-    baseWindow.ui \
     triggerWindow.ui \
     debugWindow.ui \
-    displayWindow.ui
+    displayWindow.ui \
+    homeWindow.ui
 
 RESOURCES += \
     images.qrc

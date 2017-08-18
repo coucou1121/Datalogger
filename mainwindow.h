@@ -11,7 +11,7 @@
 
 #include "main.h"
 #include "commonStyle.h"
-#include "baseWindow.h"
+#include "homeWindow.h"
 #include "settingWindow.h"
 #include "triggerWindow.h"
 #include "displayWindow.h"
@@ -60,7 +60,7 @@ private:
     RefreshTimer *_refreshDisplayTimer;
 
     //ui windows
-    BaseWindow *_baseWindow;
+    HomeWindow *_homeWindow;
     SettingWindow *_settingWindow;
     TriggerWindow *_triggerWindow;
     DisplayWindow *_displayWindow;
@@ -76,24 +76,27 @@ private:
 
     QHBoxLayout *_hlayoutStatus;
 
-    QPushButton *_btBase;
+    QPushButton *_btHome;
     QPushButton *_btSetting;
     QPushButton *_btTrigger;
-    QPushButton *_btDisplay;
+    QPushButton *_btRoll;
     QPushButton *_btDebug;
 
-    bool _btBaseWasPressed;
+    bool _btHomeWasPressed;
     bool _btSettingWasPressed;
     bool _btTriggerWasPressed;
-    bool _btDisplayWasPressed;
+    bool _btRollWasPressed;
     bool _btDebugWasPressed;
-
-    GlobalEnumatedAndExtern::eMainStateApplication _mainStateApplication;
-    GlobalEnumatedAndExtern::eMainStateDisplay _mainStateDisplay;
 
     //main state graph
     void _mainStateGraphe();
     void _goToNextState();
+    GlobalEnumatedAndExtern::eMainStateApplication _mainStateStep;
+    GlobalEnumatedAndExtern::eMainStateDisplay _mainStateDisplay;
+
+    //trig state graph
+    void _trigStateGraph();
+    GlobalEnumatedAndExtern::eTrigState _trigStateStep;
 
     //evaluation of the trigger function
     bool _triggerFunctionEvaluatedTrue;
@@ -114,7 +117,7 @@ private:
     void _setupDefaultValue();
 
     //manage state of the startStop button
-    void _startStopButtonManager(int state);
+    void _startStopButtonTextAndColorManager(GlobalEnumatedAndExtern::eBPStartStopState state);
 
     //array for data recorder
     QVector<DataFrame> _dataFrameVectorReccorder;
@@ -133,10 +136,10 @@ public slots:
     void refreshDisplay();
 
 private slots:
-    void _btBase_released();
+    void _btHome_released();
     void _btSetting_released();
     void _btTrigger_released();
-    void _btDisplay_released();
+    void _btRoll_released();
     void _btDebug_released();
     void on_pushButton_StartStop_released();
 };

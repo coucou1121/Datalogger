@@ -34,37 +34,37 @@ void SettingWindow::_setupSignalAndSlot()
     //connection of all signals from setting menu to outside
     //manage range
     QObject::connect(ui->widgetTriggerSetting, SIGNAL(_pushButtonRangeAI1WasChanged()),
-                     this, SLOT(_recieved_pushButtonRangeAI1Changed()));
+                     this, SLOT(_received_pushButtonRangeAI1Changed()));
     QObject::connect(ui->widgetTriggerSetting, SIGNAL(_pushButtonRangeAI2WasChanged()),
-                     this, SLOT(_recieved_pushButtonRangeAI2Changed()));
+                     this, SLOT(_received_pushButtonRangeAI2Changed()));
 
     //manage eEdge
     QObject::connect(ui->widgetTriggerSetting, SIGNAL(_pushButtonEdgeDI1WasChanged(int)),
-                     this, SLOT(_recieved_pushButtonEdgeDI1Changed(int)));
+                     this, SLOT(_received_pushButtonEdgeDI1Changed(int)));
     QObject::connect(ui->widgetTriggerSetting, SIGNAL(_pushButtonEdgeDI2WasChanged(int)),
-                     this, SLOT(_recieved_pushButtonEdgeDI2Changed(int)));
+                     this, SLOT(_received_pushButtonEdgeDI2Changed(int)));
     QObject::connect(ui->widgetTriggerSetting, SIGNAL(_pushButtonEdgeDI3WasChanged(int)),
-                     this, SLOT(_recieved_pushButtonEdgeDI3Changed(int)));
+                     this, SLOT(_received_pushButtonEdgeDI3Changed(int)));
     QObject::connect(ui->widgetTriggerSetting, SIGNAL(_pushButtonEdgeDI4WasChanged(int)),
-                     this, SLOT(_recieved_pushButtonEdgeDI4Changed(int)));
+                     this, SLOT(_received_pushButtonEdgeDI4Changed(int)));
     QObject::connect(ui->widgetTriggerSetting, SIGNAL(_pushButtonEdgeAI1WasChanged(int)),
-                     this, SLOT(_recieved_pushButtonEdgeAI1Changed(int)));
+                     this, SLOT(_received_pushButtonEdgeAI1Changed(int)));
     QObject::connect(ui->widgetTriggerSetting, SIGNAL(_pushButtonEdgeAI2WasChanged(int)),
-                     this, SLOT(_recieved_pushButtonEdgeAI2Changed(int)));
+                     this, SLOT(_received_pushButtonEdgeAI2Changed(int)));
 
     //manage value in doubleSpinBoxes
     QObject::connect(ui->widgetTriggerSetting, SIGNAL(_doubleSpinBoxDI1_valueWasChanged(double)),
-                     this, SLOT(_recieved_doubleSpinBoxDI1_valueChanged(double)));
+                     this, SLOT(_received_doubleSpinBoxDI1_valueChanged(double)));
     QObject::connect(ui->widgetTriggerSetting, SIGNAL(_doubleSpinBoxDI2_valueWasChanged(double)),
-                     this, SLOT(_recieved_doubleSpinBoxDI2_valueChanged(double)));
+                     this, SLOT(_received_doubleSpinBoxDI2_valueChanged(double)));
     QObject::connect(ui->widgetTriggerSetting, SIGNAL(_doubleSpinBoxDI3_valueWasChanged(double)),
-                     this, SLOT(_recieved_doubleSpinBoxDI3_valueChanged(double)));
+                     this, SLOT(_received_doubleSpinBoxDI3_valueChanged(double)));
     QObject::connect(ui->widgetTriggerSetting, SIGNAL(_doubleSpinBoxDI4_valueWasChanged(double)),
-                     this, SLOT(_recieved_doubleSpinBoxDI4_valueChanged(double)));
+                     this, SLOT(_received_doubleSpinBoxDI4_valueChanged(double)));
     QObject::connect(ui->widgetTriggerSetting, SIGNAL(_doubleSpinBoxAI1_valueWasChanged(double)),
-                     this, SLOT(_recieved_doubleSpinBoxAI1_valueChanged(double)));
+                     this, SLOT(_received_doubleSpinBoxAI1_valueChanged(double)));
     QObject::connect(ui->widgetTriggerSetting, SIGNAL(_doubleSpinBoxAI2_valueWasChanged(double)),
-                     this, SLOT(_recieved_doubleSpinBoxAI2_valueChanged(double)));
+                     this, SLOT(_received_doubleSpinBoxAI2_valueChanged(double)));
 
     //add button in all trigger function combobox
     QObject::connect(ui->widgetChannelSelection, SIGNAL(_btAddList(int)),ui->widgetTriggerFunction, SLOT(_comboboxAddItem(int)));
@@ -74,25 +74,25 @@ void SettingWindow::_setupSignalAndSlot()
 
     //select same trace according with the setting menu in the other trigger setting function
     QObject::connect(ui->widgetTriggerFunction, SIGNAL(_comboBoxTopLeft_currentIndexWasChanged(int)),
-                     this, SLOT(_recieved_ComboBoxTopLeft_currentIndexChanged(int)));
+                     this, SLOT(_received_ComboBoxTopLeft_currentIndexChanged(int)));
     QObject::connect(ui->widgetTriggerFunction, SIGNAL(_comboBoxTopRight_currentIndexWasChanged(int)),
-                     this, SLOT(_recieved_ComboBoxTopRight_currentIndexChanged(int)));
+                     this, SLOT(_received_ComboBoxTopRight_currentIndexChanged(int)));
     QObject::connect(ui->widgetTriggerFunction, SIGNAL(_comboBoxBottomLeft_currentIndexWasChanged(int)),
-                     this, SLOT(_recieved_ComboBoxBottomLeft_currentIndexChanged(int)));
+                     this, SLOT(_received_ComboBoxBottomLeft_currentIndexChanged(int)));
     QObject::connect(ui->widgetTriggerFunction, SIGNAL(_comboBoxBottomRight_currentIndexWasChanged(int)),
-                     this, SLOT(_recieved_ComboBoxBottomRight_currentIndexChanged(int)));
+                     this, SLOT(_received_ComboBoxBottomRight_currentIndexChanged(int)));
     QObject::connect(ui->widgetTriggerFunction, SIGNAL(_comboBoxTopMiddle_currentIndexWasChanged(int)),
-                     this, SLOT(_recieved_ComboBoxTopMiddle_currentIndexChanged(int)));
+                     this, SLOT(_received_ComboBoxTopMiddle_currentIndexChanged(int)));
     QObject::connect(ui->widgetTriggerFunction, SIGNAL(_comboBoxMiddle_currentIndexWasChanged(int)),
-                     this, SLOT(_recieved_ComboBoxMiddle_currentIndexChanged(int)));
+                     this, SLOT(_received_ComboBoxMiddle_currentIndexChanged(int)));
     QObject::connect(ui->widgetTriggerFunction, SIGNAL(_comboBoxBottomMiddle_currentIndexWasChanged(int)),
-                     this, SLOT(_recieved_ComboBoxBottomMiddle_currentIndexChanged(int)));
+                     this, SLOT(_received_ComboBoxBottomMiddle_currentIndexChanged(int)));
 
     //add Trace in all needed menu
-    QObject::connect(ui->widgetChannelSelection, SIGNAL(_addTrace(int)),this, SLOT(_recievedAddTraceFromChannelSelection(int)));
+    QObject::connect(ui->widgetChannelSelection, SIGNAL(_addTrace(int)),this, SLOT(_received_AddTraceFromChannelSelection(int)));
 
     //remove Trace in  all needed menu
-    QObject::connect(ui->widgetChannelSelection, SIGNAL(_removeTrace(int)),this, SLOT(_recievedRemoveTraceFromChannelSelection(int)));
+    QObject::connect(ui->widgetChannelSelection, SIGNAL(_removeTrace(int)),this, SLOT(_received_RemoveTraceFromChannelSelection(int)));
 
     //update save frame number in time scale factor menu
     QObject::connect(this, SIGNAL(_nbFrameSavedChange(quint64)),ui->widgetTimeScaleFactor, SLOT(_nbFrameSavedWasChanged(quint64)));
@@ -104,8 +104,12 @@ void SettingWindow::_setupSignalAndSlot()
     QObject::connect(this, SIGNAL(_FTDIBaudrateChange(int)),ui->widgetTimeScaleFactor, SLOT(_FTDIBaudrateWasChanged(int)));
 
     //error management
+    QObject::connect(ui->widgetChannelSelection, SIGNAL(_errorNoSelectedTrace(int,bool)),
+                     this, SLOT(_received_noSelectedTrace(int,bool)));
+    QObject::connect(ui->widgetChannelSelection, SIGNAL(_errorNoSelectedTriggerTrace(int,bool)),
+                     this, SLOT(_received_noSelectedTriggerTrace(int,bool)));
     QObject::connect(ui->widgetTimeScaleFactor, SIGNAL(_errorFrequencyToLow(int,bool)),
-                     this, SLOT(_recieved_errorFrequencyToLow(int,bool)));
+                     this, SLOT(_received_errorFrequencyToLow(int,bool)));
     QObject::connect(ui->widgetTriggerFunction, SIGNAL(_errorWrongEquation(int,bool)),
                      this, SLOT(_received_errorWrongEquation(int,bool)));
 }
@@ -171,7 +175,12 @@ TriggerFunctions *SettingWindow::getTriggerFuntion()
     return this->_triggerFunction;
 }
 
-void SettingWindow::_recievedAddTraceFromChannelSelection(int traceNumber)
+void SettingWindow::checkIfAreSelectedTrace()
+{
+    ui->widgetChannelSelection->_checkIfAreSelectedTrace();
+}
+
+void SettingWindow::_received_AddTraceFromChannelSelection(int traceNumber)
 {    
     // add in trigger menu
     emit _addTraceInTriggerMenu(traceNumber);
@@ -186,7 +195,7 @@ void SettingWindow::_recievedAddTraceFromChannelSelection(int traceNumber)
 
 }
 
-void SettingWindow::_recievedRemoveTraceFromChannelSelection(int traceNumber)
+void SettingWindow::_received_RemoveTraceFromChannelSelection(int traceNumber)
 {   
     //remove in trigger menu
     emit _removeTraceInTriggerMenu(traceNumber);
@@ -197,7 +206,17 @@ void SettingWindow::_recievedRemoveTraceFromChannelSelection(int traceNumber)
     qDebug() << "_recievedRemoveTraceFromChannelSelection" << _triggerFunctionEnable;
 }
 
-void SettingWindow::_recieved_errorFrequencyToLow(int errorNumber, bool active)
+void SettingWindow::_received_noSelectedTrace(int errorNumber, bool active)
+{
+   emit _errorNoSelectedTrace(errorNumber, active);
+}
+
+void SettingWindow::_received_noSelectedTriggerTrace(int errorNumber, bool active)
+{
+   emit _errorNoSelectedTriggerTrace(errorNumber, active);
+}
+
+void SettingWindow::_received_errorFrequencyToLow(int errorNumber, bool active)
 {
     emit _errorFrequencyToLow(errorNumber, active);
 }
@@ -207,57 +226,57 @@ void SettingWindow::_received_errorWrongEquation(int errorNumber, bool active)
     emit _errorWrongEquation(errorNumber, active);
 }
 
-void SettingWindow::_recieved_pushButtonRangeAI1Changed()
+void SettingWindow::_received_pushButtonRangeAI1Changed()
 {
     emit _pushButtonRangeAI1WasChangedFromSettingMenu();
 }
 
-void SettingWindow::_recieved_pushButtonRangeAI2Changed()
+void SettingWindow::_received_pushButtonRangeAI2Changed()
 {
     emit _pushButtonRangeAI2WasChangedFromSettingMenu();
 }
 
-void SettingWindow::_recieved_pushButtonEdgeDI1Changed(int eEdge)
+void SettingWindow::_received_pushButtonEdgeDI1Changed(int eEdge)
 {
     emit _pushButtonEdgeDI1WasChangedFromSettingMenu(eEdge);
 }
 
-void SettingWindow::_recieved_pushButtonEdgeDI2Changed(int eEdge)
+void SettingWindow::_received_pushButtonEdgeDI2Changed(int eEdge)
 {
     emit _pushButtonEdgeDI2WasChangedFromSettingMenu(eEdge);
 }
 
-void SettingWindow::_recieved_pushButtonEdgeDI3Changed(int eEdge)
+void SettingWindow::_received_pushButtonEdgeDI3Changed(int eEdge)
 {
     emit _pushButtonEdgeDI3WasChangedFromSettingMenu(eEdge);
 }
 
-void SettingWindow::_recieved_pushButtonEdgeDI4Changed(int eEdge)
+void SettingWindow::_received_pushButtonEdgeDI4Changed(int eEdge)
 {
     emit _pushButtonEdgeDI4WasChangedFromSettingMenu(eEdge);
 }
 
-void SettingWindow::_recieved_pushButtonEdgeAI1Changed(int eEdge)
+void SettingWindow::_received_pushButtonEdgeAI1Changed(int eEdge)
 {
     emit _pushButtonEdgeAI1WasChangedFromSettingMenu(eEdge);
 }
 
-void SettingWindow::_recieved_pushButtonEdgeAI2Changed(int eEdge)
+void SettingWindow::_received_pushButtonEdgeAI2Changed(int eEdge)
 {
     emit _pushButtonEdgeAI2WasChangedFromSettingMenu(eEdge);
 }
 
-void SettingWindow::_recievedNbFrameSavedChanged(quint64 nbFrameChanged)
+void SettingWindow::_received_NbFrameSavedChanged(quint64 nbFrameChanged)
 {
     emit _nbFrameSavedChange(nbFrameChanged);
 }
 
-void SettingWindow::_recievedSizeFrameChange(int frameSize)
+void SettingWindow::_received_SizeFrameChange(int frameSize)
 {
     emit _sizeFrameChange(frameSize);
 }
 
-void SettingWindow::_recievedFTDIBaudrateChange(int FTDIBaudrate)
+void SettingWindow::_received_FTDIBaudrateChange(int FTDIBaudrate)
 {
     emit _FTDIBaudrateChange(FTDIBaudrate);
 }
@@ -338,37 +357,37 @@ void SettingWindow::doubleSpinBoxAI2_changeValue(double value)
     ui->widgetTriggerSetting->doubleSpinBoxAI2_changeValue(value);
 }
 
-void SettingWindow::_recieved_doubleSpinBoxDI1_valueChanged(double value)
+void SettingWindow::_received_doubleSpinBoxDI1_valueChanged(double value)
 {
     emit _doubleSpinBoxDI1_valueWasChangedFromSettingMenu(value);
 }
 
-void SettingWindow::_recieved_doubleSpinBoxDI2_valueChanged(double value)
+void SettingWindow::_received_doubleSpinBoxDI2_valueChanged(double value)
 {
     emit _doubleSpinBoxDI2_valueWasChangedFromSettingMenu(value);
 }
 
-void SettingWindow::_recieved_doubleSpinBoxDI3_valueChanged(double value)
+void SettingWindow::_received_doubleSpinBoxDI3_valueChanged(double value)
 {
     emit _doubleSpinBoxDI3_valueWasChangedFromSettingMenu(value);
 }
 
-void SettingWindow::_recieved_doubleSpinBoxDI4_valueChanged(double value)
+void SettingWindow::_received_doubleSpinBoxDI4_valueChanged(double value)
 {
     emit _doubleSpinBoxDI4_valueWasChangedFromSettingMenu(value);
 }
 
-void SettingWindow::_recieved_doubleSpinBoxAI1_valueChanged(double value)
+void SettingWindow::_received_doubleSpinBoxAI1_valueChanged(double value)
 {
     emit _doubleSpinBoxAI1_valueWasChangedFromSettingMenu(value);
 }
 
-void SettingWindow::_recieved_doubleSpinBoxAI2_valueChanged(double value)
+void SettingWindow::_received_doubleSpinBoxAI2_valueChanged(double value)
 {
     emit _doubleSpinBoxAI2_valueWasChangedFromSettingMenu(value);
 }
 
-void SettingWindow::_recieved_ComboBoxTopLeft_currentIndexChanged(int index)
+void SettingWindow::_received_ComboBoxTopLeft_currentIndexChanged(int index)
 {
     //check if trace selected
     _triggerFunctionEnable = ui->widgetTriggerFunction->areSomeTraceSelected();
@@ -376,32 +395,32 @@ void SettingWindow::_recieved_ComboBoxTopLeft_currentIndexChanged(int index)
     emit _comboBoxTopLeft_currentIndexWasChanged(index);
 }
 
-void SettingWindow::_recieved_ComboBoxTopRight_currentIndexChanged(int index)
+void SettingWindow::_received_ComboBoxTopRight_currentIndexChanged(int index)
 {
     emit _comboBoxTopRight_currentIndexWasChanged(index);
 }
 
-void SettingWindow::_recieved_ComboBoxBottomLeft_currentIndexChanged(int index)
+void SettingWindow::_received_ComboBoxBottomLeft_currentIndexChanged(int index)
 {
     emit _comboBoxBottomLeft_currentIndexWasChanged(index);
 }
 
-void SettingWindow::_recieved_ComboBoxBottomRight_currentIndexChanged(int index)
+void SettingWindow::_received_ComboBoxBottomRight_currentIndexChanged(int index)
 {
     emit _comboBoxBottomRight_currentIndexWasChanged(index);
 }
 
-void SettingWindow::_recieved_ComboBoxTopMiddle_currentIndexChanged(int index)
+void SettingWindow::_received_ComboBoxTopMiddle_currentIndexChanged(int index)
 {
     emit _comboBoxTopMiddle_currentIndexWasChanged(index);
 }
 
-void SettingWindow::_recieved_ComboBoxMiddle_currentIndexChanged(int index)
+void SettingWindow::_received_ComboBoxMiddle_currentIndexChanged(int index)
 {
     emit _comboBoxMiddle_currentIndexWasChanged(index);
 }
 
-void SettingWindow::_recieved_ComboBoxBottomMiddle_currentIndexChanged(int index)
+void SettingWindow::_received_ComboBoxBottomMiddle_currentIndexChanged(int index)
 {
     emit _comboBoxBottomMiddle_currentIndexWasChanged(index);
 }

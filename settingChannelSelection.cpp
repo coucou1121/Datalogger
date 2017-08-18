@@ -3,15 +3,17 @@
 
 SettingChannelSelection::SettingChannelSelection(QWidget *parent) :
     QFrame(parent),
-    ui(new Ui::SettingChannelSelection)
+    ui(new Ui::SettingChannelSelection),
+    _sumOfSelectedTrace(0),
+    _sumOfTriggerSelectedTrace(0)
 {
     //initialise the Key - Value for combobx
     _triggerTracePossible = GlobalEnumatedAndExtern::initTriggerTracePossible();
 
     ui->setupUi(this);
-    _setupStyle();
-    _setupUILayout();
-    _setupLabel();
+    this->_setupStyle();
+    this->_setupUILayout();
+    this->_setupLabel();
 }
 
 SettingChannelSelection::~SettingChannelSelection()
@@ -103,14 +105,23 @@ void SettingChannelSelection::emitBtSignal(int buttonNumber, bool btSelected)
 
     if(btSelected)
     {
+        //increase number of selected trace
+        this->_sumOfSelectedTrace++;
+
+        //increase number of trigger selected trace
+        if(buttonNumber == GlobalEnumatedAndExtern::btDI1 ||
+                buttonNumber == GlobalEnumatedAndExtern::btDI2 ||
+                buttonNumber == GlobalEnumatedAndExtern::btDI3 ||
+                buttonNumber == GlobalEnumatedAndExtern::btDI4 ||
+                buttonNumber == GlobalEnumatedAndExtern::btAI1 ||
+                buttonNumber == GlobalEnumatedAndExtern::btAI2)
+        {
+            this->_sumOfTriggerSelectedTrace++;
+        }
+
         //unlock trigger setting in trigger setting menu
         emit _btSeleccted(buttonNumber, btSelected);
 
-
-        //if its DI1 -> DI4, AI1 and AI2
-//        if(     buttonNumber < GlobalEnumatedAndExtern::btDI5 ||
-//                buttonNumber == GlobalEnumatedAndExtern::btAI1 ||
-//                buttonNumber == GlobalEnumatedAndExtern::btAI2)
         {
             //add selection in trigger function combobox
             emit _btAddList(buttonNumber);
@@ -122,6 +133,20 @@ void SettingChannelSelection::emitBtSignal(int buttonNumber, bool btSelected)
     }
     else
     {
+        //decrease number of selected trace
+        this->_sumOfSelectedTrace--;
+
+        //decrease number of trigger selected trace
+        if(buttonNumber == GlobalEnumatedAndExtern::btDI1 ||
+                buttonNumber == GlobalEnumatedAndExtern::btDI2 ||
+                buttonNumber == GlobalEnumatedAndExtern::btDI3 ||
+                buttonNumber == GlobalEnumatedAndExtern::btDI4 ||
+                buttonNumber == GlobalEnumatedAndExtern::btAI1 ||
+                buttonNumber == GlobalEnumatedAndExtern::btAI2)
+        {
+            this->_sumOfTriggerSelectedTrace--;
+        }
+
         //remove selection in trigger function combobox
         emit _btRemoveList(buttonNumber);
 
@@ -130,6 +155,33 @@ void SettingChannelSelection::emitBtSignal(int buttonNumber, bool btSelected)
     }
 
     emit _btSeleccted(buttonNumber, btSelected);
+
+    this->_checkIfAreSelectedTrace();
+}
+
+void SettingChannelSelection::_checkIfAreSelectedTrace()
+{
+    //check if aren't selected trace
+    if(this->_sumOfSelectedTrace <= 0)
+    {
+        emit _errorNoSelectedTrace(GlobalEnumatedAndExtern::errorNoSelectedTrace, true);
+
+    }
+    //check if aren't trigger selected trace
+    else if(this->_sumOfTriggerSelectedTrace <= 0)
+    {
+        emit _errorNoSelectedTriggerTrace(GlobalEnumatedAndExtern::errorNoSelectedTriggerTrace, true);
+    }
+    else
+    {
+        emit _errorNoSelectedTrace(GlobalEnumatedAndExtern::errorNoSelectedTrace, false);
+
+        //check if are trigger selected trace
+        if(this->_sumOfTriggerSelectedTrace > 0)
+        {
+            emit _errorNoSelectedTriggerTrace(GlobalEnumatedAndExtern::errorNoSelectedTriggerTrace, false);
+        }
+    }
 }
 
 void SettingChannelSelection::on_btDI1_released()

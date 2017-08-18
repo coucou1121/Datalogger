@@ -1,25 +1,25 @@
-#ifndef BASEWINDOW_H
-#define BASEWINDOW_H
+#ifndef HomeWindow_H
+#define HomeWindow_H
 
 #include <QWidget>
 
 namespace Ui {
-class BaseWindow;
+class HomeWindow;
 }
 
-class BaseWindow : public QWidget
+class HomeWindow : public QWidget
 {
     Q_OBJECT
 
 public:
-    explicit BaseWindow(QWidget *parent = 0);
-    ~BaseWindow();
+    explicit HomeWindow(QWidget *parent = 0);
+    ~HomeWindow();
 
     void setTitle(const QString &title);
     void setVersion(const QString &version);
 
 private:
-    Ui::BaseWindow *ui;
+    Ui::HomeWindow *ui;
 
     //title
     QString _title;
@@ -28,4 +28,4 @@ private:
     QString _version;
 };
 
-#endif // BASEWINDOW_H
+#endif // HomeWindow_H

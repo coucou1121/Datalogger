@@ -12,7 +12,7 @@ private:
 public:
     GlobalEnumatedAndExtern();
 
-    //application state possible
+    //application main state possible
     typedef enum
     {
         mainStateInit = 0,
@@ -24,7 +24,16 @@ public:
         mainStateDebug
     }eMainStateApplication;
 
-    //application state possible
+    //application trig state possible
+    typedef enum
+    {
+        trigNoReady = 0,
+        trigReady,
+        trigRunTrig,
+        trigTrigged,
+    }eTrigState;
+
+    //display state possible
     typedef enum
     {
         init = 0,
@@ -35,6 +44,12 @@ public:
         rollOn,
         paused
     }eMainStateDisplay;
+
+    QString BPMenuHomeTxt;
+    QString BPMenuSetTxt;
+    QString BPMenuTrigTxt;
+    QString BPMenuRollTxt;
+    QString BPMenuDebugTxt;
 
 //    QString mainStateInitTxt;
 //    QString mainStateReadyTxt;
@@ -55,12 +70,14 @@ public:
     QString BPStartStopStateStartTxt;
     QString BPStartStopStateStopTxt;
 
-    //ErrorPossible
+    //Error Possible
     typedef enum
     {
         noError = 0,
         errorSamplingFrequencyToHigh,
-        errorWrongEquation
+        errorWrongEquation,
+        errorNoSelectedTrace,
+        errorNoSelectedTriggerTrace
     }eError;
 
 

@@ -10,7 +10,9 @@ QMap<int, QString> GlobalEnumatedAndExtern::initErrorPossible()
     QMap<int, QString> ret;
     ret.insert(noError, "no error");
     ret.insert(errorSamplingFrequencyToHigh, "Periode too low \n or \n baudrate too high");
-    ret.insert(errorWrongEquation, "Wrong Equation in\n Trigger Tunction \nmenu");
+    ret.insert(errorWrongEquation, "Wrong Equation in \n Trigger Tunction\n menu");
+    ret.insert(errorNoSelectedTrace, "no selected \n channels");
+    ret.insert(errorNoSelectedTriggerTrace, "no selected \n trigger channels");
     return ret;
 }
 
@@ -100,6 +102,12 @@ QMap<int, QString> GlobalEnumatedAndExtern::initMainStateDisplayPossibleTxt()
 extern QMap<int, QString> TriggerTracePossible = GlobalEnumatedAndExtern::initTriggerTracePossible();
 
 //externe variable
+extern QString BPMenuHomeTxt = "Home";
+extern QString BPMenuSetTxt = "Set";
+extern QString BPMenuTrigTxt = "Trig";
+extern QString BPMenuRollTxt = "Roll";
+extern QString BPMenuDebugTxt = "Debug";
+
 extern QString BPStartStopStateStartTxt = "Start";
 extern QString BPStartStopStateStopTxt = "Stop";
 extern QString BPStartStopStateHoldTxt = "Hold";
