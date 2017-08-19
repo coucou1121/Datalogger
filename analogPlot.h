@@ -6,16 +6,22 @@
 #include "qcustomplot.h"
 #include "commonStyle.h"
 
-#define AI_TIMER_REFRESH 100
-#define AI_DISPLAY_REFRESH 0
+//#define AI_TIMER_REFRESH 100
+//#define AI_DISPLAY_REFRESH 0
 #define AI_NB_TRACE 1
-#define AI_RESOLUTION 900
-#define AI_NB_X_PIXELS 795
+//#define AI_RESOLUTION 900
+#define AI_NB_X_PIXELS 400 //795
 #define AI_NB_X_VALUES_DISPLAY_LIVE     AI_NB_X_PIXELS/AI_NB_TRACE
-#define AI_NB_X_VALUES_DISPLAY_HOLD 100
-#define AI_X_AXIS_MIN_VALUE -1.2
-#define AI_Y_AXIS_MIN_VALUE 1.2
-#define AI_Y_AXIS_MAX_VALUE 255
+//#define AI_NB_X_VALUES_DISPLAY_HOLD 100
+//#define AI_GRAPH_0_X_AXIS_MIN_VALUE -1.2
+
+//gap of 0.2 beetween trace add display frame
+#define AI_Y_AXIS_MIN_VALUE -0.2
+#define AI_Y_AXIS_MAX_VALUE 255.2
+
+//gap of 0.2 beetween trigger trace add display frame
+#define AI_TRIGGER_Y_AXIS_MIN_VALUE -0.2
+#define AI_TRIGGER_Y_AXIS_MAX_VALUE 1.2
 
 namespace Ui {
 class AnalogPlot;
@@ -29,20 +35,25 @@ public:
     explicit AnalogPlot(QWidget *parent = 0);
     ~AnalogPlot();
 
-    //geter setter
-    //quint64 CPT() const;
-    //void setCPT(const quint64 &CPT);
+    quint64 CPT() const;
+    void setCPT(const quint64 &CPT);
 
-    //quint8 yValue() const;
-    //void setYValue(quint8 yValue);
+    quint8 yValue() const;
+    void setYValue(quint8 yValue);
 
     //change title name
     void setTitleName(QString name);
 
+    //set trace color to blue
+    void setTraceColorblue();
+
+    //set trace color to green
+    void setTraceColorRed();
+
     //direction du draw
     // if true, draw left to right, mode roll on
     // if flase, draw right to left, mode trig
-    void setDrawLeftToRight(bool drawLeftToRight);
+    void setDrawRightToLeft(bool drawRightToLeft);
 
     void replot();
 
@@ -52,6 +63,8 @@ private:
     quint64 _CPT;
     quint8 _yValue;
     //int _minValue = 0;
+
+    QColor _traceSettingColor;
 
     // Data buffers
     QVector<double> _YData;
@@ -70,6 +83,9 @@ private:
 
     //set curve style
     void setupTrace(QCustomPlot *customPlot);
+
+    //plot array pointer
+    QSharedPointer<QCPGraphDataContainer>  _arrayPlotContainerPointer;
 
 public slots:
     void updatePlot();

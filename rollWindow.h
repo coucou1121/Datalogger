@@ -23,7 +23,7 @@ public:
     //direction du draw
     // if true, draw left to right, mode roll on
     // if flase, draw right to left, mode trig
-    void setDrawLeftToRight(bool drawLeftToRight);
+    void setDrawRightToLeft(bool drawRightToLeft);
 
     // update the plot
     void refreshPlot();

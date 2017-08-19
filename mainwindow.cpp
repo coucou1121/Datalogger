@@ -19,7 +19,8 @@ MainWindow::MainWindow(QWidget *parent) :
     _btTriggerWasPressed(false),
     _btRollWasPressed(false),
     _btDebugWasPressed(false),
-    _trigStateStep(GlobalEnumatedAndExtern::trigReady)
+    _trigStateStep(GlobalEnumatedAndExtern::trigReady),
+    _rollStateStep(GlobalEnumatedAndExtern::rollReady)
 {
     ui->setupUi(this);
     setMinimumSize(MINIMUM_WIDTH_SIZE, MINIMUM_HEIGHT_SIZE);
@@ -43,7 +44,7 @@ MainWindow::MainWindow(QWidget *parent) :
 
     //create timerfor thread
     _tickTimer = new RefreshTimer(false, "Tick timer", 1);
-    _newDataFrameTimer = new RefreshTimer(false, "Data updated timer", 1000);
+    _newDataFrameTimer = new RefreshTimer(false, "Data updated timer", 50);
     _refreshDisplayTimer = new RefreshTimer(false, "Refres Display timer", 100);
 
     //create data frame simulautor
@@ -71,6 +72,10 @@ MainWindow::MainWindow(QWidget *parent) :
     //perso type for signal
     qRegisterMetaType<QVector<DataFrame>>("QVector<DataFrame>");
     //qRegisterMetaType<TriggerFunctions>("TriggerFunctions");
+
+    //select direction to plot
+    _rollWindow->setDrawRightToLeft(true);
+    _triggerWindow->setDrawRightToLeft(true);
 
     //get the setting in trigger function windows
     this->_triggerFuntion = _settingWindow->getTriggerFuntion();
@@ -112,9 +117,6 @@ void MainWindow::_mainSetup()
 
     //set backGroud color and text on pushButton StartStop
     this->_startStopButtonTextAndColorManager(GlobalEnumatedAndExtern::start);
-
-    //set basic draw on roll on
-    _rollWindow->setDrawLeftToRight(false);
 
     //set trigger function to false (no trig at startuo)
     _triggerFunctionEvaluatedTrue = false;
@@ -181,7 +183,10 @@ void MainWindow::startThread()
 void MainWindow::stopThread()
 {
     _tickTimer->stopTimer();
-    _newDataFrameTimer->stopTimer();
+    if(this->_mainStateStep != GlobalEnumatedAndExtern::mainStateRoll)
+    {
+        _newDataFrameTimer->stopTimer();
+    }
     _refreshDisplayTimer->stopTimer();
 }
 
@@ -193,7 +198,7 @@ void MainWindow::addNewDataFrame(QVector<DataFrame> dataFrameVector)
         //check trigger function
         this->_triggerFuntion->onTrig(it);
 
-         //add value in buffer
+        //add value in buffer
         _dataFrameVectorReccorder.append(*it);
 
         //adapte the size with pretrigger value
@@ -204,8 +209,17 @@ void MainWindow::addNewDataFrame(QVector<DataFrame> dataFrameVector)
     }
 
     //send value to the plot
-    this->_rollWindow->addNewDataFrame(dataFrameVector);
-    this->_triggerWindow->addNewDataFrame(dataFrameVector);
+    switch (_mainStateStep)
+    {
+    case GlobalEnumatedAndExtern::mainStateRoll:
+        this->_rollWindow->addNewDataFrame(dataFrameVector);
+        break;
+    case GlobalEnumatedAndExtern::mainStateTrig:
+        this->_triggerWindow->addNewDataFrame(dataFrameVector);
+        break;
+    default:
+        break;
+    }
     qDebug() << objectName() << "nbValue" << _dataFrameVectorReccorder.size();
     this->_triggerFuntion = _settingWindow->getTriggerFuntion();
     //this->_triggerFuntion->displayValue();
@@ -415,6 +429,14 @@ void MainWindow::_mainStateGraphe()
         //next step
         this->_mainStateStep = GlobalEnumatedAndExtern::mainStateReady;
 
+        //set trig state to ready
+        this->_trigStateStep = GlobalEnumatedAndExtern::trigReady;
+        this->_trigStateGraph();
+
+        //set roll state to ready
+        this->_rollStateStep = GlobalEnumatedAndExtern::rollReady;
+        this->_rollStateGraph();
+
         // go to next state
         qDebug() << "main state on : " << "Stop";
         this->_goToNextState();
@@ -550,7 +572,7 @@ void MainWindow::_trigStateGraph()
 {
     switch (this->_trigStateStep)
     {
-    case GlobalEnumatedAndExtern::trigNoReady:
+    case GlobalEnumatedAndExtern::trigNotReady:
         break;
     case GlobalEnumatedAndExtern::trigReady:
         //change StartStopButton to Start
@@ -583,6 +605,47 @@ void MainWindow::_trigStateGraph()
 
         //set display state to Run Trig
         ui->widgetState->setDisplayState(GlobalEnumatedAndExtern::trigged);
+
+        break;
+    default:
+        break;
+    }
+}
+
+void MainWindow::_rollStateGraph()
+{
+    switch (this->_rollStateStep)
+    {
+    case GlobalEnumatedAndExtern::rollNotReady:
+        break;
+    case GlobalEnumatedAndExtern::rollReady:
+        //change StartStopButton to Start
+        this->_startStopButtonTextAndColorManager(GlobalEnumatedAndExtern::start);
+
+        //set display state to ready
+        ui->widgetState->setDisplayState(GlobalEnumatedAndExtern::ready);
+
+        break;
+    case GlobalEnumatedAndExtern::rollRollOn:
+        //change StartStopButton to hold
+        this->_startStopButtonTextAndColorManager(GlobalEnumatedAndExtern::hold);
+
+        //start thread for analysing and refresh the display
+        this->startThread();
+
+        //set display state to roll on
+        ui->widgetState->setDisplayState(GlobalEnumatedAndExtern::rollOn);
+
+        break;
+    case GlobalEnumatedAndExtern::rollPaused:
+        //change StartStopButton to hold
+        this->_startStopButtonTextAndColorManager(GlobalEnumatedAndExtern::start);
+
+        //stop thread for analysing and refresh the display
+        this->stopThread();
+
+        //set display state to paused
+        ui->widgetState->setDisplayState(GlobalEnumatedAndExtern::paused);
 
         break;
     default:
@@ -723,6 +786,21 @@ void MainWindow::on_pushButton_StartStop_released()
             break;
             //manage roll function
         case GlobalEnumatedAndExtern::mainStateRoll:
+            switch (_rollStateStep)
+            {
+            case GlobalEnumatedAndExtern::rollReady:
+                //next roll state
+                this->_rollStateStep = GlobalEnumatedAndExtern::rollRollOn;
+                this->_rollStateGraph();
+                break;
+            case GlobalEnumatedAndExtern::rollPaused:
+                //next roll state
+                this->_rollStateStep = GlobalEnumatedAndExtern::rollRollOn;
+                this->_rollStateGraph();
+                break;
+            default:
+                break;
+            }
             break;
         default:
             break;
@@ -750,13 +828,21 @@ void MainWindow::on_pushButton_StartStop_released()
             this->_trigStateGraph();
             break;
         case GlobalEnumatedAndExtern::mainStateRoll:
-            break;
+            switch (_rollStateStep)
+            {
+            case GlobalEnumatedAndExtern::rollRollOn:
+                //next roll state
+                this->_rollStateStep = GlobalEnumatedAndExtern::rollPaused;
+                this->_rollStateGraph();
+                break;
+            default:
+                break;
+            }
         case GlobalEnumatedAndExtern::mainStateDebug:
             break;
         default:
             break;
         }
     }
-    _rollWindow->setDrawLeftToRight(_settingWindow->triggerFunctionEnable());
     qDebug() << objectName() << "trigger Enable" << _settingWindow->triggerFunctionEnable();
 }

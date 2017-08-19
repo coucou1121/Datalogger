@@ -24,29 +24,29 @@ RollWindow::~RollWindow()
     delete ui;
 }
 
-void RollWindow::setDrawLeftToRight(bool drawLeftToRight)
+void RollWindow::setDrawRightToLeft(bool drawRightToLeft)
 {
-    ui->DI1->setDrawLeftToRight(drawLeftToRight);
-    ui->DI2->setDrawLeftToRight(drawLeftToRight);
-    ui->DI3->setDrawLeftToRight(drawLeftToRight);
-    ui->DI4->setDrawLeftToRight(drawLeftToRight);
-    ui->DI5->setDrawLeftToRight(drawLeftToRight);
-    ui->DI6->setDrawLeftToRight(drawLeftToRight);
-    ui->DI7->setDrawLeftToRight(drawLeftToRight);
-    ui->DI8->setDrawLeftToRight(drawLeftToRight);
-    ui->DI9->setDrawLeftToRight(drawLeftToRight);
-    ui->DI10->setDrawLeftToRight(drawLeftToRight);
-    ui->DI11->setDrawLeftToRight(drawLeftToRight);
-    ui->DI12->setDrawLeftToRight(drawLeftToRight);
-    ui->DI13->setDrawLeftToRight(drawLeftToRight);
-    ui->DI14->setDrawLeftToRight(drawLeftToRight);
-    ui->DI15->setDrawLeftToRight(drawLeftToRight);
-    ui->DI16->setDrawLeftToRight(drawLeftToRight);
+    ui->DI1->setDrawRightToLeft(drawRightToLeft);
+    ui->DI2->setDrawRightToLeft(drawRightToLeft);
+    ui->DI3->setDrawRightToLeft(drawRightToLeft);
+    ui->DI4->setDrawRightToLeft(drawRightToLeft);
+    ui->DI5->setDrawRightToLeft(drawRightToLeft);
+    ui->DI6->setDrawRightToLeft(drawRightToLeft);
+    ui->DI7->setDrawRightToLeft(drawRightToLeft);
+    ui->DI8->setDrawRightToLeft(drawRightToLeft);
+    ui->DI9->setDrawRightToLeft(drawRightToLeft);
+    ui->DI10->setDrawRightToLeft(drawRightToLeft);
+    ui->DI11->setDrawRightToLeft(drawRightToLeft);
+    ui->DI12->setDrawRightToLeft(drawRightToLeft);
+    ui->DI13->setDrawRightToLeft(drawRightToLeft);
+    ui->DI14->setDrawRightToLeft(drawRightToLeft);
+    ui->DI15->setDrawRightToLeft(drawRightToLeft);
+    ui->DI16->setDrawRightToLeft(drawRightToLeft);
 
-    ui->AI1->setDrawLeftToRight(drawLeftToRight);
-    ui->AI2->setDrawLeftToRight(drawLeftToRight);
-    ui->AI3->setDrawLeftToRight(drawLeftToRight);
-    ui->AI4->setDrawLeftToRight(drawLeftToRight);
+    ui->AI1->setDrawRightToLeft(drawRightToLeft);
+    ui->AI2->setDrawRightToLeft(drawRightToLeft);
+    ui->AI3->setDrawRightToLeft(drawRightToLeft);
+    ui->AI4->setDrawRightToLeft(drawRightToLeft);
 }
 
 void RollWindow::refreshPlot()
@@ -154,7 +154,7 @@ void RollWindow::refreshPlot()
             ui->AI4->replot();
         }
         //qDebug() << objectName() << "took" << timerElapse.elapsed() << "miliseconds" << " for refresh";
-        timerElapse.restart();
+        //timerElapse.restart();
     }
 }
 

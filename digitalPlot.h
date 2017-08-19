@@ -11,7 +11,7 @@
 //#define DI_DISPLAY_REFRESH 0
 #define DI_NB_TRACE 1
 //#define DI_RESOLUTION 900
-#define DI_NB_X_PIXELS 80 //795
+#define DI_NB_X_PIXELS 400 //795
 #define DI_NB_X_VALUES_DISPLAY_LIVE     DI_NB_X_PIXELS/DI_NB_TRACE
 //#define DI_NB_X_VALUES_DISPLAY_HOLD 100
 //#define DI_X_AXIS_MIN_VALUE 0
@@ -48,9 +48,9 @@ public:
     void setTraceColorRed();
 
     //direction du draw
-    // if true, draw left to right, mode roll on
-    // if flase, draw right to left, mode trig
-    void setDrawLeftToRight(bool drawLeftToRight);
+    // if false, draw left to right, mode roll on
+    // if true, draw right to left, mode trig
+    void setDrawRightToLeft(bool drawRightToLeft);
 
     //update plot
     void replot();

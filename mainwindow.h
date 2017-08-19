@@ -98,6 +98,10 @@ private:
     void _trigStateGraph();
     GlobalEnumatedAndExtern::eTrigState _trigStateStep;
 
+    //roll state graph
+    void _rollStateGraph();
+    GlobalEnumatedAndExtern::eRollState _rollStateStep;
+
     //evaluation of the trigger function
     bool _triggerFunctionEvaluatedTrue;
 

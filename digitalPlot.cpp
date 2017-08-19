@@ -3,14 +3,14 @@
 
 DigitalPlot::DigitalPlot(QWidget *parent) :
     QWidget(parent),
-    ui(new Ui::DigitalPlot)
+    ui(new Ui::DigitalPlot),
+    _CPT(0)
 {
     ui->setupUi(this);
     setupStyle(ui->widget_DI);
     setupTrace(ui->widget_DI);
     ui->TLname_DI->setStyleSheet("background-color:" + _myStyle.getBackGroundColorBottomBar().name() + ";");
     _arrayPlotContainerPointer = ui->widget_DI->graph(0)->data();
-    _CPT = 0;
 }
 
 DigitalPlot::~DigitalPlot()
@@ -35,9 +35,9 @@ void DigitalPlot::setTraceColorRed()
     ui->widget_DI->graph(0)->setPen(QPen(_traceSettingColor));
 }
 
-void DigitalPlot::setDrawLeftToRight(bool drawLeftToRight)
+void DigitalPlot::setDrawRightToLeft(bool drawRightToLeft)
 {
-      ui->widget_DI->xAxis->setRangeReversed(!drawLeftToRight);
+      ui->widget_DI->xAxis->setRangeReversed(drawRightToLeft);
 }
 
 void DigitalPlot::setupStyle(QCustomPlot *customPlot)

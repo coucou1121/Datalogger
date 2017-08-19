@@ -33,15 +33,15 @@ TriggerWindow::~TriggerWindow()
     delete ui;
 }
 
-void TriggerWindow::setDrawLeftToRight(bool drawLeftToRight)
+void TriggerWindow::setDrawRightToLeft(bool drawRightToLeft)
 {
-    ui->widgetDI1->setDrawLeftToRight(drawLeftToRight);
-    ui->widgetDI2->setDrawLeftToRight(drawLeftToRight);
-    ui->widgetDI3->setDrawLeftToRight(drawLeftToRight);
-    ui->widgetDI4->setDrawLeftToRight(drawLeftToRight);
+    ui->widgetDI1->setDrawRightToLeft(!drawRightToLeft);
+    ui->widgetDI2->setDrawRightToLeft(!drawRightToLeft);
+    ui->widgetDI3->setDrawRightToLeft(!drawRightToLeft);
+    ui->widgetDI4->setDrawRightToLeft(!drawRightToLeft);
 
-    ui->widgetAI1->setDrawLeftToRight(drawLeftToRight);
-    ui->widgetAI2->setDrawLeftToRight(drawLeftToRight);
+    ui->widgetAI1->setDrawRightToLeft(!drawRightToLeft);
+    ui->widgetAI2->setDrawRightToLeft(!drawRightToLeft);
 }
 
 void TriggerWindow::refreshPlot()

@@ -27,11 +27,20 @@ public:
     //application trig state possible
     typedef enum
     {
-        trigNoReady = 0,
+        trigNotReady = 0,
         trigReady,
         trigRunTrig,
         trigTrigged,
     }eTrigState;
+
+    //application trig state possible
+    typedef enum
+    {
+        rollNotReady = 0,
+        rollReady,
+        rollRollOn,
+        rollPaused,
+    }eRollState;
 
     //display state possible
     typedef enum
