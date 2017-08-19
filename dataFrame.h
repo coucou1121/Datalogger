@@ -1,7 +1,6 @@
 #ifndef DATAFRAME_H
 #define DATAFRAME_H
 
-#include "frame.h"
 #include <QDebug>
 
 class DataFrame

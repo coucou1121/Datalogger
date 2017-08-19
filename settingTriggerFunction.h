@@ -24,6 +24,15 @@ public:
 
     TriggerFunctions *triggerFuntion() const;
 
+    // change current index in the combobox, use to sychronise wiht the other same object.
+    void comboBoxTopLeft_changeCurrentIndex(quint8 index);
+    void comboBoxTopRight_changeCurrentIndex(quint8 index);
+    void comboBoxBottomLeft_changeCurrentIndex(quint8 index);
+    void comboBoxBottomRight_changeCurrentIndex(quint8 index);
+    void comboBoxTopMiddle_changeCurrentIndex(quint8 index);
+    void comboBoxMiddle_changeCurrentIndex(quint8 index);
+    void comboBoxBottomMiddle_changeCurrentIndex(quint8 index);
+
 private:
     Ui::SettingTriggerFunction *ui;
 
@@ -56,18 +65,8 @@ private:
     void _updateCombobox();
 
 public slots:
-    void _comboboxAddItem(int buttonNumber);
-    void _comboboxRevmoveItem(int buttonNumber);
-
-    // received when the trace was changed from an other trigger function menu.
-    void _comboBoxTopLeft_currentIndexChanged(int index);
-    void _comboBoxTopRight_currentIndexChanged(int index);
-    void _comboBoxBottomLeft_currentIndexChanged(int index);
-    void _comboBoxBottomRight_currentIndexChanged(int index);
-    void _comboBoxTopMiddle_currentIndexChanged(int index);
-    void _comboBoxMiddle_currentIndexChanged(int index);
-    void _comboBoxBottomMiddle_currentIndexChanged(int index);
-
+    void comboboxAddItem(quint8 buttonNumber);
+    void comboboxRevmoveItem(quint8 buttonNumber);
 
 private slots:
     // recieved when other trace was selected on this windows
@@ -80,21 +79,21 @@ private slots:
     void on_comboBoxBottomMiddle_currentIndexChanged(int index);
 
     //received error
-    void _received_errorWrongEquation(int errorNumber,bool active);
+    void _received_errorWrongEquation(quint8 errorNumber,bool active);
 
 signals:
 
-    // send for change the sychronize the selection in the other trigger function menu
-    void _comboBoxTopLeft_currentIndexWasChanged(int index);
-    void _comboBoxTopRight_currentIndexWasChanged(int index);
-    void _comboBoxBottomLeft_currentIndexWasChanged(int index);
-    void _comboBoxBottomRight_currentIndexWasChanged(int index);
-    void _comboBoxTopMiddle_currentIndexWasChanged(int index);
-    void _comboBoxMiddle_currentIndexWasChanged(int index);
-    void _comboBoxBottomMiddle_currentIndexWasChanged(int index);
+    // send for sychronize the selection in the other trigger function menu
+    void _comboBoxTopLeft_currentIndexWasChanged(quint8 index);
+    void _comboBoxTopRight_currentIndexWasChanged(quint8 index);
+    void _comboBoxBottomLeft_currentIndexWasChanged(quint8 index);
+    void _comboBoxBottomRight_currentIndexWasChanged(quint8 index);
+    void _comboBoxTopMiddle_currentIndexWasChanged(quint8 index);
+    void _comboBoxMiddle_currentIndexWasChanged(quint8 index);
+    void _comboBoxBottomMiddle_currentIndexWasChanged(quint8 index);
 
     //error
-    void _errorWrongEquation(int errorNumber,bool active);
+    void _errorWrongEquation(quint8 errorNumber,bool active);
 };
 
 #endif // SETTINGTRIGGERFUNCTION_H

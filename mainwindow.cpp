@@ -28,7 +28,7 @@ MainWindow::MainWindow(QWidget *parent) :
     _homeWindow = new HomeWindow();
     _settingWindow = new SettingWindow();
     _triggerWindow = new TriggerWindow();
-    _displayWindow = new DisplayWindow();
+    _rollWindow = new RollWindow();
     _debugWindow = new DebugWindow();
     _hlayoutStatus = new QHBoxLayout();
 
@@ -93,7 +93,7 @@ void MainWindow::_mainSetup()
     ui->gridLayout->addWidget(_triggerWindow, 0, 1, 6, 1);
 
     //add display window in window layout
-    ui->gridLayout->addWidget(_displayWindow, 0, 1, 6, 1);
+    ui->gridLayout->addWidget(_rollWindow, 0, 1, 6, 1);
 
     //add debug window in window layout
     ui->gridLayout->addWidget(_debugWindow, 0, 1, 6, 1);
@@ -114,7 +114,7 @@ void MainWindow::_mainSetup()
     this->_startStopButtonTextAndColorManager(GlobalEnumatedAndExtern::start);
 
     //set basic draw on roll on
-    _displayWindow->setDrawLeftToRight(false);
+    _rollWindow->setDrawLeftToRight(false);
 
     //set trigger function to false (no trig at startuo)
     _triggerFunctionEvaluatedTrue = false;
@@ -204,7 +204,7 @@ void MainWindow::addNewDataFrame(QVector<DataFrame> dataFrameVector)
     }
 
     //send value to the plot
-    this->_displayWindow->addNewDataFrame(dataFrameVector);
+    this->_rollWindow->addNewDataFrame(dataFrameVector);
     this->_triggerWindow->addNewDataFrame(dataFrameVector);
     qDebug() << objectName() << "nbValue" << _dataFrameVectorReccorder.size();
     this->_triggerFuntion = _settingWindow->getTriggerFuntion();
@@ -213,15 +213,15 @@ void MainWindow::addNewDataFrame(QVector<DataFrame> dataFrameVector)
 
 void MainWindow::refreshDisplay()
 {
-    this->_displayWindow->refreshPlot();
+    this->_rollWindow->refreshPlot();
     this->_triggerWindow->refreshPlot();
 }
 
 void MainWindow::_setupSignalAndSlot()
 {
     //manage trace in trigger menu
-    QObject::connect(this->_settingWindow, SIGNAL(_addTraceInTriggerMenu(int)), this->_triggerWindow, SLOT(addTrace(int)));
-    QObject::connect(this->_settingWindow, SIGNAL(_removeTraceInTriggerMenu(int)), this->_triggerWindow, SLOT(hideTrace(int)));
+    QObject::connect(this->_settingWindow, SIGNAL(_addTraceInTriggerMenu(quint8)), this->_triggerWindow, SLOT(addTrace(quint8)));
+    QObject::connect(this->_settingWindow, SIGNAL(_removeTraceInTriggerMenu(quint8)), this->_triggerWindow, SLOT(hideTrace(quint8)));
 
     //Sychronise setting menu <--> trigger menu, the trace range
     //setting menu -> trigger menu
@@ -237,32 +237,32 @@ void MainWindow::_setupSignalAndSlot()
 
     //Sychronise setting menu <--> trigger menu, the trigger edge
     //setting menu -> trigger menu
-    QObject::connect(this->_settingWindow, SIGNAL(_pushButtonEdgeDI1WasChangedFromSettingMenu(int)),
-                     this->_triggerWindow, SLOT(pushButtonEdgeDI1_changeEdge(int)));
-    QObject::connect(this->_settingWindow, SIGNAL(_pushButtonEdgeDI2WasChangedFromSettingMenu(int)),
-                     this->_triggerWindow, SLOT(pushButtonEdgeDI2_changeEdge(int)));
-    QObject::connect(this->_settingWindow, SIGNAL(_pushButtonEdgeDI3WasChangedFromSettingMenu(int)),
-                     this->_triggerWindow, SLOT(pushButtonEdgeDI3_changeEdge(int)));
-    QObject::connect(this->_settingWindow, SIGNAL(_pushButtonEdgeDI4WasChangedFromSettingMenu(int)),
-                     this->_triggerWindow, SLOT(pushButtonEdgeDI4_changeEdge(int)));
-    QObject::connect(this->_settingWindow, SIGNAL(_pushButtonEdgeAI1WasChangedFromSettingMenu(int)),
-                     this->_triggerWindow, SLOT(pushButtonEdgeAI1_changeEdge(int)));
-    QObject::connect(this->_settingWindow, SIGNAL(_pushButtonEdgeAI2WasChangedFromSettingMenu(int)),
-                     this->_triggerWindow, SLOT(pushButtonEdgeAI2_changeEdge(int)));
+    QObject::connect(this->_settingWindow, SIGNAL(_pushButtonEdgeDI1WasChangedFromSettingMenu(quint8)),
+                     this->_triggerWindow, SLOT(pushButtonEdgeDI1_changeEdge(quint8)));
+    QObject::connect(this->_settingWindow, SIGNAL(_pushButtonEdgeDI2WasChangedFromSettingMenu(quint8)),
+                     this->_triggerWindow, SLOT(pushButtonEdgeDI2_changeEdge(quint8)));
+    QObject::connect(this->_settingWindow, SIGNAL(_pushButtonEdgeDI3WasChangedFromSettingMenu(quint8)),
+                     this->_triggerWindow, SLOT(pushButtonEdgeDI3_changeEdge(quint8)));
+    QObject::connect(this->_settingWindow, SIGNAL(_pushButtonEdgeDI4WasChangedFromSettingMenu(quint8)),
+                     this->_triggerWindow, SLOT(pushButtonEdgeDI4_changeEdge(quint8)));
+    QObject::connect(this->_settingWindow, SIGNAL(_pushButtonEdgeAI1WasChangedFromSettingMenu(quint8)),
+                     this->_triggerWindow, SLOT(pushButtonEdgeAI1_changeEdge(quint8)));
+    QObject::connect(this->_settingWindow, SIGNAL(_pushButtonEdgeAI2WasChangedFromSettingMenu(quint8)),
+                     this->_triggerWindow, SLOT(pushButtonEdgeAI2_changeEdge(quint8)));
 
     //trigger menu -> setting menu
-    QObject::connect(this->_triggerWindow, SIGNAL(_pushButtonEdgeDI1WasChanged(int)),
-                     this->_settingWindow, SLOT(pushButtonEdgeDI1_changeEdge(int)));
-    QObject::connect(this->_triggerWindow, SIGNAL(_pushButtonEdgeDI2WasChanged(int)),
-                     this->_settingWindow, SLOT(pushButtonEdgeDI2_changeEdge(int)));
-    QObject::connect(this->_triggerWindow, SIGNAL(_pushButtonEdgeDI3WasChanged(int)),
-                     this->_settingWindow, SLOT(pushButtonEdgeDI3_changeEdge(int)));
-    QObject::connect(this->_triggerWindow, SIGNAL(_pushButtonEdgeDI4WasChanged(int)),
-                     this->_settingWindow, SLOT(pushButtonEdgeDI4_changeEdge(int)));
-    QObject::connect(this->_triggerWindow, SIGNAL(_pushButtonEdgeAI1WasChanged(int)),
-                     this->_settingWindow, SLOT(pushButtonEdgeAI1_changeEdge(int)));
-    QObject::connect(this->_triggerWindow, SIGNAL(_pushButtonEdgeAI2WasChanged(int)),
-                     this->_settingWindow, SLOT(pushButtonEdgeAI2_changeEdge(int)));
+    QObject::connect(this->_triggerWindow, SIGNAL(_pushButtonEdgeDI1WasChanged(quint8)),
+                     this->_settingWindow, SLOT(pushButtonEdgeDI1_changeEdge(quint8)));
+    QObject::connect(this->_triggerWindow, SIGNAL(_pushButtonEdgeDI2WasChanged(quint8)),
+                     this->_settingWindow, SLOT(pushButtonEdgeDI2_changeEdge(quint8)));
+    QObject::connect(this->_triggerWindow, SIGNAL(_pushButtonEdgeDI3WasChanged(quint8)),
+                     this->_settingWindow, SLOT(pushButtonEdgeDI3_changeEdge(quint8)));
+    QObject::connect(this->_triggerWindow, SIGNAL(_pushButtonEdgeDI4WasChanged(quint8)),
+                     this->_settingWindow, SLOT(pushButtonEdgeDI4_changeEdge(quint8)));
+    QObject::connect(this->_triggerWindow, SIGNAL(_pushButtonEdgeAI1WasChanged(quint8)),
+                     this->_settingWindow, SLOT(pushButtonEdgeAI1_changeEdge(quint8)));
+    QObject::connect(this->_triggerWindow, SIGNAL(_pushButtonEdgeAI2WasChanged(quint8)),
+                     this->_settingWindow, SLOT(pushButtonEdgeAI2_changeEdge(quint8)));
 
     //Sychronise setting menu <--> trigger menu, the trigger values for traces
     //setting menu -> trigger menu
@@ -296,40 +296,40 @@ void MainWindow::_setupSignalAndSlot()
 
     //Sychronise setting menu <--> trigger menu, the selected trace and logical operator in trigger function
     //setting menu -> trigger menu
-    QObject::connect(this->_settingWindow, SIGNAL(_comboBoxTopLeft_currentIndexWasChanged(int)),
-                     this->_triggerWindow, SLOT(comboBoxTopLeft_changeCurrentIndex(int)));
-    QObject::connect(this->_settingWindow, SIGNAL(_comboBoxTopRight_currentIndexWasChanged(int)),
-                     this->_triggerWindow, SLOT(comboBoxTopRight_changeCurrentIndex(int)));
-    QObject::connect(this->_settingWindow, SIGNAL(_comboBoxBottomLeft_currentIndexWasChanged(int)),
-                     this->_triggerWindow, SLOT(comboBoxBottomLeft_changeCurrentIndex(int)));
-    QObject::connect(this->_settingWindow, SIGNAL(_comboBoxBottomRight_currentIndexWasChanged(int)),
-                     this->_triggerWindow, SLOT(comboBoxBottomRight_changeCurrentIndex(int)));
-    QObject::connect(this->_settingWindow, SIGNAL(_comboBoxTopMiddle_currentIndexWasChanged(int)),
-                     this->_triggerWindow, SLOT(comboBoxTopMiddle_changeCurrentIndex(int)));
-    QObject::connect(this->_settingWindow, SIGNAL(_comboBoxMiddle_currentIndexWasChanged(int)),
-                     this->_triggerWindow, SLOT(comboBoxMiddle_changeCurrentIndex(int)));
-    QObject::connect(this->_settingWindow, SIGNAL(_comboBoxBottomMiddle_currentIndexWasChanged(int)),
-                     this->_triggerWindow, SLOT(comboBoxBottomMiddle_changeCurrentIndex(int)));
+    QObject::connect(this->_settingWindow, SIGNAL(_comboBoxTopLeft_currentIndexWasChanged(quint8)),
+                     this->_triggerWindow, SLOT(comboBoxTopLeft_changeCurrentIndex(quint8)));
+    QObject::connect(this->_settingWindow, SIGNAL(_comboBoxTopRight_currentIndexWasChanged(quint8)),
+                     this->_triggerWindow, SLOT(comboBoxTopRight_changeCurrentIndex(quint8)));
+    QObject::connect(this->_settingWindow, SIGNAL(_comboBoxBottomLeft_currentIndexWasChanged(quint8)),
+                     this->_triggerWindow, SLOT(comboBoxBottomLeft_changeCurrentIndex(quint8)));
+    QObject::connect(this->_settingWindow, SIGNAL(_comboBoxBottomRight_currentIndexWasChanged(quint8)),
+                     this->_triggerWindow, SLOT(comboBoxBottomRight_changeCurrentIndex(quint8)));
+    QObject::connect(this->_settingWindow, SIGNAL(_comboBoxTopMiddle_currentIndexWasChanged(quint8)),
+                     this->_triggerWindow, SLOT(comboBoxTopMiddle_changeCurrentIndex(quint8)));
+    QObject::connect(this->_settingWindow, SIGNAL(_comboBoxMiddle_currentIndexWasChanged(quint8)),
+                     this->_triggerWindow, SLOT(comboBoxMiddle_changeCurrentIndex(quint8)));
+    QObject::connect(this->_settingWindow, SIGNAL(_comboBoxBottomMiddle_currentIndexWasChanged(quint8)),
+                     this->_triggerWindow, SLOT(comboBoxBottomMiddle_changeCurrentIndex(quint8)));
 
     //trigger menu -> setting menu
-    QObject::connect(this->_triggerWindow, SIGNAL(_comboBoxTopLeft_currentIndexWasChanged(int)),
-                     this->_settingWindow, SLOT(comboBoxTopLeft_changeCurrentIndex(int)));
-    QObject::connect(this->_triggerWindow, SIGNAL(_comboBoxTopRight_currentIndexWasChanged(int)),
-                     this->_settingWindow, SLOT(comboBoxTopRight_changeCurrentIndex(int)));
-    QObject::connect(this->_triggerWindow, SIGNAL(_comboBoxBottomLeft_currentIndexWasChanged(int)),
-                     this->_settingWindow, SLOT(comboBoxBottomLeft_changeCurrentIndex(int)));
-    QObject::connect(this->_triggerWindow, SIGNAL(_comboBoxBottomRight_currentIndexWasChanged(int)),
-                     this->_settingWindow, SLOT(comboBoxBottomRight_changeCurrentIndex(int)));
-    QObject::connect(this->_triggerWindow, SIGNAL(_comboBoxTopMiddle_currentIndexWasChanged(int)),
-                     this->_settingWindow, SLOT(comboBoxTopMiddle_changeCurrentIndex(int)));
-    QObject::connect(this->_triggerWindow, SIGNAL(_comboBoxMiddle_currentIndexWasChanged(int)),
-                     this->_settingWindow, SLOT(comboBoxMiddle_changeCurrentIndex(int)));
-    QObject::connect(this->_triggerWindow, SIGNAL(_comboBoxBottomMiddle_currentIndexWasChanged(int)),
-                     this->_settingWindow, SLOT(comboBoxBottomMiddle_changeCurrentIndex(int)));
+    QObject::connect(this->_triggerWindow, SIGNAL(_comboBoxTopLeft_currentIndexWasChanged(quint8)),
+                     this->_settingWindow, SLOT(comboBoxTopLeft_changeCurrentIndex(quint8)));
+    QObject::connect(this->_triggerWindow, SIGNAL(_comboBoxTopRight_currentIndexWasChanged(quint8)),
+                     this->_settingWindow, SLOT(comboBoxTopRight_changeCurrentIndex(quint8)));
+    QObject::connect(this->_triggerWindow, SIGNAL(_comboBoxBottomLeft_currentIndexWasChanged(quint8)),
+                     this->_settingWindow, SLOT(comboBoxBottomLeft_changeCurrentIndex(quint8)));
+    QObject::connect(this->_triggerWindow, SIGNAL(_comboBoxBottomRight_currentIndexWasChanged(quint8)),
+                     this->_settingWindow, SLOT(comboBoxBottomRight_changeCurrentIndex(quint8)));
+    QObject::connect(this->_triggerWindow, SIGNAL(_comboBoxTopMiddle_currentIndexWasChanged(quint8)),
+                     this->_settingWindow, SLOT(comboBoxTopMiddle_changeCurrentIndex(quint8)));
+    QObject::connect(this->_triggerWindow, SIGNAL(_comboBoxMiddle_currentIndexWasChanged(quint8)),
+                     this->_settingWindow, SLOT(comboBoxMiddle_changeCurrentIndex(quint8)));
+    QObject::connect(this->_triggerWindow, SIGNAL(_comboBoxBottomMiddle_currentIndexWasChanged(quint8)),
+                     this->_settingWindow, SLOT(comboBoxBottomMiddle_changeCurrentIndex(quint8)));
 
     //set visible trace in display menu
-    QObject::connect(this->_settingWindow, SIGNAL(_addTraceInDisplayMenu(int)), this->_displayWindow, SLOT(_addTrace(int)));
-    QObject::connect(this->_settingWindow, SIGNAL(_removeTraceInDisplayMenu(int)), this->_displayWindow, SLOT(_hideTrace(int)));
+    QObject::connect(this->_settingWindow, SIGNAL(_addTraceInDisplayMenu(quint8)), this->_rollWindow, SLOT(addTrace(quint8)));
+    QObject::connect(this->_settingWindow, SIGNAL(_removeTraceInDisplayMenu(quint8)), this->_rollWindow, SLOT(hideTrace(quint8)));
 
     //send new value for scale factor in setting menu
     QObject::connect(this->_debugWindow, SIGNAL(_nbFrameSavedChanged(quint64)), this->_settingWindow, SLOT(_received_NbFrameSavedChanged(quint64)));
@@ -337,11 +337,11 @@ void MainWindow::_setupSignalAndSlot()
     QObject::connect(this->_debugWindow, SIGNAL(_FTDIBaudrateChanged(int)), this->_settingWindow, SLOT(_received_FTDIBaudrateChange(int)));
 
     //error management
-    QObject::connect(this->_settingWindow, SIGNAL(_errorNoSelectedTrace(int,bool)), ui->widgetError, SLOT(_reveived_Error(int,bool)));
-    QObject::connect(this->_settingWindow, SIGNAL(_errorNoSelectedTriggerTrace(int,bool)), ui->widgetError, SLOT(_reveived_Error(int,bool)));
-    QObject::connect(this->_settingWindow, SIGNAL(_errorFrequencyToLow(int,bool)), ui->widgetError, SLOT(_reveived_Error(int,bool)));
-    QObject::connect(this->_settingWindow, SIGNAL(_errorWrongEquation(int,bool)), ui->widgetError, SLOT(_reveived_Error(int,bool)));
-    QObject::connect(this->_triggerWindow, SIGNAL(_errorWrongEquation(int,bool)), ui->widgetError, SLOT(_reveived_Error(int,bool)));
+    QObject::connect(this->_settingWindow, SIGNAL(_errorNoSelectedTrace(quint8,bool)), ui->widgetError, SLOT(_reveived_Error(quint8,bool)));
+    QObject::connect(this->_settingWindow, SIGNAL(_errorNoSelectedTriggerTrace(quint8,bool)), ui->widgetError, SLOT(_reveived_Error(quint8,bool)));
+    QObject::connect(this->_settingWindow, SIGNAL(_errorFrequencyToLow(quint8,bool)), ui->widgetError, SLOT(_reveived_Error(quint8,bool)));
+    QObject::connect(this->_settingWindow, SIGNAL(_errorWrongEquation(quint8,bool)), ui->widgetError, SLOT(_reveived_Error(quint8,bool)));
+    QObject::connect(this->_triggerWindow, SIGNAL(_errorWrongEquation(quint8,bool)), ui->widgetError, SLOT(_reveived_Error(quint8,bool)));
 
     //timer management to be sure they start correctly
     //    QObject::connect(this->_threadTick, SIGNAL(started), this->_tickTimer, SLOT(start()));
@@ -379,7 +379,7 @@ void MainWindow::_hideAllWindows()
     _homeWindow->hide();
     _settingWindow->hide();
     _triggerWindow->hide();
-    _displayWindow->hide();
+    _rollWindow->hide();
     _debugWindow->hide();
 }
 
@@ -477,7 +477,7 @@ void MainWindow::_mainStateGraphe()
         this->_btRollWasPressed = false;
 
         //show roll window
-        _displayWindow->show();
+        _rollWindow->show();
 
         //set display state to ready
         ui->widgetState->setDisplayState(GlobalEnumatedAndExtern::ready);
@@ -757,6 +757,6 @@ void MainWindow::on_pushButton_StartStop_released()
             break;
         }
     }
-    _displayWindow->setDrawLeftToRight(_settingWindow->triggerFunctionEnable());
+    _rollWindow->setDrawLeftToRight(_settingWindow->triggerFunctionEnable());
     qDebug() << objectName() << "trigger Enable" << _settingWindow->triggerFunctionEnable();
 }

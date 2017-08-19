@@ -20,11 +20,6 @@ public:
     explicit SettingTimeScaleFactor(QWidget *parent = 0);
     ~SettingTimeScaleFactor();
 
-private slots:
-
-    void on_comboBoxPeriod_currentTextChanged(const QString &arg1);
-    void on_comboBoxPeriod_currentIndexChanged(int index);
-
 private:
     Ui::SettingTimeScaleFactor *ui;
 
@@ -54,12 +49,16 @@ private:
     void _initSampleRate(int index);
 
 private slots:
+
+    void on_comboBoxPeriod_currentTextChanged(const QString &arg1);
+    void on_comboBoxPeriod_currentIndexChanged(int index);
+
     void _nbFrameSavedWasChanged(quint64 nbFrameChanged);
     void _sizeFrameWasChanged(int frameSize);
     void _FTDIBaudrateWasChanged(int FTDIBaudrate);
 
 signals:
-    void _errorFrequencyToLow(int errorNumber, bool active);
+    void _errorFrequencyToLow(quint8 errorNumber, bool active);
 };
 
 #endif // SETTINGTIMESCALEFACTOR_H

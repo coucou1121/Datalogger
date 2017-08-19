@@ -3,7 +3,6 @@
 
 #include <QtDebug>
 #include <QThread>
-#include "frameSimulator.h"
 
 
 class FrameThread : public QThread
@@ -17,9 +16,6 @@ public:
 
 protected:
     void run();
-
-private:
-    //    FrameSimulator _frame;
 
 };
 

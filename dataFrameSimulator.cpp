@@ -4,7 +4,7 @@ DataFrameSimulator::DataFrameSimulator(QString name, QObject *parent) :
 QObject(parent)
 {
     this->setObjectName(name);
-    this->resetFrame();
+    this->_resetFrame();
     _triggerFunction = new TriggerFunctions();
 }
 
@@ -18,7 +18,7 @@ void DataFrameSimulator::setCPT(const quint64 &CPT)
     _CPT = CPT;
 }
 
-void DataFrameSimulator::resetFrame()
+void DataFrameSimulator::_resetFrame()
 {
     _CPT = 0;
     _dataFrame.setDI1_8(0);
@@ -30,7 +30,7 @@ void DataFrameSimulator::resetFrame()
     _dataFrame.setTR1(0);
 }
 
-void DataFrameSimulator::incValue()
+void DataFrameSimulator::_incValue()
 {
     quint8 lsbCPT;
     quint8 msbCPT;
@@ -68,7 +68,7 @@ void DataFrameSimulator::createDataFrame()
     for(i=0; i<NB_FRAME_CREATE_AT_EVERY_TICK; i++)
     {
         //create new frame
-        incValue();
+        _incValue();
         // put in vector
         _dataFrameVector.append(_dataFrame);
     }

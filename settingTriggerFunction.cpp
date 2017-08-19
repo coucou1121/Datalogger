@@ -43,8 +43,8 @@ SettingTriggerFunction::SettingTriggerFunction(QWidget *parent) :
     ui->comboBoxBottomMiddle->setEnabled(false);
 
     //error management
-    QObject::connect(this->_triggerFuntion, SIGNAL(_errorWrongEquation(int,bool)),
-                     this, SLOT(_received_errorWrongEquation(int,bool)));
+    QObject::connect(this->_triggerFuntion, SIGNAL(_errorWrongEquation(quint8,bool)),
+                     this, SLOT(_received_errorWrongEquation(quint8,bool)));
 }
 
 SettingTriggerFunction::~SettingTriggerFunction()
@@ -60,6 +60,47 @@ bool SettingTriggerFunction::areSomeTraceSelected() const
 TriggerFunctions *SettingTriggerFunction::triggerFuntion() const
 {
     return _triggerFuntion;
+}
+
+void SettingTriggerFunction::comboboxRevmoveItem(quint8 buttonNumber)
+{
+    _triggerTraceSelected.remove(buttonNumber);
+    this->_updateCombobox();
+}
+
+void SettingTriggerFunction::comboBoxTopLeft_changeCurrentIndex(quint8 index)
+{
+    ui->comboBoxTopLeft->setCurrentIndex(index);
+}
+
+void SettingTriggerFunction::comboBoxTopRight_changeCurrentIndex(quint8 index)
+{
+    ui->comboBoxTopRight->setCurrentIndex(index);
+}
+
+void SettingTriggerFunction::comboBoxBottomLeft_changeCurrentIndex(quint8 index)
+{
+    ui->comboBoxBottomLeft->setCurrentIndex(index);
+}
+
+void SettingTriggerFunction::comboBoxBottomRight_changeCurrentIndex(quint8 index)
+{
+    ui->comboBoxBottomRight->setCurrentIndex(index);
+}
+
+void SettingTriggerFunction::comboBoxTopMiddle_changeCurrentIndex(quint8 index)
+{
+    ui->comboBoxTopMiddle->setCurrentIndex(index);
+}
+
+void SettingTriggerFunction::comboBoxMiddle_changeCurrentIndex(quint8 index)
+{
+    ui->comboBoxMiddle->setCurrentIndex(index);
+}
+
+void SettingTriggerFunction::comboBoxBottomMiddle_changeCurrentIndex(quint8 index)
+{
+    ui->comboBoxBottomMiddle->setCurrentIndex(index);
 }
 
 void SettingTriggerFunction::_setupStyle()
@@ -108,7 +149,7 @@ void SettingTriggerFunction::_updateCombobox()
     }
 }
 
-void SettingTriggerFunction::_comboboxAddItem(int buttonNumber)
+void SettingTriggerFunction::comboboxAddItem(quint8 buttonNumber)
 {
     //if its DI1 -> DI4, AI1 and AI2
     if(     buttonNumber < GlobalEnumatedAndExtern::btDI5 ||
@@ -121,58 +162,10 @@ void SettingTriggerFunction::_comboboxAddItem(int buttonNumber)
 
 }
 
-void SettingTriggerFunction::_comboboxRevmoveItem(int buttonNumber)
-{
-    _triggerTraceSelected.remove(buttonNumber);
-    this->_updateCombobox();
-}
-
-void SettingTriggerFunction::_comboBoxTopLeft_currentIndexChanged(int index)
-{
-    //    qDebug()<< objectName() << " comboBoxTopLeft received index changed : " << index;
-    ui->comboBoxTopLeft->setCurrentIndex(index);
-}
-
-void SettingTriggerFunction::_comboBoxTopRight_currentIndexChanged(int index)
-{
-    //    qDebug()<< objectName() << " comboBoxTopRight received index changed : " << index;
-    ui->comboBoxTopRight->setCurrentIndex(index);
-}
-
-void SettingTriggerFunction::_comboBoxBottomLeft_currentIndexChanged(int index)
-{
-    //    qDebug()<< objectName() << " comboBoxBottomLeft received index changed : " << index;
-    ui->comboBoxBottomLeft->setCurrentIndex(index);
-}
-
-void SettingTriggerFunction::_comboBoxBottomRight_currentIndexChanged(int index)
-{
-    //    qDebug()<< objectName() << " comboBoxBottomRight received index changed : " << index;
-    ui->comboBoxBottomRight->setCurrentIndex(index);
-}
-
-void SettingTriggerFunction::_comboBoxTopMiddle_currentIndexChanged(int index)
-{
-    //    qDebug()<< objectName() << " comboBoxTopMiddle received index changed : " << index;
-    ui->comboBoxTopMiddle->setCurrentIndex(index);
-}
-
-void SettingTriggerFunction::_comboBoxMiddle_currentIndexChanged(int index)
-{
-    //    qDebug()<< objectName() << " comboBoxMiddle received index changed : " << index;
-    ui->comboBoxMiddle->setCurrentIndex(index);
-}
-
-void SettingTriggerFunction::_comboBoxBottomMiddle_currentIndexChanged(int index)
-{
-    //    qDebug()<< objectName() << " comboBoxBottomMiddle received index changed : " << index;
-    ui->comboBoxBottomMiddle->setCurrentIndex(index);
-}
-
 void SettingTriggerFunction::on_comboBoxTopLeft_currentIndexChanged(int index)
 {
     //set the selected signal in trigger function
-    int selectedTrace = _triggerTracePossible.key(ui->comboBoxTopLeft->currentText());
+    quint8 selectedTrace = _triggerTracePossible.key(ui->comboBoxTopLeft->currentText());
     GlobalEnumatedAndExtern::eTracePossible trace = (GlobalEnumatedAndExtern::eTracePossible)selectedTrace;
     this->_triggerFuntion->setTraceA(trace);
 
@@ -199,7 +192,7 @@ void SettingTriggerFunction::on_comboBoxTopLeft_currentIndexChanged(int index)
 void SettingTriggerFunction::on_comboBoxTopRight_currentIndexChanged(int index)
 {
     //set the selected signal in trigger function
-    int selectedTrace = _triggerTracePossible.key(ui->comboBoxTopRight->currentText());
+    quint8 selectedTrace = _triggerTracePossible.key(ui->comboBoxTopRight->currentText());
     GlobalEnumatedAndExtern::eTracePossible trace = (GlobalEnumatedAndExtern::eTracePossible)selectedTrace;
     if(ui->comboBoxTopRight->isEnabled())
     {
@@ -229,7 +222,7 @@ void SettingTriggerFunction::on_comboBoxTopRight_currentIndexChanged(int index)
 void SettingTriggerFunction::on_comboBoxBottomLeft_currentIndexChanged(int index)
 {
     //set the selected signal in trigger function
-    int selectedTrace = _triggerTracePossible.key(ui->comboBoxBottomLeft->currentText());
+    quint8 selectedTrace = _triggerTracePossible.key(ui->comboBoxBottomLeft->currentText());
     GlobalEnumatedAndExtern::eTracePossible trace = (GlobalEnumatedAndExtern::eTracePossible)selectedTrace;
     this->_triggerFuntion->setTraceC(trace);
 
@@ -251,7 +244,7 @@ void SettingTriggerFunction::on_comboBoxBottomLeft_currentIndexChanged(int index
 void SettingTriggerFunction::on_comboBoxBottomRight_currentIndexChanged(int index)
 {
     //set the selected signal in trigger function
-    int selectedTrace = _triggerTracePossible.key(ui->comboBoxBottomRight->currentText());
+    quint8 selectedTrace = _triggerTracePossible.key(ui->comboBoxBottomRight->currentText());
     GlobalEnumatedAndExtern::eTracePossible trace = (GlobalEnumatedAndExtern::eTracePossible)selectedTrace;
     this->_triggerFuntion->setTraceD(trace);
 
@@ -327,7 +320,7 @@ void SettingTriggerFunction::on_comboBoxBottomMiddle_currentIndexChanged(int ind
     emit _comboBoxBottomMiddle_currentIndexWasChanged(index);
 }
 
-void SettingTriggerFunction::_received_errorWrongEquation(int errorNumber, bool active)
+void SettingTriggerFunction::_received_errorWrongEquation(quint8 errorNumber, bool active)
 {
     emit _errorWrongEquation(errorNumber,active);
 }

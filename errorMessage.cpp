@@ -32,7 +32,7 @@ void ErrorMessage::_setColor(bool inTrouble)
     }
 }
 
-void ErrorMessage::_reveived_Error(int errorNumber, bool active)
+void ErrorMessage::_reveived_Error(quint8 errorNumber, bool active)
 {
     qDebug() << objectName() << "recievedError :" << errorNumber << ", " << active;
 

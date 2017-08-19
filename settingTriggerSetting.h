@@ -106,7 +106,7 @@ private:
      quint8 _doubleToQuint8(double value, GlobalEnumatedAndExtern::eRangeValue range);
 
 public slots:
-    void _btSelected(int buttonNumber, bool btSelected);
+    void _btSelected(quint8 buttonNumber, bool btSelected);
 
 private slots:
     void on_pushButtonRangeDI1_released();
@@ -136,12 +136,12 @@ signals:
     void _pushButtonRangeAI1WasChanged();
     void _pushButtonRangeAI2WasChanged();
 
-    void _pushButtonEdgeDI1WasChanged(int eEdge);
-    void _pushButtonEdgeDI2WasChanged(int eEdge);
-    void _pushButtonEdgeDI3WasChanged(int eEdge);
-    void _pushButtonEdgeDI4WasChanged(int eEdge);
-    void _pushButtonEdgeAI1WasChanged(int eEdge);
-    void _pushButtonEdgeAI2WasChanged(int eEdge);
+    void _pushButtonEdgeDI1WasChanged(quint8 eEdge);
+    void _pushButtonEdgeDI2WasChanged(quint8 eEdge);
+    void _pushButtonEdgeDI3WasChanged(quint8 eEdge);
+    void _pushButtonEdgeDI4WasChanged(quint8 eEdge);
+    void _pushButtonEdgeAI1WasChanged(quint8 eEdge);
+    void _pushButtonEdgeAI2WasChanged(quint8 eEdge);
 
     void _doubleSpinBoxDI1_valueWasChanged(double value);
     void _doubleSpinBoxDI2_valueWasChanged(double value);

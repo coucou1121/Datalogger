@@ -1,9 +1,9 @@
-#include "DisplayWindow.h"
-#include "ui_DisplayWindow.h"
+#include "RollWindow.h"
+#include "ui_RollWindow.h"
 
-DisplayWindow::DisplayWindow(QWidget *parent) :
+RollWindow::RollWindow(QWidget *parent) :
     QWidget(parent),
-    ui(new Ui::DisplayWindow)
+    ui(new Ui::RollWindow)
 {
     //initialise the Key - Value for combobx
     TriggerTracePossible = GlobalEnumatedAndExtern::initTriggerTracePossible();
@@ -19,12 +19,12 @@ DisplayWindow::DisplayWindow(QWidget *parent) :
 }
 
 
-DisplayWindow::~DisplayWindow()
+RollWindow::~RollWindow()
 {
     delete ui;
 }
 
-void DisplayWindow::setDrawLeftToRight(bool drawLeftToRight)
+void RollWindow::setDrawLeftToRight(bool drawLeftToRight)
 {
     ui->DI1->setDrawLeftToRight(drawLeftToRight);
     ui->DI2->setDrawLeftToRight(drawLeftToRight);
@@ -49,7 +49,7 @@ void DisplayWindow::setDrawLeftToRight(bool drawLeftToRight)
     ui->AI4->setDrawLeftToRight(drawLeftToRight);
 }
 
-void DisplayWindow::refreshPlot()
+void RollWindow::refreshPlot()
 {
     if(this->isVisible())
     {
@@ -158,7 +158,7 @@ void DisplayWindow::refreshPlot()
     }
 }
 
-void DisplayWindow::_addTrace(int enumTrace)
+void RollWindow::addTrace(quint8 enumTrace)
 {
     qDebug() << objectName() << "recieved " << "_addTrace : " << enumTrace;
     switch(enumTrace)
@@ -228,7 +228,7 @@ void DisplayWindow::_addTrace(int enumTrace)
     }
 }
 
-void DisplayWindow::_hideTrace(int enumTrace)
+void RollWindow::hideTrace(quint8 enumTrace)
 {
     switch(enumTrace)
     {
@@ -297,13 +297,13 @@ void DisplayWindow::_hideTrace(int enumTrace)
     }
 }
 
-//void DisplayWindow::setupStyle()
+//void RollWindow::setupStyle()
 //{
 //    _palette.setColor(backgroundRole(), _myStyle.getBackGroundColor());
 //    this->setPalette(_palette);
 //}
 
-void DisplayWindow::addNewDataFrame(QVector<DataFrame> newDataFrameVector)
+void RollWindow::addNewDataFrame(QVector<DataFrame> newDataFrameVector)
 {
     //    qDebug() << objectName() << " nb frame recieved size" << newDataFrameVector.size();
     quint8 valueDI1_9 = 0;
@@ -342,7 +342,7 @@ void DisplayWindow::addNewDataFrame(QVector<DataFrame> newDataFrameVector)
     // updatePlot();
 }
 
-void DisplayWindow::addValueDI1_8(quint8 value)
+void RollWindow::addValueDI1_8(quint8 value)
 {
     //qDebug() << objectName() << " Data recieved " << value;
     ui->DI1->addYValue((value & 0x01) >> 0);
@@ -355,7 +355,7 @@ void DisplayWindow::addValueDI1_8(quint8 value)
     //    ui->DI8->addYValue((value & 0x80) >> 7);
 }
 
-void DisplayWindow::addValueDI9_16(quint8 value)
+void RollWindow::addValueDI9_16(quint8 value)
 {
     //qDebug() << objectName() << " Data recieved " << value;
     ui->DI9->addYValue((value & 0x01) >> 0);
@@ -368,31 +368,31 @@ void DisplayWindow::addValueDI9_16(quint8 value)
     ui->DI16->addYValue((value & 0x80) >> 7);
 }
 
-void DisplayWindow::addValueAI1(quint8 value)
+void RollWindow::addValueAI1(quint8 value)
 {
     //qDebug() << objectName() << " Data recieved " << value;
     ui->AI1->addYValue(value);
 }
 
-void DisplayWindow::addValueAI2(quint8 value)
+void RollWindow::addValueAI2(quint8 value)
 {
     //qDebug() << objectName() << " Data recieved " << value;
     ui->AI2->addYValue(value);
 }
 
-void DisplayWindow::addValueAI3(quint8 value)
+void RollWindow::addValueAI3(quint8 value)
 {
     //qDebug() << objectName() << " Data recieved " << value;
     ui->AI3->addYValue(value);
 }
 
-void DisplayWindow::addValueAI4(quint8 value)
+void RollWindow::addValueAI4(quint8 value)
 {
     //qDebug() << objectName() << " Data recieved " << value;
     ui->AI4->addYValue(value);
 }
 
-void DisplayWindow::_setAllTraceName()
+void RollWindow::_setAllTraceName()
 {
     ui->DI1->setTitleName(TriggerTracePossible[GlobalEnumatedAndExtern::btDI1]);
     ui->DI2->setTitleName(TriggerTracePossible[GlobalEnumatedAndExtern::btDI2]);
@@ -419,7 +419,7 @@ void DisplayWindow::_setAllTraceName()
 
 }
 
-void DisplayWindow::_hideAllTrace()
+void RollWindow::_hideAllTrace()
 {
     ui->DI1->hide();
     ui->DI2->hide();

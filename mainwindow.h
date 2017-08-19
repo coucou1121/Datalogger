@@ -14,7 +14,7 @@
 #include "homeWindow.h"
 #include "settingWindow.h"
 #include "triggerWindow.h"
-#include "displayWindow.h"
+#include "rollWindow.h"
 #include "debugWindow.h"
 #include "RefreshTimer.h"
 #include "dataFrameSimulator.h"
@@ -63,7 +63,7 @@ private:
     HomeWindow *_homeWindow;
     SettingWindow *_settingWindow;
     TriggerWindow *_triggerWindow;
-    DisplayWindow *_displayWindow;
+    RollWindow *_rollWindow;
     DebugWindow *_debugWindow;
 
     void _hideAllWindows();

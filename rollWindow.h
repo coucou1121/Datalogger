@@ -1,5 +1,5 @@
-#ifndef DisplayWindow_H
-#define DisplayWindow_H
+#ifndef ROLLWINDOW_H
+#define ROLLWINDOW_H
 
 #include <QWidget>
 #include <QElapsedTimer>
@@ -9,16 +9,16 @@
 #include "globalEnumatedAndExtern.h"
 
 namespace Ui {
-class DisplayWindow;
+class RollWindow;
 }
 
-class DisplayWindow : public QWidget
+class RollWindow : public QWidget
 {
     Q_OBJECT
 
 public:
-    explicit DisplayWindow(QWidget *parent = 0);
-    ~DisplayWindow();
+    explicit RollWindow(QWidget *parent = 0);
+    ~RollWindow();
 
     //direction du draw
     // if true, draw left to right, mode roll on
@@ -29,7 +29,7 @@ public:
     void refreshPlot();
 
 private:
-    Ui::DisplayWindow *ui;
+    Ui::RollWindow *ui;
 
     //key value for Trace label name
     QMap<int, QString> TriggerTracePossible;
@@ -43,11 +43,6 @@ private:
     QElapsedTimer timerElapse;
     //void setupStyle();
 
-public slots:
-    void _addTrace(int enumTrace);
-    void _hideTrace(int enumTrace);
-
-    void addNewDataFrame(QVector<DataFrame> newDataFrameVector);
     void addValueDI1_8(quint8 value);
     void addValueDI9_16(quint8 value);
 
@@ -56,6 +51,13 @@ public slots:
     void addValueAI3(quint8 value);
     void addValueAI4(quint8 value);
 
+public slots:
+    void addTrace(quint8 enumTrace);
+    void hideTrace(quint8 enumTrace);
+
+    void addNewDataFrame(QVector<DataFrame> newDataFrameVector);
+
+
 };
 
-#endif // DisplayWindow_H
+#endif // ROLLWINDOW_H

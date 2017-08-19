@@ -29,7 +29,7 @@ private:
     CommonStyle _myStyle;
 
 private slots:
-    void showTime();
+    void _showTime();
 
 };
 

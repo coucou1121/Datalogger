@@ -117,7 +117,7 @@ private:
     DataFrame *_memoFrame;
 
 signals:
-   void _errorWrongEquation(int errorNumber,bool active);
+   void _errorWrongEquation(quint8 errorNumber,bool active);
 };
 
 #endif // TRIGGERFUNCTIONS_H

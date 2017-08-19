@@ -28,21 +28,14 @@ private:
     QElapsedTimer timerElapse;
     QVector<DataFrame> _dataFrameVector;
     TriggerFunctions *_triggerFunction;
+    void _resetFrame();
+    void _incValue();
 
 public slots:
-    void resetFrame();
-    void incValue();
     void createDataFrame();
 
 signals:
     void dataFrameWasSent(QVector<DataFrame> newDataFrameVector);
-    void valueDI1_8Updated(quint8 value);
-    void valueDI9_16Updated(quint8 value);
-    void valueAI1Updated(quint8 value);
-    void valueAI2Updated(quint8 value);
-    void valueAI3Updated(quint8 value);
-    void valueAI4Updated(quint8 value);
-    void valueTR1Updated(quint8 value);
 };
 
 #endif // DATAFRAMESIMULATOR_H

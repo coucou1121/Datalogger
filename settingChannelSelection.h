@@ -82,25 +82,25 @@ private slots:
 signals:
 
     //button pushed
-    void _btSeleccted(int buttonNumber, bool btSelected);
+    void _btSeleccted(quint8 buttonNumber, bool btSelected);
 
     //add button in all trigger function combobox
-    void _btAddList(int buttonNummer);
+    void _btAddList(quint8 buttonNummer);
 
     //remove button in all trigger function combobox
-    void _btRemoveList(int buttonNummer);
+    void _btRemoveList(quint8 buttonNummer);
 
     //add trace in trigger setting
-    void _addTrace(int enumTrace);
+    void _addTrace(quint8 enumTrace);
 
     //remove trace in trigger setting
-    void _removeTrace(int enumTrace);
+    void _removeTrace(quint8 enumTrace);
 
     //error no selected trace
-    void _errorNoSelectedTrace(int errorNumber, bool noSelecetTrace);
+    void _errorNoSelectedTrace(quint8 errorNumber, bool noSelecetTrace);
 
     //error no selected trigger trace
-    void _errorNoSelectedTriggerTrace(int errorNumber, bool noSelectedTriggerTrace);
+    void _errorNoSelectedTriggerTrace(quint8 errorNumber, bool noSelectedTriggerTrace);
 };
 
 #endif // SETTINGCHANNELSELECTION_H

@@ -16,12 +16,8 @@ SOURCES += main.cpp\
     qcustomplot.cpp \
     analogPlot.cpp \
     commonStyle.cpp \
-    frameSimulator.cpp \
     frameThread.cpp \
-    startThread.cpp \
-    startstopemuldata.cpp \
     refreshTimer.cpp \
-    frame.cpp \
     dataFrame.cpp \
     dataFrameSimulator.cpp \
     digitalPlot.cpp \
@@ -37,22 +33,17 @@ SOURCES += main.cpp\
     globalEnumatedAndExtern.cpp \
     triggerWindow.cpp \
     debugWindow.cpp \
-    dataAnalyser.cpp \
     triggerFunctions.cpp \
-    displayWindow.cpp \
-    homeWindow.cpp
+    homeWindow.cpp \
+    rollWindow.cpp
 
 HEADERS  += mainwindow.h \
     main.h \
     qcustomplot.h \
     analogPlot.h \
     commonStyle.h \
-    frameSimulator.h \
     frameThread.h \
-    startThread.h \
-    startstopemuldata.h \
     refreshTimer.h \
-    frame.h \
     dataFrame.h \
     dataFrameSimulator.h \
     digitalPlot.h \
@@ -68,14 +59,12 @@ HEADERS  += mainwindow.h \
     globalEnumatedAndExtern.h \
     triggerWindow.h \
     debugWindow.h \
-    dataAnalyser.h \
     triggerFunctions.h \
-    displayWindow.h \
-    homeWindow.h
+    homeWindow.h \
+    rollWindow.h
 
 FORMS    += mainwindow.ui \
     analogPlot.ui \
-    startstopemuldata.ui \
     analogPlot_copy.ui \
     digitalPlot.ui \
     logoDateTime.ui \
@@ -89,8 +78,8 @@ FORMS    += mainwindow.ui \
     settingWindow.ui \
     triggerWindow.ui \
     debugWindow.ui \
-    displayWindow.ui \
-    homeWindow.ui
+    homeWindow.ui \
+    rollWindow.ui
 
 RESOURCES += \
     images.qrc

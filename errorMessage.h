@@ -35,7 +35,7 @@ private:
     void _displayMessage();
 
 private slots:
-    void _reveived_Error(int errorNumber, bool active);
+    void _reveived_Error(quint8 errorNumber, bool active);
 
 };
 

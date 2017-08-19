@@ -48,7 +48,7 @@ void TriggerWindow::refreshPlot()
 {
     this->_triggerFunctionEnable = ui->widgetTriggerFunctionT->areSomeTraceSelected();
 
-    if(this->isVisible() && this->_triggerFunctionEnable)
+    if(this->isVisible())
     {
         if(ui->widgetDI1->isVisible())
         {
@@ -81,8 +81,11 @@ void TriggerWindow::refreshPlot()
             ui->widgetAI2->replot();
         }
 
-        ui->widgetFunction->updatePlot();
-        ui->widgetFunction->replot();
+        if(this->_triggerFunctionEnable)
+        {
+            ui->widgetFunction->updatePlot();
+            ui->widgetFunction->replot();
+        }
     }
 }
 
@@ -117,18 +120,18 @@ void TriggerWindow::_setupSignalAndSlot()
                      this, SLOT(_recieved_pushButtonRangeAI2Changed()));
 
     //manage eEdge
-    QObject::connect(ui->widgetTriggerSettingT, SIGNAL(_pushButtonEdgeDI1WasChanged(int)),
-                     this, SLOT(_recieved_pushButtonEdgeDI1Changed(int)));
-    QObject::connect(ui->widgetTriggerSettingT, SIGNAL(_pushButtonEdgeDI2WasChanged(int)),
-                     this, SLOT(_recieved_pushButtonEdgeDI2Changed(int)));
-    QObject::connect(ui->widgetTriggerSettingT, SIGNAL(_pushButtonEdgeDI3WasChanged(int)),
-                     this, SLOT(_recieved_pushButtonEdgeDI3Changed(int)));
-    QObject::connect(ui->widgetTriggerSettingT, SIGNAL(_pushButtonEdgeDI4WasChanged(int)),
-                     this, SLOT(_recieved_pushButtonEdgeDI4Changed(int)));
-    QObject::connect(ui->widgetTriggerSettingT, SIGNAL(_pushButtonEdgeAI1WasChanged(int)),
-                     this, SLOT(_recieved_pushButtonEdgeAI1Changed(int)));
-    QObject::connect(ui->widgetTriggerSettingT, SIGNAL(_pushButtonEdgeAI2WasChanged(int)),
-                     this, SLOT(_recieved_pushButtonEdgeAI2Changed(int)));
+    QObject::connect(ui->widgetTriggerSettingT, SIGNAL(_pushButtonEdgeDI1WasChanged(quint8)),
+                     this, SLOT(_recieved_pushButtonEdgeDI1Changed(quint8)));
+    QObject::connect(ui->widgetTriggerSettingT, SIGNAL(_pushButtonEdgeDI2WasChanged(quint8)),
+                     this, SLOT(_recieved_pushButtonEdgeDI2Changed(quint8)));
+    QObject::connect(ui->widgetTriggerSettingT, SIGNAL(_pushButtonEdgeDI3WasChanged(quint8)),
+                     this, SLOT(_recieved_pushButtonEdgeDI3Changed(quint8)));
+    QObject::connect(ui->widgetTriggerSettingT, SIGNAL(_pushButtonEdgeDI4WasChanged(quint8)),
+                     this, SLOT(_recieved_pushButtonEdgeDI4Changed(quint8)));
+    QObject::connect(ui->widgetTriggerSettingT, SIGNAL(_pushButtonEdgeAI1WasChanged(quint8)),
+                     this, SLOT(_recieved_pushButtonEdgeAI1Changed(quint8)));
+    QObject::connect(ui->widgetTriggerSettingT, SIGNAL(_pushButtonEdgeAI2WasChanged(quint8)),
+                     this, SLOT(_recieved_pushButtonEdgeAI2Changed(quint8)));
 
     //manage doubleSpinBox value
     QObject::connect(ui->widgetTriggerSettingT, SIGNAL(_doubleSpinBoxDI1_valueWasChanged(double)),
@@ -145,27 +148,27 @@ void TriggerWindow::_setupSignalAndSlot()
                      this, SLOT(_recieved_doubleSpinBoxAI2_valueChanged(double)));
 
     //manage trigger function selection
-    QObject::connect(ui->widgetTriggerFunctionT, SIGNAL(_comboBoxTopLeft_currentIndexWasChanged(int)),
-                     this, SLOT(_recieved_ComboBoxTopLeft_currentIndexChanged(int)));
-    QObject::connect(ui->widgetTriggerFunctionT, SIGNAL(_comboBoxTopRight_currentIndexWasChanged(int)),
-                     this, SLOT(_recieved_ComboBoxTopRight_currentIndexChanged(int)));
-    QObject::connect(ui->widgetTriggerFunctionT, SIGNAL(_comboBoxBottomLeft_currentIndexWasChanged(int)),
-                     this, SLOT(_recieved_ComboBoxBottomLeft_currentIndexChanged(int)));
-    QObject::connect(ui->widgetTriggerFunctionT, SIGNAL(_comboBoxBottomRight_currentIndexWasChanged(int)),
-                     this, SLOT(_recieved_ComboBoxBottomRight_currentIndexChanged(int)));
-    QObject::connect(ui->widgetTriggerFunctionT, SIGNAL(_comboBoxTopMiddle_currentIndexWasChanged(int)),
-                     this, SLOT(_recieved_ComboBoxTopMiddle_currentIndexChanged(int)));
-    QObject::connect(ui->widgetTriggerFunctionT, SIGNAL(_comboBoxMiddle_currentIndexWasChanged(int)),
-                     this, SLOT(_recieved_ComboBoxMiddle_currentIndexChanged(int)));
-    QObject::connect(ui->widgetTriggerFunctionT, SIGNAL(_comboBoxBottomMiddle_currentIndexWasChanged(int)),
-                     this, SLOT(_recieved_ComboBoxBottomMiddle_currentIndexChanged(int)));
+    QObject::connect(ui->widgetTriggerFunctionT, SIGNAL(_comboBoxTopLeft_currentIndexWasChanged(quint8)),
+                     this, SLOT(_recieved_ComboBoxTopLeft_currentIndexChanged(quint8)));
+    QObject::connect(ui->widgetTriggerFunctionT, SIGNAL(_comboBoxTopRight_currentIndexWasChanged(quint8)),
+                     this, SLOT(_recieved_ComboBoxTopRight_currentIndexChanged(quint8)));
+    QObject::connect(ui->widgetTriggerFunctionT, SIGNAL(_comboBoxBottomLeft_currentIndexWasChanged(quint8)),
+                     this, SLOT(_recieved_ComboBoxBottomLeft_currentIndexChanged(quint8)));
+    QObject::connect(ui->widgetTriggerFunctionT, SIGNAL(_comboBoxBottomRight_currentIndexWasChanged(quint8)),
+                     this, SLOT(_recieved_ComboBoxBottomRight_currentIndexChanged(quint8)));
+    QObject::connect(ui->widgetTriggerFunctionT, SIGNAL(_comboBoxTopMiddle_currentIndexWasChanged(quint8)),
+                     this, SLOT(_recieved_ComboBoxTopMiddle_currentIndexChanged(quint8)));
+    QObject::connect(ui->widgetTriggerFunctionT, SIGNAL(_comboBoxMiddle_currentIndexWasChanged(quint8)),
+                     this, SLOT(_recieved_ComboBoxMiddle_currentIndexChanged(quint8)));
+    QObject::connect(ui->widgetTriggerFunctionT, SIGNAL(_comboBoxBottomMiddle_currentIndexWasChanged(quint8)),
+                     this, SLOT(_recieved_ComboBoxBottomMiddle_currentIndexChanged(quint8)));
 
     //error management
-    QObject::connect(ui->widgetTriggerFunctionT, SIGNAL(_errorWrongEquation(int,bool)),
-                     this, SLOT(_received_errorWrongEquation(int,bool)));
+    QObject::connect(ui->widgetTriggerFunctionT, SIGNAL(_errorWrongEquation(quint8,bool)),
+                     this, SLOT(_received_errorWrongEquation(quint8,bool)));
 }
 
-void TriggerWindow::addTrace(int enumTrace)
+void TriggerWindow::addTrace(quint8 enumTrace)
 {
     switch(enumTrace)
     {
@@ -198,10 +201,10 @@ void TriggerWindow::addTrace(int enumTrace)
     }
 
     //add trace in combox in trigger function
-    ui->widgetTriggerFunctionT->_comboboxAddItem(enumTrace);
+    ui->widgetTriggerFunctionT->comboboxAddItem(enumTrace);
 }
 
-void TriggerWindow::hideTrace(int enumTrace)
+void TriggerWindow::hideTrace(quint8 enumTrace)
 {
     switch(enumTrace)
     {
@@ -234,7 +237,7 @@ void TriggerWindow::hideTrace(int enumTrace)
     }
 
     //remove trace in combox in trigger function
-    ui->widgetTriggerFunctionT->_comboboxRevmoveItem(enumTrace);
+    ui->widgetTriggerFunctionT->comboboxRevmoveItem(enumTrace);
 }
 
 void TriggerWindow::pushButtonRangeAI1_changeRange()
@@ -247,32 +250,32 @@ void TriggerWindow::pushButtonRangeAI2_changeRange()
     ui->widgetTriggerSettingT->pushButtonRangeAI2_ChangeRange();
 }
 
-void TriggerWindow::pushButtonEdgeDI1_changeEdge(int eEdge)
+void TriggerWindow::pushButtonEdgeDI1_changeEdge(quint8 eEdge)
 {
     ui->widgetTriggerSettingT->pushButtonEdgeDI1_changeEdge(eEdge);
 }
 
-void TriggerWindow::pushButtonEdgeDI2_changeEdge(int eEdge)
+void TriggerWindow::pushButtonEdgeDI2_changeEdge(quint8 eEdge)
 {
     ui->widgetTriggerSettingT->pushButtonEdgeDI2_changeEdge(eEdge);
 }
 
-void TriggerWindow::pushButtonEdgeDI3_changeEdge(int eEdge)
+void TriggerWindow::pushButtonEdgeDI3_changeEdge(quint8 eEdge)
 {
     ui->widgetTriggerSettingT->pushButtonEdgeDI3_changeEdge(eEdge);
 }
 
-void TriggerWindow::pushButtonEdgeDI4_changeEdge(int eEdge)
+void TriggerWindow::pushButtonEdgeDI4_changeEdge(quint8 eEdge)
 {
     ui->widgetTriggerSettingT->pushButtonEdgeDI4_changeEdge(eEdge);
 }
 
-void TriggerWindow::pushButtonEdgeAI1_changeEdge(int eEdge)
+void TriggerWindow::pushButtonEdgeAI1_changeEdge(quint8 eEdge)
 {
     ui->widgetTriggerSettingT->pushButtonEdgeAI1_changeEdge(eEdge);
 }
 
-void TriggerWindow::pushButtonEdgeAI2_changeEdge(int eEdge)
+void TriggerWindow::pushButtonEdgeAI2_changeEdge(quint8 eEdge)
 {
     ui->widgetTriggerSettingT->pushButtonEdgeAI2_changeEdge(eEdge);
 }
@@ -307,39 +310,39 @@ void TriggerWindow::doubleSpinBoxAI2_changeValue(double value)
     ui->widgetTriggerSettingT->doubleSpinBoxAI2_changeValue(value);
 }
 
-void TriggerWindow::comboBoxTopLeft_changeCurrentIndex(int index)
+void TriggerWindow::comboBoxTopLeft_changeCurrentIndex(quint8 index)
 {
-    ui->widgetTriggerFunctionT->_comboBoxTopLeft_currentIndexChanged(index);
+    ui->widgetTriggerFunctionT->comboBoxTopLeft_changeCurrentIndex(index);
 }
 
-void TriggerWindow::comboBoxTopRight_changeCurrentIndex(int index)
+void TriggerWindow::comboBoxTopRight_changeCurrentIndex(quint8 index)
 {
-    ui->widgetTriggerFunctionT->_comboBoxTopRight_currentIndexChanged(index);
+    ui->widgetTriggerFunctionT->comboBoxTopRight_changeCurrentIndex(index);
 }
 
-void TriggerWindow::comboBoxBottomLeft_changeCurrentIndex(int index)
+void TriggerWindow::comboBoxBottomLeft_changeCurrentIndex(quint8 index)
 {
-    ui->widgetTriggerFunctionT->_comboBoxBottomLeft_currentIndexChanged(index);
+    ui->widgetTriggerFunctionT->comboBoxBottomLeft_changeCurrentIndex(index);
 }
 
-void TriggerWindow::comboBoxBottomRight_changeCurrentIndex(int index)
+void TriggerWindow::comboBoxBottomRight_changeCurrentIndex(quint8 index)
 {
-    ui->widgetTriggerFunctionT->_comboBoxBottomRight_currentIndexChanged(index);
+    ui->widgetTriggerFunctionT->comboBoxBottomRight_changeCurrentIndex(index);
 }
 
-void TriggerWindow::comboBoxTopMiddle_changeCurrentIndex(int index)
+void TriggerWindow::comboBoxTopMiddle_changeCurrentIndex(quint8 index)
 {
-    ui->widgetTriggerFunctionT->_comboBoxTopMiddle_currentIndexChanged(index);
+    ui->widgetTriggerFunctionT->comboBoxTopMiddle_changeCurrentIndex(index);
 }
 
-void TriggerWindow::comboBoxMiddle_changeCurrentIndex(int index)
+void TriggerWindow::comboBoxMiddle_changeCurrentIndex(quint8 index)
 {
-    ui->widgetTriggerFunctionT->_comboBoxMiddle_currentIndexChanged(index);
+    ui->widgetTriggerFunctionT->comboBoxMiddle_changeCurrentIndex(index);
 }
 
-void TriggerWindow::comboBoxBottomMiddle_changeCurrentIndex(int index)
+void TriggerWindow::comboBoxBottomMiddle_changeCurrentIndex(quint8 index)
 {
-    ui->widgetTriggerFunctionT->_comboBoxBottomMiddle_currentIndexChanged(index);
+    ui->widgetTriggerFunctionT->comboBoxBottomMiddle_changeCurrentIndex(index);
 }
 
 void TriggerWindow::addNewDataFrame(QVector<DataFrame> newDataFrameVector)
@@ -361,7 +364,7 @@ void TriggerWindow::addNewDataFrame(QVector<DataFrame> newDataFrameVector)
         ui->widgetAI2->addYValue(newDataFrameVector[i].AI2());
 
         ui->widgetFunction->addYValue(newDataFrameVector[i].TR1());
-     }
+    }
     // qDebug() << objectName() << "replot";
     // updatePlot();
 }
@@ -376,32 +379,32 @@ void TriggerWindow::_recieved_pushButtonRangeAI2Changed()
     emit _pushButtonRangeAI2WasChanged();
 }
 
-void TriggerWindow::_recieved_pushButtonEdgeDI1Changed(int eEdge)
+void TriggerWindow::_recieved_pushButtonEdgeDI1Changed(quint8 eEdge)
 {
     emit _pushButtonEdgeDI1WasChanged(eEdge);
 }
 
-void TriggerWindow::_recieved_pushButtonEdgeDI2Changed(int eEdge)
+void TriggerWindow::_recieved_pushButtonEdgeDI2Changed(quint8 eEdge)
 {
     emit _pushButtonEdgeDI2WasChanged(eEdge);
 }
 
-void TriggerWindow::_recieved_pushButtonEdgeDI3Changed(int eEdge)
+void TriggerWindow::_recieved_pushButtonEdgeDI3Changed(quint8 eEdge)
 {
     emit _pushButtonEdgeDI3WasChanged(eEdge);
 }
 
-void TriggerWindow::_recieved_pushButtonEdgeDI4Changed(int eEdge)
+void TriggerWindow::_recieved_pushButtonEdgeDI4Changed(quint8 eEdge)
 {
     emit _pushButtonEdgeDI4WasChanged(eEdge);
 }
 
-void TriggerWindow::_recieved_pushButtonEdgeAI1Changed(int eEdge)
+void TriggerWindow::_recieved_pushButtonEdgeAI1Changed(quint8 eEdge)
 {
     emit _pushButtonEdgeAI1WasChanged(eEdge);
 }
 
-void TriggerWindow::_recieved_pushButtonEdgeAI2Changed(int eEdge)
+void TriggerWindow::_recieved_pushButtonEdgeAI2Changed(quint8 eEdge)
 {
     emit _pushButtonEdgeAI2WasChanged(eEdge);
 }
@@ -436,42 +439,42 @@ void TriggerWindow::_recieved_doubleSpinBoxAI2_valueChanged(double value)
     emit _doubleSpinBoxAI2_valueWasChangedFromTriggerMenu(value);
 }
 
-void TriggerWindow::_recieved_ComboBoxTopLeft_currentIndexChanged(int index)
+void TriggerWindow::_recieved_ComboBoxTopLeft_currentIndexChanged(quint8 index)
 {
     emit _comboBoxTopLeft_currentIndexWasChanged(index);
 }
 
-void TriggerWindow::_recieved_ComboBoxTopRight_currentIndexChanged(int index)
+void TriggerWindow::_recieved_ComboBoxTopRight_currentIndexChanged(quint8 index)
 {
     emit _comboBoxTopRight_currentIndexWasChanged(index);
 }
 
-void TriggerWindow::_recieved_ComboBoxBottomLeft_currentIndexChanged(int index)
+void TriggerWindow::_recieved_ComboBoxBottomLeft_currentIndexChanged(quint8 index)
 {
     emit _comboBoxBottomLeft_currentIndexWasChanged(index);
 }
 
-void TriggerWindow::_recieved_ComboBoxBottomRight_currentIndexChanged(int index)
+void TriggerWindow::_recieved_ComboBoxBottomRight_currentIndexChanged(quint8 index)
 {
     emit _comboBoxBottomRight_currentIndexWasChanged(index);
 }
 
-void TriggerWindow::_recieved_ComboBoxTopMiddle_currentIndexChanged(int index)
+void TriggerWindow::_recieved_ComboBoxTopMiddle_currentIndexChanged(quint8 index)
 {
     emit _comboBoxTopMiddle_currentIndexWasChanged(index);
 }
 
-void TriggerWindow::_recieved_ComboBoxMiddle_currentIndexChanged(int index)
+void TriggerWindow::_recieved_ComboBoxMiddle_currentIndexChanged(quint8 index)
 {
     emit _comboBoxMiddle_currentIndexWasChanged(index);
 }
 
-void TriggerWindow::_recieved_ComboBoxBottomMiddle_currentIndexChanged(int index)
+void TriggerWindow::_recieved_ComboBoxBottomMiddle_currentIndexChanged(quint8 index)
 {
     emit _comboBoxBottomMiddle_currentIndexWasChanged(index);
 }
 
-void TriggerWindow::_received_errorWrongEquation(int errorNumber, bool active)
+void TriggerWindow::_received_errorWrongEquation(quint8 errorNumber, bool active)
 {
     emit _errorWrongEquation(errorNumber, active);
 }

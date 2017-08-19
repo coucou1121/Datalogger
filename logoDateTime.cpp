@@ -7,9 +7,9 @@ LogoDateTime::LogoDateTime(QWidget *parent) :
 {
     _timer = new QTimer(this);
     ui->setupUi(this);
-    connect(_timer, SIGNAL(timeout()), this, SLOT(showTime()));
+    connect(_timer, SIGNAL(timeout()), this, SLOT(_showTime()));
     _timer->start(1000);
-    showTime();
+    _showTime();
 }
 
 LogoDateTime::~LogoDateTime()
@@ -17,7 +17,7 @@ LogoDateTime::~LogoDateTime()
     delete ui;
 }
 
-void LogoDateTime::showTime()
+void LogoDateTime::_showTime()
 {
     _dateTimeToDay = QDateTime::currentDateTime();
     _timeToDay = _dateTimeToDay.time();

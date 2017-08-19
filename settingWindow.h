@@ -48,17 +48,17 @@ public slots:
     void _received_SizeFrameChange(int frameSize);
     void _received_FTDIBaudrateChange(int FTDIBaudrate);
 
-    void enableWindows(bool enableState);
+//    void enableWindows(bool enableState);
 
     void pushButtonRangeAI1_changeRange();
     void pushButtonRangeAI2_changeRange();
 
-    void pushButtonEdgeDI1_changeEdge(int eEdge);
-    void pushButtonEdgeDI2_changeEdge(int eEdge);
-    void pushButtonEdgeDI3_changeEdge(int eEdge);
-    void pushButtonEdgeDI4_changeEdge(int eEdge);
-    void pushButtonEdgeAI1_changeEdge(int eEdge);
-    void pushButtonEdgeAI2_changeEdge(int eEdge);
+    void pushButtonEdgeDI1_changeEdge(quint8 eEdge);
+    void pushButtonEdgeDI2_changeEdge(quint8 eEdge);
+    void pushButtonEdgeDI3_changeEdge(quint8 eEdge);
+    void pushButtonEdgeDI4_changeEdge(quint8 eEdge);
+    void pushButtonEdgeAI1_changeEdge(quint8 eEdge);
+    void pushButtonEdgeAI2_changeEdge(quint8 eEdge);
 
     void doubleSpinBoxDI1_changeValue(double value);
     void doubleSpinBoxDI2_changeValue(double value);
@@ -67,31 +67,31 @@ public slots:
     void doubleSpinBoxAI1_changeValue(double value);
     void doubleSpinBoxAI2_changeValue(double value);
 
-    void comboBoxTopLeft_changeCurrentIndex(int index);
-    void comboBoxTopRight_changeCurrentIndex(int index);
-    void comboBoxBottomLeft_changeCurrentIndex(int index);
-    void comboBoxBottomRight_changeCurrentIndex(int index);
-    void comboBoxTopMiddle_changeCurrentIndex(int index);
-    void comboBoxMiddle_changeCurrentIndex(int index);
-    void comboBoxBottomMiddle_changeCurrentIndex(int index);
+    void comboBoxTopLeft_changeCurrentIndex(quint8 index);
+    void comboBoxTopRight_changeCurrentIndex(quint8 index);
+    void comboBoxBottomLeft_changeCurrentIndex(quint8 index);
+    void comboBoxBottomRight_changeCurrentIndex(quint8 index);
+    void comboBoxTopMiddle_changeCurrentIndex(quint8 index);
+    void comboBoxMiddle_changeCurrentIndex(quint8 index);
+    void comboBoxBottomMiddle_changeCurrentIndex(quint8 index);
 
 private slots:
-    void _received_AddTraceFromChannelSelection(int traceNumber);
-    void _received_RemoveTraceFromChannelSelection(int traceNumber);
-    void _received_noSelectedTrace(int errorNumber, bool active);
-    void _received_noSelectedTriggerTrace(int errorNumber,bool active);
-    void _received_errorFrequencyToLow(int errorNumber, bool active);
-    void _received_errorWrongEquation(int errorNumber,bool active);
+    void _received_AddTraceFromChannelSelection(quint8 traceNumber);
+    void _received_RemoveTraceFromChannelSelection(quint8 traceNumber);
+    void _received_errorNoSelectedTrace(quint8 errorNumber, bool active);
+    void _received_errorNoSectedTriggerTrace(quint8 errorNumber,bool active);
+    void _received_errorFrequencyToLow(quint8 errorNumber, bool active);
+    void _received_errorWrongEquation(quint8 errorNumber,bool active);
 
     void _received_pushButtonRangeAI1Changed();
     void _received_pushButtonRangeAI2Changed();
 
-    void _received_pushButtonEdgeDI1Changed(int eEdge);
-    void _received_pushButtonEdgeDI2Changed(int eEdge);
-    void _received_pushButtonEdgeDI3Changed(int eEdge);
-    void _received_pushButtonEdgeDI4Changed(int eEdge);
-    void _received_pushButtonEdgeAI1Changed(int eEdge);
-    void _received_pushButtonEdgeAI2Changed(int eEdge);
+    void _received_pushButtonEdgeDI1Changed(quint8 eEdge);
+    void _received_pushButtonEdgeDI2Changed(quint8 eEdge);
+    void _received_pushButtonEdgeDI3Changed(quint8 eEdge);
+    void _received_pushButtonEdgeDI4Changed(quint8 eEdge);
+    void _received_pushButtonEdgeAI1Changed(quint8 eEdge);
+    void _received_pushButtonEdgeAI2Changed(quint8 eEdge);
 
     void _received_doubleSpinBoxDI1_valueChanged(double value);
     void _received_doubleSpinBoxDI2_valueChanged(double value);
@@ -100,36 +100,36 @@ private slots:
     void _received_doubleSpinBoxAI1_valueChanged(double value);
     void _received_doubleSpinBoxAI2_valueChanged(double value);
 
-    void _received_ComboBoxTopLeft_currentIndexChanged(int index);
-    void _received_ComboBoxTopRight_currentIndexChanged(int index);
-    void _received_ComboBoxBottomLeft_currentIndexChanged(int index);
-    void _received_ComboBoxBottomRight_currentIndexChanged(int index);
-    void _received_ComboBoxTopMiddle_currentIndexChanged(int index);
-    void _received_ComboBoxMiddle_currentIndexChanged(int index);
-    void _received_ComboBoxBottomMiddle_currentIndexChanged(int index);
+    void _received_ComboBoxTopLeft_currentIndexChanged(quint8 index);
+    void _received_ComboBoxTopRight_currentIndexChanged(quint8 index);
+    void _received_ComboBoxBottomLeft_currentIndexChanged(quint8 index);
+    void _received_ComboBoxBottomRight_currentIndexChanged(quint8 index);
+    void _received_ComboBoxTopMiddle_currentIndexChanged(quint8 index);
+    void _received_ComboBoxMiddle_currentIndexChanged(quint8 index);
+    void _received_ComboBoxBottomMiddle_currentIndexChanged(quint8 index);
 
 signals:
-    void _addTraceInTriggerMenu(int traceNumber);
-    void _removeTraceInTriggerMenu(int traceNumber);
-    void _addTraceInDisplayMenu(int traceNumber);
-    void _removeTraceInDisplayMenu(int traceNumber);
+    void _addTraceInTriggerMenu(quint8 traceNumber);
+    void _removeTraceInTriggerMenu(quint8 traceNumber);
+    void _addTraceInDisplayMenu(quint8 traceNumber);
+    void _removeTraceInDisplayMenu(quint8 traceNumber);
     void _nbFrameSavedChange(quint64 nbFrameChanges);
     void _sizeFrameChange(int frameSize);
     void _FTDIBaudrateChange(int FTDIBaudrate);
-    void _errorNoSelectedTrace(int errorNumber, bool noSelecetTrace);
-    void _errorNoSelectedTriggerTrace(int errorNumber, bool noSelectedTriggerTrace);
-    void _errorFrequencyToLow(int errorNumber,bool active);
-    void _errorWrongEquation(int errorNumber,bool active);
+    void _errorNoSelectedTrace(quint8 errorNumber, bool active);
+    void _errorNoSelectedTriggerTrace(quint8 errorNumber, bool active);
+    void _errorFrequencyToLow(quint8 errorNumber,bool active);
+    void _errorWrongEquation(quint8 errorNumber,bool active);
 
     void _pushButtonRangeAI1WasChangedFromSettingMenu();
     void _pushButtonRangeAI2WasChangedFromSettingMenu();
 
-    void _pushButtonEdgeDI1WasChangedFromSettingMenu(int eEdge);
-    void _pushButtonEdgeDI2WasChangedFromSettingMenu(int eEdge);
-    void _pushButtonEdgeDI3WasChangedFromSettingMenu(int eEdge);
-    void _pushButtonEdgeDI4WasChangedFromSettingMenu(int eEdge);
-    void _pushButtonEdgeAI1WasChangedFromSettingMenu(int eEdge);
-    void _pushButtonEdgeAI2WasChangedFromSettingMenu(int eEdge);
+    void _pushButtonEdgeDI1WasChangedFromSettingMenu(quint8 eEdge);
+    void _pushButtonEdgeDI2WasChangedFromSettingMenu(quint8 eEdge);
+    void _pushButtonEdgeDI3WasChangedFromSettingMenu(quint8 eEdge);
+    void _pushButtonEdgeDI4WasChangedFromSettingMenu(quint8 eEdge);
+    void _pushButtonEdgeAI1WasChangedFromSettingMenu(quint8 eEdge);
+    void _pushButtonEdgeAI2WasChangedFromSettingMenu(quint8 eEdge);
 
     void _doubleSpinBoxDI1_valueWasChangedFromSettingMenu(double value);
     void _doubleSpinBoxDI2_valueWasChangedFromSettingMenu(double value);
@@ -138,13 +138,13 @@ signals:
     void _doubleSpinBoxAI1_valueWasChangedFromSettingMenu(double value);
     void _doubleSpinBoxAI2_valueWasChangedFromSettingMenu(double value);
 
-    void _comboBoxTopLeft_currentIndexWasChanged(int index);
-    void _comboBoxTopRight_currentIndexWasChanged(int index);
-    void _comboBoxBottomLeft_currentIndexWasChanged(int index);
-    void _comboBoxBottomRight_currentIndexWasChanged(int index);
-    void _comboBoxTopMiddle_currentIndexWasChanged(int index);
-    void _comboBoxMiddle_currentIndexWasChanged(int index);
-    void _comboBoxBottomMiddle_currentIndexWasChanged(int index);
+    void _comboBoxTopLeft_currentIndexWasChanged(quint8 index);
+    void _comboBoxTopRight_currentIndexWasChanged(quint8 index);
+    void _comboBoxBottomLeft_currentIndexWasChanged(quint8 index);
+    void _comboBoxBottomRight_currentIndexWasChanged(quint8 index);
+    void _comboBoxTopMiddle_currentIndexWasChanged(quint8 index);
+    void _comboBoxMiddle_currentIndexWasChanged(quint8 index);
+    void _comboBoxBottomMiddle_currentIndexWasChanged(quint8 index);
 
 };
 

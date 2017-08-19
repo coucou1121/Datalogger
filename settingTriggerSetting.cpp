@@ -603,7 +603,7 @@ GlobalEnumatedAndExtern::eRangeValue SettingTriggerSetting::rangeDI1() const
     return _rangeDI1;
 }
 
-void SettingTriggerSetting::_btSelected(int buttonNumber, bool btSelected)
+void SettingTriggerSetting::_btSelected(quint8 buttonNumber, bool btSelected)
 {
     switch(buttonNumber)
     {
