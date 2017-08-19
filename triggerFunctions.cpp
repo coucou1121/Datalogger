@@ -601,10 +601,10 @@ void TriggerFunctions::_setValueFunction()
         case GlobalEnumatedAndExtern::opOr:
             _valueFunction = _valueFunction | (1<<2);
             break;
-        case GlobalEnumatedAndExtern::opNotAnd:
+        case GlobalEnumatedAndExtern::opAndNot:
             _valueFunction = _valueFunction | (1<<3);
             break;
-        case GlobalEnumatedAndExtern::opNotOr:
+        case GlobalEnumatedAndExtern::opOrNot:
             _valueFunction = _valueFunction | (1<<4);
             break;
         default:
@@ -625,10 +625,10 @@ void TriggerFunctions::_setValueFunction()
         case GlobalEnumatedAndExtern::opOr:
             _valueFunction = _valueFunction | (1<<7);
             break;
-        case GlobalEnumatedAndExtern::opNotAnd:
+        case GlobalEnumatedAndExtern::opAndNot:
             _valueFunction = _valueFunction | (1<<8);
             break;
-        case GlobalEnumatedAndExtern::opNotOr:
+        case GlobalEnumatedAndExtern::opOrNot:
             _valueFunction = _valueFunction | (1<<9);
             break;
         default:
@@ -649,10 +649,10 @@ void TriggerFunctions::_setValueFunction()
         case GlobalEnumatedAndExtern::opOr:
             _valueFunction = _valueFunction | (1<<12);
             break;
-        case GlobalEnumatedAndExtern::opNotAnd:
+        case GlobalEnumatedAndExtern::opAndNot:
             _valueFunction = _valueFunction | (1<<13);
             break;
-        case GlobalEnumatedAndExtern::opNotOr:
+        case GlobalEnumatedAndExtern::opOrNot:
             _valueFunction = _valueFunction | (1<<14);
             break;
         default:

@@ -430,9 +430,6 @@ void MainWindow::_mainStateGraphe()
         //set display state to ready
         ui->widgetState->setDisplayState(GlobalEnumatedAndExtern::ready);
 
-        //check if they are some selected trace
-        _settingWindow->checkIfAreSelectedTrace();
-
         qDebug() << "main state on : " << "ready";
         break;
     case GlobalEnumatedAndExtern::mainStateSet:
@@ -447,6 +444,9 @@ void MainWindow::_mainStateGraphe()
 
         //set display state to ready
         ui->widgetState->setDisplayState(GlobalEnumatedAndExtern::ready);
+
+        //check if they are some selected trace
+        _settingWindow->checkIfAreSelectedTrace();
 
         qDebug() << "main state on : " << "set";
         break;

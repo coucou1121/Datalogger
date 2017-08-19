@@ -165,22 +165,20 @@ void SettingChannelSelection::_checkIfAreSelectedTrace()
     if(this->_sumOfSelectedTrace <= 0)
     {
         emit _errorNoSelectedTrace(GlobalEnumatedAndExtern::errorNoSelectedTrace, true);
-
     }
+    else
+    {
+        emit _errorNoSelectedTrace(GlobalEnumatedAndExtern::errorNoSelectedTrace, false);
+    }
+
     //check if aren't trigger selected trace
-    else if(this->_sumOfTriggerSelectedTrace <= 0)
+    if(this->_sumOfTriggerSelectedTrace <= 0)
     {
         emit _errorNoSelectedTriggerTrace(GlobalEnumatedAndExtern::errorNoSelectedTriggerTrace, true);
     }
     else
     {
-        emit _errorNoSelectedTrace(GlobalEnumatedAndExtern::errorNoSelectedTrace, false);
-
-        //check if are trigger selected trace
-        if(this->_sumOfTriggerSelectedTrace > 0)
-        {
-            emit _errorNoSelectedTriggerTrace(GlobalEnumatedAndExtern::errorNoSelectedTriggerTrace, false);
-        }
+        emit _errorNoSelectedTriggerTrace(GlobalEnumatedAndExtern::errorNoSelectedTriggerTrace, false);
     }
 }
 

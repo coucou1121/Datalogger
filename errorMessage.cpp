@@ -51,6 +51,8 @@ void ErrorMessage::_displayMessage()
 {
     qDebug() << "nb error :" << _errorListNow.size();
 
+    int highestPriorityMessageToDisplay = 0;
+
     if(_errorListNow.isEmpty())
     {
         this->_setColor(false);
@@ -60,9 +62,24 @@ void ErrorMessage::_displayMessage()
     {
         this->_setColor(true);
 
+        //find the highest priority message to display
         foreach(int key, _errorListNow.keys())
         {
-            ui->label->setText(_errorListNow[key]);
+            switch (highestPriorityMessageToDisplay)
+            {
+            case 0:
+                highestPriorityMessageToDisplay = key;
+                break;
+            default:
+                highestPriorityMessageToDisplay = key < highestPriorityMessageToDisplay ?
+                            key : highestPriorityMessageToDisplay;
+                break;
+            }
         }
+
+        qDebug() << "highestPriorityMessageToDisplay : " << highestPriorityMessageToDisplay;
+
+        //display the highest priority message
+        ui->label->setText(_errorListNow[highestPriorityMessageToDisplay]);
     }
 }

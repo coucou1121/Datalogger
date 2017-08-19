@@ -71,6 +71,7 @@ public:
     QString BPStartStopStateStopTxt;
 
     //Error Possible
+    // from the Highest priority is at the top after noError
     typedef enum
     {
         noError = 0,
@@ -109,8 +110,8 @@ public:
         opNone = 0,
         opAnd,
         opOr,
-        opNotAnd,
-        opNotOr
+        opAndNot,
+        opOrNot
     }eLogicOperator;
 
     QString opNoneTxt;
