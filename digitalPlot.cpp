@@ -23,6 +23,18 @@ void DigitalPlot::setTitleName(QString name)
     ui->TLname_DI->setText(name);
 }
 
+void DigitalPlot::setTraceColorGreen()
+{
+    _traceSettingColor = _myStyle.getTraceColorDigitalPlot();
+    ui->widget_DI->graph(0)->setPen(QPen(_traceSettingColor));
+}
+
+void DigitalPlot::setTraceColorRed()
+{
+    _traceSettingColor = _myStyle.getErrorLineInTrouble();
+    ui->widget_DI->graph(0)->setPen(QPen(_traceSettingColor));
+}
+
 void DigitalPlot::setDrawLeftToRight(bool drawLeftToRight)
 {
       ui->widget_DI->xAxis->setRangeReversed(!drawLeftToRight);
@@ -72,9 +84,6 @@ void DigitalPlot::setupStyle(QCustomPlot *customPlot)
     //y Axis color and line type
     customPlot->xAxis->grid()->setZeroLinePen(Qt::NoPen);
     customPlot->yAxis->grid()->setZeroLinePen(Qt::NoPen);
-    //    customPlot->xAxis->setUpperEnding(QCPLineEnding::esSpikeArrow);
-    //    customPlot->yAxis->setUpperEnding(QCPLineEnding::esSpikeArrow);
-
 
     //rescale the axis
     customPlot->rescaleAxes();
@@ -88,28 +97,13 @@ void DigitalPlot::setupTrace(QCustomPlot *customPlot)
 {
     //trace
     customPlot->addGraph();
-    customPlot->graph(0)->setPen(QPen(_myStyle.getTraceColorDigitalPlot()));
-   // customPlot->graph(0)->setBrush(QBrush(_myStyle.getTraceColorDigitalPlot()));
 
-    //Trigger
-    //customPlot->addGraph();
-    //customPlot->graph(1)->setPen(QPen(_myStyle.getTraceColorDigitalPlot()));
-   // customPlot->graph(1)->setBrush(QBrush(_myStyle.getTraceColorDigitalPlot()));
-
-    //  customPlot->addGraph(); // red line
-    //  customPlot->graph(1)->setPen(QPen(QColor(255, 110, 40)));
+    //set color to green as default
+    this->setTraceColorGreen();
 
     // make left and bottom axes transfer their ranges to right and top axes:
     connect(customPlot->xAxis, SIGNAL(rangeChanged(QCPRange)),customPlot->xAxis2, SLOT(setRange(QCPRange)));
     connect(customPlot->yAxis, SIGNAL(rangeChanged(QCPRange)),customPlot->yAxis2, SLOT(setRange(QCPRange)));
-
-#if IN_DOOR_DATA
-    // setup a timer that repeatedly calls MainWindow::realtimeDataSlot:
-    // QTimer *timer = new QTimer(this);
-    //    connect(timer, SIGNAL(timeout()), this, SLOT(updatePlot()));
-    connect(timer, SIGNAL(timeout()), this, SLOT(realtimeDataSlot()));
-    timer->start(_timeInterval); // Interval 0 means to refresh as fast as possible
-#endif
 }
 
 void DigitalPlot::updatePlot()
@@ -133,7 +127,7 @@ void DigitalPlot::addYValue(quint8 value)
     //qDebug() << objectName() << " Datas recieved " << value;
     if(value)
     {
-        ui->TLname_DI->setStyleSheet("background-color:" + _myStyle.getTraceColorDigitalPlot().name() + ";");
+        ui->TLname_DI->setStyleSheet("background-color:" + this->_traceSettingColor.name() + ";");
     }
     else
     {
@@ -142,14 +136,6 @@ void DigitalPlot::addYValue(quint8 value)
     _CPT++;
 
     _arrayPlotContainerPointer->add(QCPGraphData(_CPT, value));
-//    _XData.append(_CPT);
-
-//    _YData.append(value);
-//    if( _XData.size() > DI_NB_X_VALUES_DISPLAY_LIVE){
-//        _XData.remove(0);
-//        _YData.remove(0);
-//       // _minusYData.remove(0);
-//    }
 }
 
 void DigitalPlot::replot()

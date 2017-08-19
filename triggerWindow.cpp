@@ -23,6 +23,9 @@ TriggerWindow::TriggerWindow(QWidget *parent) :
 
     // force the trigger trace to be on bottom
     ui->verticalLayout->setAlignment(ui->widgetFunction,Qt::AlignBottom);
+
+    // set the color of trigger trcae to red
+    ui->widgetFunction->setTraceColorRed();
 }
 
 TriggerWindow::~TriggerWindow()

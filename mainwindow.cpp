@@ -188,27 +188,12 @@ void MainWindow::stopThread()
 void MainWindow::addNewDataFrame(QVector<DataFrame> dataFrameVector)
 {
 
-    static bool memoOnTrig = false;
-
     for(QVector<DataFrame>::iterator it = dataFrameVector.begin(); it != dataFrameVector.end(); it++)
     {
         //check trigger function
         this->_triggerFuntion->onTrig(it);
 
-        if(memoOnTrig == true)
-        {
-            this->on_pushButton_StartStop_released();
-            qDebug() << "trig";
-            this->refreshDisplay();
-            memoOnTrig = false;
-        }
-
-        if(_triggerFuntion->onTrigStatus())
-        {
-            memoOnTrig = true;
-        }
-
-        //add value in buffer
+         //add value in buffer
         _dataFrameVectorReccorder.append(*it);
 
         //adapte the size with pretrigger value

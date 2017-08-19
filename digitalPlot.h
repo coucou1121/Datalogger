@@ -7,14 +7,16 @@
 #include "qcustomplot.h"
 #include "commonStyle.h"
 
-#define DI_TIMER_REFRESH 100
-#define DI_DISPLAY_REFRESH 0
+//#define DI_TIMER_REFRESH 100
+//#define DI_DISPLAY_REFRESH 0
 #define DI_NB_TRACE 1
-#define DI_RESOLUTION 900
+//#define DI_RESOLUTION 900
 #define DI_NB_X_PIXELS 80 //795
 #define DI_NB_X_VALUES_DISPLAY_LIVE     DI_NB_X_PIXELS/DI_NB_TRACE
-#define DI_NB_X_VALUES_DISPLAY_HOLD 100
-#define DI_X_AXIS_MIN_VALUE 0
+//#define DI_NB_X_VALUES_DISPLAY_HOLD 100
+//#define DI_X_AXIS_MIN_VALUE 0
+
+//gap of 0.2 beetween trace add display frame
 #define DI_Y_AXIS_MIN_VALUE -0.2
 #define DI_Y_AXIS_MAX_VALUE 1.2
 
@@ -39,6 +41,12 @@ public:
     //change title name
     void setTitleName(QString name);
 
+    //set trace color to green
+    void setTraceColorGreen();
+
+    //set trace color to green
+    void setTraceColorRed();
+
     //direction du draw
     // if true, draw left to right, mode roll on
     // if flase, draw right to left, mode trig
@@ -53,6 +61,8 @@ private:
     quint64 _CPT;
     quint8 _yValue;
     //int _minValue = 0;
+
+    QColor _traceSettingColor;
 
     // Data buffers
     QVector<double> _YData;
