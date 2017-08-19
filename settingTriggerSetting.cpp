@@ -26,6 +26,7 @@ SettingTriggerSetting::SettingTriggerSetting(QWidget *parent) :
     //initialise the Key - Value for combobx
     _triggerTracePossible = GlobalEnumatedAndExtern::initTriggerTracePossible();
 
+    //setup style
     setupStyle();
 
     //unselect all trace

@@ -159,6 +159,10 @@ void TriggerWindow::_setupSignalAndSlot()
                      this, SLOT(_recieved_ComboBoxMiddle_currentIndexChanged(int)));
     QObject::connect(ui->widgetTriggerFunctionT, SIGNAL(_comboBoxBottomMiddle_currentIndexWasChanged(int)),
                      this, SLOT(_recieved_ComboBoxBottomMiddle_currentIndexChanged(int)));
+
+    //error management
+    QObject::connect(ui->widgetTriggerFunctionT, SIGNAL(_errorWrongEquation(int,bool)),
+                     this, SLOT(_received_errorWrongEquation(int,bool)));
 }
 
 void TriggerWindow::addTrace(int enumTrace)
@@ -465,4 +469,9 @@ void TriggerWindow::_recieved_ComboBoxMiddle_currentIndexChanged(int index)
 void TriggerWindow::_recieved_ComboBoxBottomMiddle_currentIndexChanged(int index)
 {
     emit _comboBoxBottomMiddle_currentIndexWasChanged(index);
+}
+
+void TriggerWindow::_received_errorWrongEquation(int errorNumber, bool active)
+{
+    emit _errorWrongEquation(errorNumber, active);
 }

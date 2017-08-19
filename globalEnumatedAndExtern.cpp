@@ -10,9 +10,9 @@ QMap<int, QString> GlobalEnumatedAndExtern::initErrorPossible()
     QMap<int, QString> ret;
     ret.insert(noError, "no error");
     ret.insert(errorSamplingFrequencyToHigh, "Periode too low \n or \n baudrate too high");
-    ret.insert(errorWrongEquation, "Wrong Equation in \n Trigger Function\n menu");
     ret.insert(errorNoSelectedTrace, "no channels \n selected");
     ret.insert(errorNoSelectedTriggerTrace, "no trigger channels \n selected");
+    ret.insert(errorWrongEquation, "Wrong Equation in \n Trigger Function\n menu");
     return ret;
 }
 

@@ -6,7 +6,7 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>336</width>
+    <width>270</width>
     <height>400</height>
    </rect>
   </property>
@@ -18,13 +18,13 @@
   </property>
   <property name="minimumSize">
    <size>
-    <width>260</width>
+    <width>270</width>
     <height>400</height>
    </size>
   </property>
   <property name="maximumSize">
    <size>
-    <width>336</width>
+    <width>347</width>
     <height>16777215</height>
    </size>
   </property>
@@ -36,16 +36,16 @@
   </property>
   <layout class="QGridLayout" name="gridLayout">
    <property name="leftMargin">
-    <number>7</number>
+    <number>5</number>
    </property>
    <property name="topMargin">
-    <number>7</number>
+    <number>5</number>
    </property>
    <property name="rightMargin">
-    <number>7</number>
+    <number>5</number>
    </property>
    <property name="bottomMargin">
-    <number>7</number>
+    <number>5</number>
    </property>
    <property name="spacing">
     <number>5</number>
@@ -159,7 +159,7 @@
      </property>
      <property name="minimumSize">
       <size>
-       <width>30</width>
+       <width>25</width>
        <height>30</height>
       </size>
      </property>
@@ -181,7 +181,7 @@
      </property>
      <property name="minimumSize">
       <size>
-       <width>30</width>
+       <width>25</width>
        <height>30</height>
       </size>
      </property>
@@ -203,7 +203,7 @@
      </property>
      <property name="minimumSize">
       <size>
-       <width>30</width>
+       <width>25</width>
        <height>30</height>
       </size>
      </property>
@@ -225,7 +225,7 @@
      </property>
      <property name="minimumSize">
       <size>
-       <width>30</width>
+       <width>25</width>
        <height>30</height>
       </size>
      </property>
@@ -247,7 +247,7 @@
      </property>
      <property name="minimumSize">
       <size>
-       <width>30</width>
+       <width>25</width>
        <height>10</height>
       </size>
      </property>
@@ -269,7 +269,7 @@
      </property>
      <property name="minimumSize">
       <size>
-       <width>30</width>
+       <width>25</width>
        <height>10</height>
       </size>
      </property>
@@ -403,7 +403,7 @@
      </property>
      <property name="minimumSize">
       <size>
-       <width>30</width>
+       <width>25</width>
        <height>10</height>
       </size>
      </property>
@@ -599,7 +599,7 @@
      </property>
      <property name="minimumSize">
       <size>
-       <width>80</width>
+       <width>85</width>
        <height>40</height>
       </size>
      </property>
@@ -633,7 +633,7 @@
      </property>
      <property name="minimumSize">
       <size>
-       <width>80</width>
+       <width>85</width>
        <height>40</height>
       </size>
      </property>
@@ -670,7 +670,7 @@
      </property>
      <property name="minimumSize">
       <size>
-       <width>80</width>
+       <width>85</width>
        <height>40</height>
       </size>
      </property>
@@ -701,7 +701,7 @@
      </property>
      <property name="minimumSize">
       <size>
-       <width>80</width>
+       <width>85</width>
        <height>40</height>
       </size>
      </property>
@@ -732,7 +732,7 @@
      </property>
      <property name="minimumSize">
       <size>
-       <width>80</width>
+       <width>85</width>
        <height>40</height>
       </size>
      </property>
@@ -763,7 +763,7 @@
      </property>
      <property name="minimumSize">
       <size>
-       <width>80</width>
+       <width>85</width>
        <height>40</height>
       </size>
      </property>

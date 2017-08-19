@@ -341,6 +341,7 @@ void MainWindow::_setupSignalAndSlot()
     QObject::connect(this->_settingWindow, SIGNAL(_errorNoSelectedTriggerTrace(int,bool)), ui->widgetError, SLOT(_reveived_Error(int,bool)));
     QObject::connect(this->_settingWindow, SIGNAL(_errorFrequencyToLow(int,bool)), ui->widgetError, SLOT(_reveived_Error(int,bool)));
     QObject::connect(this->_settingWindow, SIGNAL(_errorWrongEquation(int,bool)), ui->widgetError, SLOT(_reveived_Error(int,bool)));
+    QObject::connect(this->_triggerWindow, SIGNAL(_errorWrongEquation(int,bool)), ui->widgetError, SLOT(_reveived_Error(int,bool)));
 
     //timer management to be sure they start correctly
     //    QObject::connect(this->_threadTick, SIGNAL(started), this->_tickTimer, SLOT(start()));
@@ -463,6 +464,9 @@ void MainWindow::_mainStateGraphe()
         //set display state to ready
         ui->widgetState->setDisplayState(GlobalEnumatedAndExtern::ready);
 
+        //check if they are some selected trace
+        _settingWindow->checkIfAreSelectedTrace();
+
         qDebug() << "main state on : " << "trig";
         break;
     case GlobalEnumatedAndExtern::mainStateRoll:
@@ -477,6 +481,9 @@ void MainWindow::_mainStateGraphe()
 
         //set display state to ready
         ui->widgetState->setDisplayState(GlobalEnumatedAndExtern::ready);
+
+        //check if they are some selected trace
+        _settingWindow->checkIfAreSelectedTrace();
 
         qDebug() << "main state on : " << "roll";
         break;

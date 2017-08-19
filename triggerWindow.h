@@ -98,6 +98,8 @@ private slots:
     void _recieved_ComboBoxMiddle_currentIndexChanged(int index);
     void _recieved_ComboBoxBottomMiddle_currentIndexChanged(int index);
 
+    void _received_errorWrongEquation(int errorNumber,bool active);
+
 signals:
     void _pushButtonRangeAI1WasChanged();
     void _pushButtonRangeAI2WasChanged();
@@ -123,6 +125,8 @@ signals:
     void _doubleSpinBoxDI4_valueWasChangedFromTriggerMenu(double value);
     void _doubleSpinBoxAI1_valueWasChangedFromTriggerMenu(double value);
     void _doubleSpinBoxAI2_valueWasChangedFromTriggerMenu(double value);
+
+    void _errorWrongEquation(int errorNumber,bool active);
 };
 
 #endif // TRIGGERWINDOW_H

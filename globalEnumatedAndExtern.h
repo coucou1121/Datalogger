@@ -76,9 +76,9 @@ public:
     {
         noError = 0,
         errorSamplingFrequencyToHigh,
-        errorWrongEquation,
         errorNoSelectedTrace,
-        errorNoSelectedTriggerTrace
+        errorNoSelectedTriggerTrace,
+        errorWrongEquation
     }eError;
 
 

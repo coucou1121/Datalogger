@@ -72,7 +72,6 @@ private:
     void setupTrace(QCustomPlot *customPlot);
 
 public slots:
-
     void updatePlot();
     void addYValue(quint8 value);
 };
