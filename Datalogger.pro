@@ -35,7 +35,8 @@ SOURCES += main.cpp\
     debugWindow.cpp \
     triggerFunctions.cpp \
     homeWindow.cpp \
-    rollWindow.cpp
+    rollWindow.cpp \
+    initWindow.cpp
 
 HEADERS  += mainwindow.h \
     main.h \
@@ -61,7 +62,8 @@ HEADERS  += mainwindow.h \
     debugWindow.h \
     triggerFunctions.h \
     homeWindow.h \
-    rollWindow.h
+    rollWindow.h \
+    initWindow.h
 
 FORMS    += mainwindow.ui \
     analogPlot.ui \
@@ -79,7 +81,8 @@ FORMS    += mainwindow.ui \
     triggerWindow.ui \
     debugWindow.ui \
     homeWindow.ui \
-    rollWindow.ui
+    rollWindow.ui \
+    initWindow.ui
 
 RESOURCES += \
     images.qrc

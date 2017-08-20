@@ -1,5 +1,5 @@
-#include "RollWindow.h"
-#include "ui_RollWindow.h"
+#include "rollWindow.h"
+#include "ui_rollWindow.h"
 
 RollWindow::RollWindow(QWidget *parent) :
     QWidget(parent),

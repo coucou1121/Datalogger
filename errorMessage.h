@@ -22,9 +22,6 @@ public:
 private:
     Ui::ErrorMessage *ui;
 
-    //timer to dispay the message as a loop
-    QTimer *_timer;
-
     //Style
     CommonStyle _myStyle;
 

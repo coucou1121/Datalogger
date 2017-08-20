@@ -1,4 +1,4 @@
-#include "RefreshTimer.h"
+#include "refreshTimer.h"
 
 RefreshTimer::RefreshTimer(bool isCounting, QString name, int timeInterval, QObject *parent) :
     QObject(parent)

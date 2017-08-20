@@ -1,7 +1,7 @@
 #ifndef DATAFRAMESIMULATOR_H
 #define DATAFRAMESIMULATOR_H
 
-#define NB_FRAME_CREATE_AT_EVERY_TICK 10
+#define NB_FRAME_CREATE_AT_EVERY_TICK 2
 
 #include <QObject>
 #include <QDebug>

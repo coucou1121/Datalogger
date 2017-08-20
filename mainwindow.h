@@ -11,12 +11,13 @@
 
 #include "main.h"
 #include "commonStyle.h"
+#include "initWindow.h"
 #include "homeWindow.h"
 #include "settingWindow.h"
 #include "triggerWindow.h"
 #include "rollWindow.h"
 #include "debugWindow.h"
-#include "RefreshTimer.h"
+#include "refreshTimer.h"
 #include "dataFrameSimulator.h"
 #include "triggerWindow.h"
 #include "triggerFunctions.h"
@@ -60,6 +61,7 @@ private:
     RefreshTimer *_refreshDisplayTimer;
 
     //ui windows
+    InitWindow *_initWindow;
     HomeWindow *_homeWindow;
     SettingWindow *_settingWindow;
     TriggerWindow *_triggerWindow;

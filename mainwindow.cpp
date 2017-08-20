@@ -14,49 +14,48 @@ extern QString BPStartStopStateHoldTxt;
 MainWindow::MainWindow(QWidget *parent) :
     QMainWindow(parent),
     ui(new Ui::MainWindow),
+
+    //create windows object
+    _initWindow(new InitWindow()),
+    _homeWindow(new HomeWindow()),
+    _settingWindow(new SettingWindow()),
+    _triggerWindow(new TriggerWindow()),
+    _rollWindow(new RollWindow()),
+    _debugWindow(new DebugWindow()),
+    _hlayoutStatus(new QHBoxLayout()),
+
+    //create thread object
+    _threadTick(new QThread),
+    _threadNewDataFrame(new QThread),
+    _threadDisplayRefresh(new QThread),
+
+    //create timer for thread
+    _tickTimer(new RefreshTimer(false, "Tick timer", 1)),
+    _newDataFrameTimer(new RefreshTimer(false, "Data updated timer", 10)),
+    _refreshDisplayTimer(new RefreshTimer(false, "Refres Display timer", 100)),
+
+    //create data frame simulautor
+    _dataFrameSimulator(new DataFrameSimulator("Frame Simulator")),
+
+    //state of menu button pressed as false
     _btHomeWasPressed(false),
     _btSettingWasPressed(false),
     _btTriggerWasPressed(false),
     _btRollWasPressed(false),
     _btDebugWasPressed(false),
+
+    //state graph initialisation
+    _mainStateStep(GlobalEnumatedAndExtern::mainStateInit),
     _trigStateStep(GlobalEnumatedAndExtern::trigReady),
     _rollStateStep(GlobalEnumatedAndExtern::rollReady)
 {
     ui->setupUi(this);
     setMinimumSize(MINIMUM_WIDTH_SIZE, MINIMUM_HEIGHT_SIZE);
 
-    //create windows object
-    _homeWindow = new HomeWindow();
-    _settingWindow = new SettingWindow();
-    _triggerWindow = new TriggerWindow();
-    _rollWindow = new RollWindow();
-    _debugWindow = new DebugWindow();
-    _hlayoutStatus = new QHBoxLayout();
-
-    this->_mainSetup();
-    this->setupStyle();
-    this->_setStatusBar();
-
-    //create thread object
-    _threadTick = new QThread;
-    _threadNewDataFrame = new QThread;
-    _threadDisplayRefresh = new QThread;
-
-    //create timerfor thread
-    _tickTimer = new RefreshTimer(false, "Tick timer", 1);
-    _newDataFrameTimer = new RefreshTimer(false, "Data updated timer", 50);
-    _refreshDisplayTimer = new RefreshTimer(false, "Refres Display timer", 100);
-
-    //create data frame simulautor
-    _dataFrameSimulator = new DataFrameSimulator("Frame Simulator");
-
     //move timer into the thread
     _tickTimer->moveToThread(_threadTick);
     _newDataFrameTimer->moveToThread(_threadNewDataFrame);
     _refreshDisplayTimer->moveToThread(_threadDisplayRefresh);
-
-    //select home menu when start the application
-    this->_btHome_released();
 
     //setup signal and slot
     this->_setupSignalAndSlot();
@@ -69,7 +68,13 @@ MainWindow::MainWindow(QWidget *parent) :
     _threadTick->start();
     _threadNewDataFrame->start();
 
-    //perso type for signal
+    //setup customise style
+    this->setupStyle();
+
+    //set the bottom menu bar
+    this->_setStatusBar();
+
+    //personal type for signal
     qRegisterMetaType<QVector<DataFrame>>("QVector<DataFrame>");
     //qRegisterMetaType<TriggerFunctions>("TriggerFunctions");
 
@@ -79,6 +84,12 @@ MainWindow::MainWindow(QWidget *parent) :
 
     //get the setting in trigger function windows
     this->_triggerFuntion = _settingWindow->getTriggerFuntion();
+
+    //set main setup for application start correctly
+    this->_mainSetup();
+
+    //start state graph of application
+    this->_mainStateGraphe();
 }
 
 MainWindow::~MainWindow()
@@ -88,13 +99,16 @@ MainWindow::~MainWindow()
 
 void MainWindow::_mainSetup()
 {
-    //add base windows in windows layout
+    //add init window in windows layout
+    ui->gridLayout->addWidget(_initWindow, 0, 1, 6, 1);
+
+    //add home window in window layout
     ui->gridLayout->addWidget(_homeWindow, 0, 1, 6, 1);
 
-    //add setting windows in windows layout
+    //add setting window in window layout
     ui->gridLayout->addWidget(_settingWindow, 0, 1, 6, 1);
 
-    //add setting windows in windows layout
+    //add setting window in window layout
     ui->gridLayout->addWidget(_triggerWindow, 0, 1, 6, 1);
 
     //add display window in window layout
@@ -118,11 +132,8 @@ void MainWindow::_mainSetup()
     //set backGroud color and text on pushButton StartStop
     this->_startStopButtonTextAndColorManager(GlobalEnumatedAndExtern::start);
 
-    //set trigger function to false (no trig at startuo)
+    //set trigger function to false (no trig at startus)
     _triggerFunctionEvaluatedTrue = false;
-
-    //start state graph
-    this->_mainStateGraphe();
 }
 
 void MainWindow::_setupDefaultValue()
@@ -390,6 +401,7 @@ void MainWindow::setupStyle()
 
 void MainWindow::_hideAllWindows()
 {
+    _initWindow->hide();
     _homeWindow->hide();
     _settingWindow->hide();
     _triggerWindow->hide();
@@ -406,15 +418,23 @@ void MainWindow::_mainStateGraphe()
     switch (_mainStateStep)
     {
     case GlobalEnumatedAndExtern::mainStateInit:
+
         //show home page
-        this->_homeWindow->show();
+        this->_initWindow->show();
 
-        //next step
-        this->_mainStateStep = GlobalEnumatedAndExtern::mainStateStop;
+        //hide menu bottom bar
+        ui->statusBar->hide();
 
-        //go to the next step
-        //        this->_goToNextState();
         qDebug() << "main state on : " << "init";
+
+        QThread::sleep(50000);
+
+        //if all init passed
+        //show menu bottom bar
+        ui->statusBar->show();
+        //start application on the hme page
+        this->_btHome_released();
+
         break;
     case GlobalEnumatedAndExtern::mainStateStop:
         //stop display refresh and data analyseur thread
@@ -430,8 +450,8 @@ void MainWindow::_mainStateGraphe()
         this->_mainStateStep = GlobalEnumatedAndExtern::mainStateReady;
 
         //set trig state to ready
-        this->_trigStateStep = GlobalEnumatedAndExtern::trigReady;
-        this->_trigStateGraph();
+       this->_trigStateStep = GlobalEnumatedAndExtern::trigReady;
+       this->_trigStateGraph();
 
         //set roll state to ready
         this->_rollStateStep = GlobalEnumatedAndExtern::rollReady;
@@ -492,6 +512,7 @@ void MainWindow::_mainStateGraphe()
         qDebug() << "main state on : " << "trig";
         break;
     case GlobalEnumatedAndExtern::mainStateRoll:
+        //activate roll button menu
         _btRoll->setStyleSheet("background-color:" + _myStyle.getBackGroundColorButtonStatusbarSelected().name() +
                                "; color:" + _myStyle.getBackGroundColorButtonStatusbarUnselected().name() + ";");
 
@@ -531,9 +552,8 @@ void MainWindow::_mainStateGraphe()
 
 void MainWindow::_goToNextState()
 {
-    // init state
-    if(!this->_btHomeWasPressed && !this->_btSettingWasPressed && !this->_btTriggerWasPressed &&
-            !this->_btRollWasPressed && !this->_btDebugWasPressed)
+    // stop state
+    if(_mainStateStep == GlobalEnumatedAndExtern::mainStateStop)
     {
         this->_mainStateGraphe();
     }
@@ -581,7 +601,7 @@ void MainWindow::_trigStateGraph()
         //stop thread for analysing and refresh the display
         this->stopThread();
 
-        //set display state to Run Trig
+        //set display state to ready
         ui->widgetState->setDisplayState(GlobalEnumatedAndExtern::ready);
 
         break;
@@ -603,7 +623,7 @@ void MainWindow::_trigStateGraph()
         //stop thread for analysing and refresh the display
         this->stopThread();
 
-        //set display state to Run Trig
+        //set display state to trigged
         ui->widgetState->setDisplayState(GlobalEnumatedAndExtern::trigged);
 
         break;
@@ -638,7 +658,7 @@ void MainWindow::_rollStateGraph()
 
         break;
     case GlobalEnumatedAndExtern::rollPaused:
-        //change StartStopButton to hold
+        //change StartStopButton to start
         this->_startStopButtonTextAndColorManager(GlobalEnumatedAndExtern::start);
 
         //stop thread for analysing and refresh the display
@@ -676,8 +696,8 @@ void MainWindow::_setStatusBar()
     _btDebug->setAutoFillBackground(true);
 
     //set the intialisation color
-    _btHome->setStyleSheet("background-color:" + _myStyle.getBackGroundColorButtonStatusbarSelected().name() +
-                           "; color:" + _myStyle.getBackGroundColorButtonStatusbarUnselected().name() + ";");
+    _btHome->setStyleSheet("background-color:" + _myStyle.getBackGroundColorButtonStatusbarUnselected().name() +
+                           "; color:" + _myStyle.getBackGroundColorButtonStatusbarSelected().name() + ";");
     _btSetting->setStyleSheet("background-color:" + _myStyle.getBackGroundColorButtonStatusbarUnselected().name() +
                               "; color:" + _myStyle.getBackGroundColorButtonStatusbarSelected().name() + ";");
     _btTrigger->setStyleSheet("background-color:" + _myStyle.getBackGroundColorButtonStatusbarUnselected().name() +
