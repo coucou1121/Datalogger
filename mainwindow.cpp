@@ -427,8 +427,6 @@ void MainWindow::_mainStateGraphe()
 
         qDebug() << "main state on : " << "init";
 
-        QThread::sleep(50000);
-
         //if all init passed
         //show menu bottom bar
         ui->statusBar->show();
