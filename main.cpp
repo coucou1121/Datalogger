@@ -7,9 +7,10 @@ int main(int argc, char *argv[])
     QString title = TITLE;
     QString version = VERSION;
 
-    MainWindow mainWindows;
-    mainWindows.show();
+    MainWindow mainWindow;
+    mainWindow.show();
 
+    mainWindow.mainSetup();
     //thread
 //    QThread *threadTick = new QThread;              // First thread
 //    QThread *threadNewDataFrame = new QThread;    // Second thread

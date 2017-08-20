@@ -1,5 +1,5 @@
 #include "homeWindow.h"
-#include "ui_HomeWindow.h"
+#include "ui_homeWindow.h"
 
 HomeWindow::HomeWindow(QWidget *parent) :
     QWidget(parent),

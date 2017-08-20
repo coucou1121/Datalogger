@@ -36,7 +36,7 @@ SOURCES += main.cpp\
     triggerFunctions.cpp \
     homeWindow.cpp \
     rollWindow.cpp \
-    initWindow.cpp
+    initWindow.cpp \
 
 HEADERS  += mainwindow.h \
     main.h \
@@ -63,7 +63,7 @@ HEADERS  += mainwindow.h \
     triggerFunctions.h \
     homeWindow.h \
     rollWindow.h \
-    initWindow.h
+    initWindow.h \
 
 FORMS    += mainwindow.ui \
     analogPlot.ui \
@@ -86,3 +86,8 @@ FORMS    += mainwindow.ui \
 
 RESOURCES += \
     images.qrc
+
+unix|win32: LIBS += -L$$PWD/'CDM v2.12.26 WHQL Certified/Static/i386/' -lftd2xx
+
+INCLUDEPATH += $$PWD/'CDM v2.12.26 WHQL Certified/Static/i386'
+DEPENDPATH += $$PWD/'CDM v2.12.26 WHQL Certified/Static/i386'

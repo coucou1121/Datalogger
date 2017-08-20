@@ -21,6 +21,8 @@
 #include "dataFrameSimulator.h"
 #include "triggerWindow.h"
 #include "triggerFunctions.h"
+//#include "FTDI/ftd2xx.h"
+//#include "FTDIFunction.h"
 
 namespace Ui {
 
@@ -43,6 +45,9 @@ public:
 
     //add value for display
     void addNewFrame( QVector<DataFrame> dataFrameVector);
+
+    //set the application with default value
+    void mainSetup();
 
 private:
     Ui::MainWindow *ui;
@@ -113,9 +118,6 @@ private:
     //set the pushbutton color to grey
     void _resetPushButtonColor();
 
-    //set the application with default value
-    void _mainSetup();
-
     //setup signal and slot
     void _setupSignalAndSlot();
 
@@ -133,6 +135,18 @@ private:
 
     //value of the selected trigger function
     TriggerFunctions *_triggerFuntion;
+
+    //FTDI connection
+    //FTDIFunction *_FTDIdevice;
+
+    quint32 _baudRateSpeed2M;
+    quint16 _baudRateSpeed9600;
+
+    //FTDI management
+    bool _FTDIconnection();
+
+    //wait delay
+    void _waitDelay(int delayInSeconde);
 
 public slots:
     void changeStateStartStopButton(int state);

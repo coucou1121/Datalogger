@@ -47,7 +47,12 @@ MainWindow::MainWindow(QWidget *parent) :
     //state graph initialisation
     _mainStateStep(GlobalEnumatedAndExtern::mainStateInit),
     _trigStateStep(GlobalEnumatedAndExtern::trigReady),
-    _rollStateStep(GlobalEnumatedAndExtern::rollReady)
+    _rollStateStep(GlobalEnumatedAndExtern::rollReady),
+
+    //create the FTDI object
+    //_FTDIdevice(new FTDIFunction()),
+    _baudRateSpeed2M(2000000),
+    _baudRateSpeed9600(9600)
 {
     ui->setupUi(this);
     setMinimumSize(MINIMUM_WIDTH_SIZE, MINIMUM_HEIGHT_SIZE);
@@ -75,7 +80,7 @@ MainWindow::MainWindow(QWidget *parent) :
     this->_setStatusBar();
 
     //personal type for signal
-    qRegisterMetaType<QVector<DataFrame>>("QVector<DataFrame>");
+    qRegisterMetaType<QVector<DataFrame> >("QVector<DataFrame>");
     //qRegisterMetaType<TriggerFunctions>("TriggerFunctions");
 
     //select direction to plot
@@ -86,10 +91,7 @@ MainWindow::MainWindow(QWidget *parent) :
     this->_triggerFuntion = _settingWindow->getTriggerFuntion();
 
     //set main setup for application start correctly
-    this->_mainSetup();
-
-    //start state graph of application
-    this->_mainStateGraphe();
+    //this->_mainSetup();
 }
 
 MainWindow::~MainWindow()
@@ -97,7 +99,7 @@ MainWindow::~MainWindow()
     delete ui;
 }
 
-void MainWindow::_mainSetup()
+void MainWindow::mainSetup()
 {
     //add init window in windows layout
     ui->gridLayout->addWidget(_initWindow, 0, 1, 6, 1);
@@ -134,6 +136,9 @@ void MainWindow::_mainSetup()
 
     //set trigger function to false (no trig at startus)
     _triggerFunctionEvaluatedTrue = false;
+
+    //start state graph of application
+    this->_mainStateGraphe();
 }
 
 void MainWindow::_setupDefaultValue()
@@ -177,6 +182,122 @@ void MainWindow::_startStopButtonTextAndColorManager(GlobalEnumatedAndExtern::eB
     default:
         break;
     }
+}
+
+//bool MainWindow::_FTDIconnection()
+//{
+//    bool passed = false;
+//    //read FTDI device information
+//    this->_FTDIdevice->ReadDeviceInfo();
+
+//    if(_FTDIdevice->_ftStatus == FT_OK)
+//    {
+//        _initWindow->addTextInLabel("Device founded");
+
+//        this->_waitDelay(1);
+
+//        //display device information
+//        _initWindow->addTextInLabel("number of device : " + QString::number(this->_FTDIdevice->_numDevs));
+//        _initWindow->addTextInLabel("Flags = \t0x" + QString::number(this->_FTDIdevice->_Flags));
+//        _initWindow->addTextInLabel("Type  = \t0x" + QString::number(this->_FTDIdevice->_Type));
+//        _initWindow->addTextInLabel("ID    = \t0x" + QString::number(this->_FTDIdevice->_ID));
+//        _initWindow->addTextInLabel("LocId = \t0x" + QString::number(this->_FTDIdevice->_LocId));
+//        _initWindow->addTextInLabel("SerialNumber\t: " + (QString)this->_FTDIdevice->_SerialNumber);
+//        _initWindow->addTextInLabel("Description\t: " + (QString)this->_FTDIdevice->_Description);
+
+//        this->_waitDelay(1);
+
+//        //connect the device
+//        if(_FTDIdevice->open() == FT_OK)
+//        {
+//            _initWindow->addTextInLabel("Device connected");
+
+//            this->_waitDelay(1);
+
+//            //setup speed of USB
+//            if(_FTDIdevice->setUSBparameter() == FT_OK)
+//            {
+//                _initWindow->addTextInLabel("setup USB : \t\tset");
+
+//                this->_waitDelay(1);
+
+//                //setup speed of USB
+//                if(_FTDIdevice->setBaudRate(this->_baudRateSpeed2M) == FT_OK)
+//                {
+//                    _initWindow->addTextInLabel("Baud rate speed : \t" + QString::number(this->_baudRateSpeed2M));
+
+//                    this->_waitDelay(1);
+
+//                    //setup carateristique of the data
+//                    if(_FTDIdevice->setDataCaracteristique() == FT_OK)
+//                    {
+//                        _initWindow->addTextInLabel("Data carateristique set : \tFT_BITS_8, FT_STOP_BITS_1, FT_PARITY_NONE");
+
+//                        this->_waitDelay(1);
+
+//                        //setup flow control
+//                        if(_FTDIdevice->setFlowControl() == FT_OK)
+//                        {
+//                            _initWindow->addTextInLabel("Flow Controle set : \tFT_FLOW_RTS_CTS");
+
+//                            this->_waitDelay(1);
+
+//                            //reset the buffer
+//                            if(_FTDIdevice->freeTxRxBuffer() == FT_OK)
+//                            {
+//                                _initWindow->addTextInLabel("Rx,Tx buffer: \t\tclean");
+//                                this->_waitDelay(1);
+//                                _initWindow->addTextInLabel("FTDI connection : \t OK");
+//                                passed = true;
+//                            }
+//                            else
+//                            {
+//                                _initWindow->addTextInLabel("Rx,Tx buffer: error");
+//                            }
+
+//                        }
+//                        else
+//                        {
+//                            _initWindow->addTextInLabel("Flow Controle set : error");
+//                        }
+
+//                    }
+//                    else
+//                    {
+//                        _initWindow->addTextInLabel("Data carateristique set: error");
+//                    }
+//                }
+//                else
+//                {
+//                    _initWindow->addTextInLabel("Baud rate : error");
+//                }
+
+//            }
+//            else
+//            {
+//                _initWindow->addTextInLabel("setup USB : error");
+//            }
+
+//        }
+//        else
+//        {
+//            _initWindow->addTextInLabel("Device not connected");
+//        }
+
+//    }
+//    else
+//    {
+//        _initWindow->addTextInLabel("Device not founded");
+//    }
+
+//    return passed;
+//}
+
+void MainWindow::_waitDelay(int delayInSeconde)
+{
+    QTime dieTime= QTime::currentTime().addSecs(delayInSeconde);
+    while (QTime::currentTime() < dieTime)
+        QCoreApplication::processEvents(QEventLoop::AllEvents, 100);
 }
 
 void MainWindow::changeStateStartStopButton(int state)
@@ -427,11 +548,22 @@ void MainWindow::_mainStateGraphe()
 
         qDebug() << "main state on : " << "init";
 
-        //if all init passed
-        //show menu bottom bar
-        ui->statusBar->show();
-        //start application on the hme page
-        this->_btHome_released();
+        //connect the FTDI device
+        //if(this->_FTDIconnection())
+        {
+            this->_waitDelay(1);
+
+            _initWindow->addTextInLabel("\n Starting up application...");
+
+            //if all init passed
+            //show menu bottom bar
+            ui->statusBar->show();
+
+            this->_waitDelay(3);
+
+            //start application on the hme page
+            this->_btHome_released();
+        }
 
         break;
     case GlobalEnumatedAndExtern::mainStateStop:
@@ -448,8 +580,8 @@ void MainWindow::_mainStateGraphe()
         this->_mainStateStep = GlobalEnumatedAndExtern::mainStateReady;
 
         //set trig state to ready
-       this->_trigStateStep = GlobalEnumatedAndExtern::trigReady;
-       this->_trigStateGraph();
+        this->_trigStateStep = GlobalEnumatedAndExtern::trigReady;
+        this->_trigStateGraph();
 
         //set roll state to ready
         this->_rollStateStep = GlobalEnumatedAndExtern::rollReady;
