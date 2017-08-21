@@ -27,6 +27,21 @@ TriggerFunctions::TriggerFunctions()
     this->_doubleSpinBoxAI1 = 0;
     this->_doubleSpinBoxAI2 = 0;
 
+    this->_minValueTraceA = 0;
+    this->_minValueTraceB = 0;
+    this->_minValueTraceC = 0;
+    this->_minValueTraceD = 0;
+
+    this->_maxValueTraceA = 1;
+    this->_maxValueTraceB = 1;
+    this->_maxValueTraceC = 1;
+    this->_maxValueTraceD = 1;
+
+    this->_trigValueTraceA = 0;
+    this->_trigValueTraceB = 0;
+    this->_trigValueTraceC = 0;
+    this->_trigValueTraceD = 0;
+
     this->_newFrame = new DataFrame();
     this->_memoFrame = new DataFrame();
 }
@@ -160,18 +175,40 @@ bool TriggerFunctions::onTrig(DataFrame *data)
     case GlobalEnumatedAndExtern::btDI1:
         valueA = data->DI1_8() & 1;
         edgeA = this->btDI1Edge();
+        _minValueTraceA = DIGITAL_MIN_VALUE;
+        _maxValueTraceA = DIGITAL_MAX_VALUE;
         break;
     case GlobalEnumatedAndExtern::btDI2:
         valueA = (data->DI1_8() >> 1) & 1;
         edgeA = this->btDI2Edge();
+        _minValueTraceA = DIGITAL_MIN_VALUE;
+        _maxValueTraceA = DIGITAL_MAX_VALUE;
         break;
     case GlobalEnumatedAndExtern::btDI3:
         valueA = (data->DI1_8() >> 2) & 1;
         edgeA = this->btDI3Edge();
+        _minValueTraceA = DIGITAL_MIN_VALUE;
+        _maxValueTraceA = DIGITAL_MAX_VALUE;
         break;
     case GlobalEnumatedAndExtern::btDI4:
         valueA = (data->DI1_8() >> 3) & 1;
         edgeA = this->btDI4Edge();
+        _minValueTraceA = DIGITAL_MIN_VALUE;
+        _maxValueTraceA = DIGITAL_MAX_VALUE;
+        break;
+    case GlobalEnumatedAndExtern::btAI1:
+        valueA = data->AI1();
+        edgeA = this->btAI1Edge();
+        _minValueTraceA = ANALOG_MIN_VALUE;
+        _maxValueTraceA = ANALOG_MAX_VALUE;
+        _trigValueTraceA = _doubleSpinBoxAI1;
+        break;
+    case GlobalEnumatedAndExtern::btAI2:
+        valueA = data->AI2();
+        edgeA = this->btAI2Edge();
+        _minValueTraceA = ANALOG_MIN_VALUE;
+        _maxValueTraceA = ANALOG_MAX_VALUE;
+        _trigValueTraceA = _doubleSpinBoxAI2;
         break;
     default:
         break;
@@ -183,18 +220,40 @@ bool TriggerFunctions::onTrig(DataFrame *data)
     case GlobalEnumatedAndExtern::btDI1:
         valueB = data->DI1_8() & 1;
         edgeB = this->btDI1Edge();
+        _minValueTraceB = DIGITAL_MIN_VALUE;
+        _maxValueTraceB = DIGITAL_MAX_VALUE;
         break;
     case GlobalEnumatedAndExtern::btDI2:
         valueB = (data->DI1_8() >> 1) & 1;
         edgeB = this->btDI2Edge();
+        _minValueTraceB = DIGITAL_MIN_VALUE;
+        _maxValueTraceB = DIGITAL_MAX_VALUE;
         break;
     case GlobalEnumatedAndExtern::btDI3:
         valueB = (data->DI1_8() >> 2) & 1;
         edgeB = this->btDI3Edge();
+        _minValueTraceB = DIGITAL_MIN_VALUE;
+        _maxValueTraceB = DIGITAL_MAX_VALUE;
         break;
     case GlobalEnumatedAndExtern::btDI4:
-        valueC = (data->DI1_8() >> 3) & 1;
+        valueB = (data->DI1_8() >> 3) & 1;
         edgeB = this->btDI4Edge();
+        _minValueTraceB = DIGITAL_MIN_VALUE;
+        _maxValueTraceB = DIGITAL_MAX_VALUE;
+        break;
+    case GlobalEnumatedAndExtern::btAI1:
+        valueB = data->AI1();
+        edgeB = this->btAI1Edge();
+        _minValueTraceB = ANALOG_MIN_VALUE;
+        _maxValueTraceB = ANALOG_MAX_VALUE;
+        _trigValueTraceB = _doubleSpinBoxAI2;
+        break;
+    case GlobalEnumatedAndExtern::btAI2:
+        valueB = data->AI2();
+        edgeB = this->btAI2Edge();
+        _minValueTraceB = ANALOG_MIN_VALUE;
+        _maxValueTraceB = ANALOG_MAX_VALUE;
+        _trigValueTraceB = _doubleSpinBoxAI2;
         break;
     default:
         break;
@@ -206,18 +265,40 @@ bool TriggerFunctions::onTrig(DataFrame *data)
     case GlobalEnumatedAndExtern::btDI1:
         valueC = data->DI1_8() & 1;
         edgeC = this->btDI1Edge();
+        _minValueTraceC = DIGITAL_MIN_VALUE;
+        _maxValueTraceC = DIGITAL_MAX_VALUE;
         break;
     case GlobalEnumatedAndExtern::btDI2:
         valueC = (data->DI1_8() >> 1) & 1;
         edgeC = this->btDI2Edge();
+        _minValueTraceC = DIGITAL_MIN_VALUE;
+        _maxValueTraceC = DIGITAL_MAX_VALUE;
         break;
     case GlobalEnumatedAndExtern::btDI3:
         valueC = (data->DI1_8() >> 2) & 1;
         edgeC = this->btDI3Edge();
+        _minValueTraceC = DIGITAL_MIN_VALUE;
+        _maxValueTraceC = DIGITAL_MAX_VALUE;
         break;
     case GlobalEnumatedAndExtern::btDI4:
         valueC = (data->DI1_8() >> 3) & 1;
         edgeC = this->btDI4Edge();
+        _minValueTraceC = DIGITAL_MIN_VALUE;
+        _maxValueTraceC = DIGITAL_MAX_VALUE;
+        break;
+    case GlobalEnumatedAndExtern::btAI1:
+        valueC = data->AI1();
+        edgeC = this->btAI1Edge();
+        _minValueTraceC = ANALOG_MIN_VALUE;
+        _maxValueTraceC = ANALOG_MAX_VALUE;
+        _trigValueTraceC = _doubleSpinBoxAI1;
+        break;
+    case GlobalEnumatedAndExtern::btAI2:
+        valueC = data->AI2();
+        edgeC = this->btAI2Edge();
+        _minValueTraceC = ANALOG_MIN_VALUE;
+        _maxValueTraceC = ANALOG_MAX_VALUE;
+        _trigValueTraceC = _doubleSpinBoxAI2;
         break;
     default:
         break;
@@ -229,18 +310,40 @@ bool TriggerFunctions::onTrig(DataFrame *data)
     case GlobalEnumatedAndExtern::btDI1:
         valueD = data->DI1_8() & 1;
         edgeD = this->btDI1Edge();
+        _minValueTraceD = DIGITAL_MIN_VALUE;
+        _maxValueTraceD = DIGITAL_MAX_VALUE;
         break;
     case GlobalEnumatedAndExtern::btDI2:
         valueD = (data->DI1_8() >> 1) & 1;
         edgeD = this->btDI2Edge();
+        _minValueTraceD = DIGITAL_MIN_VALUE;
+        _maxValueTraceD = DIGITAL_MAX_VALUE;
         break;
     case GlobalEnumatedAndExtern::btDI3:
         valueD = (data->DI1_8() >> 2) & 1;
         edgeD = this->btDI3Edge();
-       break;
+        _minValueTraceD = DIGITAL_MIN_VALUE;
+        _maxValueTraceD = DIGITAL_MAX_VALUE;
+        break;
     case GlobalEnumatedAndExtern::btDI4:
         valueD = (data->DI1_8() >> 3) & 1;
         edgeD = this->btDI4Edge();
+        _minValueTraceD = DIGITAL_MIN_VALUE;
+        _maxValueTraceD = DIGITAL_MAX_VALUE;
+        break;
+    case GlobalEnumatedAndExtern::btAI1:
+        valueD = data->AI1();
+        edgeD = this->btAI1Edge();
+        _minValueTraceD = ANALOG_MIN_VALUE;
+        _maxValueTraceD = ANALOG_MAX_VALUE;
+        _trigValueTraceD = _doubleSpinBoxAI1;
+        break;
+    case GlobalEnumatedAndExtern::btAI2:
+        valueD = data->AI2();
+        edgeD = this->btAI2Edge();
+        _minValueTraceD = ANALOG_MIN_VALUE;
+        _maxValueTraceD = ANALOG_MAX_VALUE;
+        _trigValueTraceD = _doubleSpinBoxAI2;
         break;
     default:
         break;
@@ -248,10 +351,14 @@ bool TriggerFunctions::onTrig(DataFrame *data)
 
     qDebug() << "A: " << valueA << ", B: " << valueB << ", C: " << valueC << ", D: " << valueD;
 
-    onTrigA = edgeA == GlobalEnumatedAndExtern::noEdge ? valueA : this->_checkOnTrigTrace(valueA, memoValueA, edgeA);
-    onTrigB = edgeB == GlobalEnumatedAndExtern::noEdge ? valueB : this->_checkOnTrigTrace(valueB, memoValueB, edgeB);
-    onTrigC = edgeC == GlobalEnumatedAndExtern::noEdge ? valueC : this->_checkOnTrigTrace(valueC, memoValueC, edgeC);
-    onTrigD = edgeD == GlobalEnumatedAndExtern::noEdge ? valueD : this->_checkOnTrigTrace(valueD, memoValueD, edgeD);
+    onTrigA = edgeA == GlobalEnumatedAndExtern::noEdge ? valueA : this->_checkOnTrigTrace(valueA, memoValueA,
+                                                                                          edgeA, _minValueTraceA, _maxValueTraceA, _trigValueTraceA);
+    onTrigB = edgeB == GlobalEnumatedAndExtern::noEdge ? valueB : this->_checkOnTrigTrace(valueB, memoValueB,
+                                                                                          edgeB,_minValueTraceA, _maxValueTraceA, _trigValueTraceB);
+    onTrigC = edgeC == GlobalEnumatedAndExtern::noEdge ? valueC : this->_checkOnTrigTrace(valueC, memoValueC,
+                                                                                          edgeC,_minValueTraceA, _maxValueTraceA, _trigValueTraceC);
+    onTrigD = edgeD == GlobalEnumatedAndExtern::noEdge ? valueD : this->_checkOnTrigTrace(valueD, memoValueD,
+                                                                                          edgeD,_minValueTraceA, _maxValueTraceA, _trigValueTraceD);
 
     memoValueA = valueA;
     memoValueB = valueB;
@@ -699,19 +806,38 @@ bool TriggerFunctions::_checkValideEquation()
     return valide;
 }
 
-quint8 TriggerFunctions::_checkOnTrigTrace(quint8 trace, quint8 memoTrace, GlobalEnumatedAndExtern::eEdge edge)
+quint8 TriggerFunctions::_checkOnTrigTrace(quint8 trace, quint8 memoTrace, GlobalEnumatedAndExtern::eEdge edge,
+                                           quint8 minValue, quint8 maxValue, quint8 trigValue = 0)
 {
     quint8 onTrig = 0;
 
-    if(edge == GlobalEnumatedAndExtern::risingEdge)
+    qDebug() << "AI1 trigger value : " << _doubleSpinBoxAI1;
+    qDebug() << "AI2 trigger value : " << _doubleSpinBoxAI2;
+
+    //management of the digital trace
+    if(maxValue == 1)
     {
-        onTrig = (memoTrace == 0 && trace == 1) ? 1 : 0;
+        if(edge == GlobalEnumatedAndExtern::risingEdge)
+        {
+            onTrig = (memoTrace == 0 && trace == 1) ? 1 : 0;
+        }
+        else
+        {
+            onTrig = (memoTrace == 1 && trace == 0) ? 1 : 0;
+        }
     }
+    //management of the digital trace
     else
     {
-        onTrig = (memoTrace == 1 && trace == 0) ? 1 : 0;
+        if(edge == GlobalEnumatedAndExtern::risingEdge)
+        {
+            onTrig = (memoTrace < trigValue && trace == trigValue) ? 1 : 0;
+        }
+        else
+        {
+            onTrig = (memoTrace >= trigValue && trace < trigValue) ? 1 : 0;
+        }
     }
-
     return onTrig;
 }
 

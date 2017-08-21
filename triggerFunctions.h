@@ -5,6 +5,11 @@
 #include "globalEnumatedAndExtern.h"
 #include "dataFrame.h"
 
+#define DIGITAL_MIN_VALUE 0
+#define DIGITAL_MAX_VALUE 1
+#define ANALOG_MIN_VALUE 0
+#define ANALOG_MAX_VALUE 255
+
 class TriggerFunctions : public QObject
 {
     Q_OBJECT
@@ -85,7 +90,7 @@ private:
 
     bool _checkValideEquation();
 
-    quint8 _checkOnTrigTrace(quint8 trace, quint8 memoTrace, GlobalEnumatedAndExtern::eEdge edge);
+    quint8 _checkOnTrigTrace(quint8 trace, quint8 memoTrace, GlobalEnumatedAndExtern::eEdge edge, quint8 minValue, quint8 maxValue, quint8 trigValue);
 
     GlobalEnumatedAndExtern::eTracePossible _traceA;
     GlobalEnumatedAndExtern::eTracePossible _traceB;
@@ -111,6 +116,24 @@ private:
     quint8 _doubleSpinBoxDI4;
     quint8 _doubleSpinBoxAI1;
     quint8 _doubleSpinBoxAI2;
+
+    //minimum Value of trace in pulse
+    quint8 _minValueTraceA;
+    quint8 _minValueTraceB;
+    quint8 _minValueTraceC;
+    quint8 _minValueTraceD;
+
+    //maximum Value of trace in pulse
+    quint8 _maxValueTraceA;
+    quint8 _maxValueTraceB;
+    quint8 _maxValueTraceC;
+    quint8 _maxValueTraceD;
+
+    //trig value
+    quint8 _trigValueTraceA;
+    quint8 _trigValueTraceB;
+    quint8 _trigValueTraceC;
+    quint8 _trigValueTraceD;
 
     //analysed frame
     DataFrame *_newFrame;
