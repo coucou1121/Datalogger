@@ -138,6 +138,9 @@ private:
     //value of the selected trigger function
     TriggerFunctions *_triggerFuntion;
 
+    //check if on trig
+    bool _onTrigTrue;
+
     //FTDI connection
 #if LINUX
     FTDIFunction *_FTDIdevice;

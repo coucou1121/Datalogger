@@ -53,7 +53,10 @@ MainWindow::MainWindow(QWidget *parent) :
     _FTDIdevice(new FTDIFunction()),
 #endif
     _baudRateSpeed2M(2000000),
-    _baudRateSpeed9600(9600)
+    _baudRateSpeed9600(9600),
+
+    //set application on trig to flase
+    _onTrigTrue(false)
 {
     ui->setupUi(this);
     setMinimumSize(MINIMUM_WIDTH_SIZE, MINIMUM_HEIGHT_SIZE);
@@ -317,7 +320,10 @@ void MainWindow::stopThread()
     {
         _newDataFrameTimer->stopTimer();
     }
+    else
+    {
     _refreshDisplayTimer->stopTimer();
+    }
 }
 
 void MainWindow::addNewDataFrame(QVector<DataFrame> dataFrameVector)
@@ -326,7 +332,7 @@ void MainWindow::addNewDataFrame(QVector<DataFrame> dataFrameVector)
     for(QVector<DataFrame>::iterator it = dataFrameVector.begin(); it != dataFrameVector.end(); it++)
     {
         //check trigger function
-        this->_triggerFuntion->onTrig(it);
+        _onTrigTrue =  this->_triggerFuntion->onTrig(it);
 
         //add value in buffer
         _dataFrameVectorReccorder.append(*it);
@@ -336,7 +342,14 @@ void MainWindow::addNewDataFrame(QVector<DataFrame> dataFrameVector)
         {
             _dataFrameVectorReccorder.remove(0);
         }
+
+        if(_onTrigTrue)
+        {
+            _trigStateStep = GlobalEnumatedAndExtern::trigTrigged;
+            _trigStateGraph();
+        }
     }
+
 
     //send value to the plot
     switch (_mainStateStep)
