@@ -48,9 +48,10 @@ MainWindow::MainWindow(QWidget *parent) :
     _mainStateStep(GlobalEnumatedAndExtern::mainStateInit),
     _trigStateStep(GlobalEnumatedAndExtern::trigReady),
     _rollStateStep(GlobalEnumatedAndExtern::rollReady),
-
     //create the FTDI object
-    //_FTDIdevice(new FTDIFunction()),
+#if LINUX
+    _FTDIdevice(new FTDIFunction()),
+#endif
     _baudRateSpeed2M(2000000),
     _baudRateSpeed9600(9600)
 {
@@ -183,115 +184,112 @@ void MainWindow::_startStopButtonTextAndColorManager(GlobalEnumatedAndExtern::eB
         break;
     }
 }
+#if LINUX
+bool MainWindow::_FTDIconnection()
+{
+    //read FTDI device information
+    this->_FTDIdevice->ReadDeviceInfo();
 
-//bool MainWindow::_FTDIconnection()
-//{
-//    bool passed = false;
-//    //read FTDI device information
-//    this->_FTDIdevice->ReadDeviceInfo();
+    if(_FTDIdevice->_ftStatus == FT_OK)
+    {
+        _initWindow->addTextInLabel("Device founded");
 
-//    if(_FTDIdevice->_ftStatus == FT_OK)
-//    {
-//        _initWindow->addTextInLabel("Device founded");
+        this->_waitDelay(1);
 
-//        this->_waitDelay(1);
+        //display device information
+        _initWindow->addTextInLabel("number of device : " + QString::number(this->_FTDIdevice->_numDevs));
+        _initWindow->addTextInLabel("Flags = \t0x" + QString::number(this->_FTDIdevice->_Flags));
+        _initWindow->addTextInLabel("Type  = \t0x" + QString::number(this->_FTDIdevice->_Type));
+        _initWindow->addTextInLabel("ID    = \t0x" + QString::number(this->_FTDIdevice->_ID));
+        _initWindow->addTextInLabel("LocId = \t0x" + QString::number(this->_FTDIdevice->_LocId));
+        _initWindow->addTextInLabel("SerialNumber\t: " + (QString)this->_FTDIdevice->_SerialNumber);
+        _initWindow->addTextInLabel("Description\t: " + (QString)this->_FTDIdevice->_Description);
 
-//        //display device information
-//        _initWindow->addTextInLabel("number of device : " + QString::number(this->_FTDIdevice->_numDevs));
-//        _initWindow->addTextInLabel("Flags = \t0x" + QString::number(this->_FTDIdevice->_Flags));
-//        _initWindow->addTextInLabel("Type  = \t0x" + QString::number(this->_FTDIdevice->_Type));
-//        _initWindow->addTextInLabel("ID    = \t0x" + QString::number(this->_FTDIdevice->_ID));
-//        _initWindow->addTextInLabel("LocId = \t0x" + QString::number(this->_FTDIdevice->_LocId));
-//        _initWindow->addTextInLabel("SerialNumber\t: " + (QString)this->_FTDIdevice->_SerialNumber);
-//        _initWindow->addTextInLabel("Description\t: " + (QString)this->_FTDIdevice->_Description);
+        this->_waitDelay(1);
 
-//        this->_waitDelay(1);
+        //connect the device
+        if(_FTDIdevice->open() == FT_OK)
+        {
+            _initWindow->addTextInLabel("Device connected");
 
-//        //connect the device
-//        if(_FTDIdevice->open() == FT_OK)
-//        {
-//            _initWindow->addTextInLabel("Device connected");
+            this->_waitDelay(1);
 
-//            this->_waitDelay(1);
+            //setup speed of USB
+            if(_FTDIdevice->setUSBparameter() == FT_OK)
+            {
+                _initWindow->addTextInLabel("setup USB : \t\tset");
 
-//            //setup speed of USB
-//            if(_FTDIdevice->setUSBparameter() == FT_OK)
-//            {
-//                _initWindow->addTextInLabel("setup USB : \t\tset");
+                this->_waitDelay(1);
 
-//                this->_waitDelay(1);
+                //setup speed of USB
+                if(_FTDIdevice->setBaudRate(this->_baudRateSpeed2M) == FT_OK)
+                {
+                    _initWindow->addTextInLabel("Baud rate speed : \t" + QString::number(this->_baudRateSpeed2M));
 
-//                //setup speed of USB
-//                if(_FTDIdevice->setBaudRate(this->_baudRateSpeed2M) == FT_OK)
-//                {
-//                    _initWindow->addTextInLabel("Baud rate speed : \t" + QString::number(this->_baudRateSpeed2M));
+                    this->_waitDelay(1);
 
-//                    this->_waitDelay(1);
+                    //setup carateristique of the data
+                    if(_FTDIdevice->setDataCaracteristique() == FT_OK)
+                    {
+                        _initWindow->addTextInLabel("Data carateristique set : \tFT_BITS_8, FT_STOP_BITS_1, FT_PARITY_NONE");
 
-//                    //setup carateristique of the data
-//                    if(_FTDIdevice->setDataCaracteristique() == FT_OK)
-//                    {
-//                        _initWindow->addTextInLabel("Data carateristique set : \tFT_BITS_8, FT_STOP_BITS_1, FT_PARITY_NONE");
+                        this->_waitDelay(1);
 
-//                        this->_waitDelay(1);
+                        //setup flow control
+                        if(_FTDIdevice->setFlowControl() == FT_OK)
+                        {
+                            _initWindow->addTextInLabel("Flow Controle set : \tFT_FLOW_RTS_CTS");
 
-//                        //setup flow control
-//                        if(_FTDIdevice->setFlowControl() == FT_OK)
-//                        {
-//                            _initWindow->addTextInLabel("Flow Controle set : \tFT_FLOW_RTS_CTS");
+                            this->_waitDelay(1);
 
-//                            this->_waitDelay(1);
+                            //reset the buffer
+                            if(_FTDIdevice->freeTxRxBuffer() == FT_OK)
+                            {
+                                _initWindow->addTextInLabel("Rx,Tx buffer: \t\tclean");
+                                this->_waitDelay(1);
+                                _initWindow->addTextInLabel("FTDI connection : \t OK");
+                            }
+                            else
+                            {
+                                _initWindow->addTextInLabel("Rx,Tx buffer: error");
+                            }
 
-//                            //reset the buffer
-//                            if(_FTDIdevice->freeTxRxBuffer() == FT_OK)
-//                            {
-//                                _initWindow->addTextInLabel("Rx,Tx buffer: \t\tclean");
-//                                this->_waitDelay(1);
-//                                _initWindow->addTextInLabel("FTDI connection : \t OK");
-//                                passed = true;
-//                            }
-//                            else
-//                            {
-//                                _initWindow->addTextInLabel("Rx,Tx buffer: error");
-//                            }
+                        }
+                        else
+                        {
+                            _initWindow->addTextInLabel("Flow Controle set : error");
+                        }
 
-//                        }
-//                        else
-//                        {
-//                            _initWindow->addTextInLabel("Flow Controle set : error");
-//                        }
+                    }
+                    else
+                    {
+                        _initWindow->addTextInLabel("Data carateristique set: error");
+                    }
+                }
+                else
+                {
+                    _initWindow->addTextInLabel("Baud rate : error");
+                }
 
-//                    }
-//                    else
-//                    {
-//                        _initWindow->addTextInLabel("Data carateristique set: error");
-//                    }
-//                }
-//                else
-//                {
-//                    _initWindow->addTextInLabel("Baud rate : error");
-//                }
+            }
+            else
+            {
+                _initWindow->addTextInLabel("setup USB : error");
+            }
 
-//            }
-//            else
-//            {
-//                _initWindow->addTextInLabel("setup USB : error");
-//            }
+        }
+        else
+        {
+            _initWindow->addTextInLabel("Device not connected");
+        }
 
-//        }
-//        else
-//        {
-//            _initWindow->addTextInLabel("Device not connected");
-//        }
-
-//    }
-//    else
-//    {
-//        _initWindow->addTextInLabel("Device not founded");
-//    }
-
-//    return passed;
-//}
+    }
+    else
+    {
+        _initWindow->addTextInLabel("Device not founded");
+    }
+}
+#endif
 
 void MainWindow::_waitDelay(int delayInSeconde)
 {
@@ -547,23 +545,26 @@ void MainWindow::_mainStateGraphe()
         ui->statusBar->hide();
 
         qDebug() << "main state on : " << "init";
-
+#if LINUX
         //connect the FTDI device
-        //if(this->_FTDIconnection())
+        if(this->_FTDIconnection())
         {
             this->_waitDelay(1);
 
             _initWindow->addTextInLabel("\n Starting up application...");
-
-            //if all init passed
-            //show menu bottom bar
-            ui->statusBar->show();
-
-            this->_waitDelay(3);
-
-            //start application on the hme page
-            this->_btHome_released();
         }
+
+        //set the device in debug windows
+        _debugWindow->setFTDIdevice(this->_FTDIdevice);
+        //if all init passed
+#endif
+        this->_waitDelay(1);
+
+        //show menu bottom bar
+        ui->statusBar->show();
+        //_FTDIdevice->liveReading(&_FTDIdevice->_dataStart);
+        //start application on the hme page
+        this->_btHome_released();
 
         break;
     case GlobalEnumatedAndExtern::mainStateStop:

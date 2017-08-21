@@ -3,6 +3,9 @@
 
 #include <QFrame>
 #include <QDebug>
+#include "FTDIFunction.h"
+
+#define LINUX 0
 
 namespace Ui {
 class DebugWindow;
@@ -21,12 +24,18 @@ public:
     void setFrameSize(int frameSize);
     void setBaudRateFTDI(const quint32 &baudRateFTDI);
 
+    void setFTDI_Device(FTDIFunction *FTDI_Device);
+
 private:
     Ui::DebugWindow *ui;
 
     quint64 _nbSavedFrame;
     int _frameSize;
     quint32 _baudRateFTDI;
+
+    FTDIFunction *_FTDI_Device;
+    //create the FTDI object
+    //_FTDIdevice(new FTDIFunction())
 
 private slots:
     void on_lineEditNbSavedFrame_textChanged(const QString &arg1);

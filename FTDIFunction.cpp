@@ -70,12 +70,12 @@ int FTDIFunction::setUSBparameter()
     return((int)_ftStatus);
 }
 
-int FTDIFunction::setBaudRate(quint16 baudRateSpeed)
+int FTDIFunction::setBaudRate(quint64 baudRateSpeed)
 {
     //set the baud rate for the device
     //param@1: fthandle      Handle of the device
     //param@2: dwBaudRate    Baud rate
-    _ftStatus = FT_SetBaudRate(_ftHandle, baudRateSpeed);
+    _ftStatus = FT_SetBaudRate(_ftHandle,BAUD_RATE_2M);
     //    _ftStatus = FT_SetBaudRate(_ftHandle, BAUD_RATE_9600);
     if(_ftStatus != FT_OK)
     {
@@ -225,7 +225,8 @@ int FTDIFunction::writeDataOneChar(int *data)
     }
 
     //resetRTS();
-    return((int)_ftStatus);
+ //   return((int)_ftStatus);
+    return (*data);
 }
 
 
@@ -261,6 +262,11 @@ void FTDIFunction::liveReading(int *dataStart)
 {
     initVariable();
     counterError = 0;
+    trameNumberRead=0;
+
+    //make FTDI buffer empty
+    _ftStatus = freeTxRxBuffer();
+
     //start live reading
     _ftStatus = writeDataOneChar(dataStart);
 
@@ -285,10 +291,10 @@ void FTDIFunction::liveReading(int *dataStart)
 
                 counterValue = counterValueHigh << 8 | counterValueLow;
 
-                qDebug() << "counter Value" << counterValue;
-                qDebug("value: %02x %02x %02x %02x %02x %02x %02x %02x \n",
-                       buf[j], buf[j+1], buf[j+2], buf[j+3],
-                        buf[j+4], buf[j+5], buf[j+6], buf[j+7]);
+//                qDebug() << "counter Value" << counterValue;
+//                qDebug("value: %02x %02x %02x %02x %02x %02x %02x %02x \n",
+//                       buf[j], buf[j+1], buf[j+2], buf[j+3],
+//                        buf[j+4], buf[j+5], buf[j+6], buf[j+7]);
                 if(memoCounterValue == 65535)
                 {
                     counterError += counterValue == 0 ? 0 : 1;
@@ -321,7 +327,8 @@ void FTDIFunction::liveReading(int *dataStart)
         }
 
     }
-    while(!counterError);//trameNumberRead<(NB_TRAME_READ*1000));
+    while(!counterError && trameNumberRead < 100000);
+
     _ftStatus = writeDataOneChar(&_dataStop);
     /* Write */
     if(_ftStatus != FT_OK)
@@ -333,6 +340,14 @@ void FTDIFunction::liveReading(int *dataStart)
     {
         qDebug("data Write : %x\n", _dataStop);
     }
+
+    _ftStatus = freeTxRxBuffer();
+
+}
+
+quint8 FTDIFunction::sendStop()
+{
+    return(writeDataOneChar(&_dataStop));
 }
 
 void FTDIFunction::initVariable()

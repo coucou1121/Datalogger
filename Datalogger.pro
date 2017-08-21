@@ -37,6 +37,7 @@ SOURCES += main.cpp\
     homeWindow.cpp \
     rollWindow.cpp \
     initWindow.cpp \
+#    FTDIFunction.cpp
 
 HEADERS  += mainwindow.h \
     main.h \
@@ -64,6 +65,8 @@ HEADERS  += mainwindow.h \
     homeWindow.h \
     rollWindow.h \
     initWindow.h \
+#    FTDIFunction.h \
+#    FTDI/ftd2xx.h
 
 FORMS    += mainwindow.ui \
     analogPlot.ui \
@@ -87,7 +90,8 @@ FORMS    += mainwindow.ui \
 RESOURCES += \
     images.qrc
 
-unix|win32: LIBS += -L$$PWD/'CDM v2.12.26 WHQL Certified/Static/i386/' -lftd2xx
 
-INCLUDEPATH += $$PWD/'CDM v2.12.26 WHQL Certified/Static/i386'
-DEPENDPATH += $$PWD/'CDM v2.12.26 WHQL Certified/Static/i386'
+#OTHER_FILES +=  -L/usr/local/lib/libftd2xx.a \
+#                lib/libftd2xx.so.1.3.6
+
+#LIBS += -L/usr/local/lib -lftd2xx

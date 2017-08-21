@@ -45,6 +45,16 @@ QMap<int, QString> GlobalEnumatedAndExtern::initTriggerTracePossible()
     return ret;
 }
 
+QMap<int, QString> GlobalEnumatedAndExtern::initFTDIReturnValuePossibleTxt()
+{
+    QMap<int, QString> ret;
+    ret.insert(endOfTransmission, "transmission Stop");
+    ret.insert(transmissionEnquiry, "transmission Stard");
+    ret.insert(positiveAcknoledge, "ACK");
+    ret.insert(negativeAcknoledge, "nACK");
+    return ret;
+}
+
 QMap<int, double> GlobalEnumatedAndExtern::initPeridePossible()
 {
     // all time are in millisecondes

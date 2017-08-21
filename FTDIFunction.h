@@ -1,9 +1,7 @@
 #ifndef FTDIFUNCTION_H
 #define FTDIFUNCTION_H
 
-//#include "FTDI/ftd2xx.h"
-//#include "FTDI/static/ftd2xx.h"
-#include "CDM v2.12.26 WHQL Certified/ftd2xx.h"
+#include "FTDI/ftd2xx.h"
 #include <QtGlobal>
 
 
@@ -20,7 +18,7 @@ public:
     int open();
     void ReadDeviceInfo();
     int setUSBparameter();
-    int setBaudRate(quint16 baudRateSpeed);
+    int setBaudRate(quint64 baudRateSpeed);
     int setFlowControl();
     int setDataCaracteristique();
     int setRTS();
@@ -30,6 +28,7 @@ public:
     int readDataOneChar(DWORD dwRxSize);
     int writeDataOneChar(int *data);
     void liveReading(int *dataStart);
+    quint8 sendStop();
 
 // private:
     FT_HANDLE _ftHandle;

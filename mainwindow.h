@@ -24,6 +24,8 @@
 //#include "FTDI/ftd2xx.h"
 //#include "FTDIFunction.h"
 
+#define LINUX 0
+
 namespace Ui {
 
 class MainWindow;
@@ -137,14 +139,15 @@ private:
     TriggerFunctions *_triggerFuntion;
 
     //FTDI connection
-    //FTDIFunction *_FTDIdevice;
-
+#if LINUX
+    FTDIFunction *_FTDIdevice;
+#endif
     quint32 _baudRateSpeed2M;
     quint16 _baudRateSpeed9600;
-
+#if LINUX
     //FTDI management
     bool _FTDIconnection();
-
+#endif
     //wait delay
     void _waitDelay(int delayInSeconde);
 
