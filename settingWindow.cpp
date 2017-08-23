@@ -139,9 +139,9 @@ quint8 SettingWindow::doubleToQint8(double value, GlobalEnumatedAndExtern::eRang
     }
 
     double result = value;
-    qDebug() << "double value : " << result;
+//    qDebug() << "double value : " << result;
     quint8 resultInt = (quint8)result;
-    qDebug() << "int value : " << resultInt;
+//    qDebug() << "int value : " << resultInt;
 
     return resultInt;
 }
@@ -171,7 +171,7 @@ TriggerFunctions *SettingWindow::getTriggerFuntion()
     this->_triggerFunction->setDoubleSpinBoxAI1(_triggerSetting->doubleSpinBoxAI1());
     this->_triggerFunction->setDoubleSpinBoxAI2(_triggerSetting->doubleSpinBoxAI2());
 
-    qDebug() << objectName() << "AI2 : " << _triggerSetting->doubleSpinBoxAI2();
+ //   qDebug() << objectName() << "AI2 : " << _triggerSetting->doubleSpinBoxAI2();
     return this->_triggerFunction;
 }
 

@@ -1,7 +1,7 @@
 #ifndef DATAFRAMESIMULATOR_H
 #define DATAFRAMESIMULATOR_H
 
-#define NB_FRAME_CREATE_AT_EVERY_TICK 1
+#define NB_FRAME_CREATE_AT_EVERY_TICK 10
 
 #include <QObject>
 #include <QDebug>
@@ -19,11 +19,19 @@ public:
     quint64 CPT() const;
     void setCPT(const quint64 &CPT);
 
-    DataFrame dataFrame() const;
-    void setDataFrame(const DataFrame &dataFrame);
+
+    void setDataFrameVectorReccorder(QVector<DataFrame> *dataFrameVectorReccorder);
+
+    DataFrame *dataFrame() const;
+    void setDataFrame(DataFrame *dataFrame);
+
+    void setItProducer(const QVector<DataFrame>::iterator &itProducer);
+
+
+    void setItConsumerAdress(const QVector<DataFrame>::iterator &itConsumerAdress);
 
 private:
-    DataFrame _dataFrame;
+    DataFrame *_dataFrame;
     quint64 _CPT;
     QElapsedTimer timerElapse;
     QVector<DataFrame> _dataFrameVector;
@@ -31,11 +39,17 @@ private:
     void _resetFrame();
     void _incValue();
 
+    QVector<DataFrame> *_dataFrameVectorReccorder;
+    QVector<DataFrame>::iterator _itProducer;
+
+    QVector<DataFrame>::iterator _itConsumerAdress;
+
 public slots:
     void createDataFrame();
 
 signals:
-    void dataFrameWasSent(QVector<DataFrame> newDataFrameVector);
+    // void dataFrameWasSent(QVector<DataFrame> newDataFrameVector);
+    void dataFrameWasSent(int itProducerAdress);
 };
 
 #endif // DATAFRAMESIMULATOR_H

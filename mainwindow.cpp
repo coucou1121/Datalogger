@@ -31,9 +31,15 @@ MainWindow::MainWindow(QWidget *parent) :
 
     //create timer for thread
     _tickTimer(new RefreshTimer(false, "Tick timer", 1)),
-    _newDataFrameTimer(new RefreshTimer(false, "Data updated timer", 10)),
+    _newDataFrameTimer(new RefreshTimer(false, "Data updated timer", 100)),
     _refreshDisplayTimer(new RefreshTimer(false, "Refres Display timer", 100)),
 
+    //creat circular array
+    _dataFrameReccorder(60000),
+    _dataFrameTrace(NB_FRAME_CREATE_AT_EVERY_TICK),
+    _itConsumer(_dataFrameReccorder.begin()),
+    _itProducer(_dataFrameReccorder.begin()),
+    _itTrace(_dataFrameTrace.begin()),
     //create data frame simulautor
     _dataFrameSimulator(new DataFrameSimulator("Frame Simulator")),
 
@@ -49,9 +55,9 @@ MainWindow::MainWindow(QWidget *parent) :
     _trigStateStep(GlobalEnumatedAndExtern::trigReady),
     _rollStateStep(GlobalEnumatedAndExtern::rollReady),
     //create the FTDI object
-#if LINUX
+    #if LINUX
     _FTDIdevice(new FTDIFunction()),
-#endif
+    #endif
     _baudRateSpeed2M(2000000),
     _baudRateSpeed9600(9600),
 
@@ -74,7 +80,7 @@ MainWindow::MainWindow(QWidget *parent) :
 
     //start thread for display refreshement
     _threadDisplayRefresh->start();
-    _threadTick->start();
+    //_threadTick->start();
     _threadNewDataFrame->start();
 
     //setup customise style
@@ -96,6 +102,10 @@ MainWindow::MainWindow(QWidget *parent) :
 
     //set main setup for application start correctly
     //this->_mainSetup();
+    //set the point of circular buffer for data to the frame simulator
+    this->_dataFrameSimulator->setDataFrameVectorReccorder(&this->_dataFrameReccorder);
+    this->_dataFrameSimulator->setItProducer(this->_itProducer);
+    this->_dataFrameSimulator->setItConsumerAdress(this->_dataFrameReccorder.end());
 }
 
 MainWindow::~MainWindow()
@@ -322,48 +332,89 @@ void MainWindow::stopThread()
     }
     else
     {
-    _refreshDisplayTimer->stopTimer();
+        _refreshDisplayTimer->stopTimer();
     }
 }
 
-void MainWindow::addNewDataFrame(QVector<DataFrame> dataFrameVector)
+void MainWindow::addNewDataFrame(int itProducerAdress)
 {
 
-    for(QVector<DataFrame>::iterator it = dataFrameVector.begin(); it != dataFrameVector.end(); it++)
+
+    this->_itTrace = _dataFrameTrace.begin();
+
+    qDebug() << objectName();
+    for(int i = 0; i< NB_FRAME_CREATE_AT_EVERY_TICK; i++)
+
+        //   for(QVector<DataFrame>::iterator it = _dataFrameTrace.begin(); it != _dataFrameTrace.end(); it++)
     {
-        //check trigger function
-        _onTrigTrue =  this->_triggerFuntion->onTrig(it);
-
-        //add value in buffer
-        _dataFrameVectorReccorder.append(*it);
-
-        //adapte the size with pretrigger value
-        if( _dataFrameVectorReccorder.size() > 1000)
+        //if to fast and arrived on the data creation pointeur
+        if((int)_itConsumer != itProducerAdress)
         {
-            _dataFrameVectorReccorder.remove(0);
-        }
+            //set the new position to frame emulator
+            this->_dataFrameSimulator->setItConsumerAdress(_itConsumer);
 
-        if(_onTrigTrue)
-        {
-            _trigStateStep = GlobalEnumatedAndExtern::trigTrigged;
-            _trigStateGraph();
+            //read the circular array and put on the trace array for futur ploting
+            *_itTrace = *this->_itConsumer;
+
+            //check trigger function
+            _onTrigTrue =  this->_triggerFuntion->onTrig(_itTrace);
+
+ //           this->_itTrace->displayValue();
+
+            if(_onTrigTrue)
+            {
+                _trigStateStep = GlobalEnumatedAndExtern::trigTrigged;
+                _trigStateGraph();
+            }
+
+            this->_itConsumer++;
+            this->_itTrace++;
+            this->_itConsumer = this->_itConsumer != _dataFrameReccorder.begin() + 20 ? this->_itConsumer : this->_dataFrameReccorder.begin();
+            this->_itTrace = this->_itTrace != _dataFrameTrace.end() ? this->_itTrace : this->_dataFrameTrace.begin();
         }
     }
+
+    for(QVector<DataFrame>::iterator it = _dataFrameTrace.begin(); it != _dataFrameTrace.begin() + 5; it++)
+    {
+        qDebug() << "....";
+        it->displayValue();
+    }
+
+    //    for(QVector<DataFrame>::iterator it = dataFrameVector.begin(); it != dataFrameVector.end(); it++)
+    //    {
+    //        //check trigger function
+    //        _onTrigTrue =  this->_triggerFuntion->onTrig(it);
+
+    //        //add value in buffer
+    //        _dataFrameReccorder.append(*it);
+
+    //        //adapte the size with pretrigger value
+    //        if( _dataFrameReccorder.size() > 1000)
+    //        {
+    //            _dataFrameReccorder.remove(0);
+    //        }
+
+    //        if(_onTrigTrue)
+    //        {
+    //            _trigStateStep = GlobalEnumatedAndExtern::trigTrigged;
+    //            _trigStateGraph();
+    //        }
+    //    }
 
 
     //send value to the plot
     switch (_mainStateStep)
     {
     case GlobalEnumatedAndExtern::mainStateRoll:
-        this->_rollWindow->addNewDataFrame(dataFrameVector);
+        this->_rollWindow->addNewDataFrame(_dataFrameTrace);
         break;
     case GlobalEnumatedAndExtern::mainStateTrig:
-        this->_triggerWindow->addNewDataFrame(dataFrameVector);
+        this->_triggerWindow->addNewDataFrame(_dataFrameTrace);
         break;
     default:
         break;
     }
-    qDebug() << objectName() << "nbValue" << _dataFrameVectorReccorder.size();
+    qDebug() << objectName() << "nbValue" << _dataFrameReccorder.size();
     this->_triggerFuntion = _settingWindow->getTriggerFuntion();
     //this->_triggerFuntion->displayValue();
 }
@@ -509,7 +560,7 @@ void MainWindow::_setupSignalAndSlot()
     QObject::connect(this->_newDataFrameTimer, SIGNAL(_tickFinished()), _dataFrameSimulator, SLOT(createDataFrame()));
     //QObject::connect(_dataFrameSimulator, SIGNAL(valueUpdated(quint8)), &graphicPlot, SLOT(addYValue(quint8)));
     //QObject::connect(dataFrameSimulator, SIGNAL(valueUpdated(quint8)), &analogPlot, SLOT(addYValue(quint8)));
-    QObject::connect(_dataFrameSimulator, SIGNAL(dataFrameWasSent(QVector<DataFrame>)),this,SLOT(addNewDataFrame(QVector<DataFrame>)));
+    QObject::connect(_dataFrameSimulator, SIGNAL(dataFrameWasSent(int)),this,SLOT(addNewDataFrame(int)));
 
     //refresh the display
     QObject::connect(_refreshDisplayTimer, SIGNAL(_tickFinished()), this, SLOT(refreshDisplay()));

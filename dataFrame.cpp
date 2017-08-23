@@ -94,7 +94,7 @@ void DataFrame::setTR1(const quint8 &TR1)
 
 void DataFrame::displayValue()
 {
-    qDebug() << "CPT" << '\t' << _msbCPT << _lsbCPT
+    qDebug() << "CPT" << '\t' << _msbCPT << _lsbCPT << _DI1_8 << _DI9_16
              << _AI1 << _AI2 << _AI3 << _AI4 << _TR1;
 }
 

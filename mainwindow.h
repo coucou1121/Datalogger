@@ -1,6 +1,8 @@
 #ifndef MAINWINDOW_H
 #define MAINWINDOW_H
 
+#define LINUX 0
+#define NUMBER_DOTS_ON_TRACE 400
 
 #include <QMainWindow>
 #include <QPushButton>
@@ -21,10 +23,11 @@
 #include "dataFrameSimulator.h"
 #include "triggerWindow.h"
 #include "triggerFunctions.h"
-//#include "FTDI/ftd2xx.h"
-//#include "FTDIFunction.h"
 
-#define LINUX 0
+#if LINUX
+#include "FTDI/ftd2xx.h"
+#include "FTDIFunction.h"
+#endif
 
 namespace Ui {
 
@@ -130,7 +133,11 @@ private:
     void _startStopButtonTextAndColorManager(GlobalEnumatedAndExtern::eBPStartStopState state);
 
     //array for data recorder
-    QVector<DataFrame> _dataFrameVectorReccorder;
+    QVector<DataFrame> _dataFrameReccorder;
+    QVector<DataFrame> _dataFrameTrace;
+    QVector<DataFrame>::iterator _itProducer;
+    QVector<DataFrame>::iterator _itConsumer;
+    QVector<DataFrame>::iterator _itTrace;
 
     //frame simulator
     DataFrameSimulator *_dataFrameSimulator;
@@ -158,7 +165,7 @@ public slots:
     void changeStateStartStopButton(int state);
     void startThread();
     void stopThread();
-    void addNewDataFrame(QVector<DataFrame> newDataFrameVector);
+    void addNewDataFrame(int itProducerAdress);
     void refreshDisplay();
 
 private slots:

@@ -56,7 +56,7 @@ void RollWindow::refreshPlot()
         if(ui->DI1->isVisible())
         {
             ui->DI1->updatePlot();
-            ui->DI1->replot();
+           ui->DI1->replot();
         }
         if(ui->DI2->isVisible())
         {
@@ -80,7 +80,7 @@ void RollWindow::refreshPlot()
         }
         if(ui->DI6->isVisible())
         {
-            ui->DI6->updatePlot();
+           ui->DI6->updatePlot();
             ui->DI6->replot();
         }
         if(ui->DI7->isVisible())
@@ -135,7 +135,7 @@ void RollWindow::refreshPlot()
         }
         if(ui->AI1->isVisible())
         {
-            ui->AI1->updatePlot();
+           ui->AI1->updatePlot();
             ui->AI1->replot();
         }
         if(ui->AI2->isVisible())
@@ -336,7 +336,7 @@ void RollWindow::addNewDataFrame(QVector<DataFrame> newDataFrameVector)
         ui->AI1->addYValue(newDataFrameVector[i].AI1());
         ui->AI2->addYValue(newDataFrameVector[i].AI2());
         ui->AI3->addYValue(newDataFrameVector[i].AI3());
-        ui->AI4->addYValue(newDataFrameVector[i].AI4());
+       ui->AI4->addYValue(newDataFrameVector[i].AI4());
     }
     // qDebug() << objectName() << "replot";
     // updatePlot();
