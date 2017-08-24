@@ -3,9 +3,11 @@
 
 #include <QFrame>
 #include <QDebug>
+#include <QTextBlock>
 #include "FTDIFunction.h"
+#include "globalEnumatedAndExtern.h"
 
-#define LINUX 0
+#define LINUX 1
 
 namespace Ui {
 class DebugWindow;
@@ -26,6 +28,8 @@ public:
 
     void setFTDI_Device(FTDIFunction *FTDI_Device);
 
+    void setFTDIdevice(FTDIFunction *FTDIdevice);
+
 private:
     Ui::DebugWindow *ui;
 
@@ -34,13 +38,40 @@ private:
     quint32 _baudRateFTDI;
 
     FTDIFunction *_FTDI_Device;
+
     //create the FTDI object
-    //_FTDIdevice(new FTDIFunction())
+    FTDIFunction *_FTDIdevice;
+
+    //creat message possible
+    QMap<int, QString> _FTDIReturnMessagePossibleTxt;
+
+    //check if FTDI device was found
+    bool _FTDIDeviceFound();
+
+    //read FTDI device info and display in text windows on debug menu
+    void _FTDIReadInfo();
+
+    //add text in text widget on debug windows
+    void _addTextInLabel(QString text);
 
 private slots:
     void on_lineEditNbSavedFrame_textChanged(const QString &arg1);
     void on_lineEditFrameSize_textChanged(const QString &arg1);
     void on_lineEditBaudrate_textChanged(const QString &arg1);
+
+    void on_pushButtonFTDIInfo_released();
+    void on_pushButtonSendStart_released();
+    void on_pushButtonFTDIStopRead_released();
+
+    void on_checkBoxEmulationMode_toggled(bool checked);
+
+    void on_pushButtonSendChar_released();
+
+    void on_pushButtonFTDIStartReadData_released();
+
+    void on_pushButtonFTDIStopReadData_released();
+
+    void on_pushButtonCleanText_released();
 
 signals:
 
@@ -52,6 +83,9 @@ signals:
 
     //send value if FTDI baudrate was changed
     void _FTDIBaudrateChanged(int _frameSize);
+
+    //reset the error in case of emulation
+    void _checkBoxEmulationModeStatusWasChanged(bool checked);
 };
 
 #endif // DEBUGWINDOW_H

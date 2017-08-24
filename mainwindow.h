@@ -1,7 +1,7 @@
 #ifndef MAINWINDOW_H
 #define MAINWINDOW_H
 
-#define LINUX 0
+#define LINUX 1
 #define NUMBER_DOTS_ON_TRACE 400
 
 #include <QMainWindow>
@@ -24,10 +24,10 @@
 #include "triggerWindow.h"
 #include "triggerFunctions.h"
 
-#if LINUX
+//#if LINUX
 #include "FTDI/ftd2xx.h"
 #include "FTDIFunction.h"
-#endif
+//#endif
 
 namespace Ui {
 
@@ -148,6 +148,9 @@ private:
     //check if on trig
     bool _onTrigTrue;
 
+    //memorise simulation mode
+    bool _inSimulation;
+
     //FTDI connection
 #if LINUX
     FTDIFunction *_FTDIdevice;
@@ -157,6 +160,7 @@ private:
 #if LINUX
     //FTDI management
     bool _FTDIconnection();
+    bool _FTDI_OK;
 #endif
     //wait delay
     void _waitDelay(int delayInSeconde);
@@ -167,6 +171,7 @@ public slots:
     void stopThread();
     void addNewDataFrame(int itProducerAdress);
     void refreshDisplay();
+    void checkBoxEmulationModeChanged(bool checked);
 
 private slots:
     void _btHome_released();
@@ -175,6 +180,9 @@ private slots:
     void _btRoll_released();
     void _btDebug_released();
     void on_pushButton_StartStop_released();
+
+signals:
+    void _errorFTDIDeviceNotFound(quint8 errorNumber, bool active);
 };
 
 #endif // MAINWINDOW_H

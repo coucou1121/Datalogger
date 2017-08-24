@@ -84,6 +84,7 @@ public:
     typedef enum
     {
         noError = 0,
+        errorFTDIDeviceNotFound,
         errorSamplingFrequencyToHigh,
         errorNoSelectedTrace,
         errorNoSelectedTriggerTrace,

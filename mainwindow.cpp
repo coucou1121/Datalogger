@@ -60,9 +60,13 @@ MainWindow::MainWindow(QWidget *parent) :
     #endif
     _baudRateSpeed2M(2000000),
     _baudRateSpeed9600(9600),
+    _FTDI_OK(false),
 
-    //set application on trig to flase
-    _onTrigTrue(false)
+    //set application on trig to falae
+    _onTrigTrue(false),
+
+    //set application on simulation to false
+    _inSimulation(false)
 {
     ui->setupUi(this);
     setMinimumSize(MINIMUM_WIDTH_SIZE, MINIMUM_HEIGHT_SIZE);
@@ -197,9 +201,10 @@ void MainWindow::_startStopButtonTextAndColorManager(GlobalEnumatedAndExtern::eB
         break;
     }
 }
-#if LINUX
+
 bool MainWindow::_FTDIconnection()
 {
+    this-> _FTDI_OK = false;
     //read FTDI device information
     this->_FTDIdevice->ReadDeviceInfo();
 
@@ -261,6 +266,7 @@ bool MainWindow::_FTDIconnection()
                                 _initWindow->addTextInLabel("Rx,Tx buffer: \t\tclean");
                                 this->_waitDelay(1);
                                 _initWindow->addTextInLabel("FTDI connection : \t OK");
+                                _FTDI_OK = true;
                             }
                             else
                             {
@@ -301,8 +307,9 @@ bool MainWindow::_FTDIconnection()
     {
         _initWindow->addTextInLabel("Device not founded");
     }
+
+    return _FTDI_OK;
 }
-#endif
 
 void MainWindow::_waitDelay(int delayInSeconde)
 {
@@ -319,7 +326,17 @@ void MainWindow::changeStateStartStopButton(int state)
 void MainWindow::startThread()
 {
     //_tickTimer->startTimer();
-    _newDataFrameTimer->startTimer();
+    if(this->_inSimulation)
+    {
+        _newDataFrameTimer->startTimer();
+    }
+    else
+    {
+        if(this->_FTDI_OK)
+        {
+
+        }
+    }
     _refreshDisplayTimer->startTimer();
 }
 
@@ -359,8 +376,6 @@ void MainWindow::addNewDataFrame(int itProducerAdress)
             //check trigger function
             _onTrigTrue =  this->_triggerFuntion->onTrig(_itTrace);
 
- //           this->_itTrace->displayValue();
-
             if(_onTrigTrue)
             {
                 _trigStateStep = GlobalEnumatedAndExtern::trigTrigged;
@@ -376,7 +391,6 @@ void MainWindow::addNewDataFrame(int itProducerAdress)
 
     for(QVector<DataFrame>::iterator it = _dataFrameTrace.begin(); it != _dataFrameTrace.begin() + 5; it++)
     {
-        qDebug() << "....";
         it->displayValue();
     }
 
@@ -423,6 +437,22 @@ void MainWindow::refreshDisplay()
 {
     this->_rollWindow->refreshPlot();
     this->_triggerWindow->refreshPlot();
+}
+
+void MainWindow::checkBoxEmulationModeChanged(bool checked)
+{
+    this->_inSimulation = checked;
+
+    if(checked)
+    {
+        emit _errorFTDIDeviceNotFound(GlobalEnumatedAndExtern::errorFTDIDeviceNotFound, false);
+    }
+    else
+    {
+        //restart application in init mode
+        this->_mainStateStep = GlobalEnumatedAndExtern::mainStateInit;
+        this->_mainStateGraphe();
+    }
 }
 
 void MainWindow::_setupSignalAndSlot()
@@ -550,6 +580,10 @@ void MainWindow::_setupSignalAndSlot()
     QObject::connect(this->_settingWindow, SIGNAL(_errorFrequencyToLow(quint8,bool)), ui->widgetError, SLOT(_reveived_Error(quint8,bool)));
     QObject::connect(this->_settingWindow, SIGNAL(_errorWrongEquation(quint8,bool)), ui->widgetError, SLOT(_reveived_Error(quint8,bool)));
     QObject::connect(this->_triggerWindow, SIGNAL(_errorWrongEquation(quint8,bool)), ui->widgetError, SLOT(_reveived_Error(quint8,bool)));
+    QObject::connect(this, SIGNAL(_errorFTDIDeviceNotFound(quint8,bool)), ui->widgetError, SLOT(_reveived_Error(quint8,bool)));
+
+    //manage application in simulation mode or not
+    QObject::connect(this->_debugWindow, SIGNAL(_checkBoxEmulationModeStatusWasChanged(bool)), this, SLOT(checkBoxEmulationModeChanged(bool)));
 
     //timer management to be sure they start correctly
     //    QObject::connect(this->_threadTick, SIGNAL(started), this->_tickTimer, SLOT(start()));
@@ -616,6 +650,12 @@ void MainWindow::_mainStateGraphe()
             this->_waitDelay(1);
 
             _initWindow->addTextInLabel("\n Starting up application...");
+            emit _errorFTDIDeviceNotFound(GlobalEnumatedAndExtern::errorFTDIDeviceNotFound, false);
+        }
+        else
+        {
+            this->_waitDelay(3);
+            emit _errorFTDIDeviceNotFound(GlobalEnumatedAndExtern::errorFTDIDeviceNotFound, true);
         }
 
         //set the device in debug windows
@@ -979,48 +1019,55 @@ void MainWindow::on_pushButton_StartStop_released()
     //if waitting to start
     if(stateBp == GlobalEnumatedAndExtern::start)
     {
-        switch (_mainStateStep)
+        //can start if there are in simulation or
+        //ont in simulation mode and ftdi device all right
+        if(this->_inSimulation || (!this->_inSimulation && this->_FTDI_OK))
         {
-        //manage trigger function
-        case GlobalEnumatedAndExtern::mainStateTrig:
-            switch (_trigStateStep)
-            {
-            case GlobalEnumatedAndExtern::trigReady:
-                //next application state
-                this->_trigStateStep = GlobalEnumatedAndExtern::trigRunTrig;
-                this->_trigStateGraph();
-                break;
-            case GlobalEnumatedAndExtern::trigTrigged:
-                //next application state
-                this->_trigStateStep = GlobalEnumatedAndExtern::trigRunTrig;
-                this->_trigStateGraph();
-                break;
-            default:
-                break;
-            }
-            break;
-            //manage roll function
-        case GlobalEnumatedAndExtern::mainStateRoll:
-            switch (_rollStateStep)
-            {
-            case GlobalEnumatedAndExtern::rollReady:
-                //next roll state
-                this->_rollStateStep = GlobalEnumatedAndExtern::rollRollOn;
-                this->_rollStateGraph();
-                break;
-            case GlobalEnumatedAndExtern::rollPaused:
-                //next roll state
-                this->_rollStateStep = GlobalEnumatedAndExtern::rollRollOn;
-                this->_rollStateGraph();
-                break;
-            default:
-                break;
-            }
-            break;
-        default:
-            break;
-        }
 
+            switch (_mainStateStep)
+            {
+            //manage trigger function
+            case GlobalEnumatedAndExtern::mainStateTrig:
+                switch (_trigStateStep)
+                {
+                case GlobalEnumatedAndExtern::trigReady:
+                    //next application state
+                    this->_trigStateStep = GlobalEnumatedAndExtern::trigRunTrig;
+                    this->_trigStateGraph();
+                    break;
+
+                case GlobalEnumatedAndExtern::trigTrigged:
+                    //next application state
+                    this->_trigStateStep = GlobalEnumatedAndExtern::trigRunTrig;
+                    this->_trigStateGraph();
+                    break;
+                default:
+                    break;
+                }
+
+                break;
+                //manage roll function
+            case GlobalEnumatedAndExtern::mainStateRoll:
+                switch (_rollStateStep)
+                {
+                case GlobalEnumatedAndExtern::rollReady:
+                    //next roll state
+                    this->_rollStateStep = GlobalEnumatedAndExtern::rollRollOn;
+                    this->_rollStateGraph();
+                    break;
+                case GlobalEnumatedAndExtern::rollPaused:
+                    //next roll state
+                    this->_rollStateStep = GlobalEnumatedAndExtern::rollRollOn;
+                    this->_rollStateGraph();
+                    break;
+                default:
+                    break;
+                }
+                break;
+            default:
+                break;
+            }
+        }
     }
     //system in analysing
     else

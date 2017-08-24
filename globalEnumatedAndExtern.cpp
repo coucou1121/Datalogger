@@ -9,6 +9,7 @@ QMap<int, QString> GlobalEnumatedAndExtern::initErrorPossible()
 {
     QMap<int, QString> ret;
     ret.insert(noError, "no error");
+    ret.insert(errorFTDIDeviceNotFound, "FTDI Device\nNot Found\n-> run in emulation\nor\n-> fixe FTDI device");
     ret.insert(errorSamplingFrequencyToHigh, "Periode too low \n or \n baudrate too high");
     ret.insert(errorNoSelectedTrace, "no channels \n selected");
     ret.insert(errorNoSelectedTriggerTrace, "no trigger channels \n selected");
