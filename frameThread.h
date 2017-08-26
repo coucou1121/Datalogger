@@ -17,6 +17,8 @@ public:
 protected:
     void run();
 
+signals:
+    void newDataArrived();
 };
 
 #endif // FRAMETHREAD_H

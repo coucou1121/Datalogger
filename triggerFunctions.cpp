@@ -3,6 +3,7 @@
 TriggerFunctions::TriggerFunctions()
 {
     this->_valueFunction = 0;
+    this->_onTrigStatus = false;
 
     this->_traceA = GlobalEnumatedAndExtern::btNone;
     this->_traceB = GlobalEnumatedAndExtern::btNone;

@@ -77,7 +77,7 @@ void ErrorMessage::_displayMessage()
             }
         }
 
-        qDebug() << "highestPriorityMessageToDisplay : " << highestPriorityMessageToDisplay;
+//        qDebug() << "highestPriorityMessageToDisplay : " << highestPriorityMessageToDisplay;
 
         //display the highest priority message
         ui->label->setText(_errorListNow[highestPriorityMessageToDisplay]);

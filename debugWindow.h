@@ -6,6 +6,7 @@
 #include <QTextBlock>
 #include "FTDIFunction.h"
 #include "globalEnumatedAndExtern.h"
+#include "dataFrame.h"
 
 #define LINUX 1
 
@@ -25,10 +26,11 @@ public:
     void setNbSavedFrame(quint64 nbSavedFrame);
     void setFrameSize(int frameSize);
     void setBaudRateFTDI(const quint32 &baudRateFTDI);
-
     void setFTDI_Device(FTDIFunction *FTDI_Device);
-
     void setFTDIdevice(FTDIFunction *FTDIdevice);
+
+    //received data
+    void receivedNewData(DataFrame *newDataFrame);
 
 private:
     Ui::DebugWindow *ui;

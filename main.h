@@ -9,7 +9,6 @@
 #include <QApplication>
 #include <QtWidgets>
 #include <QDebug>
-#include <QMetaType>
 
 //interfaces
 #include "mainwindow.h"

@@ -3,13 +3,13 @@
 
 #define LINUX 1
 #define NUMBER_DOTS_ON_TRACE 400
+#define NB_FRAME_READ_EVERY_CYCLE 8
 
 #include <QMainWindow>
 #include <QPushButton>
 #include <QHBoxLayout>
 #include <QTimer>
 #include <QThread>
-#include <QMetaType>
 
 #include "main.h"
 #include "commonStyle.h"
@@ -23,6 +23,8 @@
 #include "dataFrameSimulator.h"
 #include "triggerWindow.h"
 #include "triggerFunctions.h"
+#include "dataFrameLiveReading.h"
+#include "frameThread.h"
 
 //#if LINUX
 #include "FTDI/ftd2xx.h"
@@ -60,15 +62,21 @@ private:
     //value of the selected trigger function
     //quint16 _valueTriggerFunction;
 
+    //actif wait delay
+    void _waitDelay(int delayInSeconde);
+
     //thread
     QThread *_threadTick;               // create tick for frequency simulation
     QThread *_threadNewDataFrame;       // create a new data
     QThread *_threadDisplayRefresh;     // Display refreshement
+    QThread *_threadRealTimeReading;          // Manage the real time reading
+    FrameThread *_frameThread;
 
     //timer for thread
     RefreshTimer *_tickTimer;
     RefreshTimer *_newDataFrameTimer;
     RefreshTimer *_refreshDisplayTimer;
+    RefreshTimer *_getNewLiveData;
 
     //ui windows
     InitWindow *_initWindow;
@@ -152,24 +160,28 @@ private:
     bool _inSimulation;
 
     //FTDI connection
-#if LINUX
+//#if LINUX
     FTDIFunction *_FTDIdevice;
-#endif
+//#endif
     quint32 _baudRateSpeed2M;
     quint16 _baudRateSpeed9600;
-#if LINUX
+//#if LINUX
     //FTDI management
     bool _FTDIconnection();
     bool _FTDI_OK;
-#endif
-    //wait delay
-    void _waitDelay(int delayInSeconde);
+    QMap<int, QString> _FTDIStatePossibleTXT;
+
+    //realtime reading
+    DataFrameLiveReading *_dataFrameLiveReading;
+
+//#endif
 
 public slots:
     void changeStateStartStopButton(int state);
     void startThread();
     void stopThread();
-    void addNewDataFrame(int itProducerAdress);
+    void addNewSimulatedDataFrame(int itProducerAdress);
+    void addNewLiveDataFrame(int itProducerAdress);
     void refreshDisplay();
     void checkBoxEmulationModeChanged(bool checked);
 

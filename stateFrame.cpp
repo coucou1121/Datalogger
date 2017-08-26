@@ -39,7 +39,7 @@ void StateFrame::setDisplayState(GlobalEnumatedAndExtern::eMainStateDisplay stat
         ui->labelLogoState->setPixmap(*_pixStateStop);
         break;
     case GlobalEnumatedAndExtern::ready:
-        //ui->labelLogoState->setPixmap(*_pixStatePause);
+        ui->labelLogoState->setPixmap(*_pixStateStop);
         break;
     case GlobalEnumatedAndExtern::runTrig:
         ui->labelLogoState->setPixmap(*_pixStateRunTrig);

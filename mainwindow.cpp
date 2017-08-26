@@ -24,24 +24,34 @@ MainWindow::MainWindow(QWidget *parent) :
     _debugWindow(new DebugWindow()),
     _hlayoutStatus(new QHBoxLayout()),
 
+    //create data frame simulautor
+    _dataFrameSimulator(new DataFrameSimulator("Frame Simulator")),
+
+    //create the data frame for realtime reading
+    _dataFrameLiveReading(new DataFrameLiveReading("data live reading", NB_FRAME_READ_EVERY_CYCLE)),
+
+    //creat FTDI device
+    _FTDIdevice(new FTDIFunction("FTDI device")),
+
     //create thread object
     _threadTick(new QThread),
     _threadNewDataFrame(new QThread),
     _threadDisplayRefresh(new QThread),
+    _threadRealTimeReading(new QThread),
+    _frameThread(new FrameThread()),
 
     //create timer for thread
     _tickTimer(new RefreshTimer(false, "Tick timer", 1)),
     _newDataFrameTimer(new RefreshTimer(false, "Data updated timer", 100)),
     _refreshDisplayTimer(new RefreshTimer(false, "Refres Display timer", 100)),
+//    _getNewLiveData(new RefreshTimer(false, "Tick timer", 100)),
 
     //creat circular array
-    _dataFrameReccorder(60000),
+    _dataFrameReccorder(65536),
     _dataFrameTrace(NB_FRAME_CREATE_AT_EVERY_TICK),
     _itConsumer(_dataFrameReccorder.begin()),
     _itProducer(_dataFrameReccorder.begin()),
     _itTrace(_dataFrameTrace.begin()),
-    //create data frame simulautor
-    _dataFrameSimulator(new DataFrameSimulator("Frame Simulator")),
 
     //state of menu button pressed as false
     _btHomeWasPressed(false),
@@ -55,9 +65,9 @@ MainWindow::MainWindow(QWidget *parent) :
     _trigStateStep(GlobalEnumatedAndExtern::trigReady),
     _rollStateStep(GlobalEnumatedAndExtern::rollReady),
     //create the FTDI object
-    #if LINUX
-    _FTDIdevice(new FTDIFunction()),
-    #endif
+//    #if LINUX
+//    _FTDIdevice(new FTDIFunction("FTDI functions")),
+//    #endif
     _baudRateSpeed2M(2000000),
     _baudRateSpeed9600(9600),
     _FTDI_OK(false),
@@ -74,7 +84,12 @@ MainWindow::MainWindow(QWidget *parent) :
     //move timer into the thread
     _tickTimer->moveToThread(_threadTick);
     _newDataFrameTimer->moveToThread(_threadNewDataFrame);
-    _refreshDisplayTimer->moveToThread(_threadDisplayRefresh);
+    _refreshDisplayTimer->moveToThread(_threadDisplayRefresh);    
+    //_FTDIdevice->moveToThread(_threadRealTimeReading);
+    _FTDIdevice->moveToThread(_frameThread);
+
+    //key - value for FTDI state possible
+    _FTDIStatePossibleTXT = GlobalEnumatedAndExtern::initFTDIStatePossibleTXT();
 
     //setup signal and slot
     this->_setupSignalAndSlot();
@@ -84,17 +99,21 @@ MainWindow::MainWindow(QWidget *parent) :
 
     //start thread for display refreshement
     _threadDisplayRefresh->start();
+
     //_threadTick->start();
-    _threadNewDataFrame->start();
+    this->_threadNewDataFrame->start();
+    //this->_frameThread->start();
+    // start thread for real time data reading
+    //this->_threadRealTimeReading->start();
+    //this->_dataFrameLiveReading->start();
 
     //setup customise style
     this->setupStyle();
 
     //set the bottom menu bar
     this->_setStatusBar();
-
     //personal type for signal
-    qRegisterMetaType<QVector<DataFrame> >("QVector<DataFrame>");
+    //qRegisterMetaType<QVector<DataFrame> >("QVector<DataFrame>");
     //qRegisterMetaType<TriggerFunctions>("TriggerFunctions");
 
     //select direction to plot
@@ -104,12 +123,15 @@ MainWindow::MainWindow(QWidget *parent) :
     //get the setting in trigger function windows
     this->_triggerFuntion = _settingWindow->getTriggerFuntion();
 
-    //set main setup for application start correctly
-    //this->_mainSetup();
     //set the point of circular buffer for data to the frame simulator
     this->_dataFrameSimulator->setDataFrameVectorReccorder(&this->_dataFrameReccorder);
     this->_dataFrameSimulator->setItProducer(this->_itProducer);
     this->_dataFrameSimulator->setItConsumerAdress(this->_dataFrameReccorder.end());
+
+    //set the point of circular buffer for data to the FTDI device
+    this->_FTDIdevice->setDataFrameVectorReccorder(&this->_dataFrameReccorder);
+    this->_FTDIdevice->setItProducer(this->_itProducer);
+    this->_FTDIdevice->setItConsumerAdress(this->_dataFrameReccorder.end());
 }
 
 MainWindow::~MainWindow()
@@ -155,8 +177,21 @@ void MainWindow::mainSetup()
     //set trigger function to false (no trig at startus)
     _triggerFunctionEvaluatedTrue = false;
 
+    // get the FTDI device frome the real time reading thread
+    // this->_FTDIdevice = this->_dataFrameLiveReading->FTDIdevice();
+
+    // start thread for real time reading
+    this->_threadRealTimeReading->start();
+
     //start state graph of application
     this->_mainStateGraphe();
+
+     //set the FTDI device to the debug menu
+    this->_debugWindow->setFTDIdevice(this->_FTDIdevice);
+
+    //set the FTDI device to the dataFrameLiveReading
+    //this->_frameThread->setFTDIFunction(*this->_FTDIdevice);
+
 }
 
 void MainWindow::_setupDefaultValue()
@@ -204,111 +239,107 @@ void MainWindow::_startStopButtonTextAndColorManager(GlobalEnumatedAndExtern::eB
 
 bool MainWindow::_FTDIconnection()
 {
-    this-> _FTDI_OK = false;
-    //read FTDI device information
-    this->_FTDIdevice->ReadDeviceInfo();
-
-    if(_FTDIdevice->_ftStatus == FT_OK)
+    if(this->_FTDIdevice->FTDIState() >= GlobalEnumatedAndExtern::FTDIDeviceFound)
     {
-        _initWindow->addTextInLabel("Device founded");
+        _initWindow->addTextInLabel(this->_FTDIStatePossibleTXT[GlobalEnumatedAndExtern::FTDIDeviceFound]);
 
         this->_waitDelay(1);
 
         //display device information
-        _initWindow->addTextInLabel("number of device : " + QString::number(this->_FTDIdevice->_numDevs));
-        _initWindow->addTextInLabel("Flags = \t0x" + QString::number(this->_FTDIdevice->_Flags));
-        _initWindow->addTextInLabel("Type  = \t0x" + QString::number(this->_FTDIdevice->_Type));
-        _initWindow->addTextInLabel("ID    = \t0x" + QString::number(this->_FTDIdevice->_ID));
-        _initWindow->addTextInLabel("LocId = \t0x" + QString::number(this->_FTDIdevice->_LocId));
-        _initWindow->addTextInLabel("SerialNumber\t: " + (QString)this->_FTDIdevice->_SerialNumber);
-        _initWindow->addTextInLabel("Description\t: " + (QString)this->_FTDIdevice->_Description);
+        _initWindow->addTextInLabel("number of device : " + QString::number(this->_FTDIdevice->numDevs()));
+        _initWindow->addTextInLabel("Flags = \t0x" + QString::number(this->_FTDIdevice->Flags()));
+        _initWindow->addTextInLabel("Type  = \t0x" + QString::number(this->_FTDIdevice->Type()));
+        _initWindow->addTextInLabel("ID    = \t0x" + QString::number(this->_FTDIdevice->ID()));
+        _initWindow->addTextInLabel("LocId = \t0x" + QString::number(this->_FTDIdevice->LocId()));
+        _initWindow->addTextInLabel("SerialNumber\t: " + this->_FTDIdevice->SerialNumber());
+        _initWindow->addTextInLabel("Description\t: " + this->_FTDIdevice->Description());
 
         this->_waitDelay(1);
-
-        //connect the device
-        if(_FTDIdevice->open() == FT_OK)
-        {
-            _initWindow->addTextInLabel("Device connected");
-
-            this->_waitDelay(1);
-
-            //setup speed of USB
-            if(_FTDIdevice->setUSBparameter() == FT_OK)
-            {
-                _initWindow->addTextInLabel("setup USB : \t\tset");
-
-                this->_waitDelay(1);
-
-                //setup speed of USB
-                if(_FTDIdevice->setBaudRate(this->_baudRateSpeed2M) == FT_OK)
-                {
-                    _initWindow->addTextInLabel("Baud rate speed : \t" + QString::number(this->_baudRateSpeed2M));
-
-                    this->_waitDelay(1);
-
-                    //setup carateristique of the data
-                    if(_FTDIdevice->setDataCaracteristique() == FT_OK)
-                    {
-                        _initWindow->addTextInLabel("Data carateristique set : \tFT_BITS_8, FT_STOP_BITS_1, FT_PARITY_NONE");
-
-                        this->_waitDelay(1);
-
-                        //setup flow control
-                        if(_FTDIdevice->setFlowControl() == FT_OK)
-                        {
-                            _initWindow->addTextInLabel("Flow Controle set : \tFT_FLOW_RTS_CTS");
-
-                            this->_waitDelay(1);
-
-                            //reset the buffer
-                            if(_FTDIdevice->freeTxRxBuffer() == FT_OK)
-                            {
-                                _initWindow->addTextInLabel("Rx,Tx buffer: \t\tclean");
-                                this->_waitDelay(1);
-                                _initWindow->addTextInLabel("FTDI connection : \t OK");
-                                _FTDI_OK = true;
-                            }
-                            else
-                            {
-                                _initWindow->addTextInLabel("Rx,Tx buffer: error");
-                            }
-
-                        }
-                        else
-                        {
-                            _initWindow->addTextInLabel("Flow Controle set : error");
-                        }
-
-                    }
-                    else
-                    {
-                        _initWindow->addTextInLabel("Data carateristique set: error");
-                    }
-                }
-                else
-                {
-                    _initWindow->addTextInLabel("Baud rate : error");
-                }
-
-            }
-            else
-            {
-                _initWindow->addTextInLabel("setup USB : error");
-            }
-
-        }
-        else
-        {
-            _initWindow->addTextInLabel("Device not connected");
-        }
 
     }
     else
     {
-        _initWindow->addTextInLabel("Device not founded");
+        _initWindow->addTextInLabel("error befor state "+ this->_FTDIStatePossibleTXT[GlobalEnumatedAndExtern::FTDIDeviceFound]);
     }
 
-    return _FTDI_OK;
+    this->_waitDelay(1);
+
+    if(this->_FTDIdevice->FTDIState() >= GlobalEnumatedAndExtern::FTDIopened)
+    {
+        _initWindow->addTextInLabel(this->_FTDIStatePossibleTXT[GlobalEnumatedAndExtern::FTDIopened]);
+    }
+    else
+    {
+        _initWindow->addTextInLabel("error befor state "+ this->_FTDIStatePossibleTXT[GlobalEnumatedAndExtern::FTDIopened]);
+    }
+
+    this->_waitDelay(1);
+
+    if(this->_FTDIdevice->FTDIState() >= GlobalEnumatedAndExtern::FTDIUSBparameterSetted)
+    {
+        _initWindow->addTextInLabel(this->_FTDIStatePossibleTXT[GlobalEnumatedAndExtern::FTDIUSBparameterSetted]);
+    }
+    else
+    {
+        _initWindow->addTextInLabel("error befor state "+ this->_FTDIStatePossibleTXT[GlobalEnumatedAndExtern::FTDIUSBparameterSetted]);
+    }
+
+    this->_waitDelay(1);
+
+    if(this->_FTDIdevice->FTDIState() >= GlobalEnumatedAndExtern::FTDIBaudRateSetted)
+    {
+        _initWindow->addTextInLabel(this->_FTDIStatePossibleTXT[GlobalEnumatedAndExtern::FTDIBaudRateSetted]);
+    }
+    else
+    {
+        _initWindow->addTextInLabel("error befor state "+ this->_FTDIStatePossibleTXT[GlobalEnumatedAndExtern::FTDIBaudRateSetted]);
+    }
+
+    this->_waitDelay(1);
+
+    if(this->_FTDIdevice->FTDIState() >= GlobalEnumatedAndExtern::FTDIDataCaracteristiqueSetted)
+    {
+        _initWindow->addTextInLabel(this->_FTDIStatePossibleTXT[GlobalEnumatedAndExtern::FTDIDataCaracteristiqueSetted]);
+    }
+    else
+    {
+        _initWindow->addTextInLabel("error befor state "+ this->_FTDIStatePossibleTXT[GlobalEnumatedAndExtern::FTDIDataCaracteristiqueSetted]);
+    }
+
+    this->_waitDelay(1);
+
+    if(this->_FTDIdevice->FTDIState() >= GlobalEnumatedAndExtern::FTDIFlowControlSetted)
+    {
+        _initWindow->addTextInLabel(this->_FTDIStatePossibleTXT[GlobalEnumatedAndExtern::FTDIFlowControlSetted]);
+    }
+    else
+    {
+        _initWindow->addTextInLabel("error befor state "+ this->_FTDIStatePossibleTXT[GlobalEnumatedAndExtern::FTDIFlowControlSetted]);
+    }
+
+    this->_waitDelay(1);
+
+    if(this->_FTDIdevice->FTDIState() >= GlobalEnumatedAndExtern::FTDITxRxBufferFree)
+    {
+        _initWindow->addTextInLabel(this->_FTDIStatePossibleTXT[GlobalEnumatedAndExtern::FTDITxRxBufferFree]);
+    }
+    else
+    {
+        _initWindow->addTextInLabel("error befor state "+ this->_FTDIStatePossibleTXT[GlobalEnumatedAndExtern::FTDITxRxBufferFree]);
+    }
+
+    if(this->_FTDIdevice->FTDIState() >= GlobalEnumatedAndExtern::FTDIready)
+    {
+        _initWindow->addTextInLabel(this->_FTDIStatePossibleTXT[GlobalEnumatedAndExtern::FTDIready]);
+    }
+    else
+    {
+        _initWindow->addTextInLabel("error befor state "+ this->_FTDIStatePossibleTXT[GlobalEnumatedAndExtern::FTDIready]);
+    }
+
+    this->_waitDelay(1);
+
+    return (this->_FTDIdevice->FTDI_OK());
 }
 
 void MainWindow::_waitDelay(int delayInSeconde)
@@ -325,7 +356,6 @@ void MainWindow::changeStateStartStopButton(int state)
 
 void MainWindow::startThread()
 {
-    //_tickTimer->startTimer();
     if(this->_inSimulation)
     {
         _newDataFrameTimer->startTimer();
@@ -334,6 +364,7 @@ void MainWindow::startThread()
     {
         if(this->_FTDI_OK)
         {
+        this->_getNewLiveData->startTimer();
 
         }
     }
@@ -343,23 +374,35 @@ void MainWindow::startThread()
 void MainWindow::stopThread()
 {
     _tickTimer->stopTimer();
+
+    // if not in roll mode
     if(this->_mainStateStep != GlobalEnumatedAndExtern::mainStateRoll)
     {
-        _newDataFrameTimer->stopTimer();
+ //       qDebug() << "real time thread running : " << this->_threadRealTimeReading->isRunning();
+ //       _newDataFrameTimer->stopTimer();
+        //this->_dataFrameLiveReading->stopReading();
+//        if(!this->_dataFrameLiveReading->isRunning())
+//        {
+//            this->_dataFrameLiveReading->start();
+//       }
+
+ //       this->_dataFrameLiveReading->stopReading();
+//        qDebug() << "real time thread running after : " << this->_threadRealTimeReading->isRunning();
     }
     else
     {
+        //stop dispaly refreshing
         _refreshDisplayTimer->stopTimer();
     }
 }
 
-void MainWindow::addNewDataFrame(int itProducerAdress)
+void MainWindow::addNewSimulatedDataFrame(int itProducerAdress)
 {
 
 
     this->_itTrace = _dataFrameTrace.begin();
 
-    qDebug() << objectName();
+    qDebug() << objectName() << "received addNewSimulatedDataFrame";
     for(int i = 0; i< NB_FRAME_CREATE_AT_EVERY_TICK; i++)
 
         //   for(QVector<DataFrame>::iterator it = _dataFrameTrace.begin(); it != _dataFrameTrace.end(); it++)
@@ -384,7 +427,7 @@ void MainWindow::addNewDataFrame(int itProducerAdress)
 
             this->_itConsumer++;
             this->_itTrace++;
-            this->_itConsumer = this->_itConsumer != _dataFrameReccorder.begin() + 20 ? this->_itConsumer : this->_dataFrameReccorder.begin();
+            this->_itConsumer = this->_itConsumer != _dataFrameReccorder.begin()? this->_itConsumer : this->_dataFrameReccorder.begin();
             this->_itTrace = this->_itTrace != _dataFrameTrace.end() ? this->_itTrace : this->_dataFrameTrace.begin();
         }
     }
@@ -393,28 +436,6 @@ void MainWindow::addNewDataFrame(int itProducerAdress)
     {
         it->displayValue();
     }
-
-    //    for(QVector<DataFrame>::iterator it = dataFrameVector.begin(); it != dataFrameVector.end(); it++)
-    //    {
-    //        //check trigger function
-    //        _onTrigTrue =  this->_triggerFuntion->onTrig(it);
-
-    //        //add value in buffer
-    //        _dataFrameReccorder.append(*it);
-
-    //        //adapte the size with pretrigger value
-    //        if( _dataFrameReccorder.size() > 1000)
-    //        {
-    //            _dataFrameReccorder.remove(0);
-    //        }
-
-    //        if(_onTrigTrue)
-    //        {
-    //            _trigStateStep = GlobalEnumatedAndExtern::trigTrigged;
-    //            _trigStateGraph();
-    //        }
-    //    }
-
 
     //send value to the plot
     switch (_mainStateStep)
@@ -431,6 +452,40 @@ void MainWindow::addNewDataFrame(int itProducerAdress)
     qDebug() << objectName() << "nbValue" << _dataFrameReccorder.size();
     this->_triggerFuntion = _settingWindow->getTriggerFuntion();
     //this->_triggerFuntion->displayValue();
+}
+
+void MainWindow::addNewLiveDataFrame(int itProducerAdress)
+{
+ //   qDebug() << objectName() << "received addNewLiveDataFrame";
+
+    for(int i = 0; i< NB_LIVE_READING_DATA; i++)
+
+        //   for(QVector<DataFrame>::iterator it = _dataFrameTrace.begin(); it != _dataFrameTrace.end(); it++)
+    {
+        //if to fast and arrived on the data creation pointeur
+        if((int)_itConsumer != itProducerAdress)
+        {
+            //set the new position to frame emulator
+            this->_dataFrameSimulator->setItConsumerAdress(_itConsumer);
+
+            //read the circular array and put on the trace array for futur ploting
+            *_itTrace = *this->_itConsumer;
+
+            //check trigger function
+            _onTrigTrue =  this->_triggerFuntion->onTrig(_itTrace);
+
+            if(_onTrigTrue)
+            {
+                _trigStateStep = GlobalEnumatedAndExtern::trigTrigged;
+                _trigStateGraph();
+            }
+
+            this->_itConsumer++;
+            this->_itTrace++;
+            this->_itConsumer = this->_itConsumer != _dataFrameReccorder.begin()? this->_itConsumer : this->_dataFrameReccorder.begin();
+            this->_itTrace = this->_itTrace != _dataFrameTrace.end() ? this->_itTrace : this->_dataFrameTrace.begin();
+        }
+    }
 }
 
 void MainWindow::refreshDisplay()
@@ -594,10 +649,13 @@ void MainWindow::_setupSignalAndSlot()
     QObject::connect(this->_newDataFrameTimer, SIGNAL(_tickFinished()), _dataFrameSimulator, SLOT(createDataFrame()));
     //QObject::connect(_dataFrameSimulator, SIGNAL(valueUpdated(quint8)), &graphicPlot, SLOT(addYValue(quint8)));
     //QObject::connect(dataFrameSimulator, SIGNAL(valueUpdated(quint8)), &analogPlot, SLOT(addYValue(quint8)));
-    QObject::connect(_dataFrameSimulator, SIGNAL(dataFrameWasSent(int)),this,SLOT(addNewDataFrame(int)));
+    QObject::connect(_dataFrameSimulator, SIGNAL(dataFrameWasSent(int)),this,SLOT(addNewSimulatedDataFrame(int)));
 
+    //start real time reading
+    //QObject::connect(this->_FTDIdevice, SIGNAL(_startReading()), this->_FTDIdevice, SLOT(recieved_startReading()));
     //refresh the display
-    QObject::connect(_refreshDisplayTimer, SIGNAL(_tickFinished()), this, SLOT(refreshDisplay()));
+    QObject::connect(_frameThread, SIGNAL(newDataArrived()), this->_FTDIdevice, SLOT(received_connectFTDIDevice()));
+    QObject::connect(_FTDIdevice, SIGNAL(dataFrameWasSent(int)), this, SLOT(addNewLiveDataFrame(int)));
 
     //application on trig
     //QObject::connect(dataFrameSimulator, SIGNAL(valueDI1_8Updated(quint8)), &DisplayWindow, SLOT(addValueDI1_8(quint8)));
@@ -636,6 +694,9 @@ void MainWindow::_mainStateGraphe()
     {
     case GlobalEnumatedAndExtern::mainStateInit:
 
+        //clear text
+        this->_initWindow->clearTextLabel();
+
         //show home page
         this->_initWindow->show();
 
@@ -643,12 +704,12 @@ void MainWindow::_mainStateGraphe()
         ui->statusBar->hide();
 
         qDebug() << "main state on : " << "init";
-#if LINUX
         //connect the FTDI device
-        if(this->_FTDIconnection())
+        this->_FTDI_OK = this->_FTDIconnection();
+
+        if(this->_FTDI_OK)
         {
             this->_waitDelay(1);
-
             _initWindow->addTextInLabel("\n Starting up application...");
             emit _errorFTDIDeviceNotFound(GlobalEnumatedAndExtern::errorFTDIDeviceNotFound, false);
         }
@@ -661,7 +722,7 @@ void MainWindow::_mainStateGraphe()
         //set the device in debug windows
         _debugWindow->setFTDIdevice(this->_FTDIdevice);
         //if all init passed
-#endif
+
         this->_waitDelay(1);
 
         //show menu bottom bar
@@ -745,6 +806,7 @@ void MainWindow::_mainStateGraphe()
         _settingWindow->checkIfAreSelectedTrace();
 
         qDebug() << "main state on : " << "trig";
+
         break;
     case GlobalEnumatedAndExtern::mainStateRoll:
         //activate roll button menu
@@ -850,6 +912,8 @@ void MainWindow::_trigStateGraph()
         //set display state to Run Trig
         ui->widgetState->setDisplayState(GlobalEnumatedAndExtern::runTrig);
 
+        //qDebug() << "running status" << this->_dataFrameLiveReading->isRunning();
+        //this->_dataFrameLiveReading->startReading();
         break;
     case GlobalEnumatedAndExtern::trigTrigged:
         //change StartStopButton to start
@@ -1020,7 +1084,7 @@ void MainWindow::on_pushButton_StartStop_released()
     if(stateBp == GlobalEnumatedAndExtern::start)
     {
         //can start if there are in simulation or
-        //ont in simulation mode and ftdi device all right
+        //not in simulation mode and ftdi device all right
         if(this->_inSimulation || (!this->_inSimulation && this->_FTDI_OK))
         {
 

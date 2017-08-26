@@ -175,21 +175,37 @@ public:
         periode10_s
     }ePeriodePossible;
 
+    //FTDI state possible
+    typedef enum
+    {
+        FTDInotConnected = 0,
+        FTDIDeviceFound,
+        FTDIopened,
+        FTDIUSBparameterSetted,
+        FTDIBaudRateSetted,
+        FTDIDataCaracteristiqueSetted,
+        FTDIFlowControlSetted,
+        FTDITxRxBufferFree,
+        FTDIready
+    }eFTDIStatePossible;
+
     typedef enum
     {
         endOfTransmission = 0x04,
         transmissionEnquiry = 0x05,
         positiveAcknoledge = 0x06,
         negativeAcknoledge = 0x15
-    }eFTDIReturnValue;
+    }eFTDIReturnCharacter;
 
     //all static variables
     static QMap<int, QString> TriggerTracePossible;
-    static QMap<int, QString> FTDIReturnValuePossible;
+    static QMap<int, QString> FTDIReturnCharPossible;
+    static QMap<int, QString> FTDIStatePossible;
 
     //init array for external use
     static QMap<int, QString> initTriggerTracePossible();
-    static QMap<int, QString> initFTDIReturnValuePossibleTxt();
+    static QMap<int, QString> initFTDIReturnCharPossibleTxt();
+    static QMap<int, QString> initFTDIStatePossibleTXT();
 
 
     static QMap<int, double> initPeridePossible();

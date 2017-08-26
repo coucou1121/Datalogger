@@ -15,6 +15,7 @@ public:
     explicit InitWindow(QWidget *parent = 0);
     ~InitWindow();
 
+    void clearTextLabel();
     void addTextInLabel(QString text);
 
 private:

@@ -46,7 +46,22 @@ QMap<int, QString> GlobalEnumatedAndExtern::initTriggerTracePossible()
     return ret;
 }
 
-QMap<int, QString> GlobalEnumatedAndExtern::initFTDIReturnValuePossibleTxt()
+QMap<int, QString> GlobalEnumatedAndExtern::initFTDIStatePossibleTXT()
+{
+    QMap<int, QString> ret;
+    ret.insert(FTDInotConnected, "FTDI not connected");
+    ret.insert(FTDIDeviceFound, "FTDI found");
+    ret.insert(FTDIopened, "FTDI opened");
+    ret.insert(FTDIUSBparameterSetted, "FTDI USB parameter setted");
+    ret.insert(FTDIBaudRateSetted, "FTDI baudrate setted");
+    ret.insert(FTDIDataCaracteristiqueSetted, "FTDI data characteristic setted");
+    ret.insert(FTDIFlowControlSetted, "FTDI flow control setted");
+    ret.insert(FTDITxRxBufferFree, "FTDI TxRx buffer cleaned");
+    ret.insert(FTDIready, "FTDI ready to use");
+    return ret;
+}
+
+QMap<int, QString> GlobalEnumatedAndExtern::initFTDIReturnCharPossibleTxt()
 {
     QMap<int, QString> ret;
     ret.insert(endOfTransmission, "transmission Stop");

@@ -1,8 +1,14 @@
 #include "FTDIFunction.h"
-#include <QDebug>
 
-FTDIFunction::FTDIFunction()
+FTDIFunction::FTDIFunction(QString name, QObject *parent):
+    QObject(parent),
+    _newDataFrame(new DataFrame()),
+    _baudRateSpeed2M(2000000),
+    _baudRateSpeed9600(9600),
+    _FTDI_OK(false),
+    _FTDIState(GlobalEnumatedAndExtern::FTDInotConnected)
 {
+    this->setObjectName(name);
     _ftStatus = FT_CreateDeviceInfoList(&_numDevs);
     qDebug() << "Number of devices is " << _numDevs;
     _ftStatus = FT_GetDeviceInfoDetail(0, &_Flags, &_Type, &_ID, &_LocId, _SerialNumber,
@@ -15,6 +21,9 @@ FTDIFunction::FTDIFunction()
     {
         qDebug() << "Deviced not created" << _numDevs;
     }
+
+    //initialise the Key - Value for error
+//    connect(this, SIGNAL(_startReading()), this, SLOT(recieved_startReading()));
 }
 
 int FTDIFunction::open()
@@ -229,7 +238,6 @@ int FTDIFunction::writeDataOneChar(int *data)
     return (*data);
 }
 
-
 int FTDIFunction::readDataOneChar(DWORD dwRxSize)
 {
     /*Read*/
@@ -285,16 +293,13 @@ void FTDIFunction::liveReading(int *dataStart)
         {
             if(j%8 == 0)
             {
+                //get the counter value
                 counterValue=0;
                 counterValueHigh =  buf[j];
                 counterValueLow = buf[j+1];
-
                 counterValue = counterValueHigh << 8 | counterValueLow;
 
-//                qDebug() << "counter Value" << counterValue;
-//                qDebug("value: %02x %02x %02x %02x %02x %02x %02x %02x \n",
-//                       buf[j], buf[j+1], buf[j+2], buf[j+3],
-//                        buf[j+4], buf[j+5], buf[j+6], buf[j+7]);
+                //check if correct
                 if(memoCounterValue == 65535)
                 {
                     counterError += counterValue == 0 ? 0 : 1;
@@ -309,25 +314,40 @@ void FTDIFunction::liveReading(int *dataStart)
 
                 if(counterError)
                 {
-                    qDebug("cpt error : %ld", counterError);
+ //                   qDebug("cpt error : %ld", counterError);
                 }
                 memoCounterValue = counterValue;
                 trameNumberRead++;
 
-                if(counterValue == 0)
+                //save value in the data structure
+                if(0 == counterValue%10000)
                 {
+                    _newDataFrame->setMsbCPT(buf[j]);
+                    _newDataFrame->setLsbCPT(buf[j+1]);
+                    _newDataFrame->setDI1_8(buf[j+2]);
+                    _newDataFrame->setDI9_16(buf[j+3]);
+                    _newDataFrame->setAI1(buf[j+4]);
+                    _newDataFrame->setAI2(buf[j+5]);
+                    _newDataFrame->setAI3(buf[j+6]);
+                    _newDataFrame->setAI4(buf[j+7]);
+
                     qDebug("value: %02x %02x %02x %02x %02x %02x %02x %02x \n",
                            buf[j], buf[j+1], buf[j+2], buf[j+3],
-                            buf[j+4], buf[j+5], buf[j+6], buf[j+7]);
+                           buf[j+4], buf[j+5], buf[j+6], buf[j+7]);
                     qDebug("Nb trame read : %ld \n", trameNumberRead);
 
+                    *this->_itProducer = *this->_newDataFrame;
+                    this->_itProducer++;
+                    this->_itProducer = this->_itProducer < _dataFrameVectorReccorder->end() ? this->_itProducer : this->_dataFrameVectorReccorder->begin();
                 }
 
             }
         }
+//        qDebug() << objectName() << "emit dataFrameWasSent";
+        emit dataFrameWasSent((int)this->_itProducer);
 
     }
-    while(!counterError && trameNumberRead < 100000);
+    while(!counterError);// && trameNumberRead < 100000);
 
     _ftStatus = writeDataOneChar(&_dataStop);
     /* Write */
@@ -342,12 +362,196 @@ void FTDIFunction::liveReading(int *dataStart)
     }
 
     _ftStatus = freeTxRxBuffer();
-
+//        return false;
 }
 
 quint8 FTDIFunction::sendStop()
 {
     return(writeDataOneChar(&_dataStop));
+}
+
+void FTDIFunction::realTimeAcquisitionStart()
+{
+//    qDebug() << objectName() << "received realTimeAcquisitionStart";
+//    emit _startReading();
+//    this->recieved_startReading();
+}
+
+FT_STATUS FTDIFunction::ftStatus() const
+{
+    return _ftStatus;
+}
+
+DWORD FTDIFunction::numDevs() const
+{
+    return _numDevs;
+}
+
+DWORD FTDIFunction::Flags() const
+{
+    return _Flags;
+}
+
+DWORD FTDIFunction::ID() const
+{
+    return _ID;
+}
+
+DWORD FTDIFunction::Type() const
+{
+    return _Type;
+}
+
+DWORD FTDIFunction::LocId() const
+{
+    return _LocId;
+}
+
+QString FTDIFunction::SerialNumber()
+{
+    return (QString)this->_SerialNumber;
+}
+
+QString FTDIFunction::Description()
+{
+    return (QString)this->_Description;
+}
+
+FT_HANDLE FTDIFunction::ftHandle() const
+{
+    return _ftHandle;
+}
+DataFrame *FTDIFunction::newDataFrame() const
+{
+    return _newDataFrame;
+}
+
+void FTDIFunction::setNewDataFrame(DataFrame *newDataFrame)
+{
+    _newDataFrame = newDataFrame;
+}
+
+void FTDIFunction::setItProducer(const QVector<DataFrame>::iterator &itProducer)
+{
+    _itProducer = itProducer;
+}
+
+void FTDIFunction::setItConsumerAdress(const QVector<DataFrame>::iterator &itConsumerAdress)
+{
+    _itConsumerAdress = itConsumerAdress;
+}
+
+void FTDIFunction::setDataFrameVectorReccorder(QVector<DataFrame> *dataFrameVectorReccorder)
+{
+    _dataFrameVectorReccorder = dataFrameVectorReccorder;
+}
+
+
+void FTDIFunction::received_connectFTDIDevice()
+{
+    qDebug() << objectName() << "received_connectFTDIDevice";
+    if(!_FTDI_OK)
+    {
+        this->_FTDIconnection();
+    }
+    else
+    {
+        this->liveReading(&_dataStart);
+    }
+}
+
+bool FTDIFunction::_FTDIconnection()
+{
+        this-> _FTDI_OK = false;
+        //read FTDI device information
+        this->ReadDeviceInfo();
+
+        if(ftStatus() == FT_OK)
+        {
+            this->_FTDIState = GlobalEnumatedAndExtern::FTDIDeviceFound;
+
+            //connect the device
+            if(this->open() == FT_OK)
+            {
+                this->_FTDIState = GlobalEnumatedAndExtern::FTDIopened;
+
+                //setup parameter of USB
+                if(this->setUSBparameter() == FT_OK)
+                {
+                    this->_FTDIState = GlobalEnumatedAndExtern::FTDIUSBparameterSetted;
+
+                    //setup speed of USB
+                    if(this->setBaudRate(this->_baudRateSpeed2M) == FT_OK)
+                    {
+                        this->_FTDIState = GlobalEnumatedAndExtern::FTDIBaudRateSetted;
+
+                        //setup carateristique of the data
+                        if(this->setDataCaracteristique() == FT_OK)
+                        {
+                            this->_FTDIState = GlobalEnumatedAndExtern::FTDIDataCaracteristiqueSetted;
+
+                            //setup flow control
+                            if(this->setFlowControl() == FT_OK)
+                            {
+                                this->_FTDIState = GlobalEnumatedAndExtern::FTDIFlowControlSetted;
+
+                                //reset the buffer
+                                if(this->freeTxRxBuffer() == FT_OK)
+                                {
+                                    this->_FTDIState = GlobalEnumatedAndExtern::FTDITxRxBufferFree;
+                                    _FTDI_OK = true;
+                                    this->_FTDIState = GlobalEnumatedAndExtern::FTDIready;
+
+                                }
+                                else
+                                {
+ //                                   _initWindow->addTextInLabel("Rx,Tx buffer: error");
+                                }
+
+                            }
+                            else
+                            {
+ //                               _initWindow->addTextInLabel("Flow Controle set : error");
+                            }
+
+                        }
+                        else
+                        {
+//                            _initWindow->addTextInLabel("Data carateristique set: error");
+                        }
+                    }
+                    else
+                    {
+//                        _initWindow->addTextInLabel("Baud rate : error");
+                    }
+
+                }
+                else
+                {
+//                    _initWindow->addTextInLabel("setup USB : error");
+                }
+
+            }
+            else
+            {
+//                _initWindow->addTextInLabel("Device not connected");
+            }
+
+        }
+        else
+        {
+//            _initWindow->addTextInLabel("Device not founded");
+        }
+
+        return _FTDI_OK;
+}
+bool FTDIFunction::FTDI_OK() const
+{
+    return _FTDI_OK;
+}
+GlobalEnumatedAndExtern::eFTDIStatePossible FTDIFunction::FTDIState() const
+{
+    return _FTDIState;
 }
 
 void FTDIFunction::initVariable()
@@ -363,3 +567,4 @@ void FTDIFunction::initVariable()
     counterError = 0;
     counterValueFind = 0;
 }
+

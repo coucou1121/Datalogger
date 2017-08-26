@@ -31,7 +31,11 @@ void FrameThread::run()
        cpt++;
        qDebug() << "hello from worker thread " << thread()->currentThreadId() << cpt;
 //    _frame.displayValue();
-   this->msleep(100);
+   emit newDataArrived();
+   this->msleep(1000);
    }
 
 }
+
+
+

@@ -13,6 +13,11 @@ InitWindow::~InitWindow()
     delete ui;
 }
 
+void InitWindow::clearTextLabel()
+{
+    ui->initLabel->clear();
+}
+
 void InitWindow::addTextInLabel(QString text)
 {
     QString temp = ui->initLabel->text();

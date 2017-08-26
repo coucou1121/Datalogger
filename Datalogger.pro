@@ -37,7 +37,8 @@ SOURCES += main.cpp\
     homeWindow.cpp \
     rollWindow.cpp \
     initWindow.cpp \
-    FTDIFunction.cpp
+    FTDIFunction.cpp \
+    dataFrameLiveReading.cpp
 
 HEADERS  += mainwindow.h \
     main.h \
@@ -66,7 +67,8 @@ HEADERS  += mainwindow.h \
     rollWindow.h \
     initWindow.h \
     FTDIFunction.h \
-    FTDI/ftd2xx.h
+    FTDI/ftd2xx.h \
+    dataFrameLiveReading.h
 
 FORMS    += mainwindow.ui \
     analogPlot.ui \
@@ -92,7 +94,8 @@ RESOURCES += \
 
 
 OTHER_FILES +=  -L/usr/local/lib/libftd2xx.a \
-                lib/libftd2xx.so.1.3.6
+                lib/libftd2xx.so.1.3.6 \
+/usr/lib/arm-linux-gnueabihf/libEGL.so.1
 
 LIBS += -L/usr/local/lib -lftd2xx
 
