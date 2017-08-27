@@ -350,7 +350,7 @@ bool TriggerFunctions::onTrig(DataFrame *data)
         break;
     }
 
-    qDebug() << "A: " << valueA << ", B: " << valueB << ", C: " << valueC << ", D: " << valueD;
+//    qDebug() << "A: " << valueA << ", B: " << valueB << ", C: " << valueC << ", D: " << valueD;
 
     onTrigA = edgeA == GlobalEnumatedAndExtern::noEdge ? valueA : this->_checkOnTrigTrace(valueA, memoValueA,
                                                                                           edgeA, _minValueTraceA, _maxValueTraceA, _trigValueTraceA);
@@ -366,13 +366,13 @@ bool TriggerFunctions::onTrig(DataFrame *data)
     memoValueC = valueC;
     memoValueD = valueD;
 
-    qDebug() << "TRA: " << onTrigA << ", TRB: " << onTrigB << ", TRC: " << onTrigC << ", TRD: " << onTrigD;
+//    qDebug() << "TRA: " << onTrigA << ", TRB: " << onTrigB << ", TRC: " << onTrigC << ", TRD: " << onTrigD;
 
     value = onTrigA | (onTrigB << 1) | (onTrigC << 2) | (onTrigD  << 3);
 
-    qDebug() << "value : " << value;
+//    qDebug() << "value : " << value;
 
-    qDebug() << "function number : " << _valueFunction;
+//    qDebug() << "function number : " << _valueFunction;
     switch (this->_valueFunction)
     {
     case 0:
@@ -660,7 +660,7 @@ bool TriggerFunctions::onTrig(DataFrame *data)
 
     data->setTR1((quint8) onTrig);
 
-    qDebug() << "On trig : " << onTrig;
+//    qDebug() << "On trig : " << onTrig;
     this->_onTrigStatus = onTrig;
 
     return onTrig;
@@ -812,8 +812,8 @@ quint8 TriggerFunctions::_checkOnTrigTrace(quint8 trace, quint8 memoTrace, Globa
 {
     quint8 onTrig = 0;
 
-    qDebug() << "AI1 trigger value : " << _doubleSpinBoxAI1;
-    qDebug() << "AI2 trigger value : " << _doubleSpinBoxAI2;
+//    qDebug() << "AI1 trigger value : " << _doubleSpinBoxAI1;
+//    qDebug() << "AI2 trigger value : " << _doubleSpinBoxAI2;
 
     //management of the digital trace
     if(maxValue == 1)

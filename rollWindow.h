@@ -36,6 +36,7 @@ private:
 
     void _setAllTraceName();
     void _hideAllTrace();
+    DataFrame *_memoDataFrame;
 
     //style
     //QPalette _palette;
@@ -51,11 +52,14 @@ private:
     void addValueAI3(quint8 value);
     void addValueAI4(quint8 value);
 
+    void changeBrackgroudColorLabelTrace();
+    void updateAllPlot();
+
 public slots:
     void addTrace(quint8 enumTrace);
     void hideTrace(quint8 enumTrace);
 
-    void addNewDataFrame(QVector<DataFrame> newDataFrameVector);
+    void addNewDataFrame(DataFrame *newDataFrame);
 
 
 };

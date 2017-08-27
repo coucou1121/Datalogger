@@ -1,7 +1,9 @@
 #include "frameThread.h"
 
-FrameThread::FrameThread()
+FrameThread::FrameThread(QString name, quint16 delay) :
+    _delay(delay)
 {
+    this->setObjectName(name);
     moveToThread(this);
 }
 
@@ -29,10 +31,10 @@ void FrameThread::run()
    while(1)
    {
        cpt++;
-       qDebug() << "hello from worker thread " << thread()->currentThreadId() << cpt;
+       qDebug() << objectName() << thread()->currentThreadId() << cpt;
 //    _frame.displayValue();
-   emit newDataArrived();
-   this->msleep(1000);
+   emit delayFinished();
+   this->msleep(_delay);
    }
 
 }

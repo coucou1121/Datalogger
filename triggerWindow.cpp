@@ -367,6 +367,7 @@ void TriggerWindow::addNewDataFrame(QVector<DataFrame> newDataFrameVector)
     }
     // qDebug() << objectName() << "replot";
     // updatePlot();
+    // refreshPlot();
 }
 
 void TriggerWindow::_recieved_pushButtonRangeAI1Changed()

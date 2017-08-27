@@ -14,7 +14,7 @@
    <string>Form</string>
   </property>
   <layout class="QGridLayout" name="gridLayout">
-   <item row="0" column="0">
+   <item row="0" column="1">
     <layout class="QVBoxLayout" name="verticalLayout">
      <item>
       <widget class="DigitalPlot" name="DI1" native="true"/>
@@ -77,6 +77,13 @@
       <widget class="AnalogPlot" name="AI4" native="true"/>
      </item>
     </layout>
+   </item>
+   <item row="1" column="1">
+    <widget class="QPushButton" name="pushButton">
+     <property name="text">
+      <string>PushButton</string>
+     </property>
+    </widget>
    </item>
   </layout>
  </widget>

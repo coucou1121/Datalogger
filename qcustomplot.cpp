@@ -14163,6 +14163,37 @@ void QCustomPlot::replot(QCustomPlot::RefreshPriority refreshPriority)
   mReplotting = false;
 }
 
+//Modify function from me Blessemaille Sebastien
+void QCustomPlot::replot(bool step, QCustomPlot::RefreshPriority refreshPriority)
+{
+    if (mReplotting) // incase signals loop back to replot slot
+        return;
+    mReplotting = true;
+    if (!step)
+    {
+        emit beforeReplot();
+
+        updateLayout();
+        // draw all layered objects (grid, axes, plottables, items, legend,...) into their buffers:
+        setupPaintBuffers();
+        foreach(QCPLayer *layer, mLayers)
+            layer->drawToPaintBuffer();
+
+
+        for (int i = 0; i < mPaintBuffers.size(); ++i)
+            mPaintBuffers.at(i)->setInvalidated(false);
+    }
+    else
+    {
+        if ((refreshPriority == rpRefreshHint && mPlottingHints.testFlag(QCP::phImmediateRefresh)) || refreshPriority == rpImmediateRefresh)
+            repaint();
+        else
+            update();
+
+        emit afterReplot();
+    }
+    mReplotting = false;
+}
 /*!
   Rescales the axes such that all plottables (like graphs) in the plot are fully visible.
   

@@ -4,6 +4,7 @@
 #define LINUX 1
 #define NUMBER_DOTS_ON_TRACE 400
 #define NB_FRAME_READ_EVERY_CYCLE 8
+#define INI_MESSAGE_DISPLAY 0
 
 #include <QMainWindow>
 #include <QPushButton>
@@ -67,8 +68,8 @@ private:
 
     //thread
     QThread *_threadTick;               // create tick for frequency simulation
-    QThread *_threadNewDataFrame;       // create a new data
-    QThread *_threadDisplayRefresh;     // Display refreshement
+    FrameThread *_threadNewDataFrame;       // create a new data
+    FrameThread *_threadDisplayRefresh;     // Display refreshement
     QThread *_threadRealTimeReading;          // Manage the real time reading
     FrameThread *_frameThread;
 
@@ -144,6 +145,7 @@ private:
     QVector<DataFrame> _dataFrameReccorder;
     QVector<DataFrame> _dataFrameTrace;
     QVector<DataFrame>::iterator _itProducer;
+    int _itIntProducer;
     QVector<DataFrame>::iterator _itConsumer;
     QVector<DataFrame>::iterator _itTrace;
 
@@ -180,7 +182,8 @@ public slots:
     void changeStateStartStopButton(int state);
     void startThread();
     void stopThread();
-    void addNewSimulatedDataFrame(int itProducerAdress);
+    void addNewProducteurAdress(int itProducerAdress);
+    void addNewSimulatedDataFrame();
     void addNewLiveDataFrame(int itProducerAdress);
     void refreshDisplay();
     void checkBoxEmulationModeChanged(bool checked);

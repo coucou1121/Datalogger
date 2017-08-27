@@ -3697,6 +3697,10 @@ public:
   void toPainter(QCPPainter *painter, int width=0, int height=0);
   Q_SLOT void replot(QCustomPlot::RefreshPriority refreshPriority=QCustomPlot::rpRefreshHint);
   
+  //Modify function from me Blessemaille Sebastien
+  Q_SLOT void replot(bool step, QCustomPlot::RefreshPriority refreshPriority = QCustomPlot::rpRefreshHint); //added code
+
+
   QCPAxis *xAxis, *yAxis, *xAxis2, *yAxis2;
   QCPLegend *legend;
   

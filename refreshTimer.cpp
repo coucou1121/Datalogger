@@ -25,7 +25,7 @@ void RefreshTimer::stopTimer()
 void RefreshTimer::_updateCount()
 {
 //    _count++;
-//     qDebug() << objectName() << " count: " << _count;
+     qDebug() << objectName() << " count: " << _count;
 
     //if(count%1000==0)
     // {
