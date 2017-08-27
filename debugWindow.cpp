@@ -182,7 +182,7 @@ void DebugWindow::on_pushButtonSendChar_released()
 void DebugWindow::on_pushButtonFTDIStartReadData_released()
 {
     int dataToWrite = (int)GlobalEnumatedAndExtern::transmissionEnquiry;
-    int dataReceived = 0;
+//    int dataReceived = 0;
 
     if(this->_FTDIDeviceFound())
     {

@@ -34,11 +34,12 @@ MainWindow::MainWindow(QWidget *parent) :
     _FTDIdevice(new FTDIFunction("FTDI device")),
 
     //create thread object
-    _threadTick(new FrameThread("tick data analysis", 50)),
-    _threadNewDataFrame(new FrameThread("simulated data", 1000)),
-    _threadDisplayRefresh(new FrameThread("refresh display", 200)),
+    _threadDataAnalysis(new FrameThread(false, "tick data analysis", 300)),
+    _threadNewDataFrame(new FrameThread(true, "simulated data", 100)),
+    _threadDisplayRefresh(new FrameThread(false, "refresh display", 100)),
+
     _threadRealTimeReading(new QThread),
-    _frameThread(new FrameThread("real data", 1000)),
+    _frameThread(new FrameThread(false, "real data", 1000)),
 
     //create timer for thread
 //    _tickTimer(new RefreshTimer(false, "Tick timer", 1)),
@@ -83,7 +84,7 @@ MainWindow::MainWindow(QWidget *parent) :
     setMinimumSize(MINIMUM_WIDTH_SIZE, MINIMUM_HEIGHT_SIZE);
 
     //move timer into the thread
-//    _tickTimer->moveToThread(_threadTick);
+//    _tickTimer->moveToThread(_threadDataAnalysis);
 //    _newDataFrameTimer->moveToThread(_threadNewDataFrame);
 //    _refreshDisplayTimer->moveToThread(_threadDisplayRefresh);
     //_FTDIdevice->moveToThread(_threadRealTimeReading);
@@ -98,14 +99,14 @@ MainWindow::MainWindow(QWidget *parent) :
     //setup default values
     this->_setupDefaultValue();
 
-    //start thread for display refreshement
-    this->_threadDisplayRefresh->start();
-
-    //start threat for creat new data
+    //start threat for create new data
     this->_threadNewDataFrame->start();
 
     //start thread for check new data
-    this->_threadTick->start();
+    //this->_threadDataAnalysis->start();
+
+    //start thread for display refreshement
+    //this->_threadDisplayRefresh->start();
 
     //this->_frameThread->start();
     // start thread for real time data reading
@@ -361,9 +362,16 @@ void MainWindow::changeStateStartStopButton(int state)
 
 void MainWindow::startThread()
 {
+    this->_threadDataAnalysis->start();
+    this->_threadDisplayRefresh->start();
+    //in simulation mode
     if(this->_inSimulation)
-    {
-//        _newDataFrameTimer->startTimer();
+    {     
+        //start thread for simulation data
+        this->_threadNewDataFrame->startWorking();
+
+        //start thread for data analysing
+        this->_threadDataAnalysis->startWorking();
     }
     else
     {
@@ -373,17 +381,30 @@ void MainWindow::startThread()
 
         }
     }
-//    _refreshDisplayTimer->startTimer();
+
+    //start refreshing display
+    this->_threadDisplayRefresh->startWorking();
+
 }
 
 void MainWindow::stopThread()
 {
 //    _tickTimer->stopTimer();
 
-    // if not in roll mode
-    if(this->_mainStateStep != GlobalEnumatedAndExtern::mainStateRoll)
+    // if it's in roll mode
+    if(this->_mainStateStep == GlobalEnumatedAndExtern::mainStateRoll)
     {
- //       qDebug() << "real time thread running : " << this->_threadRealTimeReading->isRunning();
+        //stop dispaly refreshing
+        this->_threadDisplayRefresh->stopWorking();
+    }
+    else
+    {
+        //stop thread for simulation data
+        this->_threadNewDataFrame->stopWorking();
+
+        //stop thread for data analysing
+        this->_threadDataAnalysis->stopWorking();
+        //       qDebug() << "real time thread running : " << this->_threadRealTimeReading->isRunning();
 //        _newDataFrameTimer->stopTimer();
         //this->_dataFrameLiveReading->stopReading();
 //        if(!this->_dataFrameLiveReading->isRunning())
@@ -393,11 +414,7 @@ void MainWindow::stopThread()
 
  //       this->_dataFrameLiveReading->stopReading();
 //        qDebug() << "real time thread running after : " << this->_threadRealTimeReading->isRunning();
-    }
-    else
-    {
-        //stop dispaly refreshing
-//        _refreshDisplayTimer->stopTimer();
+
     }
 }
 
@@ -408,11 +425,14 @@ void MainWindow::addNewProducteurAdress(int itProducerAdress)
 
 void MainWindow::addNewSimulatedDataFrame()
 {
+    //wait untile the first data was creating
     int i = 0;
     this->_onTrigTrue = false;
     this->_itTrace = _dataFrameTrace.begin();
 
-    qDebug() << objectName() << "received addNewSimulatedDataFrame";
+    this->_triggerFuntion = _settingWindow->getTriggerFuntion();
+
+//    qDebug() << objectName() << "received addNewSimulatedDataFrame";
     while(i< 5 && !_onTrigTrue)
 //    for(int i = 0; i< NB_FRAME_CREATE_AT_EVERY_TICK; i++)
 
@@ -431,32 +451,34 @@ void MainWindow::addNewSimulatedDataFrame()
             //check trigger function
             _onTrigTrue =  this->_triggerFuntion->onTrig(_itTrace);
 
-            //send value to the plot
-            switch (_mainStateStep)
-            {
-            case GlobalEnumatedAndExtern::mainStateRoll:
-                this->_rollWindow->addNewDataFrame(_itTrace);
-                break;
-            case GlobalEnumatedAndExtern::mainStateTrig:
-                this->_triggerWindow->addNewDataFrame(_dataFrameTrace);
-                break;
-            default:
-                break;
-            }
-
-            if(_onTrigTrue)
+             if(_onTrigTrue)
             {
                 _trigStateStep = GlobalEnumatedAndExtern::trigTrigged;
                 _trigStateGraph();
             }
+             //send value to the plot
+
+             switch (_mainStateStep)
+             {
+             case GlobalEnumatedAndExtern::mainStateRoll:
+                 this->_rollWindow->addNewDataFrame(_itTrace);
+                 break;
+             case GlobalEnumatedAndExtern::mainStateTrig:
+                 this->_triggerWindow->addNewDataFrame(_itTrace);
+                 break;
+             default:
+                 break;
+             }
 
             this->_itConsumer++;
             this->_itTrace++;
             this->_itConsumer = this->_itConsumer != _dataFrameReccorder.begin()? this->_itConsumer : this->_dataFrameReccorder.begin();
             this->_itTrace = this->_itTrace != _dataFrameTrace.end() ? this->_itTrace : this->_dataFrameTrace.begin();
-        }
+
+        }       
         i++;
     }
+
 
     //display the first 5 value of each new data
 //    for(QVector<DataFrame>::iterator it = _dataFrameTrace.begin(); it != _dataFrameTrace.begin() + 5; it++)
@@ -476,8 +498,7 @@ void MainWindow::addNewSimulatedDataFrame()
 //    default:
 //        break;
 //    }
-    qDebug() << objectName() << "nbValue" << _dataFrameReccorder.size();
-    this->_triggerFuntion = _settingWindow->getTriggerFuntion();
+//    qDebug() << objectName() << "nbValue" << _dataFrameReccorder.size();
     //this->_triggerFuntion->displayValue();
 }
 
@@ -668,7 +689,7 @@ void MainWindow::_setupSignalAndSlot()
     QObject::connect(this->_debugWindow, SIGNAL(_checkBoxEmulationModeStatusWasChanged(bool)), this, SLOT(checkBoxEmulationModeChanged(bool)));
 
     //timer management to be sure they start correctly
-    //    QObject::connect(this->_threadTick, SIGNAL(started), this->_tickTimer, SLOT(start()));
+    //    QObject::connect(this->_threadDataAnalysis, SIGNAL(started), this->_tickTimer, SLOT(start()));
     //    QObject::connect(this->_threadDisplayRefresh, SIGNAL(started), this->_refreshDisplayTimer, SLOT(start()));
     //    QObject::connect(this->_threadDataFramSimulator, SIGNAL(started), this->_dataFrameSimulator, SLOT(start()));
 
@@ -682,9 +703,10 @@ void MainWindow::_setupSignalAndSlot()
     QObject::connect(_dataFrameSimulator, SIGNAL(dataFrameWasSent(int)),this,SLOT(addNewProducteurAdress(int)));
 
     //check trig and add data in plot
-    QObject::connect(_threadTick, SIGNAL(delayFinished()), this, SLOT(addNewSimulatedDataFrame()));
+    QObject::connect(_threadDataAnalysis, SIGNAL(delayFinished()), this, SLOT(addNewSimulatedDataFrame()));
     //start real time reading
     //QObject::connect(this->_FTDIdevice, SIGNAL(_startReading()), this->_FTDIdevice, SLOT(recieved_startReading()));
+
     //refresh the display
     QObject::connect(_frameThread, SIGNAL(delayFinished()), this->_FTDIdevice, SLOT(received_connectFTDIDevice()));
     QObject::connect(_FTDIdevice, SIGNAL(dataFrameWasSent(int)), this, SLOT(addNewLiveDataFrame(int)));

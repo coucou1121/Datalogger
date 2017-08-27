@@ -185,6 +185,13 @@ void SettingTriggerFunction::on_comboBoxTopLeft_currentIndexChanged(int index)
         ui->comboBoxBottomLeft->setEnabled(false);
         ui->comboBoxBottomRight->setEnabled(false);
         ui->comboBoxBottomMiddle->setEnabled(false);
+
+        this->_triggerFuntion->setTraceB(GlobalEnumatedAndExtern::btNone);
+        this->_triggerFuntion->setTraceC(GlobalEnumatedAndExtern::btNone);
+        this->_triggerFuntion->setTraceD(GlobalEnumatedAndExtern::btNone);
+        this->_triggerFuntion->setLogicalOperator_Top(GlobalEnumatedAndExtern::opNone);
+        this->_triggerFuntion->setLogicalOperator_Middle(GlobalEnumatedAndExtern::opNone);
+        this->_triggerFuntion->setLogicalOperator_Bottom(GlobalEnumatedAndExtern::opNone);
     }
     emit _comboBoxTopLeft_currentIndexWasChanged(index);
 }

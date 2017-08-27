@@ -52,38 +52,38 @@ void TriggerWindow::refreshPlot()
     {
         if(ui->widgetDI1->isVisible())
         {
-            ui->widgetDI1->updatePlot();
+//            ui->widgetDI1->updatePlot();
             ui->widgetDI1->replot();
         }
         if(ui->widgetDI2->isVisible())
         {
-            ui->widgetDI2->updatePlot();
+//            ui->widgetDI2->updatePlot();
             ui->widgetDI2->replot();
         }
         if(ui->widgetDI3->isVisible())
         {
-            ui->widgetDI3->updatePlot();
+//            ui->widgetDI3->updatePlot();
             ui->widgetDI3->replot();
         }
         if(ui->widgetDI4->isVisible())
         {
-            ui->widgetDI4->updatePlot();
+//            ui->widgetDI4->updatePlot();
             ui->widgetDI4->replot();
         }
         if(ui->widgetAI1->isVisible())
         {
-            ui->widgetAI1->updatePlot();
+//            ui->widgetAI1->updatePlot();
             ui->widgetAI1->replot();
         }
         if(ui->widgetAI2->isVisible())
         {
-            ui->widgetAI2->updatePlot();
+//            ui->widgetAI2->updatePlot();
             ui->widgetAI2->replot();
         }
 
         if(this->_triggerFunctionEnable)
         {
-            ui->widgetFunction->updatePlot();
+//            ui->widgetFunction->updatePlot();
             ui->widgetFunction->replot();
         }
     }
@@ -166,6 +166,46 @@ void TriggerWindow::_setupSignalAndSlot()
     //error management
     QObject::connect(ui->widgetTriggerFunctionT, SIGNAL(_errorWrongEquation(quint8,bool)),
                      this, SLOT(_received_errorWrongEquation(quint8,bool)));
+}
+
+void TriggerWindow::updateAllPlot()
+{
+    if(this->isVisible())
+    {
+        if(ui->widgetDI1->isVisible())
+        {
+            ui->widgetDI1->updatePlot();
+        }
+        if(ui->widgetDI2->isVisible())
+        {
+            ui->widgetDI2->updatePlot();
+        }
+        if(ui->widgetDI3->isVisible())
+        {
+            ui->widgetDI3->updatePlot();
+        }
+        if(ui->widgetDI4->isVisible())
+        {
+            ui->widgetDI4->updatePlot();
+        }
+      if(ui->widgetAI1->isVisible())
+        {
+            ui->widgetAI1->updatePlot();
+        }
+        if(ui->widgetAI2->isVisible())
+        {
+            ui->widgetAI2->updatePlot();
+        }
+
+        if(ui->widgetFunction->isVisible())
+        {
+            ui->widgetFunction->updatePlot();
+        }
+        //qDebug() << objectName() << "took" << timerElapse.elapsed() << "miliseconds" << " for refresh";
+        //timerElapse.restart();
+    }
+
+
 }
 
 void TriggerWindow::addTrace(quint8 enumTrace)
@@ -345,29 +385,39 @@ void TriggerWindow::comboBoxBottomMiddle_changeCurrentIndex(quint8 index)
     ui->widgetTriggerFunctionT->comboBoxBottomMiddle_changeCurrentIndex(index);
 }
 
-void TriggerWindow::addNewDataFrame(QVector<DataFrame> newDataFrameVector)
+void TriggerWindow::addNewDataFrame(DataFrame *newDataFrame)
 {
     //    qDebug() << objectName() << " nb frame recieved size" << newDataFrameVector.size();
-    quint8 valueDI1_9 = 0;
+    quint8 valueDI1_8 = 0;
 
-    for(int i = 0; i < newDataFrameVector.size(); i++)
-    {
-        valueDI1_9 = newDataFrameVector[i].DI1_8();
+    _memoDataFrame = newDataFrame;
 
-        //qDebug() << objectName() << "value DI1" << (value);
-        ui->widgetDI1->addYValue((valueDI1_9 & 0x01) >> 0);
-        ui->widgetDI2->addYValue((valueDI1_9 & 0x02) >> 1);
-        ui->widgetDI3->addYValue((valueDI1_9 & 0x04) >> 2);
-        ui->widgetDI4->addYValue((valueDI1_9 & 0x08) >> 3);
+    //    for(int i = 0; i < newDataFrameVector.size(); i++)
+    //    {
+    valueDI1_8 = newDataFrame->DI1_8();
 
-        ui->widgetAI1->addYValue(newDataFrameVector[i].AI1());
-        ui->widgetAI2->addYValue(newDataFrameVector[i].AI2());
+    //qDebug() << objectName() << "value DI1" << (value);
+    if(ui->widgetDI1->isVisible())
+        ui->widgetDI1->addYValue((valueDI1_8 & 0x01) >> 0);
+    if(ui->widgetDI2->isVisible())
+        ui->widgetDI2->addYValue((valueDI1_8 & 0x02) >> 1);
+    if(ui->widgetDI3->isVisible())
+        ui->widgetDI3->addYValue((valueDI1_8 & 0x04) >> 2);
+    if(ui->widgetDI4->isVisible())
+        ui->widgetDI4->addYValue((valueDI1_8 & 0x08) >> 3);
 
-        ui->widgetFunction->addYValue(newDataFrameVector[i].TR1());
-    }
+    if(ui->widgetAI1->isVisible())
+        ui->widgetAI1->addYValue(_memoDataFrame->AI1());
+    if(ui->widgetAI2->isVisible())
+        ui->widgetAI2->addYValue(_memoDataFrame->AI2());
+
+    if(ui->widgetFunction->isVisible())
+        ui->widgetFunction->addYValue(_memoDataFrame->TR1());
+    //    }
     // qDebug() << objectName() << "replot";
     // updatePlot();
     // refreshPlot();
+    this->updateAllPlot();
 }
 
 void TriggerWindow::_recieved_pushButtonRangeAI1Changed()

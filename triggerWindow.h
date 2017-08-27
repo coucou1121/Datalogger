@@ -34,12 +34,15 @@ private:
 
     void _setAllTraceName();
     void _hideAllTrace();
+    DataFrame *_memoDataFrame;
 
     //setup signal and slot
     void _setupSignalAndSlot();
 
     //trigger function enable
     bool _triggerFunctionEnable;
+
+    void updateAllPlot();
 
 public slots:
     void addTrace(quint8 enumTrace);
@@ -70,7 +73,7 @@ public slots:
     void comboBoxMiddle_changeCurrentIndex(quint8 index);
     void comboBoxBottomMiddle_changeCurrentIndex(quint8 index);
 
-    void addNewDataFrame(QVector<DataFrame> newDataFrameVector);
+    void addNewDataFrame(DataFrame *newDataFrame);
 
 private slots:
     void _recieved_pushButtonRangeAI1Changed();

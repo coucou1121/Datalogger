@@ -67,7 +67,7 @@ private:
     void _waitDelay(int delayInSeconde);
 
     //thread
-    QThread *_threadTick;               // create tick for frequency simulation
+    FrameThread *_threadDataAnalysis;               // create tick for frequency simulation
     FrameThread *_threadNewDataFrame;       // create a new data
     FrameThread *_threadDisplayRefresh;     // Display refreshement
     QThread *_threadRealTimeReading;          // Manage the real time reading

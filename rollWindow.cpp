@@ -52,7 +52,7 @@ void RollWindow::setDrawRightToLeft(bool drawRightToLeft)
 
 void RollWindow::refreshPlot()
 {
-    this->changeBrackgroudColorLabelTrace();
+    //this->changeBrackgroudColorLabelTrace();
 
     if(this->isVisible())
     {
@@ -442,13 +442,13 @@ void RollWindow::addNewDataFrame(DataFrame *newDataFrame)
         ui->DI16->addYValue((valueDI10_18 & 0x20) >> 5);
 
         if(ui->AI1->isVisible())
-        ui->AI1->addYValue(newDataFrame->AI1());
+        ui->AI1->addYValue(_memoDataFrame->AI1());
         if(ui->AI2->isVisible())
-        ui->AI2->addYValue(newDataFrame->AI2());
+        ui->AI2->addYValue(_memoDataFrame->AI2());
         if(ui->AI3->isVisible())
-        ui->AI3->addYValue(newDataFrame->AI3());
+        ui->AI3->addYValue(_memoDataFrame->AI3());
         if(ui->AI4->isVisible())
-       ui->AI4->addYValue(newDataFrame->AI4());
+       ui->AI4->addYValue(_memoDataFrame->AI4());
 //    }
     // qDebug() << objectName() << "replot";
     //updatePlot();

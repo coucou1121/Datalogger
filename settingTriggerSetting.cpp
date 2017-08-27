@@ -562,8 +562,8 @@ quint8 SettingTriggerSetting::_doubleToQuint8(double value, GlobalEnumatedAndExt
     }
     result = ((value - minRangeValue)*255)/(maxRangeValue-minRangeValue);
 
-    qDebug() << "double value  : " << value;
-    qDebug() << "double result : " << minRangeValue << result;
+//    qDebug() << "double value  : " << value;
+//    qDebug() << "double result : " << minRangeValue << result;
     quint8 resultInt = (quint8)result;
     return resultInt;
 }

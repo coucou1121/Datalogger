@@ -92,10 +92,10 @@ void DataFrameSimulator::createDataFrame()
     timerElapse.restart();
     //int itProducteurAdress = (int)&(_itProducer);
     quint16 i = 0;
-    qDebug() << objectName();
-    qDebug() << "adress Cosumer  : " << _itConsumerAdress;
-    qDebug() << "adress Producer : " << _itProducer;
-    qDebug() << "adress Producer : " << (int)_itProducer;
+//    qDebug() << objectName();
+//    qDebug() << "adress Cosumer  : " << _itConsumerAdress;
+//    qDebug() << "adress Producer : " << _itProducer;
+//    qDebug() << "adress Producer : " << (int)_itProducer;
 
     for(i=0; i<NB_FRAME_CREATE_AT_EVERY_TICK; i++)
     {

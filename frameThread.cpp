@@ -1,6 +1,7 @@
 #include "frameThread.h"
 
-FrameThread::FrameThread(QString name, quint16 delay) :
+FrameThread::FrameThread(bool isWorking, QString name, quint16 delay) :
+    _isWorking(isWorking),
     _delay(delay)
 {
     this->setObjectName(name);
@@ -9,7 +10,7 @@ FrameThread::FrameThread(QString name, quint16 delay) :
 
 void FrameThread::usleep(unsigned long usecs)
 {
- //   qDebug() << "coucou";
+    //   qDebug() << "coucou";
     QThread::usleep(usecs);
 }
 
@@ -23,19 +24,32 @@ void FrameThread::sleep(unsigned long secs)
     QThread::sleep(secs);
 }
 
+void FrameThread::startWorking()
+{
+    this->_isWorking = true;
+}
+
+void FrameThread::stopWorking()
+{
+    this->_isWorking = false;
+}
+
 // run() will be called when a thread starts
 void FrameThread::run()
 {
- unsigned long int cpt=0;
+    unsigned long int cpt=0;
 
-   while(1)
-   {
-       cpt++;
-       qDebug() << objectName() << thread()->currentThreadId() << cpt;
-//    _frame.displayValue();
-   emit delayFinished();
-   this->msleep(_delay);
-   }
+    while(true)
+    {
+        if(_isWorking)
+        {
+            cpt++;
+//            qDebug() << objectName() << thread()->currentThreadId() << cpt;
+            //    _frame.displayValue();
+            emit delayFinished();
+            this->msleep(_delay);
+        }
+    }
 
 }
 
