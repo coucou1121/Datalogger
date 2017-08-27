@@ -116,7 +116,7 @@ void DigitalPlot::updatePlot()
     //ui->widget_DI->graph(0)->addData(_XData , _YData);
 
     // make key axis range scroll with the data:
-    ui->widget_DI->xAxis->setRange(_CPT, DI_NB_X_VALUES_DISPLAY_LIVE, Qt::AlignRight);
+    ui->widget_DI->xAxis->setRange(_CPT, this->_nbPixels, Qt::AlignRight);
 
     // Update the plot widget
     //ui->widget_DI->replot();
@@ -141,4 +141,9 @@ void DigitalPlot::addYValue(quint8 value)
 void DigitalPlot::replot()
 {
     ui->widget_DI->replot();
+}
+
+void DigitalPlot::setNbPixels(const quint16 &nbPixels)
+{
+    _nbPixels = nbPixels;
 }

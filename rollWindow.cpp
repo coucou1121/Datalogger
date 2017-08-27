@@ -50,6 +50,31 @@ void RollWindow::setDrawRightToLeft(bool drawRightToLeft)
     ui->AI4->setDrawRightToLeft(drawRightToLeft);
 }
 
+void RollWindow::setSizeOfPlot(int valuePixels)
+{
+    ui->DI1->setNbPixels(valuePixels);
+    ui->DI2->setNbPixels(valuePixels);
+    ui->DI3->setNbPixels(valuePixels);
+    ui->DI4->setNbPixels(valuePixels);
+    ui->DI5->setNbPixels(valuePixels);
+    ui->DI6->setNbPixels(valuePixels);
+    ui->DI7->setNbPixels(valuePixels);
+    ui->DI8->setNbPixels(valuePixels);
+    ui->DI9->setNbPixels(valuePixels);
+    ui->DI10->setNbPixels(valuePixels);
+    ui->DI11->setNbPixels(valuePixels);
+    ui->DI12->setNbPixels(valuePixels);
+    ui->DI13->setNbPixels(valuePixels);
+    ui->DI14->setNbPixels(valuePixels);
+    ui->DI15->setNbPixels(valuePixels);
+    ui->DI16->setNbPixels(valuePixels);
+
+    ui->AI1->setNbPixels(valuePixels);
+    ui->AI2->setNbPixels(valuePixels);
+    ui->AI3->setNbPixels(valuePixels);
+    ui->AI4->setNbPixels(valuePixels);
+}
+
 void RollWindow::refreshPlot()
 {
     //this->changeBrackgroudColorLabelTrace();

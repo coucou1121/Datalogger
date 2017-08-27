@@ -34,8 +34,8 @@ MainWindow::MainWindow(QWidget *parent) :
     _FTDIdevice(new FTDIFunction("FTDI device")),
 
     //create thread object
-    _threadDataAnalysis(new FrameThread(false, "tick data analysis", 300)),
-    _threadNewDataFrame(new FrameThread(true, "simulated data", 100)),
+    _threadDataAnalysis(new FrameThread(false, "tick data analysis", 50)),
+    _threadNewDataFrame(new FrameThread(true, "simulated data", 1000)),
     _threadDisplayRefresh(new FrameThread(false, "refresh display", 100)),
 
     _threadRealTimeReading(new QThread),
@@ -182,6 +182,12 @@ void MainWindow::mainSetup()
 
     //set trigger function to false (no trig at startus)
     _triggerFunctionEvaluatedTrue = false;
+
+    //set the size of the plot in roll windows
+    this->_rollWindow->setSizeOfPlot(40);
+
+    //set the size of the plot in the trigger windows
+    this->_triggerWindow->setSizeOfPlot(40);
 
     // get the FTDI device frome the real time reading thread
     // this->_FTDIdevice = this->_dataFrameLiveReading->FTDIdevice();
@@ -446,24 +452,26 @@ void MainWindow::addNewSimulatedDataFrame()
             this->_dataFrameSimulator->setItConsumerAdress(_itConsumer);
 
             //read the circular array and put on the trace array for futur ploting
-            *_itTrace = *this->_itConsumer;
-
-            //check trigger function
-            _onTrigTrue =  this->_triggerFuntion->onTrig(_itTrace);
-
-             if(_onTrigTrue)
-            {
-                _trigStateStep = GlobalEnumatedAndExtern::trigTrigged;
-                _trigStateGraph();
-            }
-             //send value to the plot
+            *_itTrace = *this->_itConsumer;           
 
              switch (_mainStateStep)
              {
              case GlobalEnumatedAndExtern::mainStateRoll:
+                 //send value to the plot
                  this->_rollWindow->addNewDataFrame(_itTrace);
                  break;
              case GlobalEnumatedAndExtern::mainStateTrig:
+
+                 //check trigger function
+                 _onTrigTrue =  this->_triggerFuntion->onTrig(_itTrace);
+
+                  if(_onTrigTrue)
+                 {
+                     _trigStateStep = GlobalEnumatedAndExtern::trigTrigged;
+                     _trigStateGraph();
+                 }
+
+                  //send value to the plot
                  this->_triggerWindow->addNewDataFrame(_itTrace);
                  break;
              default:

@@ -44,6 +44,17 @@ void TriggerWindow::setDrawRightToLeft(bool drawRightToLeft)
     ui->widgetAI2->setDrawRightToLeft(!drawRightToLeft);
 }
 
+void TriggerWindow::setSizeOfPlot(int valuePixels)
+{
+    ui->widgetDI1->setNbPixels(valuePixels);
+    ui->widgetDI2->setNbPixels(valuePixels);
+    ui->widgetDI3->setNbPixels(valuePixels);
+    ui->widgetDI4->setNbPixels(valuePixels);
+    ui->widgetAI1->setNbPixels(valuePixels);
+    ui->widgetAI2->setNbPixels(valuePixels);
+    ui->widgetFunction->setNbPixels(valuePixels);
+}
+
 void TriggerWindow::refreshPlot()
 {
     this->_triggerFunctionEnable = ui->widgetTriggerFunctionT->areSomeTraceSelected();

@@ -57,9 +57,12 @@ public:
 
     void replot();
 
+    void setNbPixels(const quint16 &nbPixels);
+
 private:
     Ui::AnalogPlot *ui;
 
+    quint16 _nbPixels;
     quint64 _CPT;
     quint8 _yValue;
     //int _minValue = 0;

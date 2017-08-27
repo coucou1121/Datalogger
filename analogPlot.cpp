@@ -92,7 +92,7 @@ void AnalogPlot::setupStyle(QCustomPlot *customPlot)
     customPlot->rescaleAxes();
 
     //set the axis range
-    customPlot->xAxis->setRange(0, AI_NB_X_VALUES_DISPLAY_LIVE);
+    customPlot->xAxis->setRange(0, this->_nbPixels);
     customPlot->yAxis->setRange(AI_Y_AXIS_MIN_VALUE, AI_Y_AXIS_MAX_VALUE);
 
 }
@@ -187,4 +187,9 @@ void AnalogPlot::addYValue(quint8 value)
 void AnalogPlot::replot()
 {
     ui->widget_AI->replot();
+}
+
+void AnalogPlot::setNbPixels(const quint16 &nbPixels)
+{
+    _nbPixels = nbPixels;
 }

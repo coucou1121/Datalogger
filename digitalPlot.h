@@ -11,7 +11,7 @@
 //#define DI_DISPLAY_REFRESH 0
 #define DI_NB_TRACE 1
 //#define DI_RESOLUTION 900
-#define DI_NB_X_PIXELS 200 //500 //795
+#define DI_NB_X_PIXELS 50// 200 //500 //795
 #define DI_NB_X_VALUES_DISPLAY_LIVE     DI_NB_X_PIXELS/DI_NB_TRACE
 //#define DI_NB_X_VALUES_DISPLAY_HOLD 100
 //#define DI_X_AXIS_MIN_VALUE 0
@@ -55,9 +55,12 @@ public:
     //update plot
     void replot();
 
+    void setNbPixels(const quint16 &nbPixels);
+
 private:
     Ui::DigitalPlot *ui;
 
+    quint16 _nbPixels;
     quint64 _CPT;
     quint8 _yValue;
     //int _minValue = 0;

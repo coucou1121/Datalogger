@@ -25,6 +25,9 @@ public:
     // if flase, draw right to left, mode trig
     void setDrawRightToLeft(bool drawRightToLeft);
 
+    //dimention of plot
+    void setSizeOfPlot(int valuePixels);
+
     // update the plot
     void refreshPlot();
 
