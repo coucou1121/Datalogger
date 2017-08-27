@@ -5,6 +5,7 @@
 #define NUMBER_DOTS_ON_TRACE 400
 #define NB_FRAME_READ_EVERY_CYCLE 8
 #define INI_MESSAGE_DISPLAY 0
+#define SIZE_OF_PLOT 795
 
 #include <QMainWindow>
 #include <QPushButton>
@@ -187,6 +188,7 @@ public slots:
     void addNewLiveDataFrame(int itProducerAdress);
     void refreshDisplay();
     void checkBoxEmulationModeChanged(bool checked);
+    void received__settingSizeOfPlotWasChanged(int nbPixels);
 
 private slots:
     void _btHome_released();

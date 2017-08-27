@@ -38,7 +38,8 @@ SOURCES += main.cpp\
     rollWindow.cpp \
     initWindow.cpp \
     FTDIFunction.cpp \
-    dataFrameLiveReading.cpp
+    dataFrameLiveReading.cpp \
+    plotSetting.cpp
 
 HEADERS  += mainwindow.h \
     main.h \
@@ -68,7 +69,8 @@ HEADERS  += mainwindow.h \
     initWindow.h \
     FTDIFunction.h \
     FTDI/ftd2xx.h \
-    dataFrameLiveReading.h
+    dataFrameLiveReading.h \
+    plotSetting.h
 
 FORMS    += mainwindow.ui \
     analogPlot.ui \
@@ -87,7 +89,8 @@ FORMS    += mainwindow.ui \
     debugWindow.ui \
     homeWindow.ui \
     rollWindow.ui \
-    initWindow.ui
+    initWindow.ui \
+    plotSetting.ui
 
 RESOURCES += \
     images.qrc

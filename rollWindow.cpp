@@ -531,22 +531,6 @@ void RollWindow::addValueAI4(quint8 value)
     ui->AI4->addYValue(value);
 }
 
-void RollWindow::changeBrackgroudColorLabelTrace()
-{
-    static bool value = false;
-            value = value == false ? true : false;
-        //qDebug() << objectName() << " Datas recieved " << value;
-        if(value)
-        {
-            ui->pushButton->setStyleSheet("background-color: red;");
-        }
-        else
-        {
-            ui->pushButton->setStyleSheet("background-color: green;");
-        }
-        ui->pushButton->repaint();
-}
-
 void RollWindow::_setAllTraceName()
 {
     ui->DI1->setTitleName(TriggerTracePossible[GlobalEnumatedAndExtern::btDI1]);

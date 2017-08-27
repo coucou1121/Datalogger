@@ -148,22 +148,22 @@ MainWindow::~MainWindow()
 void MainWindow::mainSetup()
 {
     //add init window in windows layout
-    ui->gridLayout->addWidget(_initWindow, 0, 1, 6, 1);
+    ui->gridLayout->addWidget(_initWindow, 0, 1, 7, 1);
 
     //add home window in window layout
-    ui->gridLayout->addWidget(_homeWindow, 0, 1, 6, 1);
+    ui->gridLayout->addWidget(_homeWindow, 0, 1, 7, 1);
 
     //add setting window in window layout
-    ui->gridLayout->addWidget(_settingWindow, 0, 1, 6, 1);
+    ui->gridLayout->addWidget(_settingWindow, 0, 1, 7, 1);
 
     //add setting window in window layout
-    ui->gridLayout->addWidget(_triggerWindow, 0, 1, 6, 1);
+    ui->gridLayout->addWidget(_triggerWindow, 0, 1, 7, 1);
 
     //add display window in window layout
-    ui->gridLayout->addWidget(_rollWindow, 0, 1, 6, 1);
+    ui->gridLayout->addWidget(_rollWindow, 0, 1, 7, 1);
 
     //add debug window in window layout
-    ui->gridLayout->addWidget(_debugWindow, 0, 1, 6, 1);
+    ui->gridLayout->addWidget(_debugWindow, 0, 1, 7, 1);
 
     //set title on homeWindow
     _homeWindow->setTitle("Datalogger");
@@ -184,10 +184,13 @@ void MainWindow::mainSetup()
     _triggerFunctionEvaluatedTrue = false;
 
     //set the size of the plot in roll windows
-    this->_rollWindow->setSizeOfPlot(40);
+    this->_rollWindow->setSizeOfPlot(SIZE_OF_PLOT);
 
     //set the size of the plot in the trigger windows
-    this->_triggerWindow->setSizeOfPlot(40);
+    this->_triggerWindow->setSizeOfPlot(SIZE_OF_PLOT);
+
+    //set the size of the plot in the trigger windows
+    ui->widgetPlotSetting->setSizeOfPlots(SIZE_OF_PLOT);
 
     // get the FTDI device frome the real time reading thread
     // this->_FTDIdevice = this->_dataFrameLiveReading->FTDIdevice();
@@ -566,8 +569,16 @@ void MainWindow::checkBoxEmulationModeChanged(bool checked)
     }
 }
 
+void MainWindow::received__settingSizeOfPlotWasChanged(int nbPixels)
+{
+    this->_rollWindow->setSizeOfPlot(nbPixels);
+    this->_triggerWindow->setSizeOfPlot(nbPixels);
+}
+
 void MainWindow::_setupSignalAndSlot()
 {
+    //manage the size of plot
+    QObject::connect(ui->widgetPlotSetting, SIGNAL(_settingSizeOfPlotWasChanged(int)), this, SLOT(received__settingSizeOfPlotWasChanged(int)));
     //manage trace in trigger menu
     QObject::connect(this->_settingWindow, SIGNAL(_addTraceInTriggerMenu(quint8)), this->_triggerWindow, SLOT(addTrace(quint8)));
     QObject::connect(this->_settingWindow, SIGNAL(_removeTraceInTriggerMenu(quint8)), this->_triggerWindow, SLOT(hideTrace(quint8)));

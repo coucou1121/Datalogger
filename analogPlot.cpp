@@ -153,7 +153,7 @@ void AnalogPlot::updatePlot()
 
     //ui->tracePlot->yAxis->setRange(yPlotMin , yPlotMax);
     // make key axis range scroll with the data:
-    ui->widget_AI->xAxis->setRange(_CPT, AI_NB_X_VALUES_DISPLAY_LIVE, Qt::AlignRight);
+    ui->widget_AI->xAxis->setRange(_CPT, this->_nbPixels, Qt::AlignRight);
 
     //ui->tracePlot->yAxis->rescale();
 
