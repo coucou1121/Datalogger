@@ -1,9 +1,19 @@
 #include "triggerWindow.h"
 #include "ui_triggerWindow.h"
 
+extern qint8 minRange0;
+extern qint8 maxRange0_24;
+extern qint8 maxRange0_30;
+extern qint8 minRange_15_15;
+extern qint8 maxRange_15_15;
+
 TriggerWindow::TriggerWindow(QWidget *parent) :
     QFrame(parent),
-    ui(new Ui::TriggerWindow)
+    ui(new Ui::TriggerWindow),
+    _AI1SettingTriggerValue(0),
+    _AI2SettingTriggerValue(0),
+    _AI1TriggerRange((quint8)GlobalEnumatedAndExtern::range0_30),
+    _AI2TriggerRange((quint8)GlobalEnumatedAndExtern::range0_30)
 {
     ui->setupUi(this);
 
@@ -63,38 +73,38 @@ void TriggerWindow::refreshPlot()
     {
         if(ui->widgetDI1->isVisible())
         {
-//            ui->widgetDI1->updatePlot();
+            //            ui->widgetDI1->updatePlot();
             ui->widgetDI1->replot();
         }
         if(ui->widgetDI2->isVisible())
         {
-//            ui->widgetDI2->updatePlot();
+            //            ui->widgetDI2->updatePlot();
             ui->widgetDI2->replot();
         }
         if(ui->widgetDI3->isVisible())
         {
-//            ui->widgetDI3->updatePlot();
+            //            ui->widgetDI3->updatePlot();
             ui->widgetDI3->replot();
         }
         if(ui->widgetDI4->isVisible())
         {
-//            ui->widgetDI4->updatePlot();
+            //            ui->widgetDI4->updatePlot();
             ui->widgetDI4->replot();
         }
         if(ui->widgetAI1->isVisible())
         {
-//            ui->widgetAI1->updatePlot();
+            //            ui->widgetAI1->updatePlot();
             ui->widgetAI1->replot();
         }
         if(ui->widgetAI2->isVisible())
         {
-//            ui->widgetAI2->updatePlot();
+            //            ui->widgetAI2->updatePlot();
             ui->widgetAI2->replot();
         }
 
         if(this->_triggerFunctionEnable)
         {
-//            ui->widgetFunction->updatePlot();
+            //            ui->widgetFunction->updatePlot();
             ui->widgetFunction->replot();
         }
     }
@@ -179,6 +189,38 @@ void TriggerWindow::_setupSignalAndSlot()
                      this, SLOT(_received_errorWrongEquation(quint8,bool)));
 }
 
+quint8 TriggerWindow::_doubleToQuint8(double value, GlobalEnumatedAndExtern::eRangeValue range)
+{
+    qint8 minRangeValue = 0;
+    qint8 maxRangeValue = 0;
+
+    double result;
+
+    switch (range)
+    {
+    case GlobalEnumatedAndExtern::range0_24:
+        minRangeValue = minRange0;
+        maxRangeValue = maxRange0_24;
+        break;
+    case GlobalEnumatedAndExtern::range0_30:
+        minRangeValue = minRange0;
+        maxRangeValue = maxRange0_30;
+        break;
+    case GlobalEnumatedAndExtern::range15_15:
+        minRangeValue = minRange_15_15;
+        maxRangeValue = maxRange_15_15;
+        break;
+    default:
+        break;
+    }
+    result = ((value - minRangeValue)*255)/(maxRangeValue-minRangeValue);
+
+    //    qDebug() << "double value  : " << value;
+    //    qDebug() << "double result : " << minRangeValue << result;
+    quint8 resultInt = (quint8)result;
+    return resultInt;
+}
+
 void TriggerWindow::updateAllPlot()
 {
     if(this->isVisible())
@@ -199,7 +241,7 @@ void TriggerWindow::updateAllPlot()
         {
             ui->widgetDI4->updatePlot();
         }
-      if(ui->widgetAI1->isVisible())
+        if(ui->widgetAI1->isVisible())
         {
             ui->widgetAI1->updatePlot();
         }
@@ -323,11 +365,13 @@ void TriggerWindow::pushButtonEdgeDI4_changeEdge(quint8 eEdge)
 
 void TriggerWindow::pushButtonEdgeAI1_changeEdge(quint8 eEdge)
 {
+    this->_AI1TriggerRange = eEdge;
     ui->widgetTriggerSettingT->pushButtonEdgeAI1_changeEdge(eEdge);
 }
 
 void TriggerWindow::pushButtonEdgeAI2_changeEdge(quint8 eEdge)
 {
+    this->_AI2TriggerRange = eEdge;
     ui->widgetTriggerSettingT->pushButtonEdgeAI2_changeEdge(eEdge);
 }
 
@@ -353,12 +397,18 @@ void TriggerWindow::doubleSpinBoxDI4_changeValue(double value)
 
 void TriggerWindow::doubleSpinBoxAI1_changeValue(double value)
 {
+    quint8 valueInt = this->_doubleToQuint8(value, (GlobalEnumatedAndExtern::eRangeValue) this->_AI1TriggerRange);
+    this->_AI1SettingTriggerValue = valueInt;
     ui->widgetTriggerSettingT->doubleSpinBoxAI1_changeValue(value);
+    ui->widgetAI1->setSettingTriggerValue(valueInt);
 }
 
 void TriggerWindow::doubleSpinBoxAI2_changeValue(double value)
 {
+    quint8 valueInt = this->_doubleToQuint8(value, (GlobalEnumatedAndExtern::eRangeValue) this->_AI2TriggerRange);
+    this->_AI2SettingTriggerValue = valueInt;
     ui->widgetTriggerSettingT->doubleSpinBoxAI2_changeValue(value);
+    ui->widgetAI2->setSettingTriggerValue(valueInt);
 }
 
 void TriggerWindow::comboBoxTopLeft_changeCurrentIndex(quint8 index)
@@ -401,7 +451,7 @@ void TriggerWindow::addNewDataFrame(DataFrame *newDataFrame)
     //    qDebug() << objectName() << " nb frame recieved size" << newDataFrameVector.size();
     quint8 valueDI1_8 = 0;
 
-    _memoDataFrame = newDataFrame;
+    //_memoDataFrame = newDataFrame;
 
     //    for(int i = 0; i < newDataFrameVector.size(); i++)
     //    {
@@ -418,17 +468,17 @@ void TriggerWindow::addNewDataFrame(DataFrame *newDataFrame)
         ui->widgetDI4->addYValue((valueDI1_8 & 0x08) >> 3);
 
     if(ui->widgetAI1->isVisible())
-        ui->widgetAI1->addYValue(_memoDataFrame->AI1());
+        ui->widgetAI1->addYValue(newDataFrame->AI1(), _AI1SettingTriggerValue);
     if(ui->widgetAI2->isVisible())
-        ui->widgetAI2->addYValue(_memoDataFrame->AI2());
+        ui->widgetAI2->addYValue(newDataFrame->AI2(), _AI2SettingTriggerValue);
 
     if(ui->widgetFunction->isVisible())
-        ui->widgetFunction->addYValue(_memoDataFrame->TR1());
+        ui->widgetFunction->addYValue(newDataFrame->TR1());
     //    }
-    // qDebug() << objectName() << "replot";
+    //qDebug() << objectName() << "updateAllPlot";
     // updatePlot();
     // refreshPlot();
-    this->updateAllPlot();
+    // this->updateAllPlot();
 }
 
 void TriggerWindow::_recieved_pushButtonRangeAI1Changed()

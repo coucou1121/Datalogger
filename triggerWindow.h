@@ -28,7 +28,6 @@ public:
     // update the plot
     void refreshPlot();
 
-
 private:
     Ui::TriggerWindow *ui;
 
@@ -44,6 +43,16 @@ private:
 
     //trigger function enable
     bool _triggerFunctionEnable;
+
+    //trigger range
+    quint8 _AI1SettingTriggerValue;
+    quint8 _AI2SettingTriggerValue;
+
+    //trigger range
+    quint8 _AI1TriggerRange;
+    quint8 _AI2TriggerRange;
+
+    quint8 _doubleToQuint8(double value, GlobalEnumatedAndExtern::eRangeValue range);
 
     void updateAllPlot();
 

@@ -366,16 +366,6 @@ bool TriggerFunctions::onTrig(DataFrame *data)
         break;
     }
 
-    qDebug() << "A: " << valueA << ", B: " << valueB << ", C: " << valueC << ", D: " << valueD;
-
-////    onTrigA = edgeA == GlobalEnumatedAndExtern::noEdge ? valueA : this->_checkOnTrigTrace(valueA, memoValueA,
-////                                                                                          edgeA, _minValueTraceA, _maxValueTraceA, _trigValueTraceA);
-//    onTrigB = edgeB == GlobalEnumatedAndExtern::noEdge ? valueB : this->_checkOnTrigTrace(valueB, memoValueB,
-//                                                                                          edgeB,_minValueTraceB, _maxValueTraceB, _trigValueTraceB);
-//    onTrigC = edgeC == GlobalEnumatedAndExtern::noEdge ? valueC : this->_checkOnTrigTrace(valueC, memoValueC,
-//                                                                                          edgeC,_minValueTraceC, _maxValueTraceC, _trigValueTraceC);
-//    onTrigD = edgeD == GlobalEnumatedAndExtern::noEdge ? valueD : this->_checkOnTrigTrace(valueD, memoValueD,
-//                                                                                          edgeD,_minValueTraceD, _maxValueTraceD, _trigValueTraceD);
     //check on trig
     //trace A
     if(edgeA == GlobalEnumatedAndExtern::noEdge)
@@ -423,14 +413,14 @@ bool TriggerFunctions::onTrig(DataFrame *data)
     memoValueC = valueC;
     memoValueD = valueD;
 
-    qDebug() << "TRA: " << onTrigA << ", TRB: " << onTrigB << ", TRC: " << onTrigC << ", TRD: " << onTrigD;
+//    qDebug() << "TRA: " << onTrigA << ", TRB: " << onTrigB << ", TRC: " << onTrigC << ", TRD: " << onTrigD;
 
     //result of the trigger
     value = onTrigA | (onTrigB << 1) | (onTrigC << 2) | (onTrigD  << 3);
 
-    qDebug() << "value : " << value;
+//    qDebug() << "value : " << value;
 
-    qDebug() << "function number : " << _valueFunction;
+//    qDebug() << "function number : " << _valueFunction;
 
     //check if equation are true
     switch (this->_valueFunction)
@@ -718,6 +708,55 @@ bool TriggerFunctions::onTrig(DataFrame *data)
         break;
     }
 
+    //set trig AI1 and AI1 in data
+    switch (this->_traceA)
+    {
+    case (GlobalEnumatedAndExtern::btAI1):
+        data->setTR_AI1((quint8) onTrigA);
+        break;
+    case (GlobalEnumatedAndExtern::btAI2):
+        data->setTR_AI2((quint8) onTrigA);
+        break;
+    default:
+        break;
+    }
+
+    switch (this->_traceB)
+    {
+    case (GlobalEnumatedAndExtern::btAI1):
+        data->setTR_AI1((quint8) onTrigB);
+        break;
+    case (GlobalEnumatedAndExtern::btAI2):
+        data->setTR_AI2((quint8) onTrigB);
+        break;
+    default:
+        break;
+    }
+    switch (this->_traceC)
+    {
+    case (GlobalEnumatedAndExtern::btAI1):
+        data->setTR_AI1((quint8) onTrigC);
+        break;
+    case (GlobalEnumatedAndExtern::btAI2):
+        data->setTR_AI2((quint8) onTrigC);
+        break;
+    default:
+        break;
+    }
+    switch (this->_traceD)
+    {
+    case (GlobalEnumatedAndExtern::btAI1):
+        data->setTR_AI1((quint8) onTrigD);
+        break;
+    case (GlobalEnumatedAndExtern::btAI2):
+        data->setTR_AI2((quint8) onTrigD);
+        break;
+    default:
+        break;
+    }
+
+
+    //set function trigger
     data->setTR1((quint8) onTrig);
 
 //    qDebug() << "On trig : " << onTrig;

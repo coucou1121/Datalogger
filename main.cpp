@@ -10,6 +10,9 @@ int main(int argc, char *argv[])
     MainWindow mainWindow;
     mainWindow.show();
 
+//    GPIOManager gpiow;
+//    gpiow.show();
+
     mainWindow.mainSetup();
     //thread
 //    QThread *threadTick = new QThread;              // First thread

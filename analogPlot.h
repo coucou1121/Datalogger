@@ -44,12 +44,6 @@ public:
     //change title name
     void setTitleName(QString name);
 
-    //set trace color to blue
-    void setTraceColorblue();
-
-    //set trace color to green
-    void setTraceColorRed();
-
     //direction du draw
     // if true, draw left to right, mode roll on
     // if flase, draw right to left, mode trig
@@ -59,12 +53,23 @@ public:
 
     void setNbPixels(const quint16 &nbPixels);
 
+    void setSettingTriggerValue(const quint8 &settingTriggerValue);
+
 private:
     Ui::AnalogPlot *ui;
 
+    QCustomPlot *_plot;
+
+    QCPGraph *_graph1;
+
+    QCPItemStraightLine *_line;
+
     quint16 _nbPixels;
     quint64 _CPT;
+    quint64 _CPTMin;
+    quint64 _CPTMax;
     quint8 _yValue;
+    quint8 _settingTriggerValue;
     //int _minValue = 0;
 
     QColor _traceSettingColor;
@@ -85,14 +90,14 @@ private:
     void setupStyle(QCustomPlot *customPlot);
 
     //set curve style
-    void setupTrace(QCustomPlot *customPlot);
+    void setupTrace(QCPGraph *graph);
 
     //plot array pointer
     QSharedPointer<QCPGraphDataContainer> _arrayPlotContainerPointer;
 
 public slots:
     void updatePlot();
-    void addYValue(quint8 value);
+    void addYValue(quint8 valueGraph1, quint8 settingTriggerValue);
 };
 
 #endif // ANALOGPLOT_H

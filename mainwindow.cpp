@@ -36,16 +36,16 @@ MainWindow::MainWindow(QWidget *parent) :
     //create thread object
     _threadDataAnalysis(new FrameThread(false, "tick data analysis", 50)),
     _threadNewDataFrame(new FrameThread(true, "simulated data", 1000)),
-    _threadDisplayRefresh(new FrameThread(false, "refresh display", 100)),
+    _threadDisplayRefresh(new FrameThread(true, "refresh display", 100)),
 
     _threadRealTimeReading(new QThread),
     _frameThread(new FrameThread(false, "real data", 1000)),
 
     //create timer for thread
-//    _tickTimer(new RefreshTimer(false, "Tick timer", 1)),
-//    _newDataFrameTimer(new RefreshTimer(false, "Data updated timer", 200)),
-//    _refreshDisplayTimer(new RefreshTimer(true, "Refres Display timer", 100)),
-//    _getNewLiveData(new RefreshTimer(false, "Tick timer", 100)),
+    //    _tickTimer(new RefreshTimer(false, "Tick timer", 1)),
+    //    _newDataFrameTimer(new RefreshTimer(false, "Data updated timer", 200)),
+    //    _refreshDisplayTimer(new RefreshTimer(true, "Refres Display timer", 100)),
+    //    _getNewLiveData(new RefreshTimer(false, "Tick timer", 100)),
 
     //creat circular array
     _dataFrameReccorder(65536),
@@ -67,15 +67,19 @@ MainWindow::MainWindow(QWidget *parent) :
     _trigStateStep(GlobalEnumatedAndExtern::trigReady),
     _rollStateStep(GlobalEnumatedAndExtern::rollReady),
     //create the FTDI object
-//    #if LINUX
-//    _FTDIdevice(new FTDIFunction("FTDI functions")),
-//    #endif
+    //    #if LINUX
+    //    _FTDIdevice(new FTDIFunction("FTDI functions")),
+    //    #endif
     _baudRateSpeed2M(2000000),
     _baudRateSpeed9600(9600),
     _FTDI_OK(false),
 
     //set application on trig to falae
     _onTrigTrue(false),
+
+    //nombre value after trig
+    _nbValueAfterTrig(NB_FRAME_MEMORIZED),
+    _amontOfValueAfterTrig(NB_FRAME_MEMORIZED),
 
     //set application on simulation to false
     _inSimulation(false)
@@ -84,9 +88,9 @@ MainWindow::MainWindow(QWidget *parent) :
     setMinimumSize(MINIMUM_WIDTH_SIZE, MINIMUM_HEIGHT_SIZE);
 
     //move timer into the thread
-//    _tickTimer->moveToThread(_threadDataAnalysis);
-//    _newDataFrameTimer->moveToThread(_threadNewDataFrame);
-//    _refreshDisplayTimer->moveToThread(_threadDisplayRefresh);
+    //    _tickTimer->moveToThread(_threadDataAnalysis);
+    //    _newDataFrameTimer->moveToThread(_threadNewDataFrame);
+    //    _refreshDisplayTimer->moveToThread(_threadDisplayRefresh);
     //_FTDIdevice->moveToThread(_threadRealTimeReading);
     _FTDIdevice->moveToThread(_frameThread);
 
@@ -106,7 +110,7 @@ MainWindow::MainWindow(QWidget *parent) :
     //this->_threadDataAnalysis->start();
 
     //start thread for display refreshement
-    //this->_threadDisplayRefresh->start();
+    this->_threadDisplayRefresh->start();
 
     //this->_frameThread->start();
     // start thread for real time data reading
@@ -201,7 +205,7 @@ void MainWindow::mainSetup()
     //start state graph of application
     this->_mainStateGraphe();
 
-     //set the FTDI device to the debug menu
+    //set the FTDI device to the debug menu
     this->_debugWindow->setFTDIdevice(this->_FTDIdevice);
 
     //set the FTDI device to the dataFrameLiveReading
@@ -375,7 +379,7 @@ void MainWindow::startThread()
     this->_threadDisplayRefresh->start();
     //in simulation mode
     if(this->_inSimulation)
-    {     
+    {
         //start thread for simulation data
         this->_threadNewDataFrame->startWorking();
 
@@ -386,7 +390,7 @@ void MainWindow::startThread()
     {
         if(this->_FTDI_OK)
         {
-        this->_getNewLiveData->startTimer();
+            this->_getNewLiveData->startTimer();
 
         }
     }
@@ -398,7 +402,7 @@ void MainWindow::startThread()
 
 void MainWindow::stopThread()
 {
-//    _tickTimer->stopTimer();
+    //    _tickTimer->stopTimer();
 
     // if it's in roll mode
     if(this->_mainStateStep == GlobalEnumatedAndExtern::mainStateRoll)
@@ -414,15 +418,15 @@ void MainWindow::stopThread()
         //stop thread for data analysing
         this->_threadDataAnalysis->stopWorking();
         //       qDebug() << "real time thread running : " << this->_threadRealTimeReading->isRunning();
-//        _newDataFrameTimer->stopTimer();
+        //        _newDataFrameTimer->stopTimer();
         //this->_dataFrameLiveReading->stopReading();
-//        if(!this->_dataFrameLiveReading->isRunning())
-//        {
-//            this->_dataFrameLiveReading->start();
-//       }
+        //        if(!this->_dataFrameLiveReading->isRunning())
+        //        {
+        //            this->_dataFrameLiveReading->start();
+        //       }
 
- //       this->_dataFrameLiveReading->stopReading();
-//        qDebug() << "real time thread running after : " << this->_threadRealTimeReading->isRunning();
+        //       this->_dataFrameLiveReading->stopReading();
+        //        qDebug() << "real time thread running after : " << this->_threadRealTimeReading->isRunning();
 
     }
 }
@@ -437,85 +441,86 @@ void MainWindow::addNewSimulatedDataFrame()
     //wait untile the first data was creating
     int i = 0;
     this->_onTrigTrue = false;
+    static bool memoOnTrigTrue = false;
     this->_itTrace = _dataFrameTrace.begin();
-
     this->_triggerFuntion = _settingWindow->getTriggerFuntion();
 
-//    qDebug() << objectName() << "received addNewSimulatedDataFrame";
-    while(i< 5 && !_onTrigTrue)
-//    for(int i = 0; i< NB_FRAME_CREATE_AT_EVERY_TICK; i++)
+    if(!memoOnTrigTrue)
+    {
+        this->_nbValueAfterTrig = _amontOfValueAfterTrig;
+    }
 
-        //   for(QVector<DataFrame>::iterator it = _dataFrameTrace.begin(); it != _dataFrameTrace.end(); it++)
+    //    qDebug() << objectName() << "received addNewSimulatedDataFrame";
+    while(i< 5 && !_onTrigTrue)
+//    while(i< 50 && this->_nbValueAfterTrig > 0)
     {
 
-        //if to fast and arrived on the data creation pointeur
+        //if to fast and arrived on the data creation pointer
         if((int)_itConsumer != _itIntProducer)
         {
             //set the new position to frame emulator
             this->_dataFrameSimulator->setItConsumerAdress(_itConsumer);
 
             //read the circular array and put on the trace array for futur ploting
-            *_itTrace = *this->_itConsumer;           
+            *_itTrace = *this->_itConsumer;
 
-             switch (_mainStateStep)
-             {
-             case GlobalEnumatedAndExtern::mainStateRoll:
-                 //send value to the plot
-                 this->_rollWindow->addNewDataFrame(_itTrace);
-                 break;
-             case GlobalEnumatedAndExtern::mainStateTrig:
+            switch (_mainStateStep)
+            {
+            case GlobalEnumatedAndExtern::mainStateRoll:
+                //send value to the plot
+                this->_rollWindow->addNewDataFrame(_itTrace);
+                break;
+            case GlobalEnumatedAndExtern::mainStateTrig:
 
-                 //check trigger function
-                 _onTrigTrue =  this->_triggerFuntion->onTrig(_itTrace);
+                //check trigger function
+                _onTrigTrue =  this->_triggerFuntion->onTrig(_itTrace);
 
-                  if(_onTrigTrue)
-                 {
-                     _trigStateStep = GlobalEnumatedAndExtern::trigTrigged;
-                     _trigStateGraph();
-                 }
+                //change state is case of trig
+                if(_onTrigTrue && !memoOnTrigTrue)
+                {
+                   _trigStateStep = GlobalEnumatedAndExtern::trigTrigged;
+                   _trigStateGraph();
+                   memoOnTrigTrue = true;
+                }
 
-                  //send value to the plot
-                 this->_triggerWindow->addNewDataFrame(_itTrace);
-                 break;
-             default:
-                 break;
-             }
+                //decrease nomber of value after trig
+                if(memoOnTrigTrue)
+                {
+                    this->_nbValueAfterTrig = this->_nbValueAfterTrig > 0 ?
+                                this->_nbValueAfterTrig - 1 : 0;
+                    qDebug() << "rest of value :" << _nbValueAfterTrig;
+                }
+
+                //when ervery data are saved
+                if(memoOnTrigTrue && _nbValueAfterTrig == 0)
+                {
+                    //stop the reccording
+                    this->stopThread();
+
+                    //reset for next start
+                    memoOnTrigTrue = false;
+                }
+
+                //send value to the plot
+                this->_triggerWindow->addNewDataFrame(_itTrace);
+                break;
+            default:
+                break;
+            }
 
             this->_itConsumer++;
             this->_itTrace++;
             this->_itConsumer = this->_itConsumer != _dataFrameReccorder.begin()? this->_itConsumer : this->_dataFrameReccorder.begin();
             this->_itTrace = this->_itTrace != _dataFrameTrace.end() ? this->_itTrace : this->_dataFrameTrace.begin();
 
-        }       
+        }
         i++;
     }
-
-
-    //display the first 5 value of each new data
-//    for(QVector<DataFrame>::iterator it = _dataFrameTrace.begin(); it != _dataFrameTrace.begin() + 5; it++)
-//    {
-//        it->displayValue();
-//    }
-
-//    //send value to the plot
-//    switch (_mainStateStep)
-//    {
-//    case GlobalEnumatedAndExtern::mainStateRoll:
-//        this->_rollWindow->addNewDataFrame(_dataFrameTrace);
-//        break;
-//    case GlobalEnumatedAndExtern::mainStateTrig:
-//        this->_triggerWindow->addNewDataFrame(_dataFrameTrace);
-//        break;
-//    default:
-//        break;
-//    }
-//    qDebug() << objectName() << "nbValue" << _dataFrameReccorder.size();
-    //this->_triggerFuntion->displayValue();
 }
 
 void MainWindow::addNewLiveDataFrame(int itProducerAdress)
 {
- //   qDebug() << objectName() << "received addNewLiveDataFrame";
+    //   qDebug() << objectName() << "received addNewLiveDataFrame";
 
     for(int i = 0; i< NB_LIVE_READING_DATA; i++)
 
@@ -579,6 +584,11 @@ void MainWindow::_setupSignalAndSlot()
 {
     //manage the size of plot
     QObject::connect(ui->widgetPlotSetting, SIGNAL(_settingSizeOfPlotWasChanged(int)), this, SLOT(received__settingSizeOfPlotWasChanged(int)));
+
+    //manage the number of frame saved after trigger
+    QObject::connect(_settingWindow, SIGNAL(_percentPreTriggerWasChanged(quint8)),
+                     this, SLOT(received_percentPreTriggerChanged(quint8)));
+
     //manage trace in trigger menu
     QObject::connect(this->_settingWindow, SIGNAL(_addTraceInTriggerMenu(quint8)), this->_triggerWindow, SLOT(addTrace(quint8)));
     QObject::connect(this->_settingWindow, SIGNAL(_removeTraceInTriggerMenu(quint8)), this->_triggerWindow, SLOT(hideTrace(quint8)));
@@ -971,6 +981,7 @@ void MainWindow::_trigStateGraph()
     case GlobalEnumatedAndExtern::trigNotReady:
         break;
     case GlobalEnumatedAndExtern::trigReady:
+
         //change StartStopButton to Start
         this->_startStopButtonTextAndColorManager(GlobalEnumatedAndExtern::start);
 
@@ -999,7 +1010,7 @@ void MainWindow::_trigStateGraph()
         this->_startStopButtonTextAndColorManager(GlobalEnumatedAndExtern::start);
 
         //stop thread for analysing and refresh the display
-        this->stopThread();
+        //       this->stopThread();
 
         //set display state to trigged
         ui->widgetState->setDisplayState(GlobalEnumatedAndExtern::trigged);
@@ -1249,5 +1260,11 @@ void MainWindow::on_pushButton_StartStop_released()
             break;
         }
     }
-    qDebug() << objectName() << "trigger Enable" << _settingWindow->triggerFunctionEnable();
+//    qDebug() << objectName() << "trigger Enable" << _settingWindow->triggerFunctionEnable();
+}
+
+void MainWindow::received_percentPreTriggerChanged(quint8 percent)
+{
+    this->_amontOfValueAfterTrig = NB_FRAME_MEMORIZED -((NB_FRAME_MEMORIZED * percent) / 100);
+    qDebug() << "nb Frame saved after trig" << this->_amontOfValueAfterTrig;
 }

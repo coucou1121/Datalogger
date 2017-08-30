@@ -2,6 +2,7 @@
 #define SETTINGPRETRIGGERPERCENTAGE_H
 
 #include <QFrame>
+#include <QDebug>
 #include "commonStyle.h"
 
 
@@ -35,6 +36,10 @@ private:
 private slots:
     void on_spinBoxTimeBeforeTrig_valueChanged(int arg1);
     void on_spinBoxTimeAfterTrig_valueChanged(int arg1);
+
+signals:
+    void _percentPreTriggerWasChanged(quint8 percent);
+
 };
 
 #endif // SETTINGPRETRIGGERPERCENTAGE_H

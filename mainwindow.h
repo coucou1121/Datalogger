@@ -1,11 +1,12 @@
 #ifndef MAINWINDOW_H
 #define MAINWINDOW_H
 
-#define LINUX 1
+#define LINUX 0
 #define NUMBER_DOTS_ON_TRACE 400
 #define NB_FRAME_READ_EVERY_CYCLE 8
 #define INI_MESSAGE_DISPLAY 0
 #define SIZE_OF_PLOT 795
+#define NB_FRAME_MEMORIZED 200
 
 #include <QMainWindow>
 #include <QPushButton>
@@ -159,6 +160,10 @@ private:
     //check if on trig
     bool _onTrigTrue;
 
+    //number of value after trig
+    quint32 _amontOfValueAfterTrig;
+    quint32 _nbValueAfterTrig;
+
     //memorise simulation mode
     bool _inSimulation;
 
@@ -189,6 +194,7 @@ public slots:
     void refreshDisplay();
     void checkBoxEmulationModeChanged(bool checked);
     void received__settingSizeOfPlotWasChanged(int nbPixels);
+    void received_percentPreTriggerChanged(quint8 percent);
 
 private slots:
     void _btHome_released();

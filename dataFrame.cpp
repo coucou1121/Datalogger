@@ -4,7 +4,7 @@ DataFrame::DataFrame()
 {
     _msbCPT = _lsbCPT = _DI1_8 = _DI9_16 = 0;
     _AI1 = _AI2 = _AI3 = _AI4 = 0;
-    _TR1 = 0;
+    _TR1 = _TR_AI1 = _TR_AI2 = 0;
 }
 
 quint8 DataFrame::msbCPT() const
@@ -96,6 +96,26 @@ void DataFrame::displayValue()
 {
     qDebug() << "CPT" << '\t' << _msbCPT << _lsbCPT << _DI1_8 << _DI9_16
              << _AI1 << _AI2 << _AI3 << _AI4 << _TR1;
+}
+
+quint8 DataFrame::TR_AI1() const
+{
+    return _TR_AI1;
+}
+
+void DataFrame::setTR_AI1(const quint8 &TR_AI1)
+{
+    _TR_AI1 = TR_AI1;
+}
+
+quint8 DataFrame::TR_AI2() const
+{
+    return _TR_AI2;
+}
+
+void DataFrame::setTR_AI2(const quint8 &TR_AI2)
+{
+    _TR_AI2 = TR_AI2;
 }
 
 quint8 DataFrame::TR1() const

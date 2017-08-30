@@ -47,6 +47,7 @@ public slots:
     void _received_NbFrameSavedChanged(quint64 nbFrameChanged);
     void _received_SizeFrameChange(int frameSize);
     void _received_FTDIBaudrateChange(int FTDIBaudrate);
+    void _received_percentPreTriggerChanged(quint8 percent);
 
 //    void enableWindows(bool enableState);
 
@@ -78,6 +79,7 @@ public slots:
 private slots:
     void _received_AddTraceFromChannelSelection(quint8 traceNumber);
     void _received_RemoveTraceFromChannelSelection(quint8 traceNumber);
+
     void _received_errorNoSelectedTrace(quint8 errorNumber, bool active);
     void _received_errorNoSectedTriggerTrace(quint8 errorNumber,bool active);
     void _received_errorFrequencyToLow(quint8 errorNumber, bool active);
@@ -116,6 +118,8 @@ signals:
     void _nbFrameSavedChange(quint64 nbFrameChanges);
     void _sizeFrameChange(int frameSize);
     void _FTDIBaudrateChange(int FTDIBaudrate);
+    void _percentPreTriggerWasChanged(quint8 percent);
+
     void _errorNoSelectedTrace(quint8 errorNumber, bool active);
     void _errorNoSelectedTriggerTrace(quint8 errorNumber, bool active);
     void _errorFrequencyToLow(quint8 errorNumber,bool active);

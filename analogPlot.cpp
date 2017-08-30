@@ -4,11 +4,18 @@
 AnalogPlot::AnalogPlot(QWidget *parent) :
     QWidget(parent),
     ui(new Ui::AnalogPlot),
-    _CPT(0)
+    _CPT(0),
+    _CPTMin(0),
+    _CPTMax(795)
 {
     ui->setupUi(this);
-    setupStyle(ui->widget_AI);
-    setupTrace(ui->widget_AI);
+    _plot = ui->widget_AI;
+    _plot->addGraph();
+    _graph1 = _plot->graph(0);
+    //_line =  new QCPItemStraightLine(_plot->item());
+    _line = new QCPItemStraightLine(_plot);
+    setupStyle(this->_plot);
+    setupTrace(this->_graph1);
     ui->TLname_AI->setStyleSheet("background-color:" + _myStyle.getBackGroundColorBottomBar().name() + ";");
     _arrayPlotContainerPointer = ui->widget_AI->graph(0)->data();
 }
@@ -21,18 +28,6 @@ AnalogPlot::~AnalogPlot()
 void AnalogPlot::setTitleName(QString name)
 {
     ui->TLname_AI->setText(name);
-}
-
-void AnalogPlot::setTraceColorblue()
-{
-    _traceSettingColor = _myStyle.getTraceColorAnalogPlot();
-    ui->widget_AI->graph(0)->setPen(QPen(_traceSettingColor));
-}
-
-void AnalogPlot::setTraceColorRed()
-{
-    _traceSettingColor = _myStyle.getErrorLineInTrouble();
-    ui->widget_AI->graph(0)->setPen(QPen(_traceSettingColor));
 }
 
 void AnalogPlot::setDrawRightToLeft(bool drawRightToLeft)
@@ -97,63 +92,24 @@ void AnalogPlot::setupStyle(QCustomPlot *customPlot)
 
 }
 
-void AnalogPlot::setupTrace(QCustomPlot *customPlot)
+void AnalogPlot::setupTrace(QCPGraph *graph)
 {
     //trace
-    customPlot->addGraph();
- //   customPlot->graph(0)->setPen(QPen(_myStyle.getTraceColorAnalogPlot()));
-    //   customPlot->graph(0)->setBrush(QBrush(_myStyle.getTraceColorAnalogPlot()));
+    graph->setPen(QPen(_myStyle.getTraceColorAnalogPlot()));
 
-    //set color to green as default
-    this->setTraceColorblue();
-
-    //Trigger
-    customPlot->addGraph();
-    customPlot->graph(1)->setPen(QPen(_myStyle.getTraceColorDigitalPlot()));
-    //   customPlot->graph(1)->setBrush(QBrush(_myStyle.getTraceColorAnalogPlot()));
-
-    //  customPlot->addGraph(); // red line
-    //  customPlot->graph(1)->setPen(QPen(QColor(255, 110, 40)));
-
-    // make left and bottom axes transfer their ranges to right and top axes:
-    connect(customPlot->xAxis, SIGNAL(rangeChanged(QCPRange)),customPlot->xAxis2, SLOT(setRange(QCPRange)));
-    connect(customPlot->yAxis, SIGNAL(rangeChanged(QCPRange)),customPlot->yAxis2, SLOT(setRange(QCPRange)));
+    //trigger line
+    _line->setPen(QPen(_myStyle.getErrorLineInTrouble()));
 }
 
 void AnalogPlot::updatePlot()
 {
 
     // add data on th plot
-//    ui->widget_AI->graph(0)->setData(_XData , _YData);
-    ui->widget_AI->graph(0)->setData(_arrayPlotContainerPointer);
-
-    //    ui->tracePlot->graph(1)->setData(_XData , _minusYData);
-    // Now this is the tricky part, the previous part
-    // was easy and nothing new in it.
+    this->_graph1->setData(_arrayPlotContainerPointer);
 
 
-    // Set the range of the vertical and horizontal axis of the plot ( not the graph )
-    // so all the data will be centered. first we get the min and max of the x and y data
-    //    QVector<double>::iterator xMaxIt = std::max_element( _XData.begin() , _XData.end() );
-    //    QVector<double>::iterator xMinIt = std::min_element( _XData.begin() , _XData.end() );
-    //    QVector<double>::iterator yMaxIt = std::max_element( _YData.begin() , _YData.end() );
-
-
-    //    qreal yPlotMin = 0;
-    //    qreal yPlotMax = *yMaxIt;
-
-    //    qreal xPlotMin = *xMinIt;
-    //    qreal xPlotMax = *xMaxIt;
-    //        qreal xPlotMin = -1.1;
-    //        qreal xPlotMax = 1.1;
-
-    //qreal yPlotMin = 0;
-    //qreal yPlotMax = 31;
-
-
-    //ui->tracePlot->yAxis->setRange(yPlotMin , yPlotMax);
     // make key axis range scroll with the data:
-    ui->widget_AI->xAxis->setRange(_CPT, this->_nbPixels, Qt::AlignRight);
+    this->_plot->xAxis->setRange(_CPT, this->_nbPixels, Qt::AlignRight);
 
     //ui->tracePlot->yAxis->rescale();
 
@@ -161,35 +117,43 @@ void AnalogPlot::updatePlot()
     //ui->widget_AI->replot();
 }
 
-void AnalogPlot::addYValue(quint8 value)
+void AnalogPlot::addYValue(quint8 valueGraph1, quint8 settingTriggerValue)
 {
-    //qDebug() << objectName() << " Data recieved " << value;
+    qDebug() << objectName() << " Data recieved graph" << valueGraph1 << "trigger" << settingTriggerValue ;
     _CPT++;
+    _settingTriggerValue = settingTriggerValue;
 
-    _arrayPlotContainerPointer->add(QCPGraphData(_CPT, value));
- //   _XData.append(_CPT);
+    _line->point1->setCoords(0, _settingTriggerValue);
+    _line->point2->setCoords(796, _settingTriggerValue);
 
- //   _YData.append(value);
-    //   _minusYData.append(-value);
-    // int _maxValue = value > _maxValue ? value : _maxValue;
-    // int _minValue = value < _minValue ? value : _minValue;
-    //    int trigger = 80;
-    //    trigger = value < 400 ? 200 : 500;
-    // Keep the data buffers size under NB_X_VALUES_DISPLAY value each,
-    // so our memory won't explode with random numbers
-//    if( _XData.size() > AI_NB_X_VALUES_DISPLAY_LIVE){
-//        _XData.remove(0);
-//        _YData.remove(0);
-    //    _minusYData.remove(0);
-    //}
+
+    _arrayPlotContainerPointer->add(QCPGraphData(_CPT, valueGraph1));
+
+    if(_arrayPlotContainerPointer->size() > _nbPixels)
+    {
+        _CPTMin = _CPT - 796;
+        _CPTMax = _CPT - _nbPixels;
+        _arrayPlotContainerPointer->remove(_CPTMin, _CPTMax);
+        _line->point1->setCoords(_CPTMin, _settingTriggerValue);
+        _line->point2->setCoords(_CPTMax, _settingTriggerValue);
+    }
 }
 
 void AnalogPlot::replot()
 {
-    ui->widget_AI->replot();
+    this->updatePlot();
+    this->_plot->replot();
 }
 
 void AnalogPlot::setNbPixels(const quint16 &nbPixels)
 {
     _nbPixels = nbPixels;
+}
+
+void AnalogPlot::setSettingTriggerValue(const quint8 &settingTriggerValue)
+{
+    qDebug() << objectName() << " Data recieved trigger" << settingTriggerValue ;
+    _settingTriggerValue = settingTriggerValue;
+    _line->point1->setCoords(_CPTMin, _settingTriggerValue);
+    _line->point2->setCoords(_CPTMax, _settingTriggerValue);
 }

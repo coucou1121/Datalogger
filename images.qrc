@@ -12,5 +12,11 @@
         <file>images/RightFlow.png</file>
         <file>images/RightAngleFlow.png</file>
         <file>images/VLine.png</file>
+        <file>images/ledAmberOff.png</file>
+        <file>images/ledAmberOn.png</file>
+        <file>images/ledGreenOff.png</file>
+        <file>images/ledGreenOn.png</file>
+        <file>images/ledRedOff.png</file>
+        <file>images/ledRedOn.png</file>
     </qresource>
 </RCC>

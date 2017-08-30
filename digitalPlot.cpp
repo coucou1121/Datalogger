@@ -136,11 +136,18 @@ void DigitalPlot::addYValue(quint8 value)
     _CPT++;
 
     _arrayPlotContainerPointer->add(QCPGraphData(_CPT, value));
+
+    if(_arrayPlotContainerPointer->size() > _nbPixels)
+    {
+        _arrayPlotContainerPointer->remove(_CPT - 796, _CPT - _nbPixels);
+    }
 }
 
 void DigitalPlot::replot()
 {
+    this->updatePlot();
     ui->widget_DI->replot();
+//    qDebug() << objectName() << "replot";
 }
 
 void DigitalPlot::setNbPixels(const quint16 &nbPixels)

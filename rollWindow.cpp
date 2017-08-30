@@ -467,18 +467,18 @@ void RollWindow::addNewDataFrame(DataFrame *newDataFrame)
         ui->DI16->addYValue((valueDI10_18 & 0x20) >> 5);
 
         if(ui->AI1->isVisible())
-        ui->AI1->addYValue(_memoDataFrame->AI1());
+        ui->AI1->addYValue(_memoDataFrame->AI1(), _memoDataFrame->TR_AI1());
         if(ui->AI2->isVisible())
-        ui->AI2->addYValue(_memoDataFrame->AI2());
+        ui->AI2->addYValue(_memoDataFrame->AI2(), _memoDataFrame->TR_AI2());
         if(ui->AI3->isVisible())
-        ui->AI3->addYValue(_memoDataFrame->AI3());
+        ui->AI3->addYValue(_memoDataFrame->AI3(), 0);
         if(ui->AI4->isVisible())
-       ui->AI4->addYValue(_memoDataFrame->AI4());
+        ui->AI4->addYValue(_memoDataFrame->AI4(), 0);
 //    }
     // qDebug() << objectName() << "replot";
     //updatePlot();
     //this->refreshPlot();
-       this->updateAllPlot();
+    //this->updateAllPlot();
 }
 
 void RollWindow::addValueDI1_8(quint8 value)
@@ -510,25 +510,25 @@ void RollWindow::addValueDI9_16(quint8 value)
 void RollWindow::addValueAI1(quint8 value)
 {
     //qDebug() << objectName() << " Data recieved " << value;
-    ui->AI1->addYValue(value);
+ //   ui->AI1->addYValue(value);
 }
 
 void RollWindow::addValueAI2(quint8 value)
 {
     //qDebug() << objectName() << " Data recieved " << value;
-    ui->AI2->addYValue(value);
+    //ui->AI2->addYValue(value);
 }
 
 void RollWindow::addValueAI3(quint8 value)
 {
     //qDebug() << objectName() << " Data recieved " << value;
-    ui->AI3->addYValue(value);
+    //ui->AI3->addYValue(value);
 }
 
 void RollWindow::addValueAI4(quint8 value)
 {
     //qDebug() << objectName() << " Data recieved " << value;
-    ui->AI4->addYValue(value);
+    //ui->AI4->addYValue(value);
 }
 
 void RollWindow::_setAllTraceName()

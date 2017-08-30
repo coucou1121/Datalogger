@@ -37,6 +37,12 @@ public:
 
     void displayValue();
 
+    quint8 TR_AI1() const;
+    void setTR_AI1(const quint8 &TR_AI1);
+
+    quint8 TR_AI2() const;
+    void setTR_AI2(const quint8 &TR_AI2);
+
 private:
 
     //frame structure
@@ -49,6 +55,8 @@ private:
     quint8 _AI3;
     quint8 _AI4;
     quint8 _TR1;
+    quint8 _TR_AI1;
+    quint8 _TR_AI2;
 };
 
 #endif // DATAFRAME_H

@@ -29,7 +29,12 @@ SettingWindow::~SettingWindow()
 void SettingWindow::_setupSignalAndSlot()
 {
     //lock or unlock the selection in trigger setting menu
-    QObject::connect(ui->widgetChannelSelection, SIGNAL(_btSeleccted(quint8,bool)), ui->widgetTriggerSetting, SLOT(_btSelected(quint8,bool)));
+    QObject::connect(ui->widgetChannelSelection, SIGNAL(_btSeleccted(quint8,bool)),
+                     ui->widgetTriggerSetting, SLOT(_btSelected(quint8,bool)));
+
+    //manage pretrigger percetn value
+    QObject::connect(ui->widgetPreTriggerPercentage, SIGNAL(_percentPreTriggerWasChanged(quint8)),
+                     this, SLOT(_received_percentPreTriggerChanged(quint8)));
 
     //connection of all signals from setting menu to outside
     //manage range
@@ -279,6 +284,11 @@ void SettingWindow::_received_SizeFrameChange(int frameSize)
 void SettingWindow::_received_FTDIBaudrateChange(int FTDIBaudrate)
 {
     emit _FTDIBaudrateChange(FTDIBaudrate);
+}
+
+void SettingWindow::_received_percentPreTriggerChanged(quint8 percent)
+{
+    emit _percentPreTriggerWasChanged(percent);
 }
 
 //void SettingWindow::enableWindows(bool enableState)
