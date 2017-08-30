@@ -4,6 +4,7 @@
 DigitalPlot::DigitalPlot(QWidget *parent) :
     QWidget(parent),
     ui(new Ui::DigitalPlot),
+    _yValue(0),
     _CPT(0)
 {
     ui->setupUi(this);
@@ -125,14 +126,15 @@ void DigitalPlot::updatePlot()
 void DigitalPlot::addYValue(quint8 value)
 {
     //qDebug() << objectName() << " Datas recieved " << value;
-    if(value)
-    {
-        ui->TLname_DI->setStyleSheet("background-color:" + this->_traceSettingColor.name() + ";");
-    }
-    else
-    {
-        ui->TLname_DI->setStyleSheet("background-color:" + _myStyle.getBackGroundColorBottomBar().name() + ";");
-    }
+    _yValue = value;
+//    if(value)
+//    {
+//        ui->TLname_DI->setStyleSheet("background-color:" + this->_traceSettingColor.name() + ";");
+//    }
+//    else
+//    {
+//        ui->TLname_DI->setStyleSheet("background-color:" + _myStyle.getBackGroundColorBottomBar().name() + ";");
+//    }
     _CPT++;
 
     _arrayPlotContainerPointer->add(QCPGraphData(_CPT, value));
@@ -145,6 +147,14 @@ void DigitalPlot::addYValue(quint8 value)
 
 void DigitalPlot::replot()
 {
+        if(_yValue)
+        {
+            ui->TLname_DI->setStyleSheet("background-color:" + this->_traceSettingColor.name() + ";");
+        }
+        else
+        {
+            ui->TLname_DI->setStyleSheet("background-color:" + _myStyle.getBackGroundColorBottomBar().name() + ";");
+        }
     this->updatePlot();
     ui->widget_DI->replot();
 //    qDebug() << objectName() << "replot";

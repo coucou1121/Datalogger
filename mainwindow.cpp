@@ -34,7 +34,7 @@ MainWindow::MainWindow(QWidget *parent) :
     _FTDIdevice(new FTDIFunction("FTDI device")),
 
     //create thread object
-    _threadDataAnalysis(new FrameThread(false, "tick data analysis", 50)),
+    _threadDataAnalysis(new FrameThread(false, "tick data analysis", 10)),
     _threadNewDataFrame(new FrameThread(true, "simulated data", 1000)),
     _threadDisplayRefresh(new FrameThread(true, "refresh display", 100)),
 
@@ -451,7 +451,7 @@ void MainWindow::addNewSimulatedDataFrame()
     }
 
     //    qDebug() << objectName() << "received addNewSimulatedDataFrame";
-    while(i< 5 && !_onTrigTrue)
+    while(i< 1 && !_onTrigTrue)
 //    while(i< 50 && this->_nbValueAfterTrig > 0)
     {
 

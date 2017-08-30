@@ -413,7 +413,7 @@ bool TriggerFunctions::onTrig(DataFrame *data)
     memoValueC = valueC;
     memoValueD = valueD;
 
-//    qDebug() << "TRA: " << onTrigA << ", TRB: " << onTrigB << ", TRC: " << onTrigC << ", TRD: " << onTrigD;
+    qDebug() << "TRA: " << onTrigA << ", TRB: " << onTrigB << ", TRC: " << onTrigC << ", TRD: " << onTrigD;
 
     //result of the trigger
     value = onTrigA | (onTrigB << 1) | (onTrigC << 2) | (onTrigD  << 3);

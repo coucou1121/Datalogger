@@ -119,7 +119,7 @@ void AnalogPlot::updatePlot()
 
 void AnalogPlot::addYValue(quint8 valueGraph1, quint8 settingTriggerValue)
 {
-    qDebug() << objectName() << " Data recieved graph" << valueGraph1 << "trigger" << settingTriggerValue ;
+//    qDebug() << objectName() << " Data recieved graph" << valueGraph1 << "trigger" << settingTriggerValue ;
     _CPT++;
     _settingTriggerValue = settingTriggerValue;
 
@@ -142,7 +142,8 @@ void AnalogPlot::addYValue(quint8 valueGraph1, quint8 settingTriggerValue)
 void AnalogPlot::replot()
 {
     this->updatePlot();
-    this->_plot->replot();
+//    this->_plot->replot();
+    this->_graph1->layer()->replot();
 }
 
 void AnalogPlot::setNbPixels(const quint16 &nbPixels)
@@ -152,7 +153,7 @@ void AnalogPlot::setNbPixels(const quint16 &nbPixels)
 
 void AnalogPlot::setSettingTriggerValue(const quint8 &settingTriggerValue)
 {
-    qDebug() << objectName() << " Data recieved trigger" << settingTriggerValue ;
+//    qDebug() << objectName() << " Data recieved trigger" << settingTriggerValue ;
     _settingTriggerValue = settingTriggerValue;
     _line->point1->setCoords(_CPTMin, _settingTriggerValue);
     _line->point2->setCoords(_CPTMax, _settingTriggerValue);
