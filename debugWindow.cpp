@@ -27,20 +27,20 @@ void DebugWindow::setBaudRateFTDI(const quint32 &baudRateFTDI)
     ui->lineEditBaudrate->setText(QString::number(baudRateFTDI));
 }
 
-void DebugWindow::setFTDIdevice(FTDIFunction *FTDIdevice)
-{
-    _FTDIdevice = FTDIdevice;
-}
+//void DebugWindow::setFTDIdevice(FTDIFunction *FTDIdevice)
+//{
+//    _FTDIdevice = FTDIdevice;
+//}
 
 void DebugWindow::receivedNewData(DataFrame *newDataFrame)
 {
 
 }
 
-bool DebugWindow::_FTDIDeviceFound()
-{
-    return ((bool)this->_FTDIdevice->numDevs());
-}
+//bool DebugWindow::_FTDIDeviceFound()
+//{
+//    return ((bool)this->_FTDIdevice->numDevs());
+//}
 
 //#if LINUX
 
@@ -76,24 +76,24 @@ void DebugWindow::_addTextInLabel(QString text)
     ui->textEditDebug->append(text);
 }
 
-void DebugWindow::_FTDIReadInfo()
-{
-    //display device information
-    if(this->_FTDIDeviceFound())
-    {
-        this->_addTextInLabel("number of device : " + QString::number(this->_FTDIdevice->numDevs()));
-        this->_addTextInLabel("Flags = \t0x" + QString::number(this->_FTDIdevice->Flags()));
-        this->_addTextInLabel("Type  = \t0x" + QString::number(this->_FTDIdevice->Type()));
-        this->_addTextInLabel("ID    = \t0x" + QString::number(this->_FTDIdevice->ID()));
-        this->_addTextInLabel("LocId = \t0x" + QString::number(this->_FTDIdevice->LocId()));
-        this->_addTextInLabel("SerialNumber\t: " + (QString)this->_FTDIdevice->SerialNumber());
-        this->_addTextInLabel("Description\t: " + (QString)this->_FTDIdevice->Description());
-    }
-    else
-    {
-        this->_addTextInLabel("Device FTDI not found");
-    }
-}
+//void DebugWindow::_FTDIReadInfo()
+//{
+//    //display device information
+//    if(this->_FTDIDeviceFound())
+//    {
+//        this->_addTextInLabel("number of device : " + QString::number(this->_FTDIdevice->numDevs()));
+//        this->_addTextInLabel("Flags = \t0x" + QString::number(this->_FTDIdevice->Flags()));
+//        this->_addTextInLabel("Type  = \t0x" + QString::number(this->_FTDIdevice->Type()));
+//        this->_addTextInLabel("ID    = \t0x" + QString::number(this->_FTDIdevice->ID()));
+//        this->_addTextInLabel("LocId = \t0x" + QString::number(this->_FTDIdevice->LocId()));
+//        this->_addTextInLabel("SerialNumber\t: " + (QString)this->_FTDIdevice->SerialNumber());
+//        this->_addTextInLabel("Description\t: " + (QString)this->_FTDIdevice->Description());
+//    }
+//    else
+//    {
+//        this->_addTextInLabel("Device FTDI not found");
+//    }
+//}
 //#endif
 
 void DebugWindow::setNbSavedFrame(quint64 nbSavedFrame)
@@ -125,7 +125,7 @@ void DebugWindow::on_lineEditBaudrate_textChanged(const QString &arg1)
 
 void DebugWindow::on_pushButtonFTDIInfo_released()
 {
-    this->_FTDIReadInfo();
+ //   this->_FTDIReadInfo();
 }
 
 void DebugWindow::on_pushButtonSendStart_released()
@@ -149,34 +149,34 @@ void DebugWindow::on_pushButtonSendChar_released()
 {
     int dataToWrite = (int)ui->doubleSpinBoxFTDICharToSend->value();
 
-    //display device information
-    if(this->_FTDIDeviceFound())
-    {
-        //write data
-        this->_FTDIdevice->writeDataOneChar(&dataToWrite);
+//    //display device information
+//    if(this->_FTDIDeviceFound())
+//    {
+//        //write data
+//        this->_FTDIdevice->writeDataOneChar(&dataToWrite);
 
-        //check if ok
-        if(this->_FTDIdevice->ftStatus() == FT_OK)
-        {
-            this->_addTextInLabel("Write char 0x"
-                                  + QString::number(dataToWrite, 10) + ", "
-                                  + _FTDIReturnMessagePossibleTxt[dataToWrite]);
+//        //check if ok
+//        if(this->_FTDIdevice->ftStatus() == FT_OK)
+//        {
+//            this->_addTextInLabel("Write char 0x"
+//                                  + QString::number(dataToWrite, 10) + ", "
+//                                  + _FTDIReturnMessagePossibleTxt[dataToWrite]);
 
-            //read the ack
-            dataToWrite = this->_FTDIdevice->readDataOneChar(1);
-            this->_addTextInLabel("Write char 0x"
-                                  + QString::number(dataToWrite, 10) + ", "
-                                  + _FTDIReturnMessagePossibleTxt[dataToWrite]);
-        }
-        else
-        {
-            this->_addTextInLabel("Write error");
-        }
-    }
-    else
-    {
-        this->_addTextInLabel("Device FTDI not found");
-    }
+//            //read the ack
+//            dataToWrite = this->_FTDIdevice->readDataOneChar(1);
+//            this->_addTextInLabel("Write char 0x"
+//                                  + QString::number(dataToWrite, 10) + ", "
+//                                  + _FTDIReturnMessagePossibleTxt[dataToWrite]);
+//        }
+//        else
+//        {
+//            this->_addTextInLabel("Write error");
+//        }
+//    }
+//    else
+//    {
+//        this->_addTextInLabel("Device FTDI not found");
+//    }
 }
 
 void DebugWindow::on_pushButtonFTDIStartReadData_released()
@@ -184,15 +184,15 @@ void DebugWindow::on_pushButtonFTDIStartReadData_released()
     int dataToWrite = (int)GlobalEnumatedAndExtern::transmissionEnquiry;
 //    int dataReceived = 0;
 
-    if(this->_FTDIDeviceFound())
-    {
-        this->_addTextInLabel("Start reading...");
-        _FTDIdevice->liveReading(&dataToWrite);
-    }
-    else
-    {
-        this->_addTextInLabel("Device FTDI not found");
-    }
+//    if(this->_FTDIDeviceFound())
+//    {
+//        this->_addTextInLabel("Start reading...");
+//        _FTDIdevice->liveReading(&dataToWrite);
+//    }
+//    else
+//    {
+//        this->_addTextInLabel("Device FTDI not found");
+//    }
 
 }
 
@@ -200,15 +200,15 @@ void DebugWindow::on_pushButtonFTDIStopReadData_released()
 {
     quint8 dataRecieved = 0;
 
-    if(this->_FTDIDeviceFound())
-    {
-        this->_addTextInLabel("Send stop...");
-        dataRecieved = this->_FTDIdevice->sendStop();
-    }
-    else
-    {
-        this->_addTextInLabel("Device FTDI not found");
-    }
+//    if(this->_FTDIDeviceFound())
+//    {
+//        this->_addTextInLabel("Send stop...");
+//        dataRecieved = this->_FTDIdevice->sendStop();
+//    }
+//    else
+//    {
+//        this->_addTextInLabel("Device FTDI not found");
+//    }
 }
 
 void DebugWindow::on_pushButtonCleanText_released()

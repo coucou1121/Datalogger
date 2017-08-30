@@ -4,11 +4,9 @@
 #include <QFrame>
 #include <QDebug>
 #include <QTextBlock>
-#include "FTDIFunction.h"
+//#include "FTDIFunction.h"
 #include "globalEnumatedAndExtern.h"
 #include "dataFrame.h"
-
-#define LINUX 1
 
 namespace Ui {
 class DebugWindow;
@@ -26,8 +24,8 @@ public:
     void setNbSavedFrame(quint64 nbSavedFrame);
     void setFrameSize(int frameSize);
     void setBaudRateFTDI(const quint32 &baudRateFTDI);
-    void setFTDI_Device(FTDIFunction *FTDI_Device);
-    void setFTDIdevice(FTDIFunction *FTDIdevice);
+//    void setFTDI_Device(FTDIFunction *FTDI_Device);
+//    void setFTDIdevice(FTDIFunction *FTDIdevice);
 
     //received data
     void receivedNewData(DataFrame *newDataFrame);
@@ -39,19 +37,19 @@ private:
     int _frameSize;
     quint32 _baudRateFTDI;
 
-    FTDIFunction *_FTDI_Device;
+//    FTDIFunction *_FTDI_Device;
 
     //create the FTDI object
-    FTDIFunction *_FTDIdevice;
+//    FTDIFunction *_FTDIdevice;
 
     //creat message possible
     QMap<int, QString> _FTDIReturnMessagePossibleTxt;
 
     //check if FTDI device was found
-    bool _FTDIDeviceFound();
+//    bool _FTDIDeviceFound();
 
     //read FTDI device info and display in text windows on debug menu
-    void _FTDIReadInfo();
+//    void _FTDIReadInfo();
 
     //add text in text widget on debug windows
     void _addTextInLabel(QString text);

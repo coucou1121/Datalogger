@@ -26,13 +26,13 @@
 #include "dataFrameSimulator.h"
 #include "triggerWindow.h"
 #include "triggerFunctions.h"
-#include "dataFrameLiveReading.h"
+//#include "dataFrameLiveReading.h"
 #include "frameThread.h"
 
-//#if LINUX
+#if LINUX
 #include "FTDI/ftd2xx.h"
 #include "FTDIFunction.h"
-//#endif
+#endif
 
 namespace Ui {
 
@@ -168,12 +168,12 @@ private:
     bool _inSimulation;
 
     //FTDI connection
-//#if LINUX
+#if LINUX
     FTDIFunction *_FTDIdevice;
-//#endif
+#endif
     quint32 _baudRateSpeed2M;
     quint16 _baudRateSpeed9600;
-//#if LINUX
+#if LINUX
     //FTDI management
     bool _FTDIconnection();
     bool _FTDI_OK;
@@ -182,7 +182,7 @@ private:
     //realtime reading
     DataFrameLiveReading *_dataFrameLiveReading;
 
-//#endif
+#endif
 
 public slots:
     void changeStateStartStopButton(int state);

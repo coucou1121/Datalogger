@@ -37,8 +37,8 @@ SOURCES += main.cpp\
     homeWindow.cpp \
     rollWindow.cpp \
     initWindow.cpp \
-    FTDIFunction.cpp \
-    dataFrameLiveReading.cpp \
+#    FTDIFunction.cpp \
+#   dataFrameLiveReading.cpp \
     plotSetting.cpp
 
 HEADERS  += mainwindow.h \
@@ -67,9 +67,9 @@ HEADERS  += mainwindow.h \
     homeWindow.h \
     rollWindow.h \
     initWindow.h \
-    FTDIFunction.h \
-    FTDI/ftd2xx.h \
-    dataFrameLiveReading.h \
+#    FTDIFunction.h \
+#    FTDI/ftd2xx.h \
+ #   dataFrameLiveReading.h \
     plotSetting.h
 
 FORMS    += mainwindow.ui \
@@ -96,13 +96,14 @@ RESOURCES += \
     images.qrc
 
 
-OTHER_FILES +=  -L/usr/local/lib/libftd2xx.a \
-                lib/libftd2xx.so.1.3.6 \
-/usr/lib/arm-linux-gnueabihf/libEGL.so.1
+# OTHER_FILES +=  -L/usr/local/lib/libftd2xx.a \
+#                lib/libftd2xx.so.1.3.6 \
+# /usr/lib/arm-linux-gnueabihf/libEGL.so.1
 
-LIBS += -L/usr/local/lib -lftd2xx
+# LIBS += -L/usr/local/lib -lftd2xx
 
-unix|win32: LIBS += -L$$PWD/D2XX_Driver/i386/ -lftd2xx
 
-INCLUDEPATH += $$PWD/D2XX_Driver/i386
-DEPENDPATH += $$PWD/D2XX_Driver/i386
+# unix|win32: LIBS += -L$$PWD/FTDI/i386/ -lftd2xx
+
+# INCLUDEPATH += $$PWD/FTDI/i386
+# DEPENDPATH += $$PWD/FTDI/i386
