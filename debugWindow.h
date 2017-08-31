@@ -28,7 +28,7 @@ public:
 //    void setFTDIdevice(FTDIFunction *FTDIdevice);
 
     //received data
-    void receivedNewData(DataFrame *newDataFrame);
+//    void receivedNewData(DataFrame *newDataFrame);
 
 private:
     Ui::DebugWindow *ui;

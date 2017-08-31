@@ -32,10 +32,10 @@ void DebugWindow::setBaudRateFTDI(const quint32 &baudRateFTDI)
 //    _FTDIdevice = FTDIdevice;
 //}
 
-void DebugWindow::receivedNewData(DataFrame *newDataFrame)
-{
+//void DebugWindow::receivedNewData(DataFrame *newDataFrame)
+//{
 
-}
+//}
 
 //bool DebugWindow::_FTDIDeviceFound()
 //{
@@ -147,7 +147,7 @@ void DebugWindow::on_checkBoxEmulationMode_toggled(bool checked)
 
 void DebugWindow::on_pushButtonSendChar_released()
 {
-    int dataToWrite = (int)ui->doubleSpinBoxFTDICharToSend->value();
+//    int dataToWrite = (int)ui->doubleSpinBoxFTDICharToSend->value();
 
 //    //display device information
 //    if(this->_FTDIDeviceFound())
@@ -181,7 +181,7 @@ void DebugWindow::on_pushButtonSendChar_released()
 
 void DebugWindow::on_pushButtonFTDIStartReadData_released()
 {
-    int dataToWrite = (int)GlobalEnumatedAndExtern::transmissionEnquiry;
+//    int dataToWrite = (int)GlobalEnumatedAndExtern::transmissionEnquiry;
 //    int dataReceived = 0;
 
 //    if(this->_FTDIDeviceFound())
@@ -198,7 +198,7 @@ void DebugWindow::on_pushButtonFTDIStartReadData_released()
 
 void DebugWindow::on_pushButtonFTDIStopReadData_released()
 {
-    quint8 dataRecieved = 0;
+//    quint8 dataRecieved = 0;
 
 //    if(this->_FTDIDeviceFound())
 //    {

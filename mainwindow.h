@@ -1,10 +1,10 @@
 #ifndef MAINWINDOW_H
 #define MAINWINDOW_H
 
-#define LINUX 0
+#define LINUX 1
 #define NUMBER_DOTS_ON_TRACE 400
 #define NB_FRAME_READ_EVERY_CYCLE 8
-#define INI_MESSAGE_DISPLAY 0
+#define INI_MESSAGE_DISPLAY 1
 #define SIZE_OF_PLOT 795
 #define NB_FRAME_MEMORIZED 200
 
@@ -26,7 +26,7 @@
 #include "dataFrameSimulator.h"
 #include "triggerWindow.h"
 #include "triggerFunctions.h"
-//#include "dataFrameLiveReading.h"
+#include "dataFrameLiveReading.h"
 #include "frameThread.h"
 
 #if LINUX

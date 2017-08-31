@@ -128,29 +128,29 @@ QMap<int, QString> GlobalEnumatedAndExtern::initMainStateDisplayPossibleTxt()
 extern QMap<int, QString> TriggerTracePossible = GlobalEnumatedAndExtern::initTriggerTracePossible();
 
 //externe variable
-extern QString BPMenuHomeTxt = "Home";
-extern QString BPMenuSetTxt = "Set";
-extern QString BPMenuTrigTxt = "Trig";
-extern QString BPMenuRollTxt = "Roll";
-extern QString BPMenuDebugTxt = "Debug";
+ QString BPMenuHomeTxt = "Home";
+ QString BPMenuSetTxt = "Set";
+ QString BPMenuTrigTxt = "Trig";
+ QString BPMenuRollTxt = "Roll";
+ QString BPMenuDebugTxt = "Debug";
 
-extern QString BPStartStopStateStartTxt = "Start";
-extern QString BPStartStopStateStopTxt = "Stop";
-extern QString BPStartStopStateHoldTxt = "Hold";
+ QString BPStartStopStateStartTxt = "Start";
+ QString BPStartStopStateStopTxt = "Stop";
+ QString BPStartStopStateHoldTxt = "Hold";
 
-extern QString range0_24Txt = "0/24";
-extern QString range0_30Txt = "0/30";
-extern QString range15_15Txt = "-15/+15";
+ QString range0_24Txt = "0/24";
+ QString range0_30Txt = "0/30";
+ QString range15_15Txt = "-15/+15";
 
-extern qint8 minRange0 = 0;
-extern qint8 maxRange0_24 = 24;
-extern qint8 maxRange0_30 = 30;
-extern qint8 minRange_15_15 = -15;
-extern qint8 maxRange_15_15 = 15;
+ qint8 minRange0 = 0;
+ qint8 maxRange0_24 = 24;
+ qint8 maxRange0_30 = 30;
+ qint8 minRange_15_15 = -15;
+ qint8 maxRange_15_15 = 15;
 
-extern QString opNoneTxt = "NONE";
-extern QString opOrTxt = "OR";
-extern QString opAndTxt = "AND";
-extern QString opNotOrTxt = "OR NOT";
-extern QString opNoTAndTxt = "AND NOT";
+ QString opNoneTxt = "NONE";
+ QString opOrTxt = "OR";
+ QString opAndTxt = "AND";
+ QString opNotOrTxt = "OR NOT";
+ QString opNoTAndTxt = "AND NOT";
 

@@ -30,8 +30,8 @@ MainWindow::MainWindow(QWidget *parent) :
     //create the data frame for realtime reading
 //    _dataFrameLiveReading(new DataFrameLiveReading("data live reading", NB_FRAME_READ_EVERY_CYCLE)),
 
-    //creat FTDI device
-    //_FTDIdevice(new FTDIFunction("FTDI device")),
+    //create FTDI device
+    _FTDIdevice(new FTDIFunction("FTDI device")),
 
     //create thread object
     _threadDataAnalysis(new FrameThread(false, "tick data analysis", 10)),
@@ -68,7 +68,7 @@ MainWindow::MainWindow(QWidget *parent) :
     _rollStateStep(GlobalEnumatedAndExtern::rollReady),
     //create the FTDI object
         #if LINUX
-        _FTDIdevice(new FTDIFunction("FTDI functions")),
+    //    _FTDIdevice(new FTDIFunction("FTDI functions")),
         #endif
     _baudRateSpeed2M(2000000),
     _baudRateSpeed9600(9600),
@@ -95,7 +95,7 @@ MainWindow::MainWindow(QWidget *parent) :
 //    _FTDIdevice->moveToThread(_frameThread);
 
     //key - value for FTDI state possible
-//    _FTDIStatePossibleTXT = GlobalEnumatedAndExtern::initFTDIStatePossibleTXT();
+    _FTDIStatePossibleTXT = GlobalEnumatedAndExtern::initFTDIStatePossibleTXT();
 
     //setup signal and slot
     this->_setupSignalAndSlot();
@@ -818,7 +818,7 @@ void MainWindow::_mainStateGraphe()
         _initWindow->addTextInLabel("\n Starting up application...");
 #if LINUX
         //set the device in debug windows
-        _debugWindow->setFTDIdevice(this->_FTDIdevice);
+        //_debugWindow->setFTDIdevice(this->_FTDIdevice);
         //if all init passed
 #endif
         this->_waitDelay(1);
