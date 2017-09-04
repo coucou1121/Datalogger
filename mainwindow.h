@@ -6,7 +6,7 @@
 #define NB_FRAME_READ_EVERY_CYCLE 8
 #define INI_MESSAGE_DISPLAY 1
 #define SIZE_OF_PLOT 795
-#define NB_FRAME_MEMORIZED 200
+#define NB_FRAME_MEMORIZED SIZE_OF_PLOT
 
 #include <QMainWindow>
 #include <QPushButton>
@@ -92,7 +92,7 @@ private:
     void _hideAllWindows();
 
     //Style
-    CommonStyle _myStyle;
+//    CommonStyle _myStyle;
 
     //widget for status bar
     QWidget *_widgetStatusBar;
@@ -193,7 +193,7 @@ public slots:
     void addNewLiveDataFrame(int itProducerAdress);
     void refreshDisplay();
     void checkBoxEmulationModeChanged(bool checked);
-    void received__settingSizeOfPlotWasChanged(int nbPixels);
+    void received_settingSizeOfPlotWasChanged(int nbPixels);
     void received_percentPreTriggerChanged(quint8 percent);
 
 private slots:

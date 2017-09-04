@@ -24,6 +24,8 @@ public:
     //change range selection
     void pushButtonRangeAI1_ChangeRange();
     void pushButtonRangeAI2_ChangeRange();
+    void pushButtonRangeAI3_ChangeRange();
+    void pushButtonRangeAI4_ChangeRange();
 
     //change edge selection
     void pushButtonEdgeDI1_changeEdge(quint8 eEdge);
@@ -50,6 +52,9 @@ public:
     GlobalEnumatedAndExtern::eRangeValue rangeAI2() const;
     GlobalEnumatedAndExtern::eRangeValue rangeAI3() const;
     GlobalEnumatedAndExtern::eRangeValue rangeAI4() const;
+
+    double triggerValueAI1() const;
+    double triggerValueAI2() const;
 
 private:
     Ui::SettingTriggerSetting *ui;
@@ -102,6 +107,10 @@ private:
      //set range and text in trace setting button and doubleSpinBox
      void setRangeAndTextTrace(GlobalEnumatedAndExtern::eTracePossible trace, GlobalEnumatedAndExtern::eRangeValue range);
 
+     //trigger value
+     double _triggerValueAI1;
+     double _triggerValueAI2;
+
      //double to int converter
      quint8 _doubleToQuint8(double value, GlobalEnumatedAndExtern::eRangeValue range);
 
@@ -135,6 +144,12 @@ private slots:
 signals:
     void _pushButtonRangeAI1WasChanged();
     void _pushButtonRangeAI2WasChanged();
+    void _pushButtonRangeAI3WasChanged();
+    void _pushButtonRangeAI4WasChanged();
+    void _pushButtonRangeAI1TXTWasChanged(QString rangeTxt);
+    void _pushButtonRangeAI2TXTWasChanged(QString rangeTxt);
+    void _pushButtonRangeAI3TXTWasChanged(QString rangeTxt);
+    void _pushButtonRangeAI4TXTWasChanged(QString rangeTxt);
 
     void _pushButtonEdgeDI1WasChanged(quint8 eEdge);
     void _pushButtonEdgeDI2WasChanged(quint8 eEdge);

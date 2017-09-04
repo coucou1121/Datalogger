@@ -20,15 +20,20 @@ void ErrorMessage::_setColor(bool inTrouble)
 {
     if(inTrouble)
     {
+        CommonStyle::setErrorColor(ui->label);
+        CommonStyle::setErrorColor(ui->line);
+
         //setup sample / second frame
-        ui->label->setStyleSheet("background-color:" + _myStyle.getBackGroundColorErrorFrame().name()+ ";");
-        ui->line->setStyleSheet("background-color:" + _myStyle.getErrorLineInTrouble().name()+ ";");
+ //       ui->label->setStyleSheet("background-color:" + _myStyle.getBackGroundColorErrorFrame().name()+ ";");
+ //       ui->line->setStyleSheet("background-color:" + _myStyle.getErrorLineInTrouble().name()+ ";");
     }
     else
     {
         //setup sample / second frame
-        ui->label->setStyleSheet("background-color:" + _myStyle.getBackGroundColor().name()+ ";");
-        ui->line->setStyleSheet("background-color:" + _myStyle.getBackGroundColorBottomBar().name()+ ";");
+        CommonStyle::setBackGroundColor(ui->label);
+        CommonStyle::setbackGroundColorFrame(ui->line);
+        //ui->label->setStyleSheet("background-color:" + _myStyle.getBackGroundColor().name()+ ";");
+ //       ui->line->setStyleSheet("background-color:" + _myStyle.getBackGroundColorBottomBar().name()+ ";");
     }
 }
 

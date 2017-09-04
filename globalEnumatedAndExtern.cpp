@@ -138,9 +138,9 @@ extern QMap<int, QString> TriggerTracePossible = GlobalEnumatedAndExtern::initTr
  QString BPStartStopStateStopTxt = "Stop";
  QString BPStartStopStateHoldTxt = "Hold";
 
- QString range0_24Txt = "0/24";
- QString range0_30Txt = "0/30";
- QString range15_15Txt = "-15/+15";
+ QString range0_24Txt = "0-24";
+ QString range0_30Txt = "0-30";
+ QString range15_15Txt = QString::fromUtf8("\u00B1 15");
 
  qint8 minRange0 = 0;
  qint8 maxRange0_24 = 24;
@@ -148,7 +148,7 @@ extern QMap<int, QString> TriggerTracePossible = GlobalEnumatedAndExtern::initTr
  qint8 minRange_15_15 = -15;
  qint8 maxRange_15_15 = 15;
 
- QString opNoneTxt = "NONE";
+ QString opNoneTxt = "none";
  QString opOrTxt = "OR";
  QString opAndTxt = "AND";
  QString opNotOrTxt = "OR NOT";

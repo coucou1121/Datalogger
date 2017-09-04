@@ -63,7 +63,10 @@ public slots:
     void hideTrace(quint8 enumTrace);
 
     void addNewDataFrame(DataFrame *newDataFrame);
-
+    void setRangePlotAI1(QString rangeTXT);
+    void setRangePlotAI2(QString rangeTXT);
+    void setRangePlotAI3(QString rangeTXT);
+    void setRangePlotAI4(QString rangeTXT);
 
 };
 

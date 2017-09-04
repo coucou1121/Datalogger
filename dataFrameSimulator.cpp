@@ -88,20 +88,22 @@ void DataFrameSimulator::setDataFrameVectorReccorder(QVector<DataFrame> *dataFra
 
 void DataFrameSimulator::createDataFrame()
 {
+    static quint64 CPT = 0;
     //    qDebug() << objectName() << "received " << "createDataFrame";
-    timerElapse.restart();
+    //timerElapse.restart();
     //int itProducteurAdress = (int)&(_itProducer);
     quint16 i = 0;
 //    qDebug() << objectName();
 //    qDebug() << "adress Cosumer  : " << _itConsumerAdress;
 //    qDebug() << "adress Producer : " << _itProducer;
 //    qDebug() << "adress Producer : " << (int)_itProducer;
+    while(_itConsumerAdress != _itProducer && i<NB_FRAME_CREATE_AT_EVERY_TICK)
 
-    for(i=0; i<NB_FRAME_CREATE_AT_EVERY_TICK; i++)
+ //   for(i=0; i<NB_FRAME_CREATE_AT_EVERY_TICK; i++)
     {
         //if data creation arrive on reading thread
         //stop for the rest of creation and wait the next tick
-         if(_itConsumerAdress != _itProducer)
+//         if(_itConsumerAdress != _itProducer)
          {
              _incValue();
              *this->_itProducer = *this->_dataFrame;
@@ -120,12 +122,14 @@ void DataFrameSimulator::createDataFrame()
 //            it->displayValue();
 //        }
  //       qDebug() << (int)&(*_itProducer);
-
+    i++;
     }
     emit dataFrameWasSent((int)this->_itProducer);
-
+    CPT += i;
     //qDebug() << "createDataFrame took" << timerElapse.nsecsElapsed()/1000 << "micro oseconds" << " for " << i << " values.";
     //    emit dataFrameWasSent(_dataFrameVector);
     //    qDebug() << objectName() << "newDataFrameSent size : " << _dataFrameVector.size();
 //    _dataFrameVector.clear();
+    qDebug() << objectName() << CPT;
+
 }

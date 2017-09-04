@@ -1,6 +1,10 @@
 #include "rollWindow.h"
 #include "ui_rollWindow.h"
 
+extern QString range0_24Txt;
+extern QString range0_30Txt;
+extern QString range15_15Txt;
+
 RollWindow::RollWindow(QWidget *parent) :
     QWidget(parent),
     ui(new Ui::RollWindow),
@@ -274,6 +278,7 @@ void RollWindow::updateAllPlot()
         //timerElapse.restart();
     }
 }
+
 void RollWindow::addTrace(quint8 enumTrace)
 {
     qDebug() << objectName() << "recieved " << "_addTrace : " << enumTrace;
@@ -413,12 +418,6 @@ void RollWindow::hideTrace(quint8 enumTrace)
     }
 }
 
-//void RollWindow::setupStyle()
-//{
-//    _palette.setColor(backgroundRole(), _myStyle.getBackGroundColor());
-//    this->setPalette(_palette);
-//}
-
 void RollWindow::addNewDataFrame(DataFrame *newDataFrame)
 {
     //    qDebug() << objectName() << " nb frame recieved size" << newDataFrameVector.size();
@@ -478,7 +477,27 @@ void RollWindow::addNewDataFrame(DataFrame *newDataFrame)
     // qDebug() << objectName() << "replot";
     //updatePlot();
     //this->refreshPlot();
-    //this->updateAllPlot();
+        //this->updateAllPlot();
+}
+
+void RollWindow::setRangePlotAI1(QString rangeTXT)
+{
+    ui->AI1->setRangeName(rangeTXT);
+}
+
+void RollWindow::setRangePlotAI2(QString rangeTXT)
+{
+    ui->AI2->setRangeName(rangeTXT);
+}
+
+void RollWindow::setRangePlotAI3(QString rangeTXT)
+{
+    ui->AI3->setRangeName(rangeTXT);
+}
+
+void RollWindow::setRangePlotAI4(QString rangeTXT)
+{
+    ui->AI4->setRangeName(rangeTXT);
 }
 
 void RollWindow::addValueDI1_8(quint8 value)
@@ -555,7 +574,10 @@ void RollWindow::_setAllTraceName()
     ui->AI3->setTitleName(TriggerTracePossible[GlobalEnumatedAndExtern::btAI3]);
     ui->AI4->setTitleName(TriggerTracePossible[GlobalEnumatedAndExtern::btAI4]);
 
-
+    ui->AI1->setRangeName(range0_30Txt);
+    ui->AI2->setRangeName(range0_30Txt);
+    ui->AI3->setRangeName(range0_30Txt);
+    ui->AI4->setRangeName(range0_30Txt);
 }
 
 void RollWindow::_hideAllTrace()

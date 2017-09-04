@@ -26,11 +26,13 @@ void FrameThread::sleep(unsigned long secs)
 
 void FrameThread::startWorking()
 {
+    qDebug() << objectName() << "received start Working";
     this->_isWorking = true;
 }
 
 void FrameThread::stopWorking()
 {
+    qDebug() << objectName() << "received stop Working";
     this->_isWorking = false;
 }
 
@@ -41,14 +43,19 @@ void FrameThread::run()
 
     while(true)
     {
+
+ //       qDebug() << objectName() << thread()->currentThreadId() << cpt << "is working : " << this->_isWorking;
         if(_isWorking)
         {
             cpt++;
-//            qDebug() << objectName() << thread()->currentThreadId() << cpt;
             //    _frame.displayValue();
             emit delayFinished();
-            this->msleep(_delay);
         }
+        else
+        {
+
+        }
+        this->msleep(_delay);
     }
 
 }

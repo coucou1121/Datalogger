@@ -13,7 +13,7 @@ SettingWindow::SettingWindow(QWidget *parent) :
 {
     ui->setupUi(this);
     this->_setupSignalAndSlot();
-//    this->enableWindows(true);
+    //    this->enableWindows(true);
 
     _triggerFunctionEnable = false;
 
@@ -42,6 +42,20 @@ void SettingWindow::_setupSignalAndSlot()
                      this, SLOT(_received_pushButtonRangeAI1Changed()));
     QObject::connect(ui->widgetTriggerSetting, SIGNAL(_pushButtonRangeAI2WasChanged()),
                      this, SLOT(_received_pushButtonRangeAI2Changed()));
+    QObject::connect(ui->widgetTriggerSetting, SIGNAL(_pushButtonRangeAI3WasChanged()),
+                     this, SLOT(_received_pushButtonRangeAI3Changed()));
+    QObject::connect(ui->widgetTriggerSetting, SIGNAL(_pushButtonRangeAI4WasChanged()),
+                     this, SLOT(_received_pushButtonRangeAI4Changed()));
+
+    //manage range txt
+    QObject::connect(ui->widgetTriggerSetting, SIGNAL(_pushButtonRangeAI1TXTWasChanged(QString)),
+                     this, SLOT(_received_pushButtonRangeAI1TXTWasChanged(QString)));
+    QObject::connect(ui->widgetTriggerSetting, SIGNAL(_pushButtonRangeAI2TXTWasChanged(QString)),
+                     this, SLOT(_received_pushButtonRangeAI2TXTWasChanged(QString)));
+    QObject::connect(ui->widgetTriggerSetting, SIGNAL(_pushButtonRangeAI3TXTWasChanged(QString)),
+                     this, SLOT(_received_pushButtonRangeAI3TXTWasChanged(QString)));
+    QObject::connect(ui->widgetTriggerSetting, SIGNAL(_pushButtonRangeAI4TXTWasChanged(QString)),
+                     this, SLOT(_received_pushButtonRangeAI4TXTWasChanged(QString)));
 
     //manage eEdge
     QObject::connect(ui->widgetTriggerSetting, SIGNAL(_pushButtonEdgeDI1WasChanged(quint8)),
@@ -144,9 +158,9 @@ quint8 SettingWindow::doubleToQint8(double value, GlobalEnumatedAndExtern::eRang
     }
 
     double result = value;
-//    qDebug() << "double value : " << result;
+    //    qDebug() << "double value : " << result;
     quint8 resultInt = (quint8)result;
-//    qDebug() << "int value : " << resultInt;
+    //    qDebug() << "int value : " << resultInt;
 
     return resultInt;
 }
@@ -176,7 +190,7 @@ TriggerFunctions *SettingWindow::getTriggerFuntion()
     this->_triggerFunction->setDoubleSpinBoxAI1(_triggerSetting->doubleSpinBoxAI1());
     this->_triggerFunction->setDoubleSpinBoxAI2(_triggerSetting->doubleSpinBoxAI2());
 
- //   qDebug() << objectName() << "AI2 : " << _triggerSetting->doubleSpinBoxAI2();
+    //   qDebug() << objectName() << "AI2 : " << _triggerSetting->doubleSpinBoxAI2();
     return this->_triggerFunction;
 }
 
@@ -213,12 +227,12 @@ void SettingWindow::_received_RemoveTraceFromChannelSelection(quint8 traceNumber
 
 void SettingWindow::_received_errorNoSelectedTrace(quint8 errorNumber, bool active)
 {
-   emit _errorNoSelectedTrace(errorNumber, active);
+    emit _errorNoSelectedTrace(errorNumber, active);
 }
 
 void SettingWindow::_received_errorNoSectedTriggerTrace(quint8 errorNumber, bool active)
 {
-   emit _errorNoSelectedTriggerTrace(errorNumber, active);
+    emit _errorNoSelectedTriggerTrace(errorNumber, active);
 }
 
 void SettingWindow::_received_errorFrequencyToLow(quint8 errorNumber, bool active)
@@ -239,6 +253,36 @@ void SettingWindow::_received_pushButtonRangeAI1Changed()
 void SettingWindow::_received_pushButtonRangeAI2Changed()
 {
     emit _pushButtonRangeAI2WasChangedFromSettingMenu();
+}
+
+void SettingWindow::_received_pushButtonRangeAI3Changed()
+{
+
+}
+
+void SettingWindow::_received_pushButtonRangeAI4Changed()
+{
+
+}
+
+void SettingWindow::_received_pushButtonRangeAI1TXTWasChanged(QString rangeTXT)
+{
+    emit _pushButtonRangeTXTAI1WasChanged(rangeTXT);
+}
+
+void SettingWindow::_received_pushButtonRangeAI2TXTWasChanged(QString rangeTXT)
+{
+    emit _pushButtonRangeTXTAI2WasChanged(rangeTXT);
+}
+
+void SettingWindow::_received_pushButtonRangeAI3TXTWasChanged(QString rangeTXT)
+{
+    emit _pushButtonRangeTXTAI3WasChanged(rangeTXT);
+}
+
+void SettingWindow::_received_pushButtonRangeAI4TXTWasChanged(QString rangeTXT)
+{
+    emit _pushButtonRangeTXTAI4WasChanged(rangeTXT);
 }
 
 void SettingWindow::_received_pushButtonEdgeDI1Changed(quint8 eEdge)
@@ -305,6 +349,16 @@ void SettingWindow::pushButtonRangeAI1_changeRange()
 void SettingWindow::pushButtonRangeAI2_changeRange()
 {
     ui->widgetTriggerSetting->pushButtonRangeAI2_ChangeRange();
+}
+
+void SettingWindow::pushButtonRangeAI3_changeRange()
+{
+    ui->widgetTriggerSetting->pushButtonRangeAI3_ChangeRange();
+}
+
+void SettingWindow::pushButtonRangeAI4_changeRange()
+{
+    ui->widgetTriggerSetting->pushButtonRangeAI4_ChangeRange();
 }
 
 void SettingWindow::pushButtonEdgeDI1_changeEdge(quint8 eEdge)

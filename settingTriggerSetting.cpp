@@ -42,8 +42,7 @@ SettingTriggerSetting::SettingTriggerSetting(QWidget *parent) :
 
 void SettingTriggerSetting::setupStyle()
 {
-    ui->labelTitleTriggerSetting->setStyleSheet("background-color:" + _myStyle.getBackGroundColorButtonStatusbarSelected().name() +
-                                                "; color:" + _myStyle.getBackGroundColorButtonStatusbarUnselected().name() + ";");
+    CommonStyle::setbackGroundColorLabel(ui->labelTitleTriggerSetting);
 
     //set label text
     ui->labelDI1->setText(_triggerTracePossible[GlobalEnumatedAndExtern::btDI1]);
@@ -75,20 +74,20 @@ void SettingTriggerSetting::setupStyle()
     this->_rangeAI4 = GlobalEnumatedAndExtern::range0_30;
 
     //set backgroud of all buttom
-    _myStyle.setPushButtonUnselected(ui->pushButtonRangeDI1);
-    _myStyle.setPushButtonUnselected(ui->pushButtonRangeDI2);
-    _myStyle.setPushButtonUnselected(ui->pushButtonRangeDI3);
-    _myStyle.setPushButtonUnselected(ui->pushButtonRangeDI4);
-    _myStyle.setPushButtonUnselected(ui->pushButtonRangeAI1);
-    _myStyle.setPushButtonUnselected(ui->pushButtonRangeAI2);
-    _myStyle.setPushButtonUnselected(ui->pushButtonRangeAI3);
-    _myStyle.setPushButtonUnselected(ui->pushButtonRangeAI4);
-    _myStyle.setPushButtonUnselected(ui->pushButtonEdgeDI1);
-    _myStyle.setPushButtonUnselected(ui->pushButtonEdgeDI2);
-    _myStyle.setPushButtonUnselected(ui->pushButtonEdgeDI3);
-    _myStyle.setPushButtonUnselected(ui->pushButtonEdgeDI4);
-    _myStyle.setPushButtonUnselected(ui->pushButtonEdgeAI1);
-    _myStyle.setPushButtonUnselected(ui->pushButtonEdgeAI2);
+    CommonStyle::setPushButtonBlocked(ui->pushButtonRangeDI1);
+    CommonStyle::setPushButtonBlocked(ui->pushButtonRangeDI2);
+    CommonStyle::setPushButtonBlocked(ui->pushButtonRangeDI3);
+    CommonStyle::setPushButtonBlocked(ui->pushButtonRangeDI4);
+    CommonStyle::setPushButtonBlocked(ui->pushButtonRangeAI1);
+    CommonStyle::setPushButtonBlocked(ui->pushButtonRangeAI2);
+    CommonStyle::setPushButtonBlocked(ui->pushButtonRangeAI3);
+    CommonStyle::setPushButtonBlocked(ui->pushButtonRangeAI4);
+    CommonStyle::setPushButtonBlocked(ui->pushButtonEdgeDI1);
+    CommonStyle::setPushButtonBlocked(ui->pushButtonEdgeDI2);
+    CommonStyle::setPushButtonBlocked(ui->pushButtonEdgeDI3);
+    CommonStyle::setPushButtonBlocked(ui->pushButtonEdgeDI4);
+    CommonStyle::setPushButtonBlocked(ui->pushButtonEdgeAI1);
+    CommonStyle::setPushButtonBlocked(ui->pushButtonEdgeAI2);
 
     //set default edge value
     _btDI1Edge = GlobalEnumatedAndExtern::risingEdge;
@@ -155,7 +154,11 @@ void SettingTriggerSetting::on_pushButtonRangeAI1_released()
     //configur widget
     setRangeAndTextTrace(GlobalEnumatedAndExtern::btAI1, selection);
 
+    //memorise the range
+    this->_rangeAI1 = selection;
+
     emit _pushButtonRangeAI1WasChanged();
+    emit _pushButtonRangeAI1TXTWasChanged(ui->pushButtonRangeAI1->text());
 }
 
 void SettingTriggerSetting::on_pushButtonRangeAI2_released()
@@ -165,9 +168,11 @@ void SettingTriggerSetting::on_pushButtonRangeAI2_released()
     //swap range
     selection = ui->pushButtonRangeAI2->text() == range0_30Txt ? GlobalEnumatedAndExtern::range15_15 : GlobalEnumatedAndExtern::range0_30;
 
-    //configur widget
+    //configure widget
     setRangeAndTextTrace(GlobalEnumatedAndExtern::btAI2, selection);
+
     emit _pushButtonRangeAI2WasChanged();
+    emit _pushButtonRangeAI2TXTWasChanged(ui->pushButtonRangeAI2->text());
 }
 
 void SettingTriggerSetting::on_pushButtonRangeAI3_released()
@@ -179,6 +184,9 @@ void SettingTriggerSetting::on_pushButtonRangeAI3_released()
 
     //configur widget
     setRangeAndTextTrace(GlobalEnumatedAndExtern::btAI3, selection);
+
+    emit _pushButtonRangeAI3WasChanged();
+    emit _pushButtonRangeAI3TXTWasChanged(ui->pushButtonRangeAI3->text());
 }
 
 void SettingTriggerSetting::on_pushButtonRangeAI4_released()
@@ -190,6 +198,9 @@ void SettingTriggerSetting::on_pushButtonRangeAI4_released()
 
     //configur widget
     setRangeAndTextTrace(GlobalEnumatedAndExtern::btAI4, selection);
+
+    emit _pushButtonRangeAI4WasChanged();
+    emit _pushButtonRangeAI4TXTWasChanged(ui->pushButtonRangeAI4->text());
 }
 
 void SettingTriggerSetting::on_pushButtonEdgeDI1_released()
@@ -326,13 +337,13 @@ void SettingTriggerSetting::_DI1select(bool btselected)
 
     if(btselected)
     {
-        _myStyle.setPushButtonUnselected(ui->pushButtonRangeDI1);
-        _myStyle.setPushButtonUnselected(ui->pushButtonEdgeDI1);
+        CommonStyle::setBackGroundColor(ui->pushButtonRangeDI1);
+        CommonStyle::setBackGroundColor(ui->pushButtonEdgeDI1);
     }
     else
     {
-        _myStyle.setPushButtonBlocked(ui->pushButtonRangeDI1);
-        _myStyle.setPushButtonBlocked(ui->pushButtonEdgeDI1);
+        CommonStyle::setPushButtonBlocked(ui->pushButtonRangeDI1);
+        CommonStyle::setPushButtonBlocked(ui->pushButtonEdgeDI1);
     }
 }
 
@@ -344,13 +355,13 @@ void SettingTriggerSetting::_DI2select(bool btselected)
 
     if(btselected)
     {
-        _myStyle.setPushButtonUnselected(ui->pushButtonRangeDI2);
-        _myStyle.setPushButtonUnselected(ui->pushButtonEdgeDI2);
+        CommonStyle::setBackGroundColor(ui->pushButtonRangeDI2);
+        CommonStyle::setBackGroundColor(ui->pushButtonEdgeDI2);
     }
     else
     {
-        _myStyle.setPushButtonBlocked(ui->pushButtonRangeDI2);
-        _myStyle.setPushButtonBlocked(ui->pushButtonEdgeDI2);
+        CommonStyle::setPushButtonBlocked(ui->pushButtonRangeDI2);
+        CommonStyle::setPushButtonBlocked(ui->pushButtonEdgeDI2);
     }
 }
 
@@ -362,13 +373,13 @@ void SettingTriggerSetting::_DI3select(bool btselected)
 
     if(btselected)
     {
-        _myStyle.setPushButtonUnselected(ui->pushButtonRangeDI3);
-        _myStyle.setPushButtonUnselected(ui->pushButtonEdgeDI3);
+        CommonStyle::setBackGroundColor(ui->pushButtonRangeDI3);
+        CommonStyle::setBackGroundColor(ui->pushButtonEdgeDI3);
     }
     else
     {
-        _myStyle.setPushButtonBlocked(ui->pushButtonRangeDI3);
-        _myStyle.setPushButtonBlocked(ui->pushButtonEdgeDI3);
+        CommonStyle::setPushButtonBlocked(ui->pushButtonRangeDI3);
+        CommonStyle::setPushButtonBlocked(ui->pushButtonEdgeDI3);
     }
 }
 
@@ -380,13 +391,13 @@ void SettingTriggerSetting::_DI4select(bool btselected)
 
     if(btselected)
     {
-        _myStyle.setPushButtonUnselected(ui->pushButtonRangeDI4);
-        _myStyle.setPushButtonUnselected(ui->pushButtonEdgeDI4);
+        CommonStyle::setBackGroundColor(ui->pushButtonRangeDI4);
+        CommonStyle::setBackGroundColor(ui->pushButtonEdgeDI4);
     }
     else
     {
-        _myStyle.setPushButtonBlocked(ui->pushButtonRangeDI4);
-        _myStyle.setPushButtonBlocked(ui->pushButtonEdgeDI4);
+        CommonStyle::setPushButtonBlocked(ui->pushButtonRangeDI4);
+        CommonStyle::setPushButtonBlocked(ui->pushButtonEdgeDI4);
     }
 }
 
@@ -398,13 +409,13 @@ void SettingTriggerSetting::_AI1select(bool btselected)
 
     if(btselected)
     {
-        _myStyle.setPushButtonUnselected(ui->pushButtonRangeAI1);
-        _myStyle.setPushButtonUnselected(ui->pushButtonEdgeAI1);
+        CommonStyle::setBackGroundColor(ui->pushButtonRangeAI1);
+        CommonStyle::setBackGroundColor(ui->pushButtonEdgeAI1);
     }
     else
     {
-        _myStyle.setPushButtonBlocked(ui->pushButtonRangeAI1);
-        _myStyle.setPushButtonBlocked(ui->pushButtonEdgeAI1);
+        CommonStyle::setPushButtonBlocked(ui->pushButtonRangeAI1);
+        CommonStyle::setPushButtonBlocked(ui->pushButtonEdgeAI1);
     }
 }
 
@@ -416,13 +427,13 @@ void SettingTriggerSetting::_AI2select(bool btselected)
 
     if(btselected)
     {
-        _myStyle.setPushButtonUnselected(ui->pushButtonRangeAI2);
-        _myStyle.setPushButtonUnselected(ui->pushButtonEdgeAI2);
+        CommonStyle::setBackGroundColor(ui->pushButtonRangeAI2);
+        CommonStyle::setBackGroundColor(ui->pushButtonEdgeAI2);
     }
     else
     {
-        _myStyle.setPushButtonBlocked(ui->pushButtonRangeAI2);
-        _myStyle.setPushButtonBlocked(ui->pushButtonEdgeAI2);
+        CommonStyle::setPushButtonBlocked(ui->pushButtonRangeAI2);
+        CommonStyle::setPushButtonBlocked(ui->pushButtonEdgeAI2);
     }
 }
 
@@ -432,11 +443,11 @@ void SettingTriggerSetting::_AI3select(bool btselected)
 
     if(btselected)
     {
-        _myStyle.setPushButtonUnselected(ui->pushButtonRangeAI3);
+        CommonStyle::setBackGroundColor(ui->pushButtonRangeAI3);
     }
     else
     {
-        _myStyle.setPushButtonBlocked(ui->pushButtonRangeAI3);
+        CommonStyle::setPushButtonBlocked(ui->pushButtonRangeAI3);
     }
 }
 
@@ -446,11 +457,11 @@ void SettingTriggerSetting::_AI4select(bool btselected)
 
     if(btselected)
     {
-        _myStyle.setPushButtonUnselected(ui->pushButtonRangeAI4);
+        CommonStyle::setBackGroundColor(ui->pushButtonRangeAI4);
     }
     else
     {
-        _myStyle.setPushButtonBlocked(ui->pushButtonRangeAI4);
+        CommonStyle::setPushButtonBlocked(ui->pushButtonRangeAI4);
     }
 }
 
@@ -534,6 +545,16 @@ void SettingTriggerSetting::setRangeAndTextTrace(GlobalEnumatedAndExtern::eTrace
     default:
         break;
     }
+}
+
+double SettingTriggerSetting::triggerValueAI2() const
+{
+    return _triggerValueAI2;
+}
+
+double SettingTriggerSetting::triggerValueAI1() const
+{
+    return _triggerValueAI1;
 }
 
 quint8 SettingTriggerSetting::_doubleToQuint8(double value, GlobalEnumatedAndExtern::eRangeValue range)
@@ -654,6 +675,24 @@ void SettingTriggerSetting::pushButtonRangeAI2_ChangeRange()
     setRangeAndTextTrace(GlobalEnumatedAndExtern::btAI2, selection);
 }
 
+void SettingTriggerSetting::pushButtonRangeAI3_ChangeRange()
+{
+    GlobalEnumatedAndExtern::eRangeValue selection;
+
+    //swap the range
+    selection = ui->pushButtonRangeAI3->text() == range0_30Txt ? GlobalEnumatedAndExtern::range15_15 : GlobalEnumatedAndExtern::range0_30;
+    setRangeAndTextTrace(GlobalEnumatedAndExtern::btAI3, selection);
+}
+
+void SettingTriggerSetting::pushButtonRangeAI4_ChangeRange()
+{
+    GlobalEnumatedAndExtern::eRangeValue selection;
+
+    //swap the range
+    selection = ui->pushButtonRangeAI4->text() == range0_30Txt ? GlobalEnumatedAndExtern::range15_15 : GlobalEnumatedAndExtern::range0_30;
+    setRangeAndTextTrace(GlobalEnumatedAndExtern::btAI4, selection);
+}
+
 void SettingTriggerSetting::pushButtonEdgeDI1_changeEdge(quint8 eEdge)
 {
     _btDI1Edge = (GlobalEnumatedAndExtern::eEdge)eEdge;
@@ -723,12 +762,14 @@ void SettingTriggerSetting::doubleSpinBoxDI4_changeValue(double value)
 void SettingTriggerSetting::doubleSpinBoxAI1_changeValue(double value)
 {
     this->_triggerSetting->setDoubleSpinBoxAI1(_doubleToQuint8(value, _rangeAI1));
+    this->_triggerValueAI1 = ui->doubleSpinBoxAI1->value();
     ui->doubleSpinBoxAI1->setValue(value);
 }
 
 void SettingTriggerSetting::doubleSpinBoxAI2_changeValue(double value)
 {
     this->_triggerSetting->setDoubleSpinBoxAI2(_doubleToQuint8(value, _rangeAI2));
+    this->_triggerValueAI2 = ui->doubleSpinBoxAI2->value();
     ui->doubleSpinBoxAI2->setValue(value);
 }
 

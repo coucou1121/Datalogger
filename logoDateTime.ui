@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>162</width>
-    <height>88</height>
+    <width>164</width>
+    <height>100</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -26,12 +26,24 @@
    <property name="bottomMargin">
     <number>0</number>
    </property>
+   <property name="spacing">
+    <number>2</number>
+   </property>
    <item row="0" column="0">
     <widget class="QFrame" name="mainFrame">
      <property name="frameShape">
       <enum>QFrame::Panel</enum>
      </property>
      <layout class="QVBoxLayout" name="verticalLayout">
+      <property name="leftMargin">
+       <number>7</number>
+      </property>
+      <property name="topMargin">
+       <number>11</number>
+      </property>
+      <property name="rightMargin">
+       <number>7</number>
+      </property>
       <item>
        <widget class="QLabel" name="labelLeftTop">
         <property name="sizePolicy">
@@ -76,10 +88,17 @@
           <pointsize>10</pointsize>
           <weight>50</weight>
           <bold>false</bold>
+          <kerning>false</kerning>
          </font>
+        </property>
+        <property name="lineWidth">
+         <number>0</number>
         </property>
         <property name="text">
          <string>unknow</string>
+        </property>
+        <property name="scaledContents">
+         <bool>true</bool>
         </property>
         <property name="alignment">
          <set>Qt::AlignCenter</set>

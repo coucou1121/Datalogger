@@ -12,11 +12,10 @@ AnalogPlot::AnalogPlot(QWidget *parent) :
     _plot = ui->widget_AI;
     _plot->addGraph();
     _graph1 = _plot->graph(0);
-    //_line =  new QCPItemStraightLine(_plot->item());
     _line = new QCPItemStraightLine(_plot);
     setupStyle(this->_plot);
     setupTrace(this->_graph1);
-    ui->TLname_AI->setStyleSheet("background-color:" + _myStyle.getBackGroundColorBottomBar().name() + ";");
+    CommonStyle::setbackGroundColorFrame(ui->frame);
     _arrayPlotContainerPointer = ui->widget_AI->graph(0)->data();
 }
 
@@ -27,64 +26,31 @@ AnalogPlot::~AnalogPlot()
 
 void AnalogPlot::setTitleName(QString name)
 {
-    ui->TLname_AI->setText(name);
+    ui->labelNameAI->setText(name);
+}
+
+void AnalogPlot::setRangeName(QString name)
+{
+    ui->labelRangeAI->setText(name + "[V]");
 }
 
 void AnalogPlot::setDrawRightToLeft(bool drawRightToLeft)
 {
-    ui->widget_AI->xAxis->setRangeReversed(drawRightToLeft);
+    ui->widget_AI->xAxis->setRangeReversed(!drawRightToLeft);
 }
 
 void AnalogPlot::setupStyle(QCustomPlot *customPlot)
 {
 
     //back ground Color behing the plot
-    customPlot->setBackground(_myStyle.getBackGroundColor());
+    CommonStyle::setBackGroundColor(customPlot);
 
     //back ground color of the plot
-    customPlot->axisRect()->setBackground(_myStyle.getBackGroundColorAnalogPlot());
-
-    //set margin
-    customPlot->axisRect()->setAutoMargins(QCP::msNone);
+    CommonStyle::setBackGroundColorPlot(customPlot->axisRect());
 
     //Set the axis color and line type
-    customPlot->xAxis->setBasePen(QPen(_myStyle.getAxisColorAnalogPlot(), 1));
-    customPlot->yAxis->setBasePen(QPen(_myStyle.getAxisColorAnalogPlot(), 1));
-    customPlot->xAxis->setTickPen(QPen(_myStyle.getAxisTickColorAnalogPlot(), 1));
-    customPlot->yAxis->setTickPen(QPen(_myStyle.getAxisTickColorAnalogPlot(), 1));
-    customPlot->xAxis->setSubTickPen(QPen(_myStyle.getAxisSubTickColorAnalogPlot(), 1));
-    customPlot->yAxis->setSubTickPen(QPen(_myStyle.getAxisSubTickColorAnalogPlot(), 1));
-    customPlot->xAxis->setTickLabelColor(_myStyle.getAxisTickLabelColorAnalogPlot());
-    customPlot->yAxis->setTickLabelColor(_myStyle.getAxisTickLabelColorAnalogPlot());
-    customPlot->xAxis->setTicks(true);
-    customPlot->yAxis->setTicks(true);
-    customPlot->xAxis->setSubTicks(true);
-    customPlot->xAxis->setTickLabels(false);
-    customPlot->yAxis->setTickLabels(false);
-
-
-    //Set the grid plot color and line type
-    customPlot->xAxis->grid()->setVisible(false);
-    customPlot->yAxis->grid()->setVisible(false);
-    customPlot->xAxis->grid()->setSubGridVisible(true);
-    customPlot->yAxis->grid()->setSubGridVisible(true);
-    customPlot->xAxis->grid()->setSubGridPen(QPen(_myStyle.getGridColorAnalogPlot(), 1, Qt::DotLine));
-    customPlot->yAxis->grid()->setSubGridPen(QPen(_myStyle.getGridColorAnalogPlot(), 1, Qt::DotLine));
-
-    //Set the axis grid color and line type
-    customPlot->xAxis->grid()->setPen(QPen(_myStyle.getAxisGridColorAnalogPlot(), 1, Qt::DotLine));
-    customPlot->yAxis->grid()->setPen(QPen(_myStyle.getAxisGridColorAnalogPlot(), 1, Qt::DotLine));
-
-
-    //y Axis color and line type
-    customPlot->xAxis->grid()->setZeroLinePen(Qt::NoPen);
-    customPlot->yAxis->grid()->setZeroLinePen(Qt::NoPen);
-    //    customPlot->xAxis->setUpperEnding(QCPLineEnding::esSpikeArrow);
-    //    customPlot->yAxis->setUpperEnding(QCPLineEnding::esSpikeArrow);
-
-
-    //rescale the axis
-    customPlot->rescaleAxes();
+    CommonStyle::setStylePlot(customPlot);
+    CommonStyle::setbackGroundColorLabelPlotSmall(ui->labelRangeAI);
 
     //set the axis range
     customPlot->xAxis->setRange(0, this->_nbPixels);
@@ -95,10 +61,12 @@ void AnalogPlot::setupStyle(QCustomPlot *customPlot)
 void AnalogPlot::setupTrace(QCPGraph *graph)
 {
     //trace
-    graph->setPen(QPen(_myStyle.getTraceColorAnalogPlot()));
+    CommonStyle::setTraceColorAnalogPlot(graph);
+ //graph   graph->setPen(QPen(_myStyle.getTraceColorAnalogPlot()));
 
     //trigger line
-    _line->setPen(QPen(_myStyle.getErrorLineInTrouble()));
+    CommonStyle::setTraceColorTriggerPlot(_line);
+    //_line->setPen(QPen(_myStyle.getErrorLineInTrouble()));
 }
 
 void AnalogPlot::updatePlot()
@@ -121,6 +89,7 @@ void AnalogPlot::addYValue(quint8 valueGraph1, quint8 settingTriggerValue)
 {
 //    qDebug() << objectName() << " Data recieved graph" << valueGraph1 << "trigger" << settingTriggerValue ;
     _CPT++;
+//    _CPT = _CPT > 5000 ? 0 : _CPT;
     _settingTriggerValue = settingTriggerValue;
 
     _line->point1->setCoords(0, _settingTriggerValue);
@@ -137,12 +106,12 @@ void AnalogPlot::addYValue(quint8 valueGraph1, quint8 settingTriggerValue)
         _line->point1->setCoords(_CPTMin, _settingTriggerValue);
         _line->point2->setCoords(_CPTMax, _settingTriggerValue);
     }
+    qDebug() << objectName() << "CPT: " << _CPT;
 }
 
 void AnalogPlot::replot()
 {
     this->updatePlot();
-//    this->_plot->replot();
     this->_graph1->layer()->replot();
 }
 

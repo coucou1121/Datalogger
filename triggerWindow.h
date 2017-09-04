@@ -51,6 +51,8 @@ private:
     //trigger range
     quint8 _AI1TriggerRange;
     quint8 _AI2TriggerRange;
+    quint8 _AI3TriggerRange;
+    quint8 _AI4TriggerRange;
 
     quint8 _doubleToQuint8(double value, GlobalEnumatedAndExtern::eRangeValue range);
 
@@ -62,13 +64,15 @@ public slots:
 
     void pushButtonRangeAI1_changeRange();
     void pushButtonRangeAI2_changeRange();
+    void pushButtonRangeAI3_changeRange();
+    void pushButtonRangeAI4_changeRange();
 
     void pushButtonEdgeDI1_changeEdge(quint8 eEdge);
     void pushButtonEdgeDI2_changeEdge(quint8 eEdge);
     void pushButtonEdgeDI3_changeEdge(quint8 eEdge);
     void pushButtonEdgeDI4_changeEdge(quint8 eEdge);
-    void pushButtonEdgeAI1_changeEdge(quint8 eEdge);
-    void pushButtonEdgeAI2_changeEdge(quint8 eEdge);
+    void pushButtonEdgeAI1_changeEdge(quint8 eRange);
+    void pushButtonEdgeAI2_changeEdge(quint8 eRange);
 
     void doubleSpinBoxDI1_changeValue(double value);
     void doubleSpinBoxDI2_changeValue(double value);
@@ -90,7 +94,10 @@ public slots:
 private slots:
     void _recieved_pushButtonRangeAI1Changed();
     void _recieved_pushButtonRangeAI2Changed();
-
+    void _received_pushButtonRangeAI1TXTWasChanged(QString rangeTXT);
+    void _received_pushButtonRangeAI2TXTWasChanged(QString rangeTXT);
+    void _received_pushButtonRangeAI3TXTWasChanged(QString rangeTXT);
+    void _received_pushButtonRangeAI4TXTWasChanged(QString rangeTXT);
     void _recieved_pushButtonEdgeDI1Changed(quint8 eEdge);
     void _recieved_pushButtonEdgeDI2Changed(quint8 eEdge);
     void _recieved_pushButtonEdgeDI3Changed(quint8 eEdge);
@@ -118,6 +125,12 @@ private slots:
 signals:
     void _pushButtonRangeAI1WasChanged();
     void _pushButtonRangeAI2WasChanged();
+    void _pushButtonRangeAI3WasChanged();
+    void _pushButtonRangeAI4WasChanged();
+    void _pushButtonRangeTXTAI1WasChanged(QString rangeTXT);
+    void _pushButtonRangeTXTAI2WasChanged(QString rangeTXT);
+    void _pushButtonRangeTXTAI3WasChanged(QString rangeTXT);
+    void _pushButtonRangeTXTAI4WasChanged(QString rangeTXT);
 
     void _pushButtonEdgeDI1WasChanged(quint8 eEdge);
     void _pushButtonEdgeDI2WasChanged(quint8 eEdge);

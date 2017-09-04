@@ -105,8 +105,7 @@ void SettingTriggerFunction::comboBoxBottomMiddle_changeCurrentIndex(quint8 inde
 
 void SettingTriggerFunction::_setupStyle()
 {
-    ui->labelTitleTriggerFunction->setStyleSheet("background-color:" + _myStyle.getBackGroundColorButtonStatusbarSelected().name() +
-                                                 "; color:" + _myStyle.getBackGroundColorButtonStatusbarUnselected().name() + ";");
+    CommonStyle::setbackGroundColorLabel(ui->labelTitleTriggerFunction);
 }
 
 void SettingTriggerFunction::_setupTraceCombobox()

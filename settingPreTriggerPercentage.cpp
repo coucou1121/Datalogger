@@ -35,16 +35,15 @@ SettingPreTriggerPercentage::~SettingPreTriggerPercentage()
 void SettingPreTriggerPercentage::setupStyle()
 {
     //setup style main title
-    ui->labelTitlePreTriggerPercentage->setStyleSheet("background-color:" + _myStyle.getBackGroundColorButtonStatusbarSelected().name() +
-                                                      "; color:" + _myStyle.getBackGroundColorButtonStatusbarUnselected().name() + ";");
+    CommonStyle::setbackGroundColorLabel(ui->labelTitlePreTriggerPercentage);
 
     //setup style Time befor and after trig title
-    ui->labelTimeBeforTrigTitle->setStyleSheet("background-color:" + _myStyle.getBackGroundColorButtonStatusbarUnselected().name()+ ";");
-    ui->labelTimeAfterTrigTitle->setStyleSheet("background-color:" + _myStyle.getBackGroundColorButtonStatusbarUnselected().name()+ ";");
+    CommonStyle::setbackGroundColorLabelPlot(ui->labelTimeBeforTrigTitle);
+    CommonStyle::setbackGroundColorLabelPlot(ui->labelTimeAfterTrigTitle);
 
     //setup style all spinbox
-    _myStyle.setSpinBoxShape(ui->spinBoxTimeBeforeTrig);
-    _myStyle.setSpinBoxShape(ui->spinBoxTimeAfterTrig);
+    CommonStyle::setSpinBoxShape(ui->spinBoxTimeBeforeTrig);
+    CommonStyle::setSpinBoxShape(ui->spinBoxTimeAfterTrig);
 }
 
 void SettingPreTriggerPercentage::setStepOnClick(const quint8 &stepOnClick)

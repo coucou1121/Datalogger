@@ -43,11 +43,8 @@ private:
     //set the label of all push button on UI
     void _setupLabel();
 
-    //setup shap and background of the push button
-    void _setupButton(QPushButton *pushbutton, QColor btColor);
-
     //setup background color of the push button
-    void _setupButtonBackGround(QPushButton *pushbutton, QColor btSelectedColor, bool btSelected);
+    void _setupButtonBackGround(QPushButton *pushbutton, GlobalEnumatedAndExtern::eTracePossible trace , bool btSelected);
 
     //key value for pushbutton name
     QMap<int, QString> _triggerTracePossible;

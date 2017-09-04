@@ -24,7 +24,7 @@ private:
     Ui::SettingTimeScaleFactor *ui;
 
     // _frequancy
-    int _frequency;
+    double _frequency;
 
     //nombre of saved frame
     quint64 _nbFrameSaved;
@@ -33,7 +33,7 @@ private:
     int _frameSize;
 
     //FTDI baudrate
-    int _FTDIbaudrate;
+    double _FTDIbaudrate;
 
     //key value for periode possible
     QMap<int, double> _peridePossible;

@@ -29,21 +29,29 @@ SettingTimeScaleFactor::~SettingTimeScaleFactor()
 void SettingTimeScaleFactor::setupStyle()
 {
     //setup style main title
-    ui->labelTitleTimeScallFactor->setStyleSheet("background-color:" + _myStyle.getBackGroundColorButtonStatusbarSelected().name() +
-                                                 "; color:" + _myStyle.getBackGroundColorButtonStatusbarUnselected().name() + ";");
+    CommonStyle::setbackGroundColorLabel(ui->labelTitleTimeScallFactor);
 
     //setup sample / second frame
-    ui->widgetSampleSecond->setStyleSheet("background-color:" + _myStyle.getBackGroundColorFrame().name()+ ";");
-    ui->labelFrequency->setStyleSheet("background-color:" + _myStyle.getBackGroundColor().name()+ ";");
+//    ui->widgetSampleSecond->setStyleSheet("background-color:" + _myStyle.getBackGroundColorFrame().name()+ ";");
+    CommonStyle::setbackGroundColorFrame(ui->widgetSampleSecond);
+//    ui->labelFrequency->setStyleSheet("background-color:" + _myStyle.getBackGroundColor().name()+ ";");
+    CommonStyle::setbackGroundColorLabelPlot(ui->labelFrequency);
 
     //setup Duration frame
-    ui->widgetDuration->setStyleSheet("background-color:" + _myStyle.getBackGroundColorFrame().name()+ ";");
-    ui->labelYear->setStyleSheet("background-color:" + _myStyle.getBackGroundColor().name()+ ";");
-    ui->labelMonth->setStyleSheet("background-color:" + _myStyle.getBackGroundColor().name()+ ";");
-    ui->labelDay->setStyleSheet("background-color:" + _myStyle.getBackGroundColor().name()+ ";");
-    ui->labelHrs->setStyleSheet("background-color:" + _myStyle.getBackGroundColor().name()+ ";");
-    ui->labelMin->setStyleSheet("background-color:" + _myStyle.getBackGroundColor().name()+ ";");
-    ui->labelSec->setStyleSheet("background-color:" + _myStyle.getBackGroundColor().name()+ ";");
+    CommonStyle::setbackGroundColorFrame(ui->widgetDuration);
+ //   ui->widgetDuration->setStyleSheet("background-color:" + _myStyle.getBackGroundColorFrame().name()+ ";");
+    CommonStyle::setbackGroundColorLabelPlot(ui->labelYear);
+    CommonStyle::setbackGroundColorLabelPlot(ui->labelMonth);
+    CommonStyle::setbackGroundColorLabelPlot(ui->labelDay);
+    CommonStyle::setbackGroundColorLabelPlot(ui->labelHrs);
+    CommonStyle::setbackGroundColorLabelPlot(ui->labelMin);
+    CommonStyle::setbackGroundColorLabelPlot(ui->labelSec);
+//    ui->labelYear->setStyleSheet("background-color:" + _myStyle.getBackGroundColor().name()+ ";");
+//    ui->labelMonth->setStyleSheet("background-color:" + _myStyle.getBackGroundColor().name()+ ";");
+//    ui->labelDay->setStyleSheet("background-color:" + _myStyle.getBackGroundColor().name()+ ";");
+//    ui->labelHrs->setStyleSheet("background-color:" + _myStyle.getBackGroundColor().name()+ ";");
+//    ui->labelMin->setStyleSheet("background-color:" + _myStyle.getBackGroundColor().name()+ ";");
+//    ui->labelSec->setStyleSheet("background-color:" + _myStyle.getBackGroundColor().name()+ ";");
 }
 
 void SettingTimeScaleFactor::_initPeriode()
@@ -169,12 +177,13 @@ void SettingTimeScaleFactor::_initDuration()
 
 void SettingTimeScaleFactor::_initSampleRate(int index)
 {
-
-    _frequency = 1/_peridePossible[index]*1000;
+    _frequency = 1000/_peridePossible[index];//*1000;
     _FTDIbaudrate = _frequency;
-    QString frequencyTxt = QString::number(_frequency, 10);
+    QString frequencyTxt = QString("%1").arg(_frequency, 0, 'g', 13);
     int w_size = frequencyTxt.size();
 
+    qDebug() << "a: " << QString("%1").arg(_frequency, 0, 'g', 13) ;
+    qDebug() << _frequency << " , " << frequencyTxt;
     if (w_size > 3) {
         frequencyTxt.insert(frequencyTxt.size() - 3, "'");
     }

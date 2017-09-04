@@ -4,13 +4,14 @@
 DigitalPlot::DigitalPlot(QWidget *parent) :
     QWidget(parent),
     ui(new Ui::DigitalPlot),
+    _isRed(false),
     _yValue(0),
     _CPT(0)
 {
     ui->setupUi(this);
     setupStyle(ui->widget_DI);
     setupTrace(ui->widget_DI);
-    ui->TLname_DI->setStyleSheet("background-color:" + _myStyle.getBackGroundColorBottomBar().name() + ";");
+    CommonStyle::setbackGroundColorLabelPlot(ui->labelTitleDI);
     _arrayPlotContainerPointer = ui->widget_DI->graph(0)->data();
 }
 
@@ -21,73 +22,36 @@ DigitalPlot::~DigitalPlot()
 
 void DigitalPlot::setTitleName(QString name)
 {
-    ui->TLname_DI->setText(name);
+    ui->labelTitleDI->setText(name);
 }
 
 void DigitalPlot::setTraceColorGreen()
 {
-    _traceSettingColor = _myStyle.getTraceColorDigitalPlot();
-    ui->widget_DI->graph(0)->setPen(QPen(_traceSettingColor));
+    CommonStyle::setTraceColorDigitalPlot(ui->widget_DI->graph(0));
+    this->_isRed = false;
 }
 
 void DigitalPlot::setTraceColorRed()
 {
-    _traceSettingColor = _myStyle.getErrorLineInTrouble();
-    ui->widget_DI->graph(0)->setPen(QPen(_traceSettingColor));
+    CommonStyle::setTraceColorTriggerPlot(ui->widget_DI->graph(0));
+    this->_isRed = true;
 }
 
 void DigitalPlot::setDrawRightToLeft(bool drawRightToLeft)
 {
-      ui->widget_DI->xAxis->setRangeReversed(drawRightToLeft);
+      ui->widget_DI->xAxis->setRangeReversed(!drawRightToLeft);
 }
 
 void DigitalPlot::setupStyle(QCustomPlot *customPlot)
 {
-
     //back ground Color behing the plot
-    customPlot->setBackground(_myStyle.getBackGroundColor());
+    CommonStyle::setBackGroundColor(customPlot);
 
     //back ground color of the plot
-    customPlot->axisRect()->setBackground(_myStyle.getBackGroundColorAnalogPlot());
-
-    //set margin
-    customPlot->axisRect()->setAutoMargins(QCP::msNone);
+    CommonStyle::setBackGroundColorPlot(customPlot->axisRect());
 
     //Set the axis color and line type
-    customPlot->xAxis->setBasePen(QPen(_myStyle.getAxisColorAnalogPlot(), 1));
-    customPlot->yAxis->setBasePen(QPen(_myStyle.getAxisColorAnalogPlot(), 1));
-    customPlot->xAxis->setTickPen(QPen(_myStyle.getAxisTickColorAnalogPlot(), 1));
-    customPlot->yAxis->setTickPen(QPen(_myStyle.getAxisTickColorAnalogPlot(), 1));
-    customPlot->xAxis->setSubTickPen(QPen(_myStyle.getAxisSubTickColorAnalogPlot(), 1));
-    customPlot->yAxis->setSubTickPen(QPen(_myStyle.getAxisSubTickColorAnalogPlot(), 1));
-    customPlot->xAxis->setTickLabelColor(_myStyle.getAxisTickLabelColorAnalogPlot());
-    customPlot->yAxis->setTickLabelColor(_myStyle.getAxisTickLabelColorAnalogPlot());
-    customPlot->xAxis->setTicks(true);
-    customPlot->yAxis->setTicks(true);
-    customPlot->xAxis->setSubTicks(true);
-    customPlot->xAxis->setTickLabels(false);
-    customPlot->yAxis->setTickLabels(false);
-
-
-    //Set the grid plot color and line type
-    customPlot->xAxis->grid()->setVisible(false);
-    customPlot->yAxis->grid()->setVisible(false);
-    customPlot->xAxis->grid()->setSubGridVisible(true);
-    customPlot->yAxis->grid()->setSubGridVisible(true);
-    customPlot->xAxis->grid()->setSubGridPen(QPen(_myStyle.getGridColorAnalogPlot(), 1, Qt::DotLine));
-    customPlot->yAxis->grid()->setSubGridPen(QPen(_myStyle.getGridColorAnalogPlot(), 1, Qt::DotLine));
-
-    //Set the axis grid color and line type
-    customPlot->xAxis->grid()->setPen(QPen(_myStyle.getAxisGridColorAnalogPlot(), 1, Qt::DotLine));
-    customPlot->yAxis->grid()->setPen(QPen(_myStyle.getAxisGridColorAnalogPlot(), 1, Qt::DotLine));
-
-
-    //y Axis color and line type
-    customPlot->xAxis->grid()->setZeroLinePen(Qt::NoPen);
-    customPlot->yAxis->grid()->setZeroLinePen(Qt::NoPen);
-
-    //rescale the axis
-    customPlot->rescaleAxes();
+    CommonStyle::setStylePlot(customPlot);
 
     //set the axis range
     customPlot->xAxis->setRange(0, DI_NB_X_VALUES_DISPLAY_LIVE);
@@ -149,15 +113,21 @@ void DigitalPlot::replot()
 {
         if(_yValue)
         {
-            ui->TLname_DI->setStyleSheet("background-color:" + this->_traceSettingColor.name() + ";");
+            if(this->_isRed)
+            {
+                CommonStyle::setBackGroundColorRedDILabel(ui->labelTitleDI);
+            }
+            else
+            {
+                CommonStyle::setBackGroundColorDILabel(ui->labelTitleDI);
+            }
         }
         else
         {
-            ui->TLname_DI->setStyleSheet("background-color:" + _myStyle.getBackGroundColorBottomBar().name() + ";");
+           CommonStyle::setbackGroundColorLabelPlot(ui->labelTitleDI);
         }
     this->updatePlot();
     ui->widget_DI->replot();
-//    qDebug() << objectName() << "replot";
 }
 
 void DigitalPlot::setNbPixels(const quint16 &nbPixels)

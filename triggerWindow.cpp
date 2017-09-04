@@ -6,6 +6,8 @@ extern qint8 maxRange0_24;
 extern qint8 maxRange0_30;
 extern qint8 minRange_15_15;
 extern qint8 maxRange_15_15;
+extern QString range0_30Txt;
+extern QString range15_15Txt;
 
 TriggerWindow::TriggerWindow(QWidget *parent) :
     QFrame(parent),
@@ -13,13 +15,15 @@ TriggerWindow::TriggerWindow(QWidget *parent) :
     _AI1SettingTriggerValue(0),
     _AI2SettingTriggerValue(0),
     _AI1TriggerRange((quint8)GlobalEnumatedAndExtern::range0_30),
-    _AI2TriggerRange((quint8)GlobalEnumatedAndExtern::range0_30)
+    _AI2TriggerRange((quint8)GlobalEnumatedAndExtern::range0_30),
+    _AI3TriggerRange((quint8)GlobalEnumatedAndExtern::range0_30),
+    _AI4TriggerRange((quint8)GlobalEnumatedAndExtern::range0_30)
 {
     ui->setupUi(this);
 
     this->_triggerFunctionEnable = false;
 
-    //initialise the Key - Value for combobx
+    //initialise the Key - Value for combobox
     TriggerTracePossible = GlobalEnumatedAndExtern::initTriggerTracePossible();
 
     //setup title name of all trace
@@ -34,8 +38,12 @@ TriggerWindow::TriggerWindow(QWidget *parent) :
     // force the trigger trace to be on bottom
     ui->verticalLayout->setAlignment(ui->widgetFunction,Qt::AlignBottom);
 
-    // set the color of trigger trcae to red
+    // set the color of trigger trace to red
     ui->widgetFunction->setTraceColorRed();
+
+    //set range in AI1 and AI"
+    ui->widgetAI1->setRangeName(range0_30Txt);
+    ui->widgetAI2->setRangeName(range0_30Txt);
 }
 
 TriggerWindow::~TriggerWindow()
@@ -45,13 +53,14 @@ TriggerWindow::~TriggerWindow()
 
 void TriggerWindow::setDrawRightToLeft(bool drawRightToLeft)
 {
-    ui->widgetDI1->setDrawRightToLeft(!drawRightToLeft);
-    ui->widgetDI2->setDrawRightToLeft(!drawRightToLeft);
-    ui->widgetDI3->setDrawRightToLeft(!drawRightToLeft);
-    ui->widgetDI4->setDrawRightToLeft(!drawRightToLeft);
+    ui->widgetDI1->setDrawRightToLeft(drawRightToLeft);
+    ui->widgetDI2->setDrawRightToLeft(drawRightToLeft);
+    ui->widgetDI3->setDrawRightToLeft(drawRightToLeft);
+    ui->widgetDI4->setDrawRightToLeft(drawRightToLeft);
 
-    ui->widgetAI1->setDrawRightToLeft(!drawRightToLeft);
-    ui->widgetAI2->setDrawRightToLeft(!drawRightToLeft);
+    ui->widgetAI1->setDrawRightToLeft(drawRightToLeft);
+    ui->widgetAI2->setDrawRightToLeft(drawRightToLeft);
+    ui->widgetFunction->setDrawRightToLeft(drawRightToLeft);
 }
 
 void TriggerWindow::setSizeOfPlot(int valuePixels)
@@ -139,6 +148,15 @@ void TriggerWindow::_setupSignalAndSlot()
                      this, SLOT(_recieved_pushButtonRangeAI1Changed()));
     QObject::connect(ui->widgetTriggerSettingT, SIGNAL(_pushButtonRangeAI2WasChanged()),
                      this, SLOT(_recieved_pushButtonRangeAI2Changed()));
+    QObject::connect(ui->widgetTriggerSettingT, SIGNAL(_pushButtonRangeAI1TXTWasChanged(QString)),
+                     this, SLOT(_received_pushButtonRangeAI1TXTWasChanged(QString)));
+    QObject::connect(ui->widgetTriggerSettingT, SIGNAL(_pushButtonRangeAI2TXTWasChanged(QString)),
+                     this, SLOT(_received_pushButtonRangeAI2TXTWasChanged(QString)));
+    QObject::connect(ui->widgetTriggerSettingT, SIGNAL(_pushButtonRangeAI3TXTWasChanged(QString)),
+                     this, SLOT(_received_pushButtonRangeAI3TXTWasChanged(QString)));
+    QObject::connect(ui->widgetTriggerSettingT, SIGNAL(_pushButtonRangeAI4TXTWasChanged(QString)),
+                     this, SLOT(_received_pushButtonRangeAI4TXTWasChanged(QString)));
+
 
     //manage eEdge
     QObject::connect(ui->widgetTriggerSettingT, SIGNAL(_pushButtonEdgeDI1WasChanged(quint8)),
@@ -215,8 +233,8 @@ quint8 TriggerWindow::_doubleToQuint8(double value, GlobalEnumatedAndExtern::eRa
     }
     result = ((value - minRangeValue)*255)/(maxRangeValue-minRangeValue);
 
-    //    qDebug() << "double value  : " << value;
-    //    qDebug() << "double result : " << minRangeValue << result;
+        qDebug() << "double value  : " << value;
+        qDebug() << "double result : " << range << result;
     quint8 resultInt = (quint8)result;
     return resultInt;
 }
@@ -336,11 +354,69 @@ void TriggerWindow::hideTrace(quint8 enumTrace)
 void TriggerWindow::pushButtonRangeAI1_changeRange()
 {
     ui->widgetTriggerSettingT->pushButtonRangeAI1_ChangeRange();
+
+    switch (_AI1TriggerRange)
+    {
+    case GlobalEnumatedAndExtern::range0_30:
+        ui->widgetAI1->setRangeName(range0_30Txt);
+        break;
+    case GlobalEnumatedAndExtern::range15_15:
+        ui->widgetAI1->setRangeName(range15_15Txt);
+        break;
+    default:
+        break;
+    }
 }
 
 void TriggerWindow::pushButtonRangeAI2_changeRange()
 {
     ui->widgetTriggerSettingT->pushButtonRangeAI2_ChangeRange();
+
+    switch (_AI2TriggerRange)
+    {
+    case GlobalEnumatedAndExtern::range0_30:
+        ui->widgetAI2->setRangeName(range0_30Txt);
+        break;
+    case GlobalEnumatedAndExtern::range15_15:
+        ui->widgetAI2->setRangeName(range15_15Txt);
+        break;
+    default:
+        break;
+    }
+}
+
+void TriggerWindow::pushButtonRangeAI3_changeRange()
+{
+    ui->widgetTriggerSettingT->pushButtonRangeAI3_ChangeRange();
+
+    switch (_AI3TriggerRange)
+    {
+    case GlobalEnumatedAndExtern::range0_30:
+//        ui->widgetAI3->setRangeName(range0_30Txt);
+        break;
+    case GlobalEnumatedAndExtern::range15_15:
+//        ui->widgetAI3->setRangeName(range15_15Txt);
+        break;
+    default:
+        break;
+    }
+}
+
+void TriggerWindow::pushButtonRangeAI4_changeRange()
+{
+    ui->widgetTriggerSettingT->pushButtonRangeAI4_ChangeRange();
+
+    switch (_AI4TriggerRange)
+    {
+    case GlobalEnumatedAndExtern::range0_30:
+ //       ui->widgetAI4->setRangeName(range0_30Txt);
+        break;
+    case GlobalEnumatedAndExtern::range15_15:
+//        ui->widgetAI4->setRangeName(range15_15Txt);
+        break;
+    default:
+        break;
+    }
 }
 
 void TriggerWindow::pushButtonEdgeDI1_changeEdge(quint8 eEdge)
@@ -363,16 +439,16 @@ void TriggerWindow::pushButtonEdgeDI4_changeEdge(quint8 eEdge)
     ui->widgetTriggerSettingT->pushButtonEdgeDI4_changeEdge(eEdge);
 }
 
-void TriggerWindow::pushButtonEdgeAI1_changeEdge(quint8 eEdge)
+void TriggerWindow::pushButtonEdgeAI1_changeEdge(quint8 eRange)
 {
-    this->_AI1TriggerRange = eEdge;
-    ui->widgetTriggerSettingT->pushButtonEdgeAI1_changeEdge(eEdge);
+    this->_AI1TriggerRange = eRange;
+    ui->widgetTriggerSettingT->pushButtonEdgeAI1_changeEdge(eRange);
 }
 
-void TriggerWindow::pushButtonEdgeAI2_changeEdge(quint8 eEdge)
+void TriggerWindow::pushButtonEdgeAI2_changeEdge(quint8 eRange)
 {
-    this->_AI2TriggerRange = eEdge;
-    ui->widgetTriggerSettingT->pushButtonEdgeAI2_changeEdge(eEdge);
+    this->_AI2TriggerRange = eRange;
+    ui->widgetTriggerSettingT->pushButtonEdgeAI2_changeEdge(eRange);
 }
 
 void TriggerWindow::doubleSpinBoxDI1_changeValue(double value)
@@ -483,12 +559,38 @@ void TriggerWindow::addNewDataFrame(DataFrame *newDataFrame)
 
 void TriggerWindow::_recieved_pushButtonRangeAI1Changed()
 {
+    this->_AI1TriggerRange = ui->widgetTriggerSettingT->rangeAI1();
+    emit doubleSpinBoxAI1_changeValue(ui->widgetTriggerSettingT->triggerValueAI1());
     emit _pushButtonRangeAI1WasChanged();
 }
 
 void TriggerWindow::_recieved_pushButtonRangeAI2Changed()
 {
+    this->_AI2TriggerRange = ui->widgetTriggerSettingT->rangeAI2();
+    emit doubleSpinBoxAI2_changeValue(ui->widgetTriggerSettingT->triggerValueAI2());
     emit _pushButtonRangeAI2WasChanged();
+}
+
+void TriggerWindow::_received_pushButtonRangeAI1TXTWasChanged(QString rangeTXT)
+{
+    ui->widgetAI1->setRangeName(rangeTXT);
+    emit _pushButtonRangeTXTAI1WasChanged(rangeTXT);
+}
+
+void TriggerWindow::_received_pushButtonRangeAI2TXTWasChanged(QString rangeTXT)
+{
+    ui->widgetAI2->setRangeName(rangeTXT);
+    emit _pushButtonRangeTXTAI2WasChanged(rangeTXT);
+}
+
+void TriggerWindow::_received_pushButtonRangeAI3TXTWasChanged(QString rangeTXT)
+{
+    emit _pushButtonRangeTXTAI3WasChanged(rangeTXT);
+}
+
+void TriggerWindow::_received_pushButtonRangeAI4TXTWasChanged(QString rangeTXT)
+{
+    emit _pushButtonRangeTXTAI4WasChanged(rangeTXT);
 }
 
 void TriggerWindow::_recieved_pushButtonEdgeDI1Changed(quint8 eEdge)

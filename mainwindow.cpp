@@ -28,15 +28,15 @@ MainWindow::MainWindow(QWidget *parent) :
     _dataFrameSimulator(new DataFrameSimulator("Frame Simulator")),
 
     //create the data frame for realtime reading
-//    _dataFrameLiveReading(new DataFrameLiveReading("data live reading", NB_FRAME_READ_EVERY_CYCLE)),
+    //    _dataFrameLiveReading(new DataFrameLiveReading("data live reading", NB_FRAME_READ_EVERY_CYCLE)),
 
     //create FTDI device
     _FTDIdevice(new FTDIFunction("FTDI device")),
 
     //create thread object
-    _threadDataAnalysis(new FrameThread(false, "tick data analysis", 10)),
+    _threadDataAnalysis(new FrameThread(false, "tick data analysis", 10)), //10
     _threadNewDataFrame(new FrameThread(true, "simulated data", 1000)),
-    _threadDisplayRefresh(new FrameThread(true, "refresh display", 100)),
+    _threadDisplayRefresh(new FrameThread(true, "refresh display", 100)),//100
 
     _threadRealTimeReading(new QThread),
     _frameThread(new FrameThread(false, "real data", 1000)),
@@ -67,9 +67,9 @@ MainWindow::MainWindow(QWidget *parent) :
     _trigStateStep(GlobalEnumatedAndExtern::trigReady),
     _rollStateStep(GlobalEnumatedAndExtern::rollReady),
     //create the FTDI object
-        #if LINUX
+    #if LINUX
     //    _FTDIdevice(new FTDIFunction("FTDI functions")),
-        #endif
+    #endif
     _baudRateSpeed2M(2000000),
     _baudRateSpeed9600(9600),
     //_FTDI_OK(false),
@@ -92,7 +92,7 @@ MainWindow::MainWindow(QWidget *parent) :
     //    _newDataFrameTimer->moveToThread(_threadNewDataFrame);
     //    _refreshDisplayTimer->moveToThread(_threadDisplayRefresh);
     //_FTDIdevice->moveToThread(_threadRealTimeReading);
-//    _FTDIdevice->moveToThread(_frameThread);
+    //    _FTDIdevice->moveToThread(_frameThread);
 
     //key - value for FTDI state possible
     _FTDIStatePossibleTXT = GlobalEnumatedAndExtern::initFTDIStatePossibleTXT();
@@ -128,7 +128,7 @@ MainWindow::MainWindow(QWidget *parent) :
 
     //select direction to plot
     _rollWindow->setDrawRightToLeft(true);
-    _triggerWindow->setDrawRightToLeft(true);
+    _triggerWindow->setDrawRightToLeft(false);
 
     //get the setting in trigger function windows
     this->_triggerFuntion = _settingWindow->getTriggerFuntion();
@@ -139,9 +139,9 @@ MainWindow::MainWindow(QWidget *parent) :
     this->_dataFrameSimulator->setItConsumerAdress(this->_dataFrameReccorder.end());
 
     //set the point of circular buffer for data to the FTDI device
-//    this->_FTDIdevice->setDataFrameVectorReccorder(&this->_dataFrameReccorder);
-//    this->_FTDIdevice->setItProducer(this->_itProducer);
-//    this->_FTDIdevice->setItConsumerAdress(this->_dataFrameReccorder.end());
+    //    this->_FTDIdevice->setDataFrameVectorReccorder(&this->_dataFrameReccorder);
+    //    this->_FTDIdevice->setItProducer(this->_itProducer);
+    //    this->_FTDIdevice->setItConsumerAdress(this->_dataFrameReccorder.end());
 }
 
 MainWindow::~MainWindow()
@@ -206,7 +206,7 @@ void MainWindow::mainSetup()
     this->_mainStateGraphe();
 
     //set the FTDI device to the debug menu
-//    this->_debugWindow->setFTDIdevice(this->_FTDIdevice);
+    //    this->_debugWindow->setFTDIdevice(this->_FTDIdevice);
 
     //set the FTDI device to the dataFrameLiveReading
     //this->_frameThread->setFTDIFunction(*this->_FTDIdevice);
@@ -229,25 +229,22 @@ void MainWindow::_startStopButtonTextAndColorManager(GlobalEnumatedAndExtern::eB
     {
     case GlobalEnumatedAndExtern::start:
         //set backgroud color
-        ui->pushButton_StartStop->setStyleSheet("background-color: qlineargradient(x1: 0, y1: 0, x2: 0, y2: 1, "
-                                                "stop: 1" + _myStyle.getTraceColorDigitalPlot().name() +
-                                                ", stop: 0 #ffffff);");
+        CommonStyle::setStartButtonToGreen(ui->pushButton_StartStop);
+
         //set text
         ui->pushButton_StartStop->setText(BPStartStopStateStartTxt);
         break;
     case GlobalEnumatedAndExtern::stop:
         //set backgroud color
-        ui->pushButton_StartStop->setStyleSheet("background-color: qlineargradient(x1: 0, y1: 0, x2: 0, y2: 1, "
-                                                "stop: 1" + _myStyle.getBackGroundColorErrorFrame().name() +
-                                                ", stop: 0 #ffffff);");
+        CommonStyle::setStartButtonToRed(ui->pushButton_StartStop);
+
         //set text
         ui->pushButton_StartStop->setText(BPStartStopStateStopTxt);
         break;
     case GlobalEnumatedAndExtern::hold:
         //set backgroud color
-        ui->pushButton_StartStop->setStyleSheet("background-color: qlineargradient(x1: 0, y1: 0, x2: 0, y2: 1, "
-                                                "stop: 1" + _myStyle.getBackGroundColorErrorFrame().name() +
-                                                ", stop: 0 #ffffff);");
+        CommonStyle::setStartButtonToRed(ui->pushButton_StartStop);
+
         //set text
         ui->pushButton_StartStop->setText(BPStartStopStateHoldTxt);
         break;
@@ -279,7 +276,9 @@ bool MainWindow::_FTDIconnection()
     }
     else
     {
-        _initWindow->addTextInLabel("error befor state "+ this->_FTDIStatePossibleTXT[GlobalEnumatedAndExtern::FTDIDeviceFound]);
+        _initWindow->addTextInLabel("ERROR in state " +
+                                    QString::number(GlobalEnumatedAndExtern::FTDIDeviceFound) + ": " +
+                                    this->_FTDIStatePossibleTXT[GlobalEnumatedAndExtern::FTDIDeviceFound]);
     }
 
     this->_waitDelay(1);
@@ -290,7 +289,9 @@ bool MainWindow::_FTDIconnection()
     }
     else
     {
-        _initWindow->addTextInLabel("error befor state "+ this->_FTDIStatePossibleTXT[GlobalEnumatedAndExtern::FTDIopened]);
+        _initWindow->addTextInLabel("ERROR in state "+
+                                    QString::number(GlobalEnumatedAndExtern::FTDIopened) + ": " +
+                                    this->_FTDIStatePossibleTXT[GlobalEnumatedAndExtern::FTDIopened]);
     }
 
     this->_waitDelay(1);
@@ -301,7 +302,9 @@ bool MainWindow::_FTDIconnection()
     }
     else
     {
-        _initWindow->addTextInLabel("error befor state "+ this->_FTDIStatePossibleTXT[GlobalEnumatedAndExtern::FTDIUSBparameterSetted]);
+        _initWindow->addTextInLabel("ERROR in state "+
+                                    QString::number(GlobalEnumatedAndExtern::FTDIUSBparameterSetted) + ": " +
+                                    this->_FTDIStatePossibleTXT[GlobalEnumatedAndExtern::FTDIUSBparameterSetted]);
     }
 
     this->_waitDelay(1);
@@ -312,7 +315,9 @@ bool MainWindow::_FTDIconnection()
     }
     else
     {
-        _initWindow->addTextInLabel("error befor state "+ this->_FTDIStatePossibleTXT[GlobalEnumatedAndExtern::FTDIBaudRateSetted]);
+        _initWindow->addTextInLabel("ERROR in state "+
+                                    QString::number(GlobalEnumatedAndExtern::FTDIBaudRateSetted) + ": " +
+                                    this->_FTDIStatePossibleTXT[GlobalEnumatedAndExtern::FTDIBaudRateSetted]);
     }
 
     this->_waitDelay(1);
@@ -323,7 +328,9 @@ bool MainWindow::_FTDIconnection()
     }
     else
     {
-        _initWindow->addTextInLabel("error befor state "+ this->_FTDIStatePossibleTXT[GlobalEnumatedAndExtern::FTDIDataCaracteristiqueSetted]);
+        _initWindow->addTextInLabel("ERROR in state "+
+                                    QString::number(GlobalEnumatedAndExtern::FTDIDataCaracteristiqueSetted) + ": " +
+                                    this->_FTDIStatePossibleTXT[GlobalEnumatedAndExtern::FTDIDataCaracteristiqueSetted]);
     }
 
     this->_waitDelay(1);
@@ -334,7 +341,9 @@ bool MainWindow::_FTDIconnection()
     }
     else
     {
-        _initWindow->addTextInLabel("error befor state "+ this->_FTDIStatePossibleTXT[GlobalEnumatedAndExtern::FTDIFlowControlSetted]);
+        _initWindow->addTextInLabel("ERROR in state "+
+                                    QString::number(GlobalEnumatedAndExtern::FTDIFlowControlSetted) + ": " +
+                                    this->_FTDIStatePossibleTXT[GlobalEnumatedAndExtern::FTDIFlowControlSetted]);
     }
 
     this->_waitDelay(1);
@@ -345,7 +354,9 @@ bool MainWindow::_FTDIconnection()
     }
     else
     {
-        _initWindow->addTextInLabel("error befor state "+ this->_FTDIStatePossibleTXT[GlobalEnumatedAndExtern::FTDITxRxBufferFree]);
+        _initWindow->addTextInLabel("ERROR in state "+
+                                    QString::number(GlobalEnumatedAndExtern::FTDITxRxBufferFree) + ": " +
+                                    this->_FTDIStatePossibleTXT[GlobalEnumatedAndExtern::FTDITxRxBufferFree]);
     }
 
     if(this->_FTDIdevice->FTDIState() >= GlobalEnumatedAndExtern::FTDIready)
@@ -354,7 +365,9 @@ bool MainWindow::_FTDIconnection()
     }
     else
     {
-        _initWindow->addTextInLabel("error befor state "+ this->_FTDIStatePossibleTXT[GlobalEnumatedAndExtern::FTDIready]);
+        _initWindow->addTextInLabel("ERROR in state "+
+                                    QString::number(GlobalEnumatedAndExtern::FTDIready) + ": " +
+                                    this->_FTDIStatePossibleTXT[GlobalEnumatedAndExtern::FTDIready]);
     }
 
     this->_waitDelay(1);
@@ -377,10 +390,16 @@ void MainWindow::changeStateStartStopButton(int state)
 void MainWindow::startThread()
 {
     this->_threadDataAnalysis->start();
-    this->_threadDisplayRefresh->start();
+    this->_threadNewDataFrame->start();
+    //    this->_threadDisplayRefresh->start();
+
+    //start refreshing display
+    this->_threadDisplayRefresh->startWorking();
+
     //in simulation mode
     if(this->_inSimulation)
     {
+        qDebug() << "start in sumilation" ;
         //start thread for simulation data
         this->_threadNewDataFrame->startWorking();
 
@@ -397,10 +416,6 @@ void MainWindow::startThread()
         }
 #endif
     }
-
-    //start refreshing display
-    this->_threadDisplayRefresh->startWorking();
-
 }
 
 void MainWindow::stopThread()
@@ -454,7 +469,7 @@ void MainWindow::addNewSimulatedDataFrame()
     }
 
     //    qDebug() << objectName() << "received addNewSimulatedDataFrame";
-    while(i< 1 && !_onTrigTrue)
+    while(i< 10 && !_onTrigTrue)
         //    while(i< 50 && this->_nbValueAfterTrig > 0)
     {
 
@@ -465,13 +480,14 @@ void MainWindow::addNewSimulatedDataFrame()
             this->_dataFrameSimulator->setItConsumerAdress(_itConsumer);
 
             //read the circular array and put on the trace array for futur ploting
-            *_itTrace = *this->_itConsumer;
+//            *_itTrace = *this->_itConsumer;
 
             switch (_mainStateStep)
             {
             case GlobalEnumatedAndExtern::mainStateRoll:
                 //send value to the plot
-                this->_rollWindow->addNewDataFrame(_itTrace);
+ //               this->_rollWindow->addNewDataFrame(_itTrace);
+                this->_rollWindow->addNewDataFrame(_itConsumer);
                 break;
             case GlobalEnumatedAndExtern::mainStateTrig:
 
@@ -515,7 +531,6 @@ void MainWindow::addNewSimulatedDataFrame()
             this->_itTrace++;
             this->_itConsumer = this->_itConsumer != _dataFrameReccorder.begin()? this->_itConsumer : this->_dataFrameReccorder.begin();
             this->_itTrace = this->_itTrace != _dataFrameTrace.end() ? this->_itTrace : this->_dataFrameTrace.begin();
-
         }
         i++;
     }
@@ -579,7 +594,7 @@ void MainWindow::checkBoxEmulationModeChanged(bool checked)
     }
 }
 
-void MainWindow::received__settingSizeOfPlotWasChanged(int nbPixels)
+void MainWindow::received_settingSizeOfPlotWasChanged(int nbPixels)
 {
     this->_rollWindow->setSizeOfPlot(nbPixels);
     this->_triggerWindow->setSizeOfPlot(nbPixels);
@@ -588,7 +603,7 @@ void MainWindow::received__settingSizeOfPlotWasChanged(int nbPixels)
 void MainWindow::_setupSignalAndSlot()
 {
     //manage the size of plot
-    QObject::connect(ui->widgetPlotSetting, SIGNAL(_settingSizeOfPlotWasChanged(int)), this, SLOT(received__settingSizeOfPlotWasChanged(int)));
+    QObject::connect(ui->widgetPlotSetting, SIGNAL(_settingSizeOfPlotWasChanged(int)), this, SLOT(received_settingSizeOfPlotWasChanged(int)));
 
     //manage the number of frame saved after trigger
     QObject::connect(_settingWindow, SIGNAL(_percentPreTriggerWasChanged(quint8)),
@@ -604,11 +619,39 @@ void MainWindow::_setupSignalAndSlot()
                      this->_triggerWindow, SLOT(pushButtonRangeAI1_changeRange()));
     QObject::connect(this->_settingWindow, SIGNAL(_pushButtonRangeAI2WasChangedFromSettingMenu()),
                      this->_triggerWindow, SLOT(pushButtonRangeAI2_changeRange()));
+    QObject::connect(this->_settingWindow, SIGNAL(_pushButtonRangeAI3WasChangedFromSettingMenu()),
+                     this->_triggerWindow, SLOT(pushButtonRangeAI3_changeRange()));
+    QObject::connect(this->_settingWindow, SIGNAL(_pushButtonRangeAI4WasChangedFromSettingMenu()),
+                     this->_triggerWindow, SLOT(pushButtonRangeAI4_changeRange()));
     //trigger menu -> setting menu
     QObject::connect(this->_triggerWindow, SIGNAL(_pushButtonRangeAI1WasChanged()),
                      this->_settingWindow, SLOT(pushButtonRangeAI1_changeRange()));
     QObject::connect(this->_triggerWindow, SIGNAL(_pushButtonRangeAI2WasChanged()),
                      this->_settingWindow, SLOT(pushButtonRangeAI2_changeRange()));
+    QObject::connect(this->_triggerWindow, SIGNAL(_pushButtonRangeAI3WasChanged()),
+                     this->_settingWindow, SLOT(pushButtonRangeAI3_changeRange()));
+    QObject::connect(this->_triggerWindow, SIGNAL(_pushButtonRangeAI4WasChanged()),
+                     this->_settingWindow, SLOT(pushButtonRangeAI4_changeRange()));
+
+    //Manage label in trace for selected range
+    QObject::connect(this->_triggerWindow, SIGNAL(_pushButtonRangeTXTAI1WasChanged(QString)),
+                     this->_rollWindow, SLOT(setRangePlotAI1(QString)));
+    QObject::connect(this->_triggerWindow, SIGNAL(_pushButtonRangeTXTAI2WasChanged(QString)),
+                     this->_rollWindow, SLOT(setRangePlotAI2(QString)));
+    QObject::connect(this->_triggerWindow, SIGNAL(_pushButtonRangeTXTAI3WasChanged(QString)),
+                     this->_rollWindow, SLOT(setRangePlotAI3(QString)));
+    QObject::connect(this->_triggerWindow, SIGNAL(_pushButtonRangeTXTAI4WasChanged(QString)),
+                     this->_rollWindow, SLOT(setRangePlotAI4(QString)));
+
+
+    QObject::connect(this->_settingWindow, SIGNAL(_pushButtonRangeTXTAI1WasChanged(QString)),
+                     this->_triggerWindow, SLOT(_received_pushButtonRangeAI1TXTWasChanged(QString)));
+    QObject::connect(this->_settingWindow, SIGNAL(_pushButtonRangeTXTAI2WasChanged(QString)),
+                     this->_triggerWindow, SLOT(_received_pushButtonRangeAI2TXTWasChanged(QString)));
+    QObject::connect(this->_settingWindow, SIGNAL(_pushButtonRangeTXTAI3WasChanged(QString)),
+                     this->_triggerWindow, SLOT(_received_pushButtonRangeAI3TXTWasChanged(QString)));
+    QObject::connect(this->_settingWindow, SIGNAL(_pushButtonRangeTXTAI4WasChanged(QString)),
+                     this->_triggerWindow, SLOT(_received_pushButtonRangeAI4TXTWasChanged(QString)));
 
     //Sychronise setting menu <--> trigger menu, the trigger edge
     //setting menu -> trigger menu
@@ -760,7 +803,7 @@ void MainWindow::_setupSignalAndSlot()
 void MainWindow::setupStyle()
 {
     QPalette palette;
-    palette.setColor(backgroundRole(), _myStyle.getBackGroundColor());
+    palette.setColor(backgroundRole(), CommonStyle::_backGroundColor);
     this->setPalette(palette);
 }
 
@@ -786,7 +829,7 @@ void MainWindow::_mainStateGraphe()
 
         //clear text
         this->_initWindow->clearTextLabel();
-        _initWindow->addTextInLabel("Initilisation is running...\n\n");
+        _initWindow->addTextInLabel("Initialisation is running...\n\n");
 
         //show home page
         this->_initWindow->show();
@@ -804,18 +847,18 @@ void MainWindow::_mainStateGraphe()
         if(this->_FTDI_OK)
         {
             this->_waitDelay(1);
-            _initWindow->addTextInLabel("\n Initialisation sucessfull...");
+            _initWindow->addTextInLabel("\nInitialisation sucessfull...");
             emit _errorFTDIDeviceNotFound(GlobalEnumatedAndExtern::errorFTDIDeviceNotFound, false);
         }
         else
         {
-            _initWindow->addTextInLabel("\n FTDI not working...");
+            _initWindow->addTextInLabel("\nFTDI not working...");
 
             this->_waitDelay(3);
             emit _errorFTDIDeviceNotFound(GlobalEnumatedAndExtern::errorFTDIDeviceNotFound, true);
         }
 #endif
-        _initWindow->addTextInLabel("\n Starting up application...");
+        _initWindow->addTextInLabel("\nStarting up application...");
 #if LINUX
         //set the device in debug windows
         //_debugWindow->setFTDIdevice(this->_FTDIdevice);
@@ -856,8 +899,9 @@ void MainWindow::_mainStateGraphe()
         this->_goToNextState();
         break;
     case GlobalEnumatedAndExtern::mainStateReady:
-        _btHome->setStyleSheet("background-color:" + _myStyle.getBackGroundColorButtonStatusbarSelected().name() +
-                               "; color:" + _myStyle.getBackGroundColorButtonStatusbarUnselected().name() + ";");
+        //activate setting button menu
+        CommonStyle::setButtonStatusBarSelect(_btHome);
+
         //reset BP Home state
         this->_btHomeWasPressed = false;
 
@@ -870,8 +914,8 @@ void MainWindow::_mainStateGraphe()
         qDebug() << "main state on : " << "ready";
         break;
     case GlobalEnumatedAndExtern::mainStateSet:
-        _btSetting->setStyleSheet("background-color:" + _myStyle.getBackGroundColorButtonStatusbarSelected().name() +
-                                  "; color:" + _myStyle.getBackGroundColorButtonStatusbarUnselected().name() + ";");
+        //activate setting button menu
+        CommonStyle::setButtonStatusBarSelect(_btSetting);
 
         //reset BP set state
         this->_btSettingWasPressed = false;
@@ -888,8 +932,8 @@ void MainWindow::_mainStateGraphe()
         qDebug() << "main state on : " << "set";
         break;
     case GlobalEnumatedAndExtern::mainStateTrig:
-        _btTrigger->setStyleSheet("background-color:" + _myStyle.getBackGroundColorButtonStatusbarSelected().name() +
-                                  "; color:" + _myStyle.getBackGroundColorButtonStatusbarUnselected().name() + ";");
+        //activate trigger button menu
+        CommonStyle::setButtonStatusBarSelect(_btTrigger);
 
         //reset BP trig state
         this->_btTriggerWasPressed = false;
@@ -908,8 +952,7 @@ void MainWindow::_mainStateGraphe()
         break;
     case GlobalEnumatedAndExtern::mainStateRoll:
         //activate roll button menu
-        _btRoll->setStyleSheet("background-color:" + _myStyle.getBackGroundColorButtonStatusbarSelected().name() +
-                               "; color:" + _myStyle.getBackGroundColorButtonStatusbarUnselected().name() + ";");
+        CommonStyle::setButtonStatusBarSelect(_btRoll);
 
         //reset BP roll state
         this->_btRollWasPressed = false;
@@ -926,8 +969,8 @@ void MainWindow::_mainStateGraphe()
         qDebug() << "main state on : " << "roll";
         break;
     case GlobalEnumatedAndExtern::mainStateDebug:
-        _btDebug->setStyleSheet("background-color:" + _myStyle.getBackGroundColorButtonStatusbarSelected().name() +
-                                "; color:" + _myStyle.getBackGroundColorButtonStatusbarUnselected().name() + ";");
+        //activate debug button menu
+       CommonStyle::setButtonStatusBarSelect(_btDebug);
 
         //reset BP debug state
         this->_btDebugWasPressed = false;
@@ -990,6 +1033,7 @@ void MainWindow::_trigStateGraph()
     case GlobalEnumatedAndExtern::trigNotReady:
         break;
     case GlobalEnumatedAndExtern::trigReady:
+        qDebug() << "trig state on : " << "ready";
 
         //change StartStopButton to Start
         this->_startStopButtonTextAndColorManager(GlobalEnumatedAndExtern::start);
@@ -1002,6 +1046,8 @@ void MainWindow::_trigStateGraph()
 
         break;
     case GlobalEnumatedAndExtern::trigRunTrig:
+
+        qDebug() << "trig state on : " << "run trig";
         //change StartStopButton to Stop
         this->_startStopButtonTextAndColorManager(GlobalEnumatedAndExtern::stop);
 
@@ -1015,6 +1061,8 @@ void MainWindow::_trigStateGraph()
         //this->_dataFrameLiveReading->startReading();
         break;
     case GlobalEnumatedAndExtern::trigTrigged:
+        qDebug() << "trig state on : " << "trigged";
+
         //change StartStopButton to start
         this->_startStopButtonTextAndColorManager(GlobalEnumatedAndExtern::start);
 
@@ -1037,6 +1085,7 @@ void MainWindow::_rollStateGraph()
     case GlobalEnumatedAndExtern::rollNotReady:
         break;
     case GlobalEnumatedAndExtern::rollReady:
+        qDebug() << "roll state on : " << "ready";
         //change StartStopButton to Start
         this->_startStopButtonTextAndColorManager(GlobalEnumatedAndExtern::start);
 
@@ -1045,6 +1094,8 @@ void MainWindow::_rollStateGraph()
 
         break;
     case GlobalEnumatedAndExtern::rollRollOn:
+        qDebug() << "roll state on : " << "roll on";
+
         //change StartStopButton to hold
         this->_startStopButtonTextAndColorManager(GlobalEnumatedAndExtern::hold);
 
@@ -1056,6 +1107,8 @@ void MainWindow::_rollStateGraph()
 
         break;
     case GlobalEnumatedAndExtern::rollPaused:
+        qDebug() << "roll state on : " << "paused";
+
         //change StartStopButton to start
         this->_startStopButtonTextAndColorManager(GlobalEnumatedAndExtern::start);
 
@@ -1094,16 +1147,7 @@ void MainWindow::_setStatusBar()
     _btDebug->setAutoFillBackground(true);
 
     //set the intialisation color
-    _btHome->setStyleSheet("background-color:" + _myStyle.getBackGroundColorButtonStatusbarUnselected().name() +
-                           "; color:" + _myStyle.getBackGroundColorButtonStatusbarSelected().name() + ";");
-    _btSetting->setStyleSheet("background-color:" + _myStyle.getBackGroundColorButtonStatusbarUnselected().name() +
-                              "; color:" + _myStyle.getBackGroundColorButtonStatusbarSelected().name() + ";");
-    _btTrigger->setStyleSheet("background-color:" + _myStyle.getBackGroundColorButtonStatusbarUnselected().name() +
-                              "; color:" + _myStyle.getBackGroundColorButtonStatusbarSelected().name() + ";");
-    _btRoll->setStyleSheet("background-color:" + _myStyle.getBackGroundColorButtonStatusbarUnselected().name() +
-                           "; color:" + _myStyle.getBackGroundColorButtonStatusbarSelected().name() + ";");
-    _btDebug->setStyleSheet("background-color:" + _myStyle.getBackGroundColorButtonStatusbarUnselected().name() +
-                            "; color:" + _myStyle.getBackGroundColorButtonStatusbarSelected().name() + ";");
+    this->_resetPushButtonColor();
 
     //add to the status bar at bottom of the mainwoindos
     _hlayoutStatus->addWidget(_btHome);
@@ -1125,16 +1169,11 @@ void MainWindow::_setStatusBar()
 
 void MainWindow::_resetPushButtonColor()
 {
-    _btHome->setStyleSheet("background-color:" + _myStyle.getBackGroundColorButtonStatusbarUnselected().name() +
-                           "; color:" + _myStyle.getBackGroundColorButtonStatusbarSelected().name() + ";");
-    _btSetting->setStyleSheet("background-color:" + _myStyle.getBackGroundColorButtonStatusbarUnselected().name() +
-                              "; color:" + _myStyle.getBackGroundColorButtonStatusbarSelected().name() + ";");
-    _btTrigger->setStyleSheet("background-color:" + _myStyle.getBackGroundColorButtonStatusbarUnselected().name() +
-                              "; color:" + _myStyle.getBackGroundColorButtonStatusbarSelected().name() + ";");
-    _btRoll->setStyleSheet("background-color:" + _myStyle.getBackGroundColorButtonStatusbarUnselected().name() +
-                           "; color:" + _myStyle.getBackGroundColorButtonStatusbarSelected().name() + ";");
-    _btDebug->setStyleSheet("background-color:" + _myStyle.getBackGroundColorButtonStatusbarUnselected().name() +
-                            "; color:" + _myStyle.getBackGroundColorButtonStatusbarSelected().name() + ";");
+    CommonStyle::setButtonStatusBarUnselect(_btHome);
+    CommonStyle::setButtonStatusBarUnselect(_btSetting);
+    CommonStyle::setButtonStatusBarUnselect(_btTrigger);
+    CommonStyle::setButtonStatusBarUnselect(_btRoll);
+    CommonStyle::setButtonStatusBarUnselect(_btDebug);
 }
 
 void MainWindow::_btHome_released()

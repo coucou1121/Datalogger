@@ -1,7 +1,7 @@
 #ifndef DATAFRAMESIMULATOR_H
 #define DATAFRAMESIMULATOR_H
 
-#define NB_FRAME_CREATE_AT_EVERY_TICK 10000
+#define NB_FRAME_CREATE_AT_EVERY_TICK 1000
 
 #include <QObject>
 #include <QDebug>
@@ -30,7 +30,7 @@ public:
 
 private:
     DataFrame *_dataFrame;
-    quint64 _CPT;
+    quint16 _CPT;
     QElapsedTimer timerElapse;
     QVector<DataFrame> _dataFrameVector;
     TriggerFunctions *_triggerFunction;

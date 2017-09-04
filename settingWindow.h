@@ -53,6 +53,8 @@ public slots:
 
     void pushButtonRangeAI1_changeRange();
     void pushButtonRangeAI2_changeRange();
+    void pushButtonRangeAI3_changeRange();
+    void pushButtonRangeAI4_changeRange();
 
     void pushButtonEdgeDI1_changeEdge(quint8 eEdge);
     void pushButtonEdgeDI2_changeEdge(quint8 eEdge);
@@ -87,6 +89,12 @@ private slots:
 
     void _received_pushButtonRangeAI1Changed();
     void _received_pushButtonRangeAI2Changed();
+    void _received_pushButtonRangeAI3Changed();
+    void _received_pushButtonRangeAI4Changed();
+    void _received_pushButtonRangeAI1TXTWasChanged(QString rangeTXT);
+    void _received_pushButtonRangeAI2TXTWasChanged(QString rangeTXT);
+    void _received_pushButtonRangeAI3TXTWasChanged(QString rangeTXT);
+    void _received_pushButtonRangeAI4TXTWasChanged(QString rangeTXT);
 
     void _received_pushButtonEdgeDI1Changed(quint8 eEdge);
     void _received_pushButtonEdgeDI2Changed(quint8 eEdge);
@@ -127,6 +135,13 @@ signals:
 
     void _pushButtonRangeAI1WasChangedFromSettingMenu();
     void _pushButtonRangeAI2WasChangedFromSettingMenu();
+    void _pushButtonRangeAI3WasChangedFromSettingMenu();
+    void _pushButtonRangeAI4WasChangedFromSettingMenu();
+    void _pushButtonRangeTXTAI1WasChanged(QString rangeTXT);
+    void _pushButtonRangeTXTAI2WasChanged(QString rangeTXT);
+    void _pushButtonRangeTXTAI3WasChanged(QString rangeTXT);
+    void _pushButtonRangeTXTAI4WasChanged(QString rangeTXT);
+
 
     void _pushButtonEdgeDI1WasChangedFromSettingMenu(quint8 eEdge);
     void _pushButtonEdgeDI2WasChangedFromSettingMenu(quint8 eEdge);
@@ -149,7 +164,6 @@ signals:
     void _comboBoxTopMiddle_currentIndexWasChanged(quint8 index);
     void _comboBoxMiddle_currentIndexWasChanged(quint8 index);
     void _comboBoxBottomMiddle_currentIndexWasChanged(quint8 index);
-
 };
 
 #endif // SETTINGWINDOW_H

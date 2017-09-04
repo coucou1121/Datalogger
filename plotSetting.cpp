@@ -19,8 +19,8 @@ PlotSetting::~PlotSetting()
 void PlotSetting::setupStyle()
 {
     //title shape
-    ui->labelTitlePlotSetting->setStyleSheet("background-color:" + _myStyle.getBackGroundColorButtonStatusbarSelected().name() +
-                                                "; color:" + _myStyle.getBackGroundColorButtonStatusbarUnselected().name() + ";");
+    CommonStyle::setbackGroundColorLabel(ui->labelTitlePlotSetting);
+
     //set doublespinbox shape
     //setup style all spinbox
     _myStyle.setDoublespinBoxShape(ui->doubleSpinBox);

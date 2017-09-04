@@ -27,7 +27,7 @@
   </property>
   <layout class="QGridLayout" name="gridLayout">
    <property name="leftMargin">
-    <number>0</number>
+    <number>5</number>
    </property>
    <property name="topMargin">
     <number>0</number>
@@ -163,18 +163,6 @@
  </widget>
  <customwidgets>
   <customwidget>
-   <class>AnalogPlot</class>
-   <extends>QWidget</extends>
-   <header>analogPlot.h</header>
-   <container>1</container>
-  </customwidget>
-  <customwidget>
-   <class>DigitalPlot</class>
-   <extends>QWidget</extends>
-   <header>digitalPlot.h</header>
-   <container>1</container>
-  </customwidget>
-  <customwidget>
    <class>SettingTriggerFunction</class>
    <extends>QWidget</extends>
    <header>settingTriggerFunction.h</header>
@@ -184,6 +172,18 @@
    <class>SettingTriggerSetting</class>
    <extends>QWidget</extends>
    <header>settingTriggerSetting.h</header>
+   <container>1</container>
+  </customwidget>
+  <customwidget>
+   <class>AnalogPlot</class>
+   <extends>QWidget</extends>
+   <header>analogPlot.h</header>
+   <container>1</container>
+  </customwidget>
+  <customwidget>
+   <class>DigitalPlot</class>
+   <extends>QWidget</extends>
+   <header>digitalPlot.h</header>
    <container>1</container>
   </customwidget>
  </customwidgets>

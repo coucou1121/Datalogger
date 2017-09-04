@@ -60,6 +60,8 @@ public:
 private:
     Ui::DigitalPlot *ui;
 
+    bool _isRed;
+
     quint16 _nbPixels;
     quint64 _CPT;
     quint8 _yValue;
