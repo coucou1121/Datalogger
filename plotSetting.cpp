@@ -32,6 +32,31 @@ void PlotSetting::setSizeOfPlots(int nbPixels)
     ui->doubleSpinBox->setValue(nbPixels);
 }
 
+void PlotSetting::setTitle(QString nameTxt)
+{
+    ui->labelTitlePlotSetting->setText(nameTxt);
+}
+
+void PlotSetting::setStartValue(double startValue)
+{
+    ui->doubleSpinBox->setValue(startValue);
+}
+
+void PlotSetting::setMinimum(double valueMin)
+{
+    ui->doubleSpinBox->setMinimum(valueMin);
+}
+
+void PlotSetting::setMaximum(double valueMin)
+{
+    ui->doubleSpinBox->setMaximum(valueMin);
+}
+
+void PlotSetting::setStep(double stepValue)
+{
+    ui->doubleSpinBox->setSingleStep(stepValue);
+}
+
 void PlotSetting::on_doubleSpinBox_valueChanged(double arg1)
 {
    emit _settingSizeOfPlotWasChanged(static_cast<int>(arg1));

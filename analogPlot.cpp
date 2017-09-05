@@ -106,7 +106,7 @@ void AnalogPlot::addYValue(quint8 valueGraph1, quint8 settingTriggerValue)
         _line->point1->setCoords(_CPTMin, _settingTriggerValue);
         _line->point2->setCoords(_CPTMax, _settingTriggerValue);
     }
-    qDebug() << objectName() << "CPT: " << _CPT;
+//   qDebug() << objectName() << "CPT: " << _CPT;
 }
 
 void AnalogPlot::replot()

@@ -19,12 +19,14 @@ LogoDateTime::~LogoDateTime()
 
 void LogoDateTime::_showTime()
 {
+    QLocale l(QLocale::English, QLocale::UnitedStates);
+            QLocale::setDefault(l);
     _dateTimeToDay = QDateTime::currentDateTime();
     _timeToDay = _dateTimeToDay.time();
     QString timeStr = _timeToDay.toString("hh : mm : ss");
     ui->labelTime->setText(timeStr);
 
     _dateToDay = _dateTimeToDay.date();
-    QString dateToDayStr = _dateToDay.toString("dd  MMMM  yyyy");
+    QString dateToDayStr = _dateToDay.toString("dd / MM / yyyy");
     ui->labelDate->setText(dateToDayStr);
 }

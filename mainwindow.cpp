@@ -11,10 +11,13 @@ extern QString BPStartStopStateStartTxt;
 extern QString BPStartStopStateStopTxt;
 extern QString BPStartStopStateHoldTxt;
 
+extern QString speedSettingTitle;
+
 MainWindow::MainWindow(QWidget *parent) :
     QMainWindow(parent),
     ui(new Ui::MainWindow),
-
+    //speed of plot
+    _speedOfPlot(0),
     //create windows object
     _initWindow(new InitWindow()),
     _homeWindow(new HomeWindow()),
@@ -34,7 +37,7 @@ MainWindow::MainWindow(QWidget *parent) :
     _FTDIdevice(new FTDIFunction("FTDI device")),
 
     //create thread object
-    _threadDataAnalysis(new FrameThread(false, "tick data analysis", 10)), //10
+    _threadDataAnalysis(new FrameThread(false, "tick data analysis", 100)), //10
     _threadNewDataFrame(new FrameThread(true, "simulated data", 1000)),
     _threadDisplayRefresh(new FrameThread(true, "refresh display", 100)),//100
 
@@ -96,6 +99,13 @@ MainWindow::MainWindow(QWidget *parent) :
 
     //key - value for FTDI state possible
     _FTDIStatePossibleTXT = GlobalEnumatedAndExtern::initFTDIStatePossibleTXT();
+
+    //setup speed setting widget
+    ui->widgetSpeedReading->setTitle(speedSettingTitle);
+    ui->widgetSpeedReading->setMinimum(0);
+    ui->widgetSpeedReading->setMaximum(250);
+    ui->widgetSpeedReading->setStep(1);
+    ui->widgetSpeedReading->setStartValue(0);
 
     //setup signal and slot
     this->_setupSignalAndSlot();
@@ -457,6 +467,7 @@ void MainWindow::addNewProducteurAdress(int itProducerAdress)
 void MainWindow::addNewSimulatedDataFrame()
 {
     //wait untile the first data was creating
+    static bool isFirstTrig = true;
     int i = 0;
     this->_onTrigTrue = false;
     static bool memoOnTrigTrue = false;
@@ -469,7 +480,7 @@ void MainWindow::addNewSimulatedDataFrame()
     }
 
     //    qDebug() << objectName() << "received addNewSimulatedDataFrame";
-    while(i< 10 && !_onTrigTrue)
+    while(i<this->_speedOfPlot && !_onTrigTrue)
         //    while(i< 50 && this->_nbValueAfterTrig > 0)
     {
 
@@ -480,26 +491,24 @@ void MainWindow::addNewSimulatedDataFrame()
             this->_dataFrameSimulator->setItConsumerAdress(_itConsumer);
 
             //read the circular array and put on the trace array for futur ploting
-//            *_itTrace = *this->_itConsumer;
+ //           *_itTrace = *this->_itConsumer;
 
             switch (_mainStateStep)
             {
             case GlobalEnumatedAndExtern::mainStateRoll:
                 //send value to the plot
- //               this->_rollWindow->addNewDataFrame(_itTrace);
                 this->_rollWindow->addNewDataFrame(_itConsumer);
                 break;
             case GlobalEnumatedAndExtern::mainStateTrig:
 
                 //check trigger function
-                _onTrigTrue =  this->_triggerFuntion->onTrig(_itTrace);
-
-                //change state is case of trig
-                if(_onTrigTrue && !memoOnTrigTrue)
+                if(isFirstTrig)
                 {
-                    _trigStateStep = GlobalEnumatedAndExtern::trigTrigged;
-                    _trigStateGraph();
-                    memoOnTrigTrue = true;
+                  _onTrigTrue = this->_triggerFuntion->onTrig(_itConsumer);
+                }
+                else
+                {
+                    this->_itConsumer->setTR1(0);
                 }
 
                 //decrease nomber of value after trig
@@ -507,8 +516,18 @@ void MainWindow::addNewSimulatedDataFrame()
                 {
                     this->_nbValueAfterTrig = this->_nbValueAfterTrig > 0 ?
                                 this->_nbValueAfterTrig - 1 : 0;
-                    qDebug() << "rest of value :" << _nbValueAfterTrig;
+                     qDebug() << "rest of value :" << _nbValueAfterTrig;
                 }
+
+                //change state is case of trig
+                if(_onTrigTrue && !memoOnTrigTrue)
+                {
+                    _trigStateStep = GlobalEnumatedAndExtern::trigTrigged;
+                    _trigStateGraph();
+                    memoOnTrigTrue = true;
+                    isFirstTrig = false;
+                }
+
 
                 //when ervery data are saved
                 if(memoOnTrigTrue && _nbValueAfterTrig == 0)
@@ -521,7 +540,7 @@ void MainWindow::addNewSimulatedDataFrame()
                 }
 
                 //send value to the plot
-                this->_triggerWindow->addNewDataFrame(_itTrace);
+                this->_triggerWindow->addNewDataFrame(_itConsumer);
                 break;
             default:
                 break;
@@ -529,11 +548,17 @@ void MainWindow::addNewSimulatedDataFrame()
 
             this->_itConsumer++;
             this->_itTrace++;
-            this->_itConsumer = this->_itConsumer != _dataFrameReccorder.begin()? this->_itConsumer : this->_dataFrameReccorder.begin();
-            this->_itTrace = this->_itTrace != _dataFrameTrace.end() ? this->_itTrace : this->_dataFrameTrace.begin();
+            this->_itConsumer = this->_itConsumer != _dataFrameReccorder.end()? this->_itConsumer : this->_dataFrameReccorder.begin();
+ //           this->_itTrace = this->_itTrace != _dataFrameTrace.end() ? this->_itTrace : this->_dataFrameTrace.begin();
         }
         i++;
     }
+
+    if(this->_nbValueAfterTrig <= 0)
+    {
+        isFirstTrig = true;
+    }
+
 }
 
 void MainWindow::addNewLiveDataFrame(int itProducerAdress)
@@ -600,10 +625,18 @@ void MainWindow::received_settingSizeOfPlotWasChanged(int nbPixels)
     this->_triggerWindow->setSizeOfPlot(nbPixels);
 }
 
+void MainWindow::received_speedOfPlotWasChanged(int dataPerSecond)
+{
+    this->_speedOfPlot = dataPerSecond;
+}
+
 void MainWindow::_setupSignalAndSlot()
 {
     //manage the size of plot
     QObject::connect(ui->widgetPlotSetting, SIGNAL(_settingSizeOfPlotWasChanged(int)), this, SLOT(received_settingSizeOfPlotWasChanged(int)));
+
+    //manage speed of plot
+    QObject::connect(ui->widgetSpeedReading, SIGNAL(_settingSizeOfPlotWasChanged(int)), this, SLOT(received_speedOfPlotWasChanged(int)));
 
     //manage the number of frame saved after trigger
     QObject::connect(_settingWindow, SIGNAL(_percentPreTriggerWasChanged(quint8)),

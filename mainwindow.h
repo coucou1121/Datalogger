@@ -68,6 +68,9 @@ private:
     //actif wait delay
     void _waitDelay(int delayInSeconde);
 
+    //speed of plot
+    quint8 _speedOfPlot;
+
     //thread
     FrameThread *_threadDataAnalysis;               // create tick for frequency simulation
     FrameThread *_threadNewDataFrame;       // create a new data
@@ -194,6 +197,7 @@ public slots:
     void refreshDisplay();
     void checkBoxEmulationModeChanged(bool checked);
     void received_settingSizeOfPlotWasChanged(int nbPixels);
+    void received_speedOfPlotWasChanged(int dataPerSecond);
     void received_percentPreTriggerChanged(quint8 percent);
 
 private slots:

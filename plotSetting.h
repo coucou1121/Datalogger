@@ -19,6 +19,11 @@ public:
 
 
     void setSizeOfPlots(int nbPixels);
+    void setTitle(QString nameTxt);
+    void setStartValue(double startValue);
+    void setMinimum(double valueMin);
+    void setMaximum(double valueMin);
+    void setStep(double stepValue);
 
 private:
     Ui::PlotSetting *ui;

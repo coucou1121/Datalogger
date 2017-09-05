@@ -8,8 +8,8 @@ GlobalEnumatedAndExtern::GlobalEnumatedAndExtern()
 QMap<int, QString> GlobalEnumatedAndExtern::initErrorPossible()
 {
     QMap<int, QString> ret;
-    ret.insert(noError, "no error");
-    ret.insert(errorFTDIDeviceNotFound, "FTDI Device\nNot Found\n-> run in emulation\nor\n-> fixe FTDI device");
+    ret.insert(noError, "No error");
+    ret.insert(errorFTDIDeviceNotFound, "FTDI Device\nNot Found\n-> Run in emulation\nor\n-> Fix FTDI device");
     ret.insert(errorSamplingFrequencyToHigh, "Periode too low \n or \n baudrate too high");
     ret.insert(errorNoSelectedTrace, "no channels \n selected");
     ret.insert(errorNoSelectedTriggerTrace, "no trigger channels \n selected");
@@ -154,3 +154,4 @@ extern QMap<int, QString> TriggerTracePossible = GlobalEnumatedAndExtern::initTr
  QString opNotOrTxt = "OR NOT";
  QString opNoTAndTxt = "AND NOT";
 
+ QString speedSettingTitle = "x10 Data/s";

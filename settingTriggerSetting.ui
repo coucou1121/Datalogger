@@ -688,7 +688,7 @@
       </size>
      </property>
      <property name="text">
-      <string>Level</string>
+      <string>Level [V]</string>
      </property>
      <property name="alignment">
       <set>Qt::AlignCenter</set>
