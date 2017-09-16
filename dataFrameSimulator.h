@@ -31,7 +31,12 @@ public:
 private:
     DataFrame *_dataFrame;
     quint16 _CPT;
+
     QElapsedTimer timerElapse;
+    quint64 _minTime;
+    quint64 _maxTime;
+    quint64 _avgTime;
+
     QVector<DataFrame> _dataFrameVector;
     TriggerFunctions *_triggerFunction;
     void _resetFrame();

@@ -11,8 +11,8 @@ QMap<int, QString> GlobalEnumatedAndExtern::initErrorPossible()
     ret.insert(noError, "No error");
     ret.insert(errorFTDIDeviceNotFound, "FTDI Device\nNot Found\n-> Run in emulation\nor\n-> Fix FTDI device");
     ret.insert(errorSamplingFrequencyToHigh, "Periode too low \n or \n baudrate too high");
-    ret.insert(errorNoSelectedTrace, "no channels \n selected");
-    ret.insert(errorNoSelectedTriggerTrace, "no trigger channels \n selected");
+    ret.insert(errorNoSelectedTrace, "No channels \n selected");
+    ret.insert(errorNoSelectedTriggerTrace, "No trigger channels \n selected");
     ret.insert(errorWrongEquation, "Wrong Equation in \n Trigger Function\n menu");
     return ret;
 }

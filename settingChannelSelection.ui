@@ -486,7 +486,7 @@
       </font>
      </property>
      <property name="text">
-      <string>Chanels selection</string>
+      <string>Channels selection</string>
      </property>
      <property name="alignment">
       <set>Qt::AlignCenter</set>

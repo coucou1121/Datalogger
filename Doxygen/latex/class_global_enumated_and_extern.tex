@@ -1,0 +1,248 @@
+\hypertarget{class_global_enumated_and_extern}{}\section{Global\+Enumated\+And\+Extern Class Reference}
+\label{class_global_enumated_and_extern}\index{Global\+Enumated\+And\+Extern@{Global\+Enumated\+And\+Extern}}
+\subsection*{Public Types}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\Hypertarget{class_global_enumated_and_extern_a430adcded6c74bf7c7de431adeabad11}\label{class_global_enumated_and_extern_a430adcded6c74bf7c7de431adeabad11}} 
+enum {\bfseries e\+Main\+State\+Application} \{ \newline
+{\bfseries main\+State\+Init} = 0, 
+{\bfseries main\+State\+Stop}, 
+{\bfseries main\+State\+Ready}, 
+{\bfseries main\+State\+Set}, 
+\newline
+{\bfseries main\+State\+Trig}, 
+{\bfseries main\+State\+Roll}, 
+{\bfseries main\+State\+Debug}
+ \}
+\item 
+\mbox{\Hypertarget{class_global_enumated_and_extern_a9285d747a087ccb9c821770462039c04}\label{class_global_enumated_and_extern_a9285d747a087ccb9c821770462039c04}} 
+enum {\bfseries e\+Trig\+State} \{ {\bfseries trig\+Not\+Ready} = 0, 
+{\bfseries trig\+Ready}, 
+{\bfseries trig\+Run\+Trig}, 
+{\bfseries trig\+Trigged}
+ \}
+\item 
+\mbox{\Hypertarget{class_global_enumated_and_extern_af8159024389eceac15fea44b48f48b8b}\label{class_global_enumated_and_extern_af8159024389eceac15fea44b48f48b8b}} 
+enum {\bfseries e\+Roll\+State} \{ {\bfseries roll\+Not\+Ready} = 0, 
+{\bfseries roll\+Ready}, 
+{\bfseries roll\+Roll\+On}, 
+{\bfseries roll\+Paused}
+ \}
+\item 
+\mbox{\Hypertarget{class_global_enumated_and_extern_a8ead8c9e81876881e595ccf8472f49ef}\label{class_global_enumated_and_extern_a8ead8c9e81876881e595ccf8472f49ef}} 
+enum {\bfseries e\+Main\+State\+Display} \{ \newline
+{\bfseries init} = 0, 
+{\bfseries stopped}, 
+{\bfseries ready}, 
+{\bfseries run\+Trig}, 
+\newline
+{\bfseries trigged}, 
+{\bfseries roll\+On}, 
+{\bfseries paused}
+ \}
+\item 
+\mbox{\Hypertarget{class_global_enumated_and_extern_a5939b05020fd4efc1593f159462f6332}\label{class_global_enumated_and_extern_a5939b05020fd4efc1593f159462f6332}} 
+enum {\bfseries e\+B\+P\+Start\+Stop\+State} \{ {\bfseries stop}, 
+{\bfseries start}, 
+{\bfseries hold}
+ \}
+\item 
+\mbox{\Hypertarget{class_global_enumated_and_extern_abf42bbd7759c59483b36948df532e257}\label{class_global_enumated_and_extern_abf42bbd7759c59483b36948df532e257}} 
+enum {\bfseries e\+Error} \{ \newline
+{\bfseries no\+Error} = 0, 
+{\bfseries error\+F\+T\+D\+I\+Device\+Not\+Found}, 
+{\bfseries error\+Sampling\+Frequency\+To\+High}, 
+{\bfseries error\+No\+Selected\+Trace}, 
+\newline
+{\bfseries error\+No\+Selected\+Trigger\+Trace}, 
+{\bfseries error\+Wrong\+Equation}
+ \}
+\item 
+\mbox{\Hypertarget{class_global_enumated_and_extern_a7e2fec4711fb87e6409006c948a3ad10}\label{class_global_enumated_and_extern_a7e2fec4711fb87e6409006c948a3ad10}} 
+enum {\bfseries e\+Range\+Value} \{ {\bfseries range0\+\_\+24} = 0, 
+{\bfseries range0\+\_\+30}, 
+{\bfseries range15\+\_\+15}
+ \}
+\item 
+\mbox{\Hypertarget{class_global_enumated_and_extern_a5da84856dc8ab66a8de348f3c579e112}\label{class_global_enumated_and_extern_a5da84856dc8ab66a8de348f3c579e112}} 
+enum {\bfseries e\+Edge} \{ {\bfseries no\+Edge} = 0, 
+{\bfseries falling\+Edge}, 
+{\bfseries rising\+Edge}
+ \}
+\item 
+\mbox{\Hypertarget{class_global_enumated_and_extern_a732c770ea64278ee922e069c2f7f8db1}\label{class_global_enumated_and_extern_a732c770ea64278ee922e069c2f7f8db1}} 
+enum {\bfseries e\+Logic\+Operator} \{ \newline
+{\bfseries op\+None} = 0, 
+{\bfseries op\+And}, 
+{\bfseries op\+Or}, 
+{\bfseries op\+And\+Not}, 
+\newline
+{\bfseries op\+Or\+Not}
+ \}
+\item 
+\mbox{\Hypertarget{class_global_enumated_and_extern_a54aa06ee800cb5fb68acf11bb2bd96bc}\label{class_global_enumated_and_extern_a54aa06ee800cb5fb68acf11bb2bd96bc}} 
+enum {\bfseries e\+Trace\+Possible} \{ \newline
+{\bfseries bt\+None} = 0, 
+{\bfseries bt\+D\+I1}, 
+{\bfseries bt\+D\+I2}, 
+{\bfseries bt\+D\+I3}, 
+\newline
+{\bfseries bt\+D\+I4}, 
+{\bfseries bt\+D\+I5}, 
+{\bfseries bt\+D\+I6}, 
+{\bfseries bt\+D\+I7}, 
+\newline
+{\bfseries bt\+D\+I8}, 
+{\bfseries bt\+D\+I9}, 
+{\bfseries bt\+D\+I10}, 
+{\bfseries bt\+D\+I11}, 
+\newline
+{\bfseries bt\+D\+I12}, 
+{\bfseries bt\+D\+I13}, 
+{\bfseries bt\+D\+I14}, 
+{\bfseries bt\+D\+I15}, 
+\newline
+{\bfseries bt\+D\+I16}, 
+{\bfseries bt\+A\+I1}, 
+{\bfseries bt\+A\+I2}, 
+{\bfseries bt\+A\+I3}, 
+\newline
+{\bfseries bt\+A\+I4}, 
+{\bfseries function\+Result}
+ \}
+\item 
+\mbox{\Hypertarget{class_global_enumated_and_extern_abc49ace8b35e4dbcb0d386ef2345b2ea}\label{class_global_enumated_and_extern_abc49ace8b35e4dbcb0d386ef2345b2ea}} 
+enum {\bfseries e\+Periode\+Possible} \{ \newline
+{\bfseries periode0\+\_\+5\+\_\+microsec} = 0, 
+{\bfseries periode1\+\_\+microsec}, 
+{\bfseries periode50\+\_\+microsec}, 
+{\bfseries periode100\+\_\+microsec}, 
+\newline
+{\bfseries periode1\+\_\+ms}, 
+{\bfseries periode5\+\_\+ms}, 
+{\bfseries periode10\+\_\+ms}, 
+{\bfseries periode50\+\_\+ms}, 
+\newline
+{\bfseries periode100\+\_\+ms}, 
+{\bfseries periode500\+\_\+ms}, 
+{\bfseries periode1\+\_\+s}, 
+{\bfseries periode5\+\_\+s}, 
+\newline
+{\bfseries periode10\+\_\+s}
+ \}
+\item 
+\mbox{\Hypertarget{class_global_enumated_and_extern_a90ce2f72845e86ab24d740dade100a97}\label{class_global_enumated_and_extern_a90ce2f72845e86ab24d740dade100a97}} 
+enum {\bfseries e\+F\+T\+D\+I\+State\+Possible} \{ \newline
+{\bfseries F\+T\+D\+Inot\+Connected} = 0, 
+{\bfseries F\+T\+D\+I\+Device\+Found}, 
+{\bfseries F\+T\+D\+Iopened}, 
+{\bfseries F\+T\+D\+I\+U\+S\+Bparameter\+Setted}, 
+\newline
+{\bfseries F\+T\+D\+I\+Baud\+Rate\+Setted}, 
+{\bfseries F\+T\+D\+I\+Data\+Caracteristique\+Setted}, 
+{\bfseries F\+T\+D\+I\+Flow\+Control\+Setted}, 
+{\bfseries F\+T\+D\+I\+Tx\+Rx\+Buffer\+Free}, 
+\newline
+{\bfseries F\+T\+D\+Iready}
+ \}
+\item 
+\mbox{\Hypertarget{class_global_enumated_and_extern_a9c17d244982cc8a07ab7ac6adf9f1666}\label{class_global_enumated_and_extern_a9c17d244982cc8a07ab7ac6adf9f1666}} 
+enum {\bfseries e\+F\+T\+D\+I\+Return\+Character} \{ {\bfseries end\+Of\+Transmission} = 0x04, 
+{\bfseries transmission\+Enquiry} = 0x05, 
+{\bfseries positive\+Acknoledge} = 0x06, 
+{\bfseries negative\+Acknoledge} = 0x15
+ \}
+\end{DoxyCompactItemize}
+\subsection*{Static Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\Hypertarget{class_global_enumated_and_extern_afd5ccc14ffb855c35d6b699805509b0e}\label{class_global_enumated_and_extern_afd5ccc14ffb855c35d6b699805509b0e}} 
+static Q\+Map$<$ int, Q\+String $>$ {\bfseries init\+Error\+Possible} ()
+\item 
+\mbox{\Hypertarget{class_global_enumated_and_extern_a7c1b1ebfd4f274ab65cac16e02d041d6}\label{class_global_enumated_and_extern_a7c1b1ebfd4f274ab65cac16e02d041d6}} 
+static Q\+Map$<$ int, Q\+String $>$ {\bfseries init\+Trigger\+Trace\+Possible} ()
+\item 
+\mbox{\Hypertarget{class_global_enumated_and_extern_a4fa9c09cf608cd1ddd7a8c50f382b8f9}\label{class_global_enumated_and_extern_a4fa9c09cf608cd1ddd7a8c50f382b8f9}} 
+static Q\+Map$<$ int, Q\+String $>$ {\bfseries init\+F\+T\+D\+I\+Return\+Char\+Possible\+Txt} ()
+\item 
+\mbox{\Hypertarget{class_global_enumated_and_extern_ac1d88b3ae956f8650da214fcfb036e7c}\label{class_global_enumated_and_extern_ac1d88b3ae956f8650da214fcfb036e7c}} 
+static Q\+Map$<$ int, Q\+String $>$ {\bfseries init\+F\+T\+D\+I\+State\+Possible\+T\+XT} ()
+\item 
+\mbox{\Hypertarget{class_global_enumated_and_extern_a4fa8170ab5b9cba44a3d62d9b46b9fb9}\label{class_global_enumated_and_extern_a4fa8170ab5b9cba44a3d62d9b46b9fb9}} 
+static Q\+Map$<$ int, double $>$ {\bfseries init\+Peride\+Possible} ()
+\item 
+\mbox{\Hypertarget{class_global_enumated_and_extern_a2290571e9262c866097b96885b56eade}\label{class_global_enumated_and_extern_a2290571e9262c866097b96885b56eade}} 
+static Q\+Map$<$ int, Q\+String $>$ {\bfseries init\+Peride\+Possible\+Txt} ()
+\item 
+\mbox{\Hypertarget{class_global_enumated_and_extern_ad7edac52fecb3c0d396d0780f3681e89}\label{class_global_enumated_and_extern_ad7edac52fecb3c0d396d0780f3681e89}} 
+static Q\+Map$<$ int, Q\+String $>$ {\bfseries init\+Main\+State\+Display\+Possible\+Txt} ()
+\end{DoxyCompactItemize}
+\subsection*{Public Attributes}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\Hypertarget{class_global_enumated_and_extern_ac35dfd94c8b742aa09e9b3031b742d73}\label{class_global_enumated_and_extern_ac35dfd94c8b742aa09e9b3031b742d73}} 
+Q\+String {\bfseries B\+P\+Menu\+Home\+Txt}
+\item 
+\mbox{\Hypertarget{class_global_enumated_and_extern_a59d0390bf0da6fa727f1477a20fcfb74}\label{class_global_enumated_and_extern_a59d0390bf0da6fa727f1477a20fcfb74}} 
+Q\+String {\bfseries B\+P\+Menu\+Set\+Txt}
+\item 
+\mbox{\Hypertarget{class_global_enumated_and_extern_a02d38e75232a4a504dd4a2deac4fb943}\label{class_global_enumated_and_extern_a02d38e75232a4a504dd4a2deac4fb943}} 
+Q\+String {\bfseries B\+P\+Menu\+Trig\+Txt}
+\item 
+\mbox{\Hypertarget{class_global_enumated_and_extern_a4b64d654894f9d385307005a020fb66a}\label{class_global_enumated_and_extern_a4b64d654894f9d385307005a020fb66a}} 
+Q\+String {\bfseries B\+P\+Menu\+Roll\+Txt}
+\item 
+\mbox{\Hypertarget{class_global_enumated_and_extern_a9a4bf3a9b869ad7d44e411ea37d8f9f1}\label{class_global_enumated_and_extern_a9a4bf3a9b869ad7d44e411ea37d8f9f1}} 
+Q\+String {\bfseries B\+P\+Menu\+Debug\+Txt}
+\item 
+\mbox{\Hypertarget{class_global_enumated_and_extern_a6e8d3d5eeadaa5a018033d5284e422a0}\label{class_global_enumated_and_extern_a6e8d3d5eeadaa5a018033d5284e422a0}} 
+Q\+String {\bfseries B\+P\+Start\+Stop\+State\+Block\+Txt}
+\item 
+\mbox{\Hypertarget{class_global_enumated_and_extern_a22cdbfc7abdf4afe946e594ce1333c17}\label{class_global_enumated_and_extern_a22cdbfc7abdf4afe946e594ce1333c17}} 
+Q\+String {\bfseries B\+P\+Start\+Stop\+State\+Start\+Txt}
+\item 
+\mbox{\Hypertarget{class_global_enumated_and_extern_ac02e2f7a2a83f8ed1c663173fa481a1a}\label{class_global_enumated_and_extern_ac02e2f7a2a83f8ed1c663173fa481a1a}} 
+Q\+String {\bfseries B\+P\+Start\+Stop\+State\+Stop\+Txt}
+\item 
+\mbox{\Hypertarget{class_global_enumated_and_extern_aefb0029bd38fd99e2edfb1625080494b}\label{class_global_enumated_and_extern_aefb0029bd38fd99e2edfb1625080494b}} 
+Q\+String {\bfseries range0\+\_\+24\+Txt}
+\item 
+\mbox{\Hypertarget{class_global_enumated_and_extern_af1c7900c3aa9912be038cbba1b8c2b58}\label{class_global_enumated_and_extern_af1c7900c3aa9912be038cbba1b8c2b58}} 
+Q\+String {\bfseries range0\+\_\+30\+Txt}
+\item 
+\mbox{\Hypertarget{class_global_enumated_and_extern_a16bd134d1864f480d7d5f48ffa5afe9d}\label{class_global_enumated_and_extern_a16bd134d1864f480d7d5f48ffa5afe9d}} 
+Q\+String {\bfseries range15\+\_\+15\+Txt}
+\item 
+\mbox{\Hypertarget{class_global_enumated_and_extern_af22bf56c5e5919e4d8015d58162534ea}\label{class_global_enumated_and_extern_af22bf56c5e5919e4d8015d58162534ea}} 
+Q\+String {\bfseries op\+None\+Txt}
+\item 
+\mbox{\Hypertarget{class_global_enumated_and_extern_a0eaa8293b1f94e652d022f3431a6a840}\label{class_global_enumated_and_extern_a0eaa8293b1f94e652d022f3431a6a840}} 
+Q\+String {\bfseries op\+Or\+Txt}
+\item 
+\mbox{\Hypertarget{class_global_enumated_and_extern_a187e9b46265c3b1c817e36bbb661705c}\label{class_global_enumated_and_extern_a187e9b46265c3b1c817e36bbb661705c}} 
+Q\+String {\bfseries op\+And\+Txt}
+\item 
+\mbox{\Hypertarget{class_global_enumated_and_extern_a56c5d6220c7099ff21a570b8534eb99a}\label{class_global_enumated_and_extern_a56c5d6220c7099ff21a570b8534eb99a}} 
+Q\+String {\bfseries op\+Not\+Or\+Txt}
+\item 
+\mbox{\Hypertarget{class_global_enumated_and_extern_a0da3df83132ecd4bd1a8021f9ef93628}\label{class_global_enumated_and_extern_a0da3df83132ecd4bd1a8021f9ef93628}} 
+Q\+String {\bfseries op\+No\+T\+And}
+\end{DoxyCompactItemize}
+\subsection*{Static Public Attributes}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\Hypertarget{class_global_enumated_and_extern_a1f9efd6c1b2c316e8dae8a8d42aaa416}\label{class_global_enumated_and_extern_a1f9efd6c1b2c316e8dae8a8d42aaa416}} 
+static Q\+Map$<$ int, Q\+String $>$ {\bfseries Trigger\+Trace\+Possible}
+\item 
+\mbox{\Hypertarget{class_global_enumated_and_extern_a147de86b95d1ee3efb121901bc43c67a}\label{class_global_enumated_and_extern_a147de86b95d1ee3efb121901bc43c67a}} 
+static Q\+Map$<$ int, Q\+String $>$ {\bfseries F\+T\+D\+I\+Return\+Char\+Possible}
+\item 
+\mbox{\Hypertarget{class_global_enumated_and_extern_aeae501d34ab48ca2647ba68bc94d59fd}\label{class_global_enumated_and_extern_aeae501d34ab48ca2647ba68bc94d59fd}} 
+static Q\+Map$<$ int, Q\+String $>$ {\bfseries F\+T\+D\+I\+State\+Possible}
+\end{DoxyCompactItemize}
+
+
+The documentation for this class was generated from the following files\+:\begin{DoxyCompactItemize}
+\item 
+C\+:/\+Users/\+Sebastien/\+Documents/\+Q\+T\+\_\+porject/\+Datalogger/global\+Enumated\+And\+Extern.\+h\item 
+C\+:/\+Users/\+Sebastien/\+Documents/\+Q\+T\+\_\+porject/\+Datalogger/global\+Enumated\+And\+Extern.\+cpp\end{DoxyCompactItemize}

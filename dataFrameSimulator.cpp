@@ -2,6 +2,9 @@
 
 DataFrameSimulator::DataFrameSimulator(QString name, QObject *parent) :
     QObject(parent),
+    _minTime(10000000),
+    _maxTime(0),
+    _avgTime(0),
     _dataFrame(new DataFrame())
 {
     this->setObjectName(name);
@@ -89,8 +92,11 @@ void DataFrameSimulator::setDataFrameVectorReccorder(QVector<DataFrame> *dataFra
 void DataFrameSimulator::createDataFrame()
 {
     static quint64 CPT = 0;
+    static quint64 totalTimePassed = 0;
+    quint64 timepassed = 0;
+
     //    qDebug() << objectName() << "received " << "createDataFrame";
-    //timerElapse.restart();
+    timerElapse.restart();
     //int itProducteurAdress = (int)&(_itProducer);
     quint16 i = 0;
 //    qDebug() << objectName();
@@ -123,11 +129,23 @@ void DataFrameSimulator::createDataFrame()
 //        }
  //       qDebug() << (int)&(*_itProducer);
     i++;
+    if(i>2500)
+    {
+        _minTime = 10000000;
+        _maxTime = 0;
+        _avgTime = 0;
+    }
     }
     emit dataFrameWasSent((int)this->_itProducer);
-    CPT += i;
-    //qDebug() << "createDataFrame took" << timerElapse.nsecsElapsed()/1000 << "micro oseconds" << " for " << i << " values.";
-    //    emit dataFrameWasSent(_dataFrameVector);
+    CPT++;
+    timepassed = timerElapse.nsecsElapsed();
+    totalTimePassed += timepassed;
+    _maxTime = timepassed > _maxTime ? timepassed : _maxTime;
+    _minTime = timepassed < _minTime ? timepassed : _minTime;
+    _avgTime = totalTimePassed/CPT;
+    qDebug() << "createDataFrame took" << timepassed/1000 << "micro seconds" << " for " << i << " values.";
+    qDebug() << "min : " << _minTime << ", avg : " << _avgTime << ", max : " << _maxTime << " in microseconds.";
+   //    emit dataFrameWasSent(_dataFrameVector);
     //    qDebug() << objectName() << "newDataFrameSent size : " << _dataFrameVector.size();
 //    _dataFrameVector.clear();
     qDebug() << objectName() << CPT;
