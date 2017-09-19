@@ -154,4 +154,4 @@ extern QMap<int, QString> TriggerTracePossible = GlobalEnumatedAndExtern::initTr
  QString opNotOrTxt = "OR NOT";
  QString opNoTAndTxt = "AND NOT";
 
- QString speedSettingTitle = "x10 Data/s";
+ QString speedSettingTitle = "x100 Data/s";

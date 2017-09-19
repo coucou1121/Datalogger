@@ -453,17 +453,17 @@ void RollWindow::addNewDataFrame(DataFrame *newDataFrame)
         if(ui->DI10->isVisible())
         ui->DI10->addYValue((valueDI10_18 & 0x02) >> 1);
         if(ui->DI11->isVisible())
-        ui->DI11->addYValue((valueDI10_18 & 0x01) >> 0);
+        ui->DI11->addYValue((valueDI10_18 & 0x04) >> 2);
         if(ui->DI12->isVisible())
-        ui->DI12->addYValue((valueDI10_18 & 0x02) >> 1);
+        ui->DI12->addYValue((valueDI10_18 & 0x08) >> 3);
         if(ui->DI13->isVisible())
-        ui->DI13->addYValue((valueDI10_18 & 0x04) >> 2);
+        ui->DI13->addYValue((valueDI10_18 & 0x10) >> 4);
         if(ui->DI14->isVisible())
-        ui->DI14->addYValue((valueDI10_18 & 0x08) >> 3);
+        ui->DI14->addYValue((valueDI10_18 & 0x20) >> 5);
         if(ui->DI15->isVisible())
-        ui->DI15->addYValue((valueDI10_18 & 0x10) >> 4);
+        ui->DI15->addYValue((valueDI10_18 & 0x40) >> 6);
         if(ui->DI16->isVisible())
-        ui->DI16->addYValue((valueDI10_18 & 0x20) >> 5);
+        ui->DI16->addYValue((valueDI10_18 & 0x80) >> 7);
 
         if(ui->AI1->isVisible())
         ui->AI1->addYValue(_memoDataFrame->AI1(), _memoDataFrame->TR_AI1());

@@ -62,7 +62,7 @@ void SettingChannelSelection::_setupLabel()
     ui->btDI6->setText(_triggerTracePossible[GlobalEnumatedAndExtern::btDI6]);
     ui->btDI7->setText(_triggerTracePossible[GlobalEnumatedAndExtern::btDI7]);
     ui->btDI8->setText(_triggerTracePossible[GlobalEnumatedAndExtern::btDI8]);
-    ui->btDI9->setText(_triggerTracePossible[GlobalEnumatedAndExtern::btDI8]);
+    ui->btDI9->setText(_triggerTracePossible[GlobalEnumatedAndExtern::btDI9]);
     ui->btDI10->setText(_triggerTracePossible[GlobalEnumatedAndExtern::btDI10]);
     ui->btDI11->setText(_triggerTracePossible[GlobalEnumatedAndExtern::btDI11]);
     ui->btDI12->setText(_triggerTracePossible[GlobalEnumatedAndExtern::btDI12]);
