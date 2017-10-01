@@ -64,9 +64,10 @@ int FTDIFunction::setUSBparameter()
 {
     // the USB request transfer siye
     //param@1: fthandle Handle of the device
-    //param@2: DWORD    Transfer siye for USB IN request
-    //param@3: DWORD    Transfer siye for USB OUT request
+    //param@2: DWORD    Transfer size in byte for USB IN request
+    //param@3: DWORD    Transfer size in byte for USB OUT request
 
+//    _ftStatus = FT_SetUSBParameters(_ftHandle, 16384, 0);
     _ftStatus = FT_SetUSBParameters(_ftHandle, 256, 128);
     if(_ftStatus != FT_OK)
     {

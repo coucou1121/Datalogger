@@ -42,7 +42,7 @@ MainWindow::MainWindow(QWidget *parent) :
     _threadDisplayRefresh(new FrameThread(true, "refresh display", 20)),//100
 
     _threadRealTimeReading(new QThread),
-    _frameThread(new FrameThread(false, "real data", 1000)),
+    //_frameThread(new FrameThread(false, "real data", 1000)),
 
     //create timer for thread
     //    _tickTimer(new RefreshTimer(false, "Tick timer", 1)),
@@ -820,7 +820,7 @@ void MainWindow::_setupSignalAndSlot()
     //QObject::connect(this->_FTDIdevice, SIGNAL(_startReading()), this->_FTDIdevice, SLOT(recieved_startReading()));
 #if LINUX
     //refresh the display
-    QObject::connect(_frameThread, SIGNAL(delayFinished()), this->_FTDIdevice, SLOT(received_connectFTDIDevice()));
+//    QObject::connect(_frameThread, SIGNAL(delayFinished()), this->_FTDIdevice, SLOT(received_connectFTDIDevice()));
     QObject::connect(_FTDIdevice, SIGNAL(dataFrameWasSent(int)), this, SLOT(addNewLiveDataFrame(int)));
 #endif
     //application on trig
